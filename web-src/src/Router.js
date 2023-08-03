@@ -11,12 +11,14 @@ const Router = () => {
     return (
         <Routes>
             {/* /link를 입력하면 LinkPage 오픈 */}
+            {/* -------------------------------web------------------------------- */}
 
+            {/* -------------------------------admin------------------------------- */}
             {/* 메인 */}
-            <Route path={routerPath.admin_login_url} element={<Main />} />
+            <Route path={routerPath.admin_main_url} element={<Main />} />
 
             {/* 로그인 */}
-            <Route path={routerPath.admin_main_url} element={<LoginMain />} />
+            <Route path={routerPath.admin_login_url} element={<LoginMain />} />
 
             <Route path="*" element={<NotFoundPage />} />
         </Routes>
