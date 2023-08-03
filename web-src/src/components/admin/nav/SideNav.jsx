@@ -12,7 +12,7 @@ import { init_user_info } from "redux/actions/userInfoAction";
 import { apiPath, routerPath } from "webPath";
 
 import $ from "jquery";
-import RegUserModal from "components/user/userList/RegUserModal";
+import RegUserModal from "components/admin/user/userList/RegUserModal";
 import useAlert from "hook/useAlert";
 
 const SideNav = (props) => {

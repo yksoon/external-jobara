@@ -4,7 +4,7 @@ import { CircularProgress, Dialog, Modal } from "@mui/material";
 import { set_spinner } from "redux/actions/commonAction";
 import { routerPath } from "webPath";
 import tokenExpire from "./tokenExpire";
-import HotelDetailModalMain from "components/hotel/hotelList/hotelDetailModal/HotelDetailModalMain";
+import HotelDetailModalMain from "components/admin/hotel/hotelList/hotelDetailModal/HotelDetailModalMain";
 
 // Alert (props)
 // isOpen = state 상태값

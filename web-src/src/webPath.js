@@ -36,12 +36,27 @@ const admin = "admin";
 
 // route
 const routerPath = {
+    // ---------------------- web -------------------------
+    // 메인
+    // /
+    web_main_url: `${base_url}`,
+
+    // 회원가입
+    // /signup
+    web_signup_url: `${base_url}signup`,
+
+    // 회원가입 완료
+    // /signupok
+    web_signupok_url: `${base_url}signupok`,
+
     // ---------------------- admin -------------------------
     // 메인
-    admin_main_url: `${base_url + slash + admin}`,
+    // /admin
+    admin_main_url: `${base_url + admin}`,
 
     // 로그인
-    admin_login_url: `${base_url + slash + admin}login${slash}`,
+    // /admin/login
+    admin_login_url: `${base_url + admin + slash}login${slash}`,
 };
 
 // api
