@@ -147,7 +147,7 @@ function Header({ props }) {
                 // dispatch(set_user_info(null));
                 dispatch(init_user_info(null));
                 setIsSignOut(false);
-                navigate(routerPath.main_url);
+                navigate(routerPath.web_main_url);
             });
     };
 
@@ -162,7 +162,7 @@ function Header({ props }) {
             <header>
                 <div className="header_content">
                     <h1 className="logo">
-                        <Link to={routerPath.main_url}>
+                        <Link to={routerPath.web_main_url}>
                             <img src="/img/common/logo.png" alt="" />
                         </Link>
                     </h1>
