@@ -36,15 +36,15 @@ const Router = () => {
                 {/* /link를 입력하면 LinkPage 오픈 */}
                 {/* -------------------------------web------------------------------- */}
                 {/* 메인 */}
-                {/* / */}
+                {/* URL : / */}
                 <Route path={routerPath.web_main_url} element={<Main />} />
 
                 {/* 회원가입 */}
-                {/* /signup */}
+                {/* URL : /signup */}
                 <Route path={routerPath.web_signup_url} element={<SignUp />} />
 
                 {/* 회원가입 완료 */}
-                {/* /signupok */}
+                {/* URL : /signupok */}
                 <Route
                     path={routerPath.web_signupok_url}
                     element={<SignUpOk />}
@@ -52,11 +52,11 @@ const Router = () => {
 
                 {/* -------------------------------admin------------------------------- */}
                 {/* 메인 */}
-                {/* /admin */}
+                {/* URL : /admin */}
                 <Route path={routerPath.admin_main_url} element={<Admin />} />
 
                 {/* 로그인 */}
-                {/* /admin/login */}
+                {/* URL : /admin/login */}
                 <Route path={routerPath.admin_login_url} element={<Login />} />
 
                 {/* 404 */}

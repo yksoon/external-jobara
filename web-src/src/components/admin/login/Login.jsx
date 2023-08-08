@@ -68,11 +68,11 @@ const Login = () => {
     };
 
     const login = () => {
-        // auth/v1/signin
+        // /v1/signin
         // POST
         let url = apiPath.api_auth_login;
         let data = {
-            signup_type: "000",
+            // signup_type: "000",
             user_id: inputID.current.value,
             user_pwd: inputPW.current.value,
             admin_yn: "Y",
@@ -152,7 +152,7 @@ const Login = () => {
                             placeholder="ID"
                             ref={inputID}
                             onKeyDown={handleOnKeyPress} // Enter 입력 이벤트 함수
-                            defaultValue="ksyong3@naver.com"
+                            defaultValue="support"
                         />
                     </div>
                     <div>
@@ -163,7 +163,7 @@ const Login = () => {
                             placeholder="PW"
                             ref={inputPW}
                             onKeyDown={handleOnKeyPress} // Enter 입력 이벤트 함수
-                            defaultValue="123qwe123!@#"
+                            defaultValue="1234qwer!@"
                         />
                     </div>
                     <div className="flex login_btn">

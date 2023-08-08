@@ -52,26 +52,57 @@ const routerPath = {
 const apiPath = {
     // http://jejujobara.com:60000/auth/v1/signin
 
-    // ------------------ 공통 ------------------
+    // ------------------ Information ------------------
+
     // /v1/_codes
     // POST
     // 공통 코드
-    api_codes: `${base_api_url + slash + version + slash}_codes`,
+    // api_codes: `${base_api_url + slash + version + slash}_codes`,
+    api_codes: `${version + slash}_codes`,
 
     // /v1/info/result
     // GET
     // 공통 코드
-    api_result: `${base_api_url + slash + version + slash}info/result`,
+    // api_result: `${base_api_url + slash + version + slash}info/result`,
+    api_result: `${version + slash}info/result`,
 
     // ------------------ Auth ------------------
-    // Refresh POST
-    api_auth_refresh: `${base_api_url + slash + version + slash}refresh`,
 
-    // 로그인 POST
-    api_auth_login: `${base_api_url + slash + version + slash}signin`,
+    // /v1/signin
+    // POST
+    // 로그인
+    api_auth_login: `${version + slash}signin`,
 
-    // 로그아웃 POST
-    api_auth_signout: `${base_api_url + slash + version + slash}signout`,
+    // /v1/signout
+    // POST
+    // 로그아웃
+    api_auth_signout: `${version + slash}signout`,
+
+    // ------------------ Refresh ------------------
+
+    // /v1/refresh
+    // POST
+    // 토큰 리프레쉬
+    api_refresh: `${version + slash}refresh`,
+
+    // ------------------ Menu Management ------------------
+
+    // /v1/menus
+    // GET
+    // 메뉴 리스트
+    api_admin_menus: `${version + slash}menus`,
+
+    // ------------------ User Info Management API 사용자 정보 관리 API ------------------
+
+    // /v1/user/infos
+    // POST
+    // 유저 리스트
+    api_admin_user_infos: `${version + slash}user/infos`,
+
+    // /v1/user/info/{user_idx}
+    // POST
+    // 유저 리스트
+    api_admin_user_info: `${version + slash}user/info`,
 };
 
 export { routerPath, apiPath };

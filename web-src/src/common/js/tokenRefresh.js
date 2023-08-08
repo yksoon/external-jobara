@@ -4,7 +4,7 @@ import { apiPath } from "webPath";
 
 const tokenRefresh = async (callback) => {
     // let retVal;
-    const url = apiPath.api_auth_refresh;
+    const url = apiPath.api_refresh;
     const data = {};
 
     await RestServer("post", url, data)

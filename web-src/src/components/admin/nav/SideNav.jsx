@@ -155,7 +155,7 @@ const SideNav = (props) => {
                     //         page: "dashboard",
                     //     })
                     // );
-                    navigate(routerPath.login_url);
+                    navigate(routerPath.admin_login_url);
                 }
             })
             .catch(function (error) {

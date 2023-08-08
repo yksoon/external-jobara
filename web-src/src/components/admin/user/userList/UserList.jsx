@@ -53,9 +53,9 @@ const UserList = () => {
             })
         );
 
-        // account/v1/user/infos
+        // /v1/user/infos
         // POST
-        let url = apiPath.api_user_list;
+        let url = apiPath.api_admin_user_infos;
         let data = {
             page_num: pageNum,
             page_size: pageSize,
@@ -107,7 +107,7 @@ const UserList = () => {
 
         // account/v1/user/info/{user_idx}
         // GET
-        const url = apiPath.api_user_info + `/${userIdx}`;
+        const url = apiPath.api_admin_user_info + `/${userIdx}`;
         const data = {};
 
         RestServer("get", url, data)

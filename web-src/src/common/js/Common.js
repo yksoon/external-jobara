@@ -1,4 +1,5 @@
-import { React, useEffect, useRef } from "react";
+import { React, useEffect, useRef, useState } from "react";
+import $ from "jquery";
 import { Link } from "react-router-dom";
 import { CircularProgress, Dialog, Modal } from "@mui/material";
 import { set_spinner } from "redux/actions/commonAction";
@@ -134,17 +135,20 @@ const CommonConsole = (type, responseData) => {
 
 // 스피너
 const CommonSpinner = (props) => {
-    const spinner = useRef();
+    const [isLoading, setIsloading] = useState(false);
+    const spinner = useRef(null);
 
-    const isLoading = props.option.isLoading;
+    // const isLoading = props.option.isLoading;
     const alertMsg = props.option.alert ? props.option.alert : "";
     const error = props.option.error ? props.option.error : "";
 
     useEffect(() => {
+        setIsloading(props.option.isLoading);
+
         if (error === "Y") {
             if (!alertMsg) {
-                let spnin = spinner.current.childNodes[0];
-                spnin.classList.add("error");
+                let spnin = spinner.current && spinner.current.childNodes[0];
+                spinner.current && spnin.classList.add("error");
             } else {
                 alert(decodeURI(alertMsg).replace("%20", " "));
             }
@@ -201,6 +205,13 @@ const CommonErrorCatch = (error, dispatch, alert) => {
                 message: error.response.headers.result_message_ko,
             });
         }
+    } else {
+        dispatch(
+            set_spinner({
+                isLoading: true,
+                error: "Y",
+            })
+        );
     }
     // 타임아웃
     if (error.message === "timeout of 5000ms exceeded") {

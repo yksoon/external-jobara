@@ -40,7 +40,7 @@ const Admin = () => {
         // 메뉴 리스트 호출
         // /v1/menus
         // GET
-        const url = apiPath.api_mng_menus;
+        const url = apiPath.api_admin_menus;
         const data = {};
         RestServer("get", url, data)
             .then((response) => {

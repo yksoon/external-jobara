@@ -37,6 +37,7 @@ function App() {
 
         getResultCode();
         getCodes();
+        getCountryBank();
         setInterval(getResultCode, 3600000);
         setInterval(getCodes, 3600000);
 
@@ -94,6 +95,25 @@ function App() {
                 console.log("codes", response);
 
                 dispatch(set_codes(JSON.stringify(response.data.result_info)));
+            })
+            .catch((error) => {
+                // 오류발생시 실행
+                console.log(decodeURI(error));
+            });
+    };
+
+    // codes
+    const getCountryBank = () => {
+        RestServer("post", apiPath.api_codes, {
+            code_types: ["INTER_PHONE_TYPE", "BANK_TYPE", "LANGUAGE_TYPE"],
+            exclude_code_types: [],
+        })
+            .then((response) => {
+                console.log("codesCountryBank", response);
+
+                dispatch(
+                    set_country_bank(JSON.stringify(response.data.result_info))
+                );
             })
             .catch((error) => {
                 // 오류발생시 실행
