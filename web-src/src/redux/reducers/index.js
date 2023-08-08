@@ -9,15 +9,16 @@ import ipInfo from "./reducers/ipInfo";
 import certInfo from "./reducers/cert";
 import common from "./reducers/common";
 import page from "./reducers/page";
-import hotel from "./reducers/hotel";
 
+// 스토리지 세팅
 const persistConfig = {
     key: "root",
     storage: storageSession,
     version: 0,
-    whitelist: ["codes", "userInfo", "ipInfo", "page", "hotel"],
+    whitelist: ["codes", "userInfo", "ipInfo", "page"], // 이곳에 추가시 세션스토리지에 저장됨
 };
 
+// 리듀서 추가
 const rootReducer = combineReducers({
     codes,
     userInfo,
@@ -25,7 +26,6 @@ const rootReducer = combineReducers({
     certInfo,
     common,
     page,
-    hotel,
 });
 
 export default persistReducer(persistConfig, rootReducer);

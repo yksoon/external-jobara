@@ -11,13 +11,6 @@ const tokenExpire = (dispatch, alert) => {
         })
     );
 
-    // dispatch(
-    //     set_alert({
-    //         isAlertOpen: true,
-    //         alertTitle: "비정상적인 접근입니다.",
-    //     })
-    // );
-
     CommonNotify({
         type: "alert",
         hook: alert,

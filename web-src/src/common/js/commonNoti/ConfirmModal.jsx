@@ -58,23 +58,6 @@ const ConfirmModal = () => {
                                 </Link>
                             </div>
                         </div>
-                        // <div className="mmodal-content" key={`confirm_${idx}`}>
-                        //     <span className="close" onClick={close.click}>
-                        //         &times;
-                        //     </span>
-
-                        //     <p>{message}</p>
-
-                        //     <div className="mmodal-buttons">
-                        //         <button onClick={ok.click}>{ok.text}</button>
-
-                        //         {cancel && (
-                        //             <button onClick={cancel.click}>
-                        //                 {cancel.text}
-                        //             </button>
-                        //         )}
-                        //     </div>
-                        // </div>
                     );
                 }
             )}

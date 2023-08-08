@@ -7,7 +7,6 @@ import { Modal } from "@mui/material";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import { CommonNotify } from "common/js/Common";
 import useAlert from "hook/useAlert";
-import { set_reg_hotel } from "redux/actions/hotelAction";
 
 const HotelDetailEssential = forwardRef((props, ref) => {
     const codes = useSelector((state) => state.codes.codes);
@@ -171,108 +170,6 @@ const HotelDetailEssential = forwardRef((props, ref) => {
         const val = e.target.value
             ? e.target.value
             : `unknown_value_${e.target.nodeName}`;
-
-        dispatch(
-            set_reg_hotel({
-                ...regHotelEssential,
-                [key]: val,
-            })
-        );
-
-        // let hotelEssential = regHotelEssential;
-
-        // switch (e.target.id) {
-        //     // 구분
-        //     case "nationType":
-        //         val = e.target.value;
-        //         dispatch(
-        //             set_reg_hotel({
-        //                 ...regHotelEssential,
-        //                 nationType: val,
-        //             })
-        //         );
-
-        //         break;
-
-        //     case "nameKo":
-        //         val = e.target.value;
-        //         dispatch(
-        //             set_reg_hotel({
-        //                 ...regHotelEssential,
-        //                 nameKo: val,
-        //             })
-        //         );
-
-        //         break;
-
-        //     case "nameEn":
-        //         val = e.target.value;
-        //         dispatch(
-        //             set_reg_hotel({
-        //                 ...regHotelEssential,
-        //                 nameEn: val,
-        //             })
-        //         );
-
-        //         break;
-
-        //     case "addr1Ko":
-        //         val = e.target.value;
-        //         dispatch(
-        //             set_reg_hotel({
-        //                 ...regHotelEssential,
-        //                 addr1Ko: val,
-        //             })
-        //         );
-
-        //         break;
-
-        //     case "addr2Ko":
-        //         val = e.target.value;
-        //         dispatch(
-        //             set_reg_hotel({
-        //                 ...regHotelEssential,
-        //                 addr2Ko: val,
-        //             })
-        //         );
-
-        //         break;
-
-        //     case "addr1En":
-        //         val = e.target.value;
-        //         dispatch(
-        //             set_reg_hotel({
-        //                 ...regHotelEssential,
-        //                 addr1En: val,
-        //             })
-        //         );
-
-        //         break;
-
-        //     case "addr2En":
-        //         val = e.target.value;
-        //         dispatch(
-        //             set_reg_hotel({
-        //                 ...regHotelEssential,
-        //                 addr2En: val,
-        //             })
-        //         );
-
-        //         break;
-
-        //     case "zipcode":
-        //         val = e.target.value;
-        //         dispatch(
-        //             set_reg_hotel({
-        //                 ...regHotelEssential,
-        //                 zipcode: val,
-        //             })
-        //         );
-
-        //         break;
-        //     default:
-        //         break;
-        // }
     };
 
     return (

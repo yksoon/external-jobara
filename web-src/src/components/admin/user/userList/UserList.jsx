@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import {
     CommonConsole,
     CommonErrorCatch,
+    CommonModal,
     CommonNotify,
 } from "common/js/Common";
 import { RestServer } from "common/js/Rest";
 import { apiPath } from "webPath";
 import { useDispatch } from "react-redux";
 import { set_spinner } from "redux/actions/commonAction";
-import RegUserModal from "./RegUserModal";
 import { Pagination } from "@mui/material";
 import useConfirm from "hook/useConfirm";
 import useAlert from "hook/useAlert";
@@ -395,11 +395,12 @@ const UserList = () => {
                     )}
                 </div>
             </div>
-            <RegUserModal
+            <CommonModal
                 isOpen={isOpen}
                 title={modalTitle}
+                width={"800"}
                 handleModalClose={handleModalClose}
-                modUserData={modUserData}
+                component={"RegUserModalMain"}
                 handleNeedUpdate={handleNeedUpdate}
             />
         </>

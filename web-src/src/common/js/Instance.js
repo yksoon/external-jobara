@@ -17,8 +17,8 @@ Instance.interceptors.request.use(
         ip = store.getState().ipInfo.ipInfo;
         token = store.getState().userInfo.userToken;
 
-        config.headers["Medicity-Src"] = ip ? ip : "";
-        config.headers["Medicity-Token"] = token ? token : "";
+        config.headers["Jobara-Src"] = ip ? ip : "";
+        config.headers["Jobara-Token"] = token ? token : "";
         return config;
     },
     (err) => {
@@ -39,8 +39,8 @@ Instance_multi.interceptors.request.use(
         ip = store.getState().ipInfo.ipInfo;
         token = store.getState().userInfo.userToken;
 
-        config.headers["Medicity-Src"] = ip ? ip : "";
-        config.headers["Medicity-Token"] = token ? token : "";
+        config.headers["Jobara-Src"] = ip ? ip : "";
+        config.headers["Jobara-Token"] = token ? token : "";
         return config;
     },
     (err) => {

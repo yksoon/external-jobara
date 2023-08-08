@@ -1,10 +1,10 @@
 import { routerPath } from "webPath";
 import { RestServer } from "./Rest";
-import { set_user_info } from "redux/actions/userInfoAction";
-import { CommonConsole } from "./Common";
+import { set_user_info, set_user_token } from "redux/actions/userInfoAction";
+import { CommonConsole, CommonNotify } from "./Common";
 import { set_alert, set_spinner } from "redux/actions/commonAction";
 
-export default function Login(url, data, resultCode, dispatch) {
+export default function Login(url, data, resultCode, dispatch, alert) {
     RestServer("post", url, data)
         .then(function (response) {
             // response
@@ -15,6 +15,7 @@ export default function Login(url, data, resultCode, dispatch) {
             if (result_code === "0000") {
                 user_info = response.data.result_info;
 
+                // 블랙리스트 (추가한것은 제외)
                 let deleteKey = [
                     "md_licenses_number",
                     "signin_policy",
@@ -30,7 +31,11 @@ export default function Login(url, data, resultCode, dispatch) {
                     delete user_info[deleteKey[i]];
                 }
 
+                // user_info
                 dispatch(set_user_info(JSON.stringify(user_info)));
+
+                // user_token
+                dispatch(set_user_token(JSON.stringify(user_info)));
 
                 dispatch(
                     set_spinner({
@@ -38,22 +43,18 @@ export default function Login(url, data, resultCode, dispatch) {
                     })
                 );
 
-                window.location.replace(routerPath.main_url);
+                window.location.replace(routerPath.web_main_url);
             } else if (result_code === "1003") {
                 CommonConsole("log", response);
 
                 CommonConsole("decLog", response);
                 // CommonConsole("alertMsg", response);
 
-                dispatch(
-                    set_alert({
-                        isAlertOpen: true,
-                        alertTitle: response.headers.result_message_ko
-                            ? response.headers.result_message_ko
-                            : "",
-                        alertContent: "",
-                    })
-                );
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: response.headers.result_message_ko,
+                });
 
                 dispatch(
                     set_spinner({
@@ -67,15 +68,13 @@ export default function Login(url, data, resultCode, dispatch) {
             CommonConsole("decLog", error);
             // CommonConsole("alertMsg", error);
 
-            dispatch(
-                set_alert({
-                    isAlertOpen: true,
-                    alertTitle: error.response.headers.result_message_ko
-                        ? error.response.headers.result_message_ko
-                        : "",
-                    alertContent: "",
-                })
-            );
+            CommonNotify({
+                type: "alert",
+                hook: alert,
+                message: error.response.headers.result_message_ko
+                    ? error.response.headers.result_message_ko
+                    : "잠시 후 다시 시도해주세요.",
+            });
 
             dispatch(
                 set_spinner({

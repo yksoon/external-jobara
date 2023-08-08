@@ -3,7 +3,7 @@ export const SET_USER_INFO = "SET_USER_INFO";
 export const SET_USER_TOKEN = "SET_USER_TOKEN";
 export const INIT_USER_INFO = "INIT_USER_INFO";
 
-// Action Creator
+// userInfo SET
 export const set_user_info = (data) => {
     return {
         type: SET_USER_INFO,
@@ -11,7 +11,7 @@ export const set_user_info = (data) => {
     };
 };
 
-// Action Creator
+// userToken SET
 export const set_user_token = (data) => {
     return {
         type: SET_USER_TOKEN,
@@ -19,6 +19,7 @@ export const set_user_token = (data) => {
     };
 };
 
+// userInfo 초기화
 export const init_user_info = (data) => {
     return {
         type: INIT_USER_INFO,

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+// 404 페이지
 function NotFound() {
     return (
         <>

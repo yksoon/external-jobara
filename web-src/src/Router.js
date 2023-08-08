@@ -3,19 +3,22 @@ import { Route, Routes } from "react-router-dom";
 
 import { routerPath } from "webPath";
 import { Suspense } from "react";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 import NotFoundPage from "NotFoundPage";
 import Admin from "components/admin/Admin";
 import Login from "components/admin/login/Login";
 import SignUpOk from "components/web/signUpOk/SignUpOk";
-import { Backdrop, CircularProgress } from "@mui/material";
 
+// Router
 const Router = () => {
     // 레이지 로딩 추가
     const Main = React.lazy(() => import("components/web/Main"));
     const SignUp = React.lazy(() => import("components/web/signUp/SignUp"));
 
+    // 페이지 url 라우팅 추가 필요시 아래에 추가하세요
     return (
+        // Route 밖에 Suspense로 감싼다
         <Suspense
             fallback={
                 <Backdrop
@@ -23,6 +26,7 @@ const Router = () => {
                         color: "#fff",
                         zIndex: (theme) => theme.zIndex.drawer + 1,
                     }}
+                    open={true}
                 >
                     <CircularProgress color="inherit" />
                 </Backdrop>
@@ -55,6 +59,7 @@ const Router = () => {
                 {/* /admin/login */}
                 <Route path={routerPath.admin_login_url} element={<Login />} />
 
+                {/* 404 */}
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </Suspense>

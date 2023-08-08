@@ -5,6 +5,7 @@ import { set_spinner } from "redux/actions/commonAction";
 import { routerPath } from "webPath";
 import tokenExpire from "./tokenExpire";
 import HotelDetailModalMain from "components/admin/hotel/hotelList/hotelDetailModal/HotelDetailModalMain";
+import RegUserModalMain from "components/admin/user/userList/RegUserModalMain";
 
 // Alert (props)
 // isOpen = state 상태값
@@ -17,15 +18,28 @@ const CommonModal = (props) => {
         isOpen: props.isOpen,
         title: props.title,
         handleModalClose: props.handleModalClose,
+        width: props.width,
     };
 
     const component = props.component;
+
+    const handleNeedUpdate = props.handleNeedUpdate
+        ? props.handleNeedUpdate
+        : null;
 
     // 모달 컴포넌트 렌더
     const renderComponent = (component) => {
         switch (component) {
             case "HotelDetailModalMain":
                 return <HotelDetailModalMain />;
+
+            case "RegUserModalMain":
+                return (
+                    <RegUserModalMain
+                        handleNeedUpdate={handleNeedUpdate}
+                        handleModalClose={modalOption.handleModalClose}
+                    />
+                );
 
             default:
                 return;
@@ -40,7 +54,7 @@ const CommonModal = (props) => {
                 aria-describedby="modal-modal-description"
             >
                 <div className="modal_wrap" id="modal_wrap">
-                    <div className="modal w1400">
+                    <div className={`modal w${modalOption.width}`}>
                         <div
                             className="modal_content form hotel"
                             id="hotelInsert"

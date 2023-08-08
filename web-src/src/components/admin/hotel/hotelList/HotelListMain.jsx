@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { init_reg_hotel } from "redux/actions/hotelAction";
 import { CommonModal, CommonNotify } from "common/js/Common";
 import useConfirm from "hook/useConfirm";
 
@@ -28,7 +27,6 @@ const HotelListMain = () => {
         const close = () => {
             setModalTitle("");
             setIsOpen(false);
-            dispatch(init_reg_hotel());
         };
     };
 
@@ -188,6 +186,7 @@ const HotelListMain = () => {
             <CommonModal
                 isOpen={isOpen}
                 title={modalTitle}
+                width={"1400"}
                 handleModalClose={handleModalClose}
                 component={"HotelDetailModalMain"}
             />

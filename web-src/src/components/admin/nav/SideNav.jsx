@@ -1,6 +1,7 @@
 import {
     CommonConsole,
     CommonErrorCatch,
+    CommonModal,
     CommonNotify,
 } from "common/js/Common";
 import { RestServer } from "common/js/Rest";
@@ -12,13 +13,13 @@ import { init_user_info } from "redux/actions/userInfoAction";
 import { apiPath, routerPath } from "webPath";
 
 import $ from "jquery";
-import RegUserModal from "components/admin/user/userList/RegUserModal";
 import useAlert from "hook/useAlert";
 
 const SideNav = (props) => {
     const [isOpen, setIsOpen] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
     const [modUserData, setModUserData] = useState(null);
+    const [isNeedUpdate, setIsNeedUpdate] = useState(false);
     const navigate = useNavigate();
     const { alert } = useAlert();
 
@@ -57,6 +58,11 @@ const SideNav = (props) => {
     const handleModalClose = () => {
         setModUserData(null);
         setIsOpen(false);
+    };
+
+    // 화면 재 렌더
+    const handleNeedUpdate = () => {
+        setIsNeedUpdate(!isNeedUpdate);
     };
 
     // 회원 정보 수정
@@ -309,11 +315,13 @@ const SideNav = (props) => {
                     </ul>
                 </div>
             </header>
-            <RegUserModal
+            <CommonModal
                 isOpen={isOpen}
                 title={modalTitle}
+                width={"800"}
                 handleModalClose={handleModalClose}
-                modUserData={modUserData}
+                component={"RegUserModalMain"}
+                handleNeedUpdate={handleNeedUpdate}
             />
         </>
     );

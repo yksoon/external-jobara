@@ -14,6 +14,8 @@ import { set_spinner } from "redux/actions/commonAction";
 import useAlert from "hook/useAlert";
 
 let resultCode;
+let loginInfo;
+
 function Header({ props }) {
     const [userId, setUserId] = useState("");
     const [userPwd, setUserPwd] = useState("");
@@ -33,8 +35,9 @@ function Header({ props }) {
     //     loginInfo = JSON.parse(localStorage.getItem("userInfo"));
     // })();
 
-    let loginInfo = useSelector((state) => state.userInfo.userInfo);
+    loginInfo = useSelector((state) => state.userInfo.userInfo);
     resultCode = useSelector((state) => state.codes.resultCode);
+
     useEffect(() => {
         // resultCode = JSON.parse(localStorage.getItem("result_code"));
 
@@ -56,6 +59,7 @@ function Header({ props }) {
         }
     };
 
+    // 아이디, 비번 handler
     const onEmailHandler = (event) => {
         setUserId(event.currentTarget.value);
     };
@@ -63,6 +67,7 @@ function Header({ props }) {
         setUserPwd(event.currentTarget.value);
     };
 
+    // 로그인
     const signIn = () => {
         if (!userId) {
             CommonNotify({
@@ -91,7 +96,7 @@ function Header({ props }) {
             })
         );
 
-        const url = apiPath.api_login;
+        const url = apiPath.api_auth_login;
 
         let data = {
             signup_type: "000",
@@ -102,6 +107,7 @@ function Header({ props }) {
         Login(url, data, resultCode, dispatch, alert);
     };
 
+    // 로그아웃
     const signout = () => {
         setIsSignOut(true);
 
@@ -111,7 +117,7 @@ function Header({ props }) {
             })
         );
 
-        const url = apiPath.api_signout;
+        const url = apiPath.api_auth_signout;
         let data = {};
 
         RestServer("post", url, data)
@@ -151,6 +157,7 @@ function Header({ props }) {
             });
     };
 
+    // 엔터키 로그인 이벤트
     const handleOnKeyPress = (e) => {
         if (e.key === "Enter") {
             signIn(); // Enter 입력이 되면 클릭 이벤트 실행

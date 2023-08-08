@@ -14,8 +14,8 @@ import { set_ip_info } from "redux/actions/ipInfoAction";
 import { useLocation, useNavigate } from "react-router";
 import { ConfirmContextProvider } from "context/ContextProvider";
 import { AlertContextProvider } from "context/ContextProvider";
-import ConfirmModal from "common/js/ConfirmModal";
-import AlertModal from "common/js/AlertModal";
+import ConfirmModal from "common/js/commonNoti/ConfirmModal";
+import AlertModal from "common/js/commonNoti/AlertModal";
 
 function App() {
     let ipInfo = useSelector((state) => state.ipInfo.ipInfo);
@@ -37,7 +37,6 @@ function App() {
 
         getResultCode();
         getCodes();
-        getCountryBank();
         setInterval(getResultCode, 3600000);
         setInterval(getCodes, 3600000);
 
@@ -67,7 +66,7 @@ function App() {
 
     // result code
     const getResultCode = () => {
-        RestServer("get", apiPath.api_mng_result, {})
+        RestServer("get", apiPath.api_result, {})
             .then((response) => {
                 console.log("result_code", response);
 
@@ -83,7 +82,7 @@ function App() {
 
     // codes
     const getCodes = () => {
-        RestServer("post", apiPath.api_mng_codes, {
+        RestServer("post", apiPath.api_codes, {
             code_types: [],
             exclude_code_types: [
                 "INTER_PHONE_TYPE",
@@ -95,25 +94,6 @@ function App() {
                 console.log("codes", response);
 
                 dispatch(set_codes(JSON.stringify(response.data.result_info)));
-            })
-            .catch((error) => {
-                // 오류발생시 실행
-                console.log(decodeURI(error));
-            });
-    };
-
-    // codes
-    const getCountryBank = () => {
-        RestServer("post", apiPath.api_mng_codes, {
-            code_types: ["INTER_PHONE_TYPE", "BANK_TYPE", "LANGUAGE_TYPE"],
-            exclude_code_types: [],
-        })
-            .then((response) => {
-                console.log("codesCountryBank", response);
-
-                dispatch(
-                    set_country_bank(JSON.stringify(response.data.result_info))
-                );
             })
             .catch((error) => {
                 // 오류발생시 실행
