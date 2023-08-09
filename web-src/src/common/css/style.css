@@ -8,7 +8,7 @@
 .font-24 {font-size: 24px; font-weight: 700;}
 .font-21 {font-size: 21px; font-weight: 600;}
 .font-18 {font-size: 16px; font-weight: 500; color: #616161;}
-.font-12 {font-size: 12px; font-weight: 500; color: #818181; text-decoration: underline;}
+.font-12 {font-size: 12px; font-weight: 500; color: #dd0000; text-decoration: underline;}
 a.font-12 {font-size: 12px; font-weight: 500; color: #818181; text-decoration: underline;}
 
 .gray-1 {color: #111;}
@@ -310,6 +310,3 @@ nav.nav_on span:nth-child(3) { top: 8px; transform: rotate(-135deg); width:24px;
 .mainvisual01 {background: url('/public/img/web/main/mainvisual01.png') center center no-repeat;}
 .mainvisual02 {background: url('/public/img/web/main/mainvisual02.png') center center no-repeat;}
 .mainvisual03 {background: url('/public/img/web/main/mainvisual_230726.png') center center no-repeat;}
-
-/*CSS TEST*/
-.mainvisual999 {background: url('/public/img/web/main/mainvisual_230726.png') center center no-repeat;}
