@@ -1,48 +1,50 @@
 @charset "utf-8";
 
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css");
+
 @font-face {
-font-family: "noto";
-font-style: normal;
-font-weight: 300;
-src: local('notokr-thin'), local('notoKR-Thin'), local('NotoKR Thin');
-src: url(../font_hi/notokr-thin.eot);/*A*/
-src: url(../font_hi/notokr-thin.eot?#iefix) format('embedded-opentype'),/*B*/
-		url(../font_hi/notokr-thin.woff) format('woff'),/*C*/
-		url(../font_hi/notokr-thin.woff2) format('woff2'),/*C*/
-		url(../font_hi/notokr-thin.ttf) format('truetype');/*D*/
-		url(../font_hi/notokr-thin.svg) format('svg');/*E*/
-}
+    font-family: 'GmarketSans';
+    font-weight: 300;
+    font-style: normal;
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansLight.eot');
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansLight.eot?#iefix') format('embedded-opentype'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansLight.woff2') format('woff2'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansLight.woff') format('woff'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansLight.ttf') format("truetype");
+    font-display: swap;
+} 
 @font-face {
-font-family: "noto";
-font-style: normal;
-font-weight: 400;
-src: local('notokr-regular'), local('notoKR-Regular'), local('NotoKR Regular');
-src: url(../font_hi/notokr-regular.eot);/*A*/
-src: url(../font_hi/notokr-regular.eot?#iefix) format('embedded-opentype'),/*B*/
-		url(../font_hi/notokr-regular.woff) format('woff'),/*C*/
-		url(../font_hi/notokr-regular.woff2) format('woff2'),/*C*/
-		url(../font_hi/notokr-regular.ttf) format('truetype');/*D*/
-		url(../font_hi/notokr-regular.svg) format('svg');/*E*/
-}
+    font-family: 'GmarketSans';
+    font-weight: 400;
+    font-style: normal;
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansMedium.eot');
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansMedium.eot?#iefix') format('embedded-opentype'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansMedium.woff2') format('woff2'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansMedium.woff') format('woff'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansMedium.ttf') format("truetype");
+    font-display: swap;
+} 
 @font-face {
-font-family: "noto";
-font-style: normal;
-font-weight: 500;
-src: local('notokr-demilight'), local('notoKR-Demilight'), local('NotoKR Demilight');
-src: url(../font_hi/notokr-demilight.eot);/*A*/
-src: url(../font_hi/notokr-demilight.eot?#iefix) format('embedded-opentype'),/*B*/
-		url(../font_hi/notokr-demilight.woff) format('woff'),/*C*/
-		url(../font_hi/notokr-demilight.woff2) format('woff2'),/*C*/
-		url(../font_hi/notokr-demilight.ttf) format('truetype');/*D*/
-		url(../font_hi/notokr-demilight.svg) format('svg');/*E*/
+    font-family: 'GmarketSans';
+    font-weight: 900;
+    font-style: bold;
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansBold.eot');
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansBold.eot?#iefix') format('embedded-opentype'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansBold.woff2') format('woff2'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansBold.woff') format('woff'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansBold.ttf') format("truetype");
+    font-display: swap;
+} 
+
+@font-face {
+    font-family: 'LOTTERIACHAB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/LOTTERIACHAB.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
 }
-
-
-
-
 
 /* */
-BODY {font-size:13px; color:#666666; font-family: "noto", Dotum, "돋움", Verdana, Arial, sans-serif;}
+BODY {font-size:13px; color:#666666; font-family: "Pretendard", Dotum, "돋움", Verdana, Arial, sans-serif;}
 header {margin:0; padding:0;}
 h5 {
 	-webkit-margin-before: 0;
