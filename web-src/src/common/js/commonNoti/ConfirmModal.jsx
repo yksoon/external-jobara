@@ -13,17 +13,18 @@ const ConfirmModal = () => {
                     return (
                         <div className="alert" key={`confirm_${idx}`}>
                             <div>
-                                <span
+                                {/* <span
                                     className="noti_icon"
                                     id="modal-modal-title"
                                 >
                                     <img src="img/common/alert.png" alt="" />
-                                </span>
+                                </span> */}
                                 <h3>
                                     {message
                                         ? decodeURI(message)
                                               .replaceAll("%20", " ")
                                               .replaceAll("%40", "@")
+                                              .replaceAll("%3A", ":")
                                         : ""}
                                 </h3>
                                 <p>

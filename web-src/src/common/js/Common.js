@@ -7,6 +7,7 @@ import { routerPath } from "webPath";
 import tokenExpire from "./tokenExpire";
 import HotelDetailModalMain from "components/admin/hotel/hotelList/hotelDetailModal/HotelDetailModalMain";
 import RegUserModalMain from "components/admin/user/userList/RegUserModalMain";
+import { RestServer } from "./Rest";
 
 // Alert (props)
 // isOpen = state 상태값
@@ -166,6 +167,7 @@ const CommonSpinner = (props) => {
     );
 };
 
+// 에러처리
 const CommonErrorCatch = (error, dispatch, alert) => {
     // 오류발생시 실행
     CommonConsole("log", error);
@@ -283,10 +285,75 @@ const CommonNotify = async (option) => {
     }
 };
 
+// 공용 REST
+/* 
+-- restParams --
+dispatch : useDispatch
+alert : useAlert
+method : "post", "get", "delete", "put", "post_multi", "put_multi"
+url : ""
+data : {}
+callback : callback()
+*/
+const CommonRest = async (restParams) => {
+    const dispatch = restParams.err.dispatch;
+    const alert = restParams.err.alert;
+
+    const method = restParams.method;
+    const url = restParams.url;
+    const data = restParams.data;
+
+    await RestServer(method, url, data)
+        .then((response) => {
+            restParams.callback(response);
+        })
+        .catch((error) => {
+            CommonErrorCatch(error, dispatch, alert);
+            // console.log(error);
+            // func(error);
+        });
+};
+
+// 공용 날짜 체킹
+/* 
+-- restParams --
+dispatch : useDispatch
+alert : useAlert
+type: ""
+callback : callback()
+*/
+const CommonCheckDate = async (restParams) => {
+    const dispatch = restParams.err.dispatch;
+    const alert = restParams.err.alert;
+
+    const type = restParams.type;
+    const url = "http://jejujobara.com:60000" + "/" + type;
+
+    await RestServer("get", url, {})
+        .then((response) => {
+            if (response.headers.result_code === "0000") {
+                restParams.callback(response);
+            } else {
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: response.headers.result_message_ko,
+                });
+            }
+        })
+        .catch((error) => {
+            CommonErrorCatch(error, dispatch, alert);
+            // console.log(error);
+            // func(error);
+        });
+};
+
 export {
     CommonModal,
     CommonConsole,
     CommonSpinner,
     CommonErrorCatch,
     CommonNotify,
+    CommonRest,
+    CommonCheckDate,
 };

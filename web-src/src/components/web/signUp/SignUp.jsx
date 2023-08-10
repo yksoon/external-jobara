@@ -8,345 +8,249 @@ import { set_cert_info } from "redux/actions/certAction";
 import Header from "components/web/common/Header";
 import Footer from "components/web/common/Footer";
 
-import IdComponent from "./signupComponents/IdComponent";
-import PwComponent from "./signupComponents/PwComponent";
-import NameComponent from "./signupComponents/NameComponent";
-import MobileComponent from "./signupComponents/MobileComponent";
-import LicenseComponent from "./signupComponents/LicenseComponent";
-import DepartmentComponent from "./signupComponents/DepartmentComponent";
-import TermsComponent from "./signupComponents/TermsComponent";
-import { CommonConsole, CommonNotify, CommonSpinner } from "common/js/Common";
+import {
+    CommonConsole,
+    CommonNotify,
+    CommonRest,
+    CommonSpinner,
+} from "common/js/Common";
 import { set_spinner } from "redux/actions/commonAction";
 import useAlert from "hook/useAlert";
 
+import SignUpID from "./signupComponents/SignUpID";
+import SignUpPW from "./signupComponents/SignUpPW";
+import SignUpCaptcha from "./signupComponents/SignUpCaptcha";
+import SignUpName from "./signupComponents/SignUpName";
+import SignUpMobile from "./signupComponents/SignUpMobile";
+import SignUpOrg from "./signupComponents/SignUpOrg";
+import SignUpDepartment from "./signupComponents/SignUpDepartment";
+import SignUpBirthday from "./signupComponents/SignUpBirthday";
+import SignUpSpecialized from "./signupComponents/SignUpSpecialized";
+import SignUpSpecialCheck from "./signupComponents/SignUpSpecialCheck";
+import SignUpFile from "./signupComponents/SignUpFile";
+import { signupModel, signupMultiModel } from "models/user/signUp";
+import { idPattern, pwPattern } from "common/js/Pattern";
+
+// 회원가입
 function SignUp() {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { alert } = useAlert();
+    const err = { dispatch, alert };
 
-    const signupRefs = {
-        accountType: useRef(null),
+    const signUpRefs = {
         inputID: useRef(null),
         inputPW: useRef(null),
-        user_name_first_ko: useRef(null),
-        user_name_last_ko: useRef(null),
-        user_name_first_en: useRef(null),
-        user_name_last_en: useRef(null),
-        md_licenses_number: useRef(null),
-        organization_name_ko: useRef(null),
-        department_name_ko: useRef(null),
-        specialized_name_ko: useRef(null),
-        inter_phone_number: useRef(null),
+        inputPW2: useRef(null),
+        inputFirstName: useRef(null),
+        inputLastName: useRef(null),
         inputMobile1: useRef(null),
         inputMobile2: useRef(null),
         inputMobile3: useRef(null),
-        termsChk: useRef(null),
-        privacyChk: useRef(null),
-        marketingChk: useRef(null),
-        marketing_sms: useRef(null),
-        marketing_mail: useRef(null),
+        inputCaptcha: useRef(null),
+        inputOrg: useRef(null),
+        inputDepartment: useRef(null),
+        inputBirthYear: useRef(null),
+        inputBirthMonth: useRef(null),
+        inputBirthDay: useRef(null),
+        inputSpecialized: useRef(null),
+        inputAttachmentFile: useRef(null),
     };
 
-    // 사용 가능한 아이디 확인
-    const [chkId, setChkId] = useState(false);
-    const [chkPw, setChkPw] = useState(false);
-    const [chkMobile, setChkMobile] = useState(false);
-    const [terms, setTerms] = useState("");
-    const [privacy, setPrivacy] = useState("");
-    const [marketing, setMarketing] = useState("");
-    const certInfo = useSelector((state) => state.certInfo.certInfo);
+    // 제출
+    const clickForm = () => {
+        // if (validation()) {
 
-    const certification_idx = localStorage.getItem("certification_idx");
+        dispatch(
+            set_spinner({
+                isLoading: true,
+            })
+        );
 
-    const sendSignupForm = () => {
-        if (validation()) {
+        const formData = new FormData();
+        const model = signupMultiModel;
+        let data = {};
+
+        let fileArr = [];
+        let files = signUpRefs.inputAttachmentFile.current.files;
+        fileArr.push(signUpRefs.inputAttachmentFile.current.files[0]);
+
+        console.log(Array.from(signUpRefs.inputAttachmentFile.current.files));
+
+        data = {
+            ...model,
+            userId: signUpRefs.inputID.current.value,
+            userPwd: signUpRefs.inputPW.current.value,
+            userNameFirstKo: signUpRefs.inputFirstName.current.value,
+            userNameLastKo: signUpRefs.inputLastName.current.value,
+            mobile1: signUpRefs.inputMobile1.current.value,
+            mobile2: signUpRefs.inputMobile2.current.value,
+            mobile3: signUpRefs.inputMobile3.current.value,
+            securityCode: signUpRefs.inputCaptcha.current.value,
+            organizationNameKo: signUpRefs.inputOrg.current.value,
+            departmentNameKo: signUpRefs.inputDepartment.current.value,
+            birthYyyy: signUpRefs.inputBirthYear.current.value,
+            birthMm: signUpRefs.inputBirthMonth.current.value,
+            birthDd: signUpRefs.inputBirthDay.current.value,
+            specializedNameKo: signUpRefs.inputSpecialized.current.value,
+        };
+
+        // 기본 formData append
+        for (const key in data) {
+            formData.append(key, data[key]);
+        }
+
+        // 파일 formData append
+        fileArr = Array.from(signUpRefs.inputAttachmentFile.current.files);
+        let len = fileArr.length;
+        for (let i = 0; i < len; i++) {
+            formData.append("attachmentFile", fileArr[i]);
+        }
+
+        const responsLogic = (res) => {
             dispatch(
                 set_spinner({
                     isLoading: true,
                 })
             );
 
-            let birth_yyyy = certInfo.birth_date.slice(0, 4);
-            let birth_mm = certInfo.birth_date.slice(4, 6);
-            let birth_dd = certInfo.birth_date.slice(-2);
-            let gender;
-            let certification_tool;
+            CommonNotify({
+                type: "alert",
+                hook: alert,
+                message: "가입 완료 되었습니다",
+            });
 
-            // nice = 0: 여자, 1: 남자
-            if (certInfo.gender === "1") {
-                gender = "0";
-            } else if (certInfo.gender === "0") {
-                gender = "1";
-            }
+            console.log(res);
+        };
 
-            // auth_type
-            // M	휴대폰인증
-            // C	카드본인확인
-            // X	공동인증서
-            // F	금융인증서
-            // S	PASS인증서
+        const restParams = {
+            method: "post_multi",
+            url: apiPath.api_auth_reg_user,
+            data: formData,
+            err: err,
+            callback: (res) => responsLogic(res),
+        };
 
-            // 인증 도구 = 000 : 휴대폰, 100 : 인증서, 200 : 이메일, 900 : 기타등등
-            if (certInfo.auth_type === "M") {
-                certification_tool = "000";
-            } else if (
-                certInfo.auth_type === "X" ||
-                certInfo.auth_type === "F"
-            ) {
-                certification_tool = "100";
-            } else if (
-                certInfo.auth_type === "C" ||
-                certInfo.auth_type === "S"
-            ) {
-                certification_tool = "900";
-            }
-
-            let mobile_agency;
-            // 통신사
-            switch (certInfo.mobile_co) {
-                // SK Telecom
-                case "1":
-                    mobile_agency = "000";
-                    break;
-
-                // KT
-                case "2":
-                    mobile_agency = "100";
-                    break;
-
-                // LGU+
-                case "3":
-                    mobile_agency = "200";
-                    break;
-
-                // SK Telecom 알뜰폰
-                case "5":
-                    mobile_agency = "300";
-                    break;
-
-                // KT 알뜰폰
-                case "6":
-                    mobile_agency = "400";
-                    break;
-
-                // LGU+ 알뜰폰
-                case "7":
-                    mobile_agency = "500";
-                    break;
-
-                // 기타
-                default:
-                    mobile_agency = "900";
-                    break;
-            }
-
-            let data = {
-                user_id: signupRefs.inputID.current.value,
-                user_pwd: signupRefs.inputPW.current.value,
-                user_name_first_ko: signupRefs.user_name_first_ko.current.value,
-                user_name_last_ko: signupRefs.user_name_last_ko.current.value,
-                user_name_first_en: signupRefs.user_name_first_en.current.value,
-                user_name_last_en: signupRefs.user_name_last_en.current.value,
-                md_licenses_number: signupRefs.md_licenses_number.current.value,
-                auth_code: certification_idx,
-                inter_phone_number: signupRefs.inter_phone_number.current.value,
-                mobile1: signupRefs.inputMobile1.current.value,
-                mobile2: signupRefs.inputMobile2.current.value,
-                mobile3: signupRefs.inputMobile3.current.value,
-                signup_type: signupRefs.accountType.current.value,
-                organization_name_ko:
-                    signupRefs.organization_name_ko.current.value,
-                specialized_name_ko:
-                    signupRefs.specialized_name_ko.current.value,
-                department_name_ko: signupRefs.department_name_ko.current.value,
-                sms_yn: signupRefs.marketing_sms.current.checked ? "Y" : "N",
-                email_yn: signupRefs.marketing_mail.current.checked ? "Y" : "N",
-                certification_idx: certification_idx,
-                birth_yyyy: birth_yyyy,
-                birth_mm: birth_mm,
-                birth_dd: birth_dd,
-                gender: gender,
-                user_ci: certInfo.ci,
-                user_di: certInfo.di,
-                certification_tool: certification_tool,
-                certification_type: "000",
-                terms_idx: terms_idx_func(),
-                mobile_agency: mobile_agency,
-            };
-
-            let url = apiPath.api_user;
-
-            RestServer("post", url, data)
-                .then((response) => {
-                    // response
-
-                    let result_code = response.headers.result_code;
-
-                    if (result_code === "0000") {
-                        localStorage.removeItem("certification_idx");
-                        dispatch(set_cert_info(null));
-
-                        // Spinner
-                        dispatch(
-                            set_spinner({
-                                isLoading: false,
-                            })
-                        );
-
-                        navigate(routerPath.web_signupok_url);
-                    } else {
-                        CommonConsole("log", response);
-
-                        // alert
-                        CommonNotify({
-                            type: "alert",
-                            hook: alert,
-                            message: response.headers.result_message_ko,
-                        });
-
-                        // Spinner
-                        dispatch(
-                            set_spinner({
-                                isLoading: false,
-                            })
-                        );
-                    }
-                })
-                .catch((error) => {
-                    // 오류발생시 실행
-                    CommonConsole("log", error);
-                    CommonConsole("decLog", error);
-                    // CommonConsole("alertMsg", error);
-
-                    // alert
-                    CommonNotify({
-                        type: "alert",
-                        hook: alert,
-                        message: "잠시 후에 다시 시도해주세요.",
-                    });
-
-                    // Spinner
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
-                });
-        }
+        CommonRest(restParams);
+        // }
     };
 
-    const terms_idx_func = () => {
-        let termsIdx = String(terms) + String(privacy) + String(marketing);
-        let arr = [...termsIdx];
-        let terms_idx = arr.join();
-
-        if (terms_idx.slice(-1) === ",") {
-            terms_idx = terms_idx.slice(0, -1);
-        }
-
-        return terms_idx;
-    };
-
-    const idStatus = (status) => {
-        setChkId(status);
-    };
-    const pwStatus = (status) => {
-        setChkPw(status);
-    };
-    const mobileStatus = (status) => {
-        setChkMobile(status);
-    };
-
-    const termChkMain = (status) => {
-        setTerms(status);
-    };
-    const privacyChkMain = (status) => {
-        setPrivacy(status);
-    };
-    const marketingChkMain = (status) => {
-        setMarketing(status);
-    };
-
+    // 검증
     const validation = () => {
-        if (!chkId) {
-            CommonNotify({
-                type: "alert",
-                hook: alert,
-                message: "아이디를 확인해주세요",
-            });
-
-            signupRefs.inputID.current.focus();
-
+        // --------------------아이디----------------------
+        if (!signUpRefs.inputID.current.value) {
+            signupAlert("아이디를 입력해주세요");
+            signUpRefs.inputID.current.focus();
             return false;
         }
-        if (!chkPw) {
-            CommonNotify({
-                type: "alert",
-                hook: alert,
-                message: "비밀번호를 확인해주세요",
-            });
-
-            signupRefs.inputPW.current.focus();
-
+        if (!idPattern.test(signUpRefs.inputID.current.value)) {
+            signupAlert("아이디는 4글자이상 20글자 이하입니다");
+            signUpRefs.inputID.current.focus();
             return false;
         }
-        if (
-            signupRefs.user_name_first_ko.current.value === "" ||
-            signupRefs.user_name_last_ko.current.value === "" ||
-            signupRefs.user_name_first_en.current.value === "" ||
-            signupRefs.user_name_last_en.current.value === ""
-        ) {
-            CommonNotify({
-                type: "alert",
-                hook: alert,
-                message: "성명을 입력해주세요",
-            });
 
-            signupRefs.user_name_first_ko.current.focus();
-
+        // --------------------비밀번호----------------------
+        if (!signUpRefs.inputPW.current.value) {
+            signupAlert("비밀번호를 입력해주세요");
+            signUpRefs.inputPW.current.focus();
             return false;
         }
-        if (!chkMobile) {
-            CommonNotify({
-                type: "alert",
-                hook: alert,
-                message: "휴대폰 인증을 완료해주세요",
-            });
-
-            signupRefs.inputMobile2.current.focus();
-
+        if (!signUpRefs.inputPW2.current.value) {
+            signupAlert("비밀번호를 입력해주세요");
+            signUpRefs.inputPW2.current.focus();
             return false;
         }
         if (
-            signupRefs.user_name_first_ko.current.value +
-                signupRefs.user_name_last_ko.current.value !==
-            certInfo.name
+            signUpRefs.inputPW.current.value !==
+            signUpRefs.inputPW2.current.value
         ) {
-            CommonNotify({
-                type: "alert",
-                hook: alert,
-                message: "성명이 일치하지 않습니다",
-            });
-
-            signupRefs.user_name_first_ko.current.focus();
-
+            signupAlert("비밀번호가 일치하지 않습니다");
+            signUpRefs.inputPW.current.focus();
             return false;
         }
+        if (!pwPattern.test(signUpRefs.inputPW.current.value)) {
+            signupAlert(
+                "비밀번호는 특수문자, 문자, 숫자 포함 형태의 6~16자리 입니다"
+            );
+            signUpRefs.inputPW.current.focus();
+            return false;
+        }
+
+        // --------------------성명----------------------
         if (
-            !signupRefs.termsChk.current.checked ||
-            !signupRefs.privacyChk.current.checked
+            !signUpRefs.inputFirstName.current.value ||
+            !signUpRefs.inputLastName.current.value
         ) {
-            CommonNotify({
-                type: "alert",
-                hook: alert,
-                message: "약관에 동의해주세요",
-            });
+            signupAlert("성명을 입력해주세요");
+            signUpRefs.inputFirstName.current.focus();
+            return false;
+        }
 
-            signupRefs.termsChk.current.focus();
+        // --------------------휴대전화----------------------
+        if (
+            !signUpRefs.inputMobile1.current.value ||
+            !signUpRefs.inputMobile2.current.value ||
+            !signUpRefs.inputMobile3.current.value
+        ) {
+            signupAlert("전화번호를 입력해주세요");
+            signUpRefs.inputMobile1.current.focus();
+            return false;
+        }
 
+        // --------------------학교----------------------
+        if (!signUpRefs.inputOrg.current.value) {
+            signupAlert("학교를 입력해주세요");
+            signUpRefs.inputOrg.current.focus();
+            return false;
+        }
+
+        // --------------------학과----------------------
+        if (!signUpRefs.inputDepartment.current.value) {
+            signupAlert("학과를 입력해주세요");
+            signUpRefs.inputDepartment.current.focus();
+            return false;
+        }
+
+        // --------------------생년월일----------------------
+        if (
+            !signUpRefs.inputBirthYear.current.value ||
+            !signUpRefs.inputBirthMonth.current.value ||
+            !signUpRefs.inputBirthDay.current.value
+        ) {
+            signupAlert("생년월일을 입력해주세요");
+            signUpRefs.inputBirthYear.current.focus();
+            return false;
+        }
+
+        // --------------------희망직종----------------------
+        if (!signUpRefs.inputSpecialized.current.value) {
+            signupAlert("희망직종을 입력해주세요");
+            signUpRefs.inputSpecialized.current.focus();
+            return false;
+        }
+
+        // --------------------파일----------------------
+        if (!signUpRefs.inputAttachmentFile.current.value) {
+            signupAlert("이력서를 첨부해주세요");
+            signUpRefs.inputAttachmentFile.current.focus();
+            return false;
+        }
+
+        // --------------------captcha----------------------
+        if (!signUpRefs.inputCaptcha.current.value) {
+            signupAlert("보안번호를 입력해주세요");
+            signUpRefs.inputCaptcha.current.focus();
             return false;
         }
         return true;
+    };
+
+    // 알럿
+    const signupAlert = (msg) => {
+        CommonNotify({
+            type: "alert",
+            hook: alert,
+            message: msg,
+        });
     };
 
     return (
@@ -354,53 +258,55 @@ function SignUp() {
             <Header />
             <div id="con_area">
                 <div className="form sign" id="sign_form">
-                    <h3 className="title">회원가입</h3>
+                    {/* <h3 className="title">회원가입</h3> */}
                     <div>
-                        {/* 아이디 영역 */}
-                        <IdComponent ref={signupRefs} idStatus={idStatus} />
+                        {/* 컨텐츠 */}
+                        {/* ID Component */}
+                        {/* 아이디 */}
+                        <SignUpID ref={signUpRefs} />
 
-                        {/* 패스워드 영역 */}
-                        <PwComponent ref={signupRefs} pwStatus={pwStatus} />
+                        {/* PW Component */}
+                        {/* 비밀번호 */}
+                        <SignUpPW ref={signUpRefs} />
 
-                        <div className="flex">
-                            {/* 성명 영역 */}
-                            <NameComponent ref={signupRefs} />
-                        </div>
-                        <div className="flex end">
-                            {/* 휴대폰 인증 영역 */}
-                            <MobileComponent
-                                ref={signupRefs}
-                                mobileStatus={mobileStatus}
-                            />
-                        </div>
-                        <div>
-                            {/* 면허번호 영역 */}
-                            <LicenseComponent ref={signupRefs} />
-                        </div>
-                        <div className="flex">
-                            {/* 소속기관, 전공과, 전공분야 영역 */}
-                            <DepartmentComponent ref={signupRefs} />
-                        </div>
-                        <div className="term_wrap">
-                            {/* 약관 영역 */}
-                            <TermsComponent
-                                ref={signupRefs}
-                                termChkMain={termChkMain}
-                                privacyChkMain={privacyChkMain}
-                                marketingChkMain={marketingChkMain}
-                                // props = {[termChk, privacyChk, marketingChk]}
-                            />
-                            <div className="btn_box">
-                                <Link
-                                    className="mainbtn btn01"
-                                    onClick={sendSignupForm}
-                                >
-                                    가입하기
-                                </Link>
-                                <Link to="/" className="mainbtn btn02">
-                                    뒤로가기
-                                </Link>
-                            </div>
+                        {/* Name Component */}
+                        {/* 이름 */}
+                        <SignUpName ref={signUpRefs} />
+
+                        {/* Mobile Component */}
+                        {/* 휴대전화 */}
+                        <SignUpMobile ref={signUpRefs} />
+
+                        {/* Org Component */}
+                        {/* 학교 */}
+                        <SignUpOrg ref={signUpRefs} />
+
+                        {/* Department Component */}
+                        {/* 학과 */}
+                        <SignUpDepartment ref={signUpRefs} />
+
+                        {/* Birthday Component */}
+                        {/* 생년월일 */}
+                        <SignUpBirthday ref={signUpRefs} />
+
+                        {/* Specialized Component */}
+                        {/* 희망직종 */}
+                        <SignUpSpecialized ref={signUpRefs} />
+
+                        {/* SignUpSpecialCheck Component */}
+                        {/* 체크박스 */}
+                        <SignUpSpecialCheck ref={signUpRefs} />
+
+                        {/* SignUpFile Component */}
+                        {/* 파일첨부 */}
+                        <SignUpFile ref={signUpRefs} />
+
+                        {/* Captcha Component */}
+                        {/* Captcha */}
+                        <SignUpCaptcha ref={signUpRefs} />
+
+                        <div style={{ marginTop: 20 }}>
+                            <Link onClick={(e) => clickForm()}>제출</Link>
                         </div>
                     </div>
                 </div>

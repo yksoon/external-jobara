@@ -12,6 +12,15 @@ const Instance = axios.create({
     timeout: 5000,
 });
 
+/*
+    REST CONNECTION 시 Request 를 가로채서
+    request.headers 를 셋팅한다.
+    
+    Jobara-Src = : 0.0.0.0
+    Jobara-Token = JEJUJOBARA xxxxxxxxxxxxxxx
+
+*/
+// TODO: 중복소스 처리
 Instance.interceptors.request.use(
     (config) => {
         ip = store.getState().ipInfo.ipInfo;

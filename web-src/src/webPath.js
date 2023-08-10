@@ -57,26 +57,35 @@ const apiPath = {
     // /v1/_codes
     // POST
     // 공통 코드
-    // api_codes: `${base_api_url + slash + version + slash}_codes`,
     api_codes: `${version + slash}_codes`,
 
     // /v1/info/result
     // GET
     // 공통 코드
-    // api_result: `${base_api_url + slash + version + slash}info/result`,
     api_result: `${version + slash}info/result`,
+
+    // /v1/captcha/img
+    // GET
+    // 자동가입방지-이미지
+    api_captcha_img: `${version + slash}captcha/img`,
 
     // ------------------ Auth ------------------
 
     // /v1/signin
     // POST
     // 로그인
-    api_auth_login: `${version + slash}signin`,
+    // TODO: 파라미터명 통일시키자
+    api_auth_signin: `${version + slash}signin`,
 
     // /v1/signout
     // POST
     // 로그아웃
     api_auth_signout: `${version + slash}signout`,
+
+    // /v1/_user
+    // POST(multi)
+    // 등록
+    api_auth_reg_user: `${version + slash}_user`,
 
     // ------------------ Refresh ------------------
 
@@ -103,6 +112,11 @@ const apiPath = {
     // POST
     // 유저 리스트
     api_admin_user_info: `${version + slash}user/info`,
+
+    // /v1/user/_check
+    // POST
+    // 중복확인
+    api_user_check: `${version + slash}user/_check`,
 };
 
 export { routerPath, apiPath };

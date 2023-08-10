@@ -70,7 +70,7 @@ const Login = () => {
     const login = () => {
         // /v1/signin
         // POST
-        let url = apiPath.api_auth_login;
+        let url = apiPath.api_auth_signin;
         let data = {
             // signup_type: "000",
             user_id: inputID.current.value,
