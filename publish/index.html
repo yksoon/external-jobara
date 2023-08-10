@@ -28,6 +28,31 @@
 		<div id="header">
 			<div id="header_content">
 				<h1 class="logo"><a href="/" ><img src="images/main/logo.png" alt="" /></a></h1>
+                <!--모바일 메뉴 // S-->
+                <div id="top_right">
+                    <div id="menu-icon2" class="all_menu">
+                        <span></span>
+                        <span></span>
+                        <span class="short"></span>
+                    </div>
+                    <nav>
+                        <ul id="nav">
+                            <li><a href="" id="nav1">박람회안내</a></li>
+                            <li><a href="" id="nav2">프로그램</a></li>
+                            <li><a href="" id="nav3">사전등록</a></li>
+                            <li><a href="" id="nav4">참여기업</a></li>
+                            <li><a href="" id="nav5">공지</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <script>				
+                    $(document).ready(function(){
+                        $('#menu-icon2').click(function(){
+                            $(this).toggleClass('open');
+                        });
+                    });
+                </script>
+                <!--모바일메뉴 // E -->
 			</div>
 
 		</div>

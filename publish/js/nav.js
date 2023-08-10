@@ -1,6 +1,6 @@
 $(function(){
 	$('#nav').hide();
-	$('.allmenu').click(function(){
+	$('.all_menu').click(function(){
 		$('#nav').slideToggle();
 	});
 });
