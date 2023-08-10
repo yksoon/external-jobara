@@ -64,7 +64,11 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 .section01 ul{display: flex;width:1100px;margin:0 auto;flex-wrap: wrap;justify-content: center;}
 .section01 ul li{font-family:'GmarketSans';width:50%;height:65px; margin:10px 0;font-size: 24px;color:#000; letter-spacing: -0.04em;line-height: 65px;}
 .section01 ul li span{font-weight: 900;display:inline-block;width:125px;height:65px;position:Relative; padding-left:35px;box-sizing: border-box;}
-.section01 ul li span:before {content:"";display:block; width:65px;height: 65px;border-radius: 65px;background-color:#65C4F2;position:Absolute; top:0;left:0;z-index: -1;}
+.section01 ul li span:before {content:"";display:block; width:65px;height: 65px;background-color:#65C4F2;position:Absolute; top:0;left:0;z-index: -1;
+	border-radius: 65px;
+	-moz-border-radius: 65px;
+	-webkit-border-radius: 65px;
+}
 .section01 ul li.c02 span:before {background-color:#BAD73C;}
 .section01 ul li.c03 span:before {background-color:#FFEC00;}
 .section01 ul li.c04 span:before {background-color:#FF6DB7;}
@@ -83,7 +87,11 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 .section02 .program{width:1400px; margin:0 auto 160px;}
 .section02 .program h3{font-family:'GmarketSans';font-weight:900;color:#000;text-align: center;font-size:38px;letter-spacing: -0.04em;margin:0 0 90px 0;}
 .section02 .program ul{display: flex;flex-wrap: wrap;justify-content: space-between;}
-.section02 .program ul li{font-family:'GmarketSans';position:relative;width:450px;height: 100px;border-radius: 20px;border:1px solid #ccc;line-height: 100px;box-sizing: border-box;margin:0 0 40px 0;font-size: 24px;color:#000;letter-spacing: -0.03em;;}
+.section02 .program ul li{font-family:'GmarketSans';position:relative;width:450px;height: 100px;border:1px solid #ccc;line-height: 100px;box-sizing: border-box;margin:0 0 40px 0;font-size: 24px;color:#000;letter-spacing: -0.03em;
+	border-radius: 20px;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	;}
 .section02 .program ul li.p02, .section02 .program ul li.p05 {margin:-30px 0 40px 0;}
 .section02 .program ul li .icon {position:absolute;top:-30px; right:30px;}
 .section02 .program ul li .num {font-weight: 900;display: inline-block;width:90px;text-align: center;color:#E72295;}
@@ -105,7 +113,11 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 .section03 {width:100%; padding:200px 0;background:url('../images/main/sec03_bg.png') center 100% no-repeat; background-size:100%;}
 .section03 .notice{width:1400px; margin:0 auto;}
 .section03 .notice h3{font-family:'GmarketSans';font-weight:900;color:#000;text-align: center;font-size:38px;letter-spacing: -0.04em;margin:0 0 30px 0;}
-.section03 .notice ul li{width:100%; height:62px;line-height:62px;border:1px solid #ccc; border-radius:62px; box-sizing:border-box;position:relative;margin:0 0 20px 0;padding:0 40px;}
+.section03 .notice ul li{width:100%; height:62px;line-height:62px;border:1px solid #ccc;  box-sizing:border-box;position:relative;margin:0 0 20px 0;padding:0 40px;
+	border-radius:62px;
+	-webkit-border-radius:62px;
+	-moz-border-radius:62px;
+}
 .section03 .notice ul li a{display:block; width:70%; overflow: hidden;text-overflow: ellipsis;white-space: nowrap; font-size: 21px;font-weight: 400;color:#000;letter-spacing: -0.03em;}
 .section03 .notice ul li .date{position:absolute;top:0;right:40px;font-size: 20px;color:#F385C5;}
 .section03 .notice ul li:hover {border-color:#E72295;}
@@ -243,7 +255,11 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 	.section01 ul{width:auto;flex-direction: column;}
 	.section01 ul li{width:100%;height:auto; margin:5px auto;font-size:18px;line-height:30px;text-align: center;;word-break: keep-all;}
 	.section01 ul li span{display:block; margin:0 auto; width:50px;height:auto;padding:25px 0 0 0;}
-	.section01 ul li span:before {width:45px;height: 45px;border-radius: 45px;left:3px;}
+	.section01 ul li span:before {width:45px;height: 45px;left:3px;
+		border-radius: 45px;
+		-webkit-border-radius: 45px;
+		-moz-border-radius: 45px;
+	}
 	.section01 ul li.c02 span:before {background-color:#BAD73C;}
 	.section01 ul li.c03 span:before {background-color:#FFEC00;}
 	.section01 ul li.c04 span:before {background-color:#FF6DB7;}
@@ -273,7 +289,11 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 	.section03 {padding:100px 0;}
 	.section03 .notice{width:auto; padding:0 20px;}
 	.section03 .notice h3{font-size:28px;margin:0 0 20px 0;}
-	.section03 .notice ul li{height:50px;line-height:50px;border-radius:50px;margin:0 0 10px 0;padding:0 30px;}
+	.section03 .notice ul li{height:50px;line-height:50px;margin:0 0 10px 0;padding:0 30px;
+		border-radius:50px;
+		-webkit-border-radius:50px;
+		-moz-border-radius:50px;
+	}
 	.section03 .notice ul li a{width:63%;font-size:17px;}
 	.section03 .notice ul li .date{right:30px;font-size:14px;}
 
