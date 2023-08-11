@@ -165,12 +165,19 @@ function Header({ props }) {
     //     }
     // };
 
-    $(function () {
+    useEffect(() => {
         $("#nav").hide();
-        $(".all_menu").click(function () {
-            $("#nav").slideToggle();
-        });
-    });
+    }, []);
+
+    const menuClick = () => {
+        $("#nav").slideToggle();
+    };
+
+    // $(function () {
+    //     $(".all_menu").click(function () {
+    //         $("#nav").slideToggle();
+    //     });
+    // });
 
     $(function () {
         $("#nav1_s").hide();
@@ -279,7 +286,11 @@ function Header({ props }) {
                     </h1>
                     {/* 모바일 메뉴 // S */}
                     <div id="top_right">
-                        <div id="menu-icon2" class="all_menu">
+                        <div
+                            id="menu-icon2"
+                            class="all_menu"
+                            onClick={(e) => menuClick(e)}
+                        >
                             <span></span>
                             <span></span>
                             <span class="short"></span>
