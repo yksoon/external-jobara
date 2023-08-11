@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { apiPath, routerPath } from "webPath";
 import { useDispatch, useSelector } from "react-redux";
 import { RestServer } from "common/js/Rest";
-import { set_cert_info } from "redux/actions/certAction";
 
 import Header from "components/web/common/Header";
 import Footer from "components/web/common/Footer";
@@ -30,6 +29,7 @@ import SignUpSpecialCheck from "./signupComponents/SignUpSpecialCheck";
 import SignUpFile from "./signupComponents/SignUpFile";
 import { signupModel, signupMultiModel } from "models/user/signUp";
 import { idPattern, pwPattern } from "common/js/Pattern";
+import SubHeader from "../common/SubHeader";
 
 // 회원가입
 function SignUp() {
@@ -256,63 +256,117 @@ function SignUp() {
 
     return (
         <>
-            <Header />
-            <div id="con_area">
-                <div className="form sign" id="sign_form">
-                    {/* <h3 className="title">회원가입</h3> */}
-                    <div>
-                        {/* 컨텐츠 */}
-                        {/* ID Component */}
-                        {/* 아이디 */}
-                        <SignUpID ref={signUpRefs} />
+            {/* 컨텐츠 */}
+            {/* ID Component */}
+            {/* 아이디 */}
+            {/* <SignUpID ref={signUpRefs} /> */}
 
-                        {/* PW Component */}
-                        {/* 비밀번호 */}
-                        <SignUpPW ref={signUpRefs} />
+            {/* PW Component */}
+            {/* 비밀번호 */}
+            {/* <SignUpPW ref={signUpRefs} /> */}
 
-                        {/* Name Component */}
-                        {/* 이름 */}
-                        <SignUpName ref={signUpRefs} />
+            {/* Name Component */}
+            {/* 이름 */}
+            {/* <SignUpName ref={signUpRefs} /> */}
 
-                        {/* Mobile Component */}
-                        {/* 휴대전화 */}
-                        <SignUpMobile ref={signUpRefs} />
+            {/* Mobile Component */}
+            {/* 휴대전화 */}
+            {/* <SignUpMobile ref={signUpRefs} /> */}
 
-                        {/* Org Component */}
-                        {/* 학교 */}
-                        <SignUpOrg ref={signUpRefs} />
+            {/* Org Component */}
+            {/* 학교 */}
+            {/* <SignUpOrg ref={signUpRefs} /> */}
 
-                        {/* Department Component */}
-                        {/* 학과 */}
-                        <SignUpDepartment ref={signUpRefs} />
+            {/* Department Component */}
+            {/* 학과 */}
+            {/* <SignUpDepartment ref={signUpRefs} /> */}
 
-                        {/* Birthday Component */}
-                        {/* 생년월일 */}
-                        <SignUpBirthday ref={signUpRefs} />
+            {/* Birthday Component */}
+            {/* 생년월일 */}
+            {/* <SignUpBirthday ref={signUpRefs} /> */}
 
-                        {/* Specialized Component */}
-                        {/* 희망직종 */}
-                        <SignUpSpecialized ref={signUpRefs} />
+            {/* Specialized Component */}
+            {/* 희망직종 */}
+            {/* <SignUpSpecialized ref={signUpRefs} /> */}
 
-                        {/* SignUpSpecialCheck Component */}
-                        {/* 체크박스 */}
-                        <SignUpSpecialCheck ref={signUpRefs} />
+            {/* SignUpSpecialCheck Component */}
+            {/* 체크박스 */}
+            {/* <SignUpSpecialCheck ref={signUpRefs} /> */}
 
-                        {/* SignUpFile Component */}
-                        {/* 파일첨부 */}
-                        <SignUpFile ref={signUpRefs} />
+            {/* SignUpFile Component */}
+            {/* 파일첨부 */}
+            {/* <SignUpFile ref={signUpRefs} /> */}
 
-                        {/* Captcha Component */}
-                        {/* Captcha */}
-                        <SignUpCaptcha ref={signUpRefs} />
+            {/* Captcha Component */}
+            {/* Captcha */}
+            {/* <SignUpCaptcha ref={signUpRefs} /> */}
 
-                        <div style={{ marginTop: 20 }}>
+            {/* <div style={{ marginTop: 20 }}>
                             <Link onClick={(e) => clickForm()}>제출</Link>
+                        </div> */}
+
+            <SubHeader />
+
+            {/* 서브컨텐츠     //S */}
+            <div id="container" className="sub_container">
+                <div id="content">
+                    <h2 id="subtitle">사전등록</h2>
+                    <div className="registration">
+                        <table className="regi_form">
+                            <colgroup>
+                                <col widtd="30%" />
+                                <col widtd="*" />
+                            </colgroup>
+                            <tbody>
+                                {/* ID Component */}
+                                {/* 아이디 */}
+                                <SignUpID ref={signUpRefs} />
+
+                                {/* Name Component */}
+                                {/* 이름 */}
+                                <SignUpName ref={signUpRefs} />
+
+                                {/* Mobile Component */}
+                                {/* 휴대전화 */}
+                                <SignUpMobile ref={signUpRefs} />
+
+                                {/* Org Component */}
+                                {/* 학교 */}
+                                <SignUpOrg ref={signUpRefs} />
+
+                                {/* Department Component */}
+                                {/* 학과 */}
+                                <SignUpDepartment ref={signUpRefs} />
+
+                                {/* Birthday Component */}
+                                {/* 생년월일 */}
+                                <SignUpBirthday ref={signUpRefs} />
+
+                                {/* Specialized Component */}
+                                {/* 희망직종 */}
+                                <SignUpSpecialized ref={signUpRefs} />
+
+                                {/* SignUpSpecialCheck Component */}
+                                {/* 참여프로그램 */}
+                                <SignUpSpecialCheck ref={signUpRefs} />
+
+                                {/* SignUpFile Component */}
+                                {/* 파일첨부 */}
+                                <SignUpFile ref={signUpRefs} />
+
+                                {/* Captcha Component */}
+                                {/* Captcha */}
+                                <SignUpCaptcha ref={signUpRefs} />
+                            </tbody>
+                        </table>
+
+                        <div className="btnbox">
+                            <Link href="">사전등록하기</Link>
                         </div>
                     </div>
                 </div>
             </div>
-            <Footer />
+            {/* 서브컨텐츠     //E */}
         </>
     );
 }

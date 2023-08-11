@@ -4,7 +4,7 @@ import { RestServer } from "common/js/Rest";
 import axios from "axios";
 import Router from "Router";
 import { useDispatch, useSelector } from "react-redux";
-import { CommonSpinner } from "common/js/Common";
+import { CommonRest, CommonSpinner } from "common/js/Common";
 import {
     set_codes,
     set_result_code,
@@ -16,12 +16,18 @@ import { ConfirmContextProvider } from "context/ContextProvider";
 import { AlertContextProvider } from "context/ContextProvider";
 import ConfirmModal from "common/js/commonNoti/ConfirmModal";
 import AlertModal from "common/js/commonNoti/AlertModal";
+import useAlert from "hook/useAlert";
+import {
+    set_check_schedule,
+    set_schedule,
+    set_view_schedule,
+} from "redux/actions/scheduleAction";
 
 function App() {
     let ipInfo = useSelector((state) => state.ipInfo.ipInfo);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    const dispatch = useDispatch();
 
     useEffect(() => {
         // localStorage.clear();
@@ -38,6 +44,7 @@ function App() {
         getResultCode();
         getCodes();
         getCountryBank();
+        getSchedule();
         setInterval(getResultCode, 3600000);
         setInterval(getCodes, 3600000);
 
@@ -114,6 +121,34 @@ function App() {
                 dispatch(
                     set_country_bank(JSON.stringify(response.data.result_info))
                 );
+            })
+            .catch((error) => {
+                // 오류발생시 실행
+                console.log(decodeURI(error));
+            });
+    };
+
+    // schedule
+    const getSchedule = () => {
+        RestServer("get", apiPath.api_schedule_list, {})
+            .then((response) => {
+                console.log("scheduleList", response);
+
+                const resultData = response.data.result_info;
+
+                // 화면단
+                const viewSchedule = resultData.filter(
+                    (e) => e.schedule_type_cd === "900"
+                )[0];
+
+                // 날짜 체크
+                const checkSchedule = resultData.filter(
+                    (e) => e.schedule_type_cd === "000"
+                )[0];
+
+                dispatch(set_view_schedule(JSON.stringify(viewSchedule)));
+
+                dispatch(set_check_schedule(JSON.stringify(checkSchedule)));
             })
             .catch((error) => {
                 // 오류발생시 실행

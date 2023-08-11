@@ -174,16 +174,6 @@ function Header({ props }) {
         $("#menu-icon2").toggleClass("open");
     };
 
-    // $(function () {
-    //     $(".all_menu").click(function () {
-    //         $("#nav").slideToggle();
-    //     });
-    // });
-
-    // $("#menu-icon2").click(function () {
-    //     $(this).toggleClass("open");
-    // });
-
     $(function () {
         $("#nav1_s").hide();
         $("#nav1").click(function () {
@@ -284,7 +274,7 @@ function Header({ props }) {
         <>
             <div id="header">
                 <div id="header_content">
-                    <h1 class="logo">
+                    <h1 className="logo">
                         <a href="/">
                             <img src="img/web/main/logo.png" alt="" />
                         </a>
@@ -293,12 +283,12 @@ function Header({ props }) {
                     <div id="top_right">
                         <div
                             id="menu-icon2"
-                            class="all_menu"
+                            className="all_menu"
                             onClick={(e) => menuClick(e)}
                         >
                             <span></span>
                             <span></span>
-                            <span class="short"></span>
+                            <span className="short"></span>
                         </div>
                         <nav>
                             <ul id="nav">

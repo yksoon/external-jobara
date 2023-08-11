@@ -297,7 +297,7 @@ callback : callback()
 */
 const CommonRest = async (restParams) => {
     const dispatch = restParams.err.dispatch;
-    const alert = restParams.err.alert;
+    const alert = restParams.err.alert ? restParams.err.alert : "";
 
     const method = restParams.method;
     const url = restParams.url;

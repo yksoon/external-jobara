@@ -20,16 +20,6 @@ const SignUpID = forwardRef((props, ref) => {
 
         if (idChk) {
             let data = { user_id: idVal };
-            // RestServer("post", apiPath.api_user_check, {
-            //     user_id: idVal,
-            // })
-            //     .then((response) => {
-            //         console.log("id결과 ", response);
-            //     })
-            //     .catch((error) => {
-            //         // 오류발생시 실행
-            //         console.log(decodeURI(error));
-            //     });
 
             const testFunc = (res) => {
                 console.log(res);
@@ -49,19 +39,20 @@ const SignUpID = forwardRef((props, ref) => {
 
     return (
         <>
-            <div>
-                <h4>아이디</h4>
-            </div>
-            <div>
-                <input
-                    type="text"
-                    placeholder="아이디"
-                    ref={inputID}
-                    onChange={(e) => {
-                        idCheck(e);
-                    }}
-                />
-            </div>
+            <tr>
+                <th>ID</th>
+                <td>
+                    <input
+                        type="text"
+                        className="input_s"
+                        autoFocus
+                        ref={inputID}
+                        onChange={(e) => {
+                            idCheck(e);
+                        }}
+                    />
+                </td>
+            </tr>
         </>
     );
 });

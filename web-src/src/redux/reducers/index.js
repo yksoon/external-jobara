@@ -6,9 +6,9 @@ import storageSession from "redux-persist/lib/storage/session";
 import codes from "./reducers/codes";
 import userInfo from "./reducers/userInfo";
 import ipInfo from "./reducers/ipInfo";
-import certInfo from "./reducers/cert";
 import common from "./reducers/common";
 import page from "./reducers/page";
+import schedule from "./reducers/schedule";
 
 // 스토리지 세팅
 const persistConfig = {
@@ -23,9 +23,9 @@ const rootReducer = combineReducers({
     codes,
     userInfo,
     ipInfo,
-    certInfo,
     common,
     page,
+    schedule,
 });
 
 export default persistReducer(persistConfig, rootReducer);

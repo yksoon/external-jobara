@@ -8,7 +8,7 @@ function Footer() {
             <div id="footer">
                 <div id="footer_content">
                     <address>
-                        <p class="flogo">
+                        <p className="flogo">
                             <img src="img/web/main/logo.png" alt="" />
                         </p>
                         63243 제주특별자치도 제주시 제주대학로 102 인문대학

@@ -117,6 +117,18 @@ const apiPath = {
     // POST
     // 중복확인
     api_user_check: `${version + slash}user/_check`,
+
+    // ------------------ Schedule API 스케줄 관리 API ------------------
+    // /v1/schedules
+    // GET
+    // 스케줄 목록
+    api_schedule_list: `${version + slash}schedules`,
+
+    // ------------------ Additional API 스케줄 관리 API ------------------
+    // /v1/meta/_additionals
+    // GET
+    // 부가정보관리 목록
+    api_get_additional: `${version + slash}meta/_additionals`,
 };
 
 export { routerPath, apiPath };

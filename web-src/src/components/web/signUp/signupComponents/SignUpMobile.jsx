@@ -44,29 +44,34 @@ const SignUpMobile = forwardRef((props, ref) => {
     };
     return (
         <>
-            <div style={{ marginTop: 20 }}>
-                <h4>휴대전화</h4>
-            </div>
-            <div>
-                <input
-                    type="tel"
-                    id="mobile1"
-                    ref={inputMobile1}
-                    onChange={(e) => mobileHandler(e)}
-                />
-                <input
-                    type="tel"
-                    id="mobile2"
-                    ref={inputMobile2}
-                    onChange={(e) => mobileHandler(e)}
-                />
-                <input
-                    type="tel"
-                    id="mobile3"
-                    ref={inputMobile3}
-                    onChange={(e) => mobileHandler(e)}
-                />
-            </div>
+            <tr>
+                <th>연락처</th>
+                <td>
+                    <input
+                        type="text"
+                        id="mobile1"
+                        className="input_m"
+                        ref={inputMobile1}
+                        onChange={(e) => mobileHandler(e)}
+                    />{" "}
+                    -
+                    <input
+                        type="text"
+                        id="mobile2"
+                        className="input_m"
+                        ref={inputMobile2}
+                        onChange={(e) => mobileHandler(e)}
+                    />{" "}
+                    -
+                    <input
+                        type="text"
+                        id="mobile3"
+                        className="input_m"
+                        ref={inputMobile3}
+                        onChange={(e) => mobileHandler(e)}
+                    />
+                </td>
+            </tr>
         </>
     );
 });
