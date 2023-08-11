@@ -43,7 +43,7 @@
 
 @font-face {
     font-family: 'LOTTERIACHAB';
-    src: url('../font_hi/chab.woff2') format('woff2');
+    src: url('../font_hi/chab.ttf') format('ttf');
     font-weight: normal;
     font-style: normal;
 }
