@@ -58,80 +58,81 @@ function SignUp() {
 
     // 제출
     const clickForm = () => {
-        // if (validation()) {
-
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
-
-        const formData = new FormData();
-        const model = signupMultiModel;
-        let data = {};
-
-        let fileArr = [];
-        let files = signUpRefs.inputAttachmentFile.current.files;
-        fileArr.push(signUpRefs.inputAttachmentFile.current.files[0]);
-
-        console.log(Array.from(signUpRefs.inputAttachmentFile.current.files));
-
-        data = {
-            ...model,
-            userId: signUpRefs.inputID.current.value,
-            userPwd: signUpRefs.inputPW.current.value,
-            userNameFirstKo: signUpRefs.inputFirstName.current.value,
-            userNameLastKo: signUpRefs.inputLastName.current.value,
-            mobile1: signUpRefs.inputMobile1.current.value,
-            mobile2: signUpRefs.inputMobile2.current.value,
-            mobile3: signUpRefs.inputMobile3.current.value,
-            securityCode: signUpRefs.inputCaptcha.current.value,
-            organizationNameKo: signUpRefs.inputOrg.current.value,
-            departmentNameKo: signUpRefs.inputDepartment.current.value,
-            birthYyyy: signUpRefs.inputBirthYear.current.value,
-            birthMm: signUpRefs.inputBirthMonth.current.value,
-            birthDd: signUpRefs.inputBirthDay.current.value,
-            specializedNameKo: signUpRefs.inputSpecialized.current.value,
-        };
-
-        // 기본 formData append
-        for (const key in data) {
-            formData.append(key, data[key]);
-        }
-
-        // 파일 formData append
-        fileArr = Array.from(signUpRefs.inputAttachmentFile.current.files);
-        let len = fileArr.length;
-        for (let i = 0; i < len; i++) {
-            formData.append("attachmentFile", fileArr[i]);
-        }
-
-        const responsLogic = (res) => {
+        if (validation()) {
             dispatch(
                 set_spinner({
                     isLoading: true,
                 })
             );
 
-            CommonNotify({
-                type: "alert",
-                hook: alert,
-                message: "가입 완료 되었습니다",
-            });
+            const formData = new FormData();
+            const model = signupMultiModel;
+            let data = {};
 
-            console.log(res);
-        };
+            let fileArr = [];
+            let files = signUpRefs.inputAttachmentFile.current.files;
+            fileArr.push(signUpRefs.inputAttachmentFile.current.files[0]);
 
-        const restParams = {
-            method: "post_multi",
-            url: apiPath.api_auth_reg_user,
-            data: formData,
-            err: err,
-            callback: (res) => responsLogic(res),
-        };
+            console.log(
+                Array.from(signUpRefs.inputAttachmentFile.current.files)
+            );
 
-        CommonRest(restParams);
-        // }
+            data = {
+                ...model,
+                userId: signUpRefs.inputID.current.value,
+                userPwd: signUpRefs.inputPW.current.value,
+                userNameFirstKo: signUpRefs.inputFirstName.current.value,
+                userNameLastKo: signUpRefs.inputLastName.current.value,
+                mobile1: signUpRefs.inputMobile1.current.value,
+                mobile2: signUpRefs.inputMobile2.current.value,
+                mobile3: signUpRefs.inputMobile3.current.value,
+                securityCode: signUpRefs.inputCaptcha.current.value,
+                organizationNameKo: signUpRefs.inputOrg.current.value,
+                departmentNameKo: signUpRefs.inputDepartment.current.value,
+                birthYyyy: signUpRefs.inputBirthYear.current.value,
+                birthMm: signUpRefs.inputBirthMonth.current.value,
+                birthDd: signUpRefs.inputBirthDay.current.value,
+                specializedNameKo: signUpRefs.inputSpecialized.current.value,
+            };
+
+            // 기본 formData append
+            for (const key in data) {
+                formData.append(key, data[key]);
+            }
+
+            // 파일 formData append
+            fileArr = Array.from(signUpRefs.inputAttachmentFile.current.files);
+            let len = fileArr.length;
+            for (let i = 0; i < len; i++) {
+                formData.append("attachmentFile", fileArr[i]);
+            }
+
+            const responsLogic = (res) => {
+                dispatch(
+                    set_spinner({
+                        isLoading: true,
+                    })
+                );
+
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: "가입 완료 되었습니다",
+                });
+
+                console.log(res);
+            };
+
+            const restParams = {
+                method: "post_multi",
+                url: apiPath.api_auth_reg_user,
+                data: formData,
+                err: err,
+                callback: (res) => responsLogic(res),
+            };
+
+            CommonRest(restParams);
+        }
     };
 
     // 검증
