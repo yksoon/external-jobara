@@ -370,6 +370,7 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 	.registration .btnbox a{height:60px;line-height: 60px;padding:0 30px;min-width:120px;font-size:22px;}
 	
 
+	
 	/* 사전등록 확인 */
 	.registration_chk .regi_form tbody tr th {display:block;font-size:14px; padding:15px 10px ;background-color:#f9f9f9;}
 	.registration_chk .regi_form tbody tr td {display:block;font-size:14px; padding:20px 10px;}
