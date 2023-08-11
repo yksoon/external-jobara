@@ -2,31 +2,43 @@
 
 body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 
-#header  {position:absolute;width:100%; height:80px; z-index:999;}
+#header  {position:absolute;width:100%; height:120px; z-index:999;}
 
-#header_content {width:100%; margin:0 auto;height:80px;}
+#header_content {width:100%; margin:0 auto;height:120px;}
 #header_content .logo {position:absolute; top:35px; left:135px; z-index:1000;}
 #header_content .logo a{display:block;}
 
 
-/* 
 
-#gnb {position:relative;top:0; height:60px;border-top:1px solid #ddd; border-bottom:1px solid #ddd;}
-#gnb ul {display:block; width:1300px; margin:0 auto;text-align:center;}
+/* gnb */
+#gnb {position:relative;top:0; height:120px;}
+#gnb ul {display:flex;justify-content: flex-end; width:1400px; margin:0 auto;text-align:center;}
 #gnb ul:after {content:" "; display:block; clear:both;}
-#gnb ul li {float:left;  width:calc(100% / 5); line-height:60px;height:60px;  text-align:center; border-right:1px solid #ddd;box-sizing:border-box;}
-#gnb ul li:first-child {border-left:1px solid #ddd;}
+#gnb ul li {width:160px; line-height:120px;height:120px;  text-align:center; box-sizing:border-box;}
+#gnb ul li a {font-family: 'LOTTERIACHAB';display:block; color:#333; font-size:23px;  letter-spacing:-0.04em;}
+#gnb ul li:hover .submenu { display:block;}
 
-#gnb ul li a {display:block; color:#111111; font-size:20px;  letter-spacing:-0.04em;}
-#gnb ul li a:hover, #gnb ul li a:focus { color:#172a88;}
+#gnb ul li .submenu {display:none; width:200px; margin-left:-20px; line-height:40px;  padding:20px 0;background:#0092E5; animation:menuDown 0.3s linear;
+	border-radius:22px;
+	-webkit-border-radius:22px;
+	-moz-border-radius:22px;
+}
+#gnb ul li .submenu a {font-family:'GmarketSans';color:#fff; font-size:17px;}
+#gnb ul li .submenu a:hover, #gnb ul li .submenu a:focus {color:#f8ffd4;}
 
-#gnb div.submenu {display:none; position:absolute; top:60px; z-index:999; width:260px; padding:20px 0;background:#FFF;BORDER:1PX SOLID #DDD;border-top:1px solid #172a88;}
-#gnb div.submenu ul {margin:0; height:auto;}
-#gnb div.submenu ul li {float:none;BORDER:NONE;padding:0; height:auto; text-align:center; background:none; margin:0; }
-#gnb div.submenu ul li a {display:block;height:auto; padding:12px 0; font-size:17px; line-height:22px;color:#111111; }
-#gnb div.submenu ul li a:hover, #gnb div.submenu ul li a:focus {color:#172a88;} */
+@keyframes menuDown{
+	0% {
+        opacity:0; 
+		margin-top:-20px;
+    }
 
- 
+    100% {
+        opacity:1; 
+		margin-top:0;
+    }
+}
+
+
 
 
 
@@ -54,7 +66,7 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 #mainvisual  .main_txt .host {display: flex;justify-content: space-between;align-items: center;}
 
 
-#container {width:100%; clear:both;}
+#container {width:100%; }
 
 
 .section01 {width:1400px; margin:100px auto 160px;}
@@ -143,17 +155,30 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 
 
 /* sub */
-.subvisual {width:100%;height:240px;background:url('../images/sub/subvisual.jpg') center 100% no-repeat;background-size: cover;box-shadow: 0 0 15px rgba(0,0,0,0.1);}
-.subvisual .sub_in {width:1300px; margin:0 auto;}
-.subvisual .sub_in .subtxt {padding:50px 0 0 70px;}
-.subvisual .sub_in .subtxt h3 {margin:0 0 24px 0;}
+.sub_container {width:100%;background:url('../images/sub/sub_bg.jpg') center 0 no-repeat #fff;}
+#content {width: 1200px; margin:0 auto; padding:180px 0 100px;min-height:850px;}
+#subtitle {font-family:'GmarketSans';padding:0 0 80px; font-size:35px; font-weight:900; color:#111;letter-spacing: -0.03em; text-align: center;}
 
 
-#cont {width:1300px; margin:0 auto; padding:60px 0 0;}
-#subtitle {margin:0 0 50px 0;}
-#subtitle h3 {font-size:35px; font-weight:600; color:#111;letter-spacing: -0.03em; text-align: center;}
-#subtitle h3:after {content:"";display:block; width:1px; height:30px; background-color:#d73a2a; margin:20px auto;}
-#con_area {clear:both; min-height:320px; padding:0 0 200px 0;}
+
+/* 사전등록 */
+.registration .regi_form {border-top:1px solid #E72295;}
+.registration .regi_form tbody tr th {font-family:'GmarketSans'; font-size:17px; color:#000; padding:30px 10px 30px 30px;text-align: left;border-bottom:1px solid #ddd;}
+.registration .regi_form tbody tr td {font-family:'GmarketSans'; font-size:17px; color:#444;  font-weight:400; padding:20px 10px;border-bottom:1px solid #ddd;}
+.registration .regi_form tbody tr td input {border:1px solid #ccc; height:40px; line-height:40px;text-indent: 10px; font-family:'GmarketSans';vertical-align: middle;
+	border-radius: 10px; 
+	-webkit-border-radius: 10px; 
+	-moz-border-radius: 10px; 
+}
+.registration .regi_form tbody tr td input.input_l{width:95%;}
+.registration .regi_form tbody tr td .cap {vertical-align: middle;}
+.registration .btnbox {margin:100px 0 0; text-align: center;}
+.registration .btnbox a{font-family:'GmarketSans'; display:inline-block; height:60px;line-height: 60px;padding:0 30px;min-width:180px; background-color: #E72295; color:#fff; font-size:24px; 	font-weight: 600;
+	border-radius:60px;
+	-webkit- border-radius:60px;
+	-moz- border-radius:60px;
+}
+.registration .btnbox a:hover, .registration .btnbox a:focus { background-color: #e40b8a; }
 
 
 
