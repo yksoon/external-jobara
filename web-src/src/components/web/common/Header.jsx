@@ -303,7 +303,10 @@ function Header({ props }) {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="" id="nav3">
+                                    <Link
+                                        to={routerPath.web_signup_url}
+                                        id="nav3"
+                                    >
                                         사전등록
                                     </Link>
                                 </li>
