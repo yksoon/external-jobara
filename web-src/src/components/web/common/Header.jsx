@@ -171,12 +171,17 @@ function Header({ props }) {
 
     const menuClick = () => {
         $("#nav").slideToggle();
+        $("#menu-icon2").toggleClass("open");
     };
 
     // $(function () {
     //     $(".all_menu").click(function () {
     //         $("#nav").slideToggle();
     //     });
+    // });
+
+    // $("#menu-icon2").click(function () {
+    //     $(this).toggleClass("open");
     // });
 
     $(function () {
