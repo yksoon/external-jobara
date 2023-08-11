@@ -143,7 +143,7 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 
 
 /* sub */
-.subvisual {width:100%;height:240px;background:url('/public/images/sub/subvisual.jpg') center 100% no-repeat;background-size: cover;box-shadow: 0 0 15px rgba(0,0,0,0.1);}
+/* .subvisual {width:100%;height:240px;background:url('/public/images/sub/subvisual.jpg') center 100% no-repeat;background-size: cover;box-shadow: 0 0 15px rgba(0,0,0,0.1);} */
 .subvisual .sub_in {width:1300px; margin:0 auto;}
 .subvisual .sub_in .subtxt {padding:50px 0 0 70px;}
 .subvisual .sub_in .subtxt h3 {margin:0 0 24px 0;}

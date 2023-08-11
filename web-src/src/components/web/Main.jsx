@@ -1,38 +1,28 @@
-import { React } from "react";
+import { React, useEffect } from "react";
 
 import Header from "components/web/common/Header";
 import Footer from "components/web/common/Footer";
-
-import MainCarousel from "components/web/main/crousel/MainCarousel";
-import MainMenu from "components/web/main/content/MainMenu";
-import MainHotel from "components/web/main/content/MainHotel";
-import MainBanner from "components/web/main/content/MainBanner";
-import MainNews from "components/web/main/content/MainNews";
-import MainBoard from "components/web/main/content/MainBoard";
+import MainMainvisual from "./main/mainComponents/MainMainvisual";
+import MainContents from "./main/mainComponents/MainContents";
+import Aos from "aos";
 
 function Main() {
+    useEffect(() => {
+        Aos.init();
+    });
+
     return (
         <>
+            {/* 헤더 */}
             <Header />
 
-            <MainCarousel />
+            {/* 메인비주얼 */}
+            <MainMainvisual />
 
-            <MainMenu />
+            {/* 메인컨텐츠 */}
+            <MainContents />
 
-            <MainHotel />
-
-            <MainBanner />
-
-            <MainNews />
-
-            <MainBoard />
-
-            {/* <CommonAlert
-                isOpen={isOpen}
-                handleModalClose={handleModalClose}
-                content={modalContent}
-                title={modalTitle}
-            /> */}
+            {/* 푸터 */}
             <Footer />
         </>
     );
