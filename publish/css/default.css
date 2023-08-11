@@ -20,30 +20,29 @@
     src: url('../font_hi/Pretendard-Bold.woff')  format('woff');
 }  
 
-
 @font-face {
     font-family: 'GmarketSans';
     font-weight: 300;
     font-style: normal;
-    src: url('../font_hi/GmarketSansTTFLight.woff2')  format('woff2');
+    src: url('../font_hi/GmarketSansTTFLight.woff')  format('woff');
 }  
 
 @font-face {
     font-family: 'GmarketSans';
     font-weight: 400;
     font-style: normal;
-    src: url('../font_hi/GmarketSansTTFMedium.woff2')  format('woff2');
+    src: url('../font_hi/GmarketSansTTFMedium.woff')  format('woff');
 } 
 @font-face {
     font-family: 'GmarketSans';
     font-weight: 900;
     font-style: bold;
-    src: url('../font_hi/GmarketSansTTFBold.woff2')  format('woff2');
+    src: url('../font_hi/GmarketSansTTFBold.woff')  format('woff');
 } 
 
 @font-face {
     font-family: 'LOTTERIACHAB';
-    src: url('../font_hi/chab.ttf') format('ttf');
+    src: url('../font_hi/chab.ttf') format("truetype");
     font-weight: normal;
     font-style: normal;
 }
