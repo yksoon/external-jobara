@@ -15,7 +15,8 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 #gnb ul {display:flex;justify-content: flex-end; width:1400px; margin:0 auto;text-align:center;}
 #gnb ul:after {content:" "; display:block; clear:both;}
 #gnb ul li {width:160px; line-height:120px;height:120px;  text-align:center; box-sizing:border-box;}
-#gnb ul li a {font-family: 'LOTTERIACHAB';display:block; color:#333; font-size:23px;  letter-spacing:-0.04em;}
+#gnb ul li > a {font-family: 'LOTTERIACHAB';display:block; color:#333; font-size:23px;  letter-spacing:-0.04em;}
+#gnb ul li:hover > a  {color:#0092E5;}
 #gnb ul li:hover .submenu { display:block;}
 
 #gnb ul li .submenu {display:none; width:200px; margin-left:-20px; line-height:40px;  padding:20px 0;background:#0092E5; animation:menuDown 0.3s linear;
@@ -23,7 +24,7 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 	-webkit-border-radius:22px;
 	-moz-border-radius:22px;
 }
-#gnb ul li .submenu a {font-family:'GmarketSans';color:#fff; font-size:17px;}
+#gnb ul li .submenu a {font-family:'GmarketSans';display:block;color:#fff; font-size:17px;letter-spacing:-0.04em;}
 #gnb ul li .submenu a:hover, #gnb ul li .submenu a:focus {color:#f8ffd4;}
 
 @keyframes menuDown{
@@ -37,9 +38,6 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 		margin-top:0;
     }
 }
-
-
-
 
 
 /** mobile_none **/
@@ -156,7 +154,7 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 
 /* sub */
 .sub_container {width:100%;background:url('../images/sub/sub_bg.jpg') center 0 no-repeat #fff;}
-#content {width: 1200px; margin:0 auto; padding:180px 0 100px;min-height:850px;}
+#content {width: 1200px; margin:0 auto; padding:180px 0 130px;min-height:850px;}
 #subtitle {font-family:'GmarketSans';padding:0 0 80px; font-size:35px; font-weight:900; color:#111;letter-spacing: -0.03em; text-align: center;}
 
 
@@ -172,13 +170,36 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 }
 .registration .regi_form tbody tr td input.input_l{width:95%;}
 .registration .regi_form tbody tr td .cap {vertical-align: middle;}
-.registration .btnbox {margin:100px 0 0; text-align: center;}
+.registration .btnbox {margin:70px 0 0; text-align: center;}
 .registration .btnbox a{font-family:'GmarketSans'; display:inline-block; height:60px;line-height: 60px;padding:0 30px;min-width:180px; background-color: #E72295; color:#fff; font-size:24px; 	font-weight: 600;
 	border-radius:60px;
 	-webkit- border-radius:60px;
 	-moz- border-radius:60px;
 }
 .registration .btnbox a:hover, .registration .btnbox a:focus { background-color: #e40b8a; }
+
+
+
+
+
+/* 사전등록 확인 */
+.registration_chk .regi_form {border-top:1px solid #E72295;}
+.registration_chk .regi_form tbody tr th {font-family:'GmarketSans'; font-size:17px; color:#000; padding:30px 10px 30px 30px;text-align: left;border-bottom:1px solid #ddd;}
+.registration_chk .regi_form tbody tr td {font-family:'GmarketSans'; font-size:17px; color:#444;  font-weight:400; padding:20px 10px;border-bottom:1px solid #ddd;}
+.registration_chk .regi_form tbody tr td input {border:1px solid #ccc; height:40px; line-height:40px;text-indent: 10px; font-family:'GmarketSans';vertical-align: middle;
+	border-radius: 10px; 
+	-webkit-border-radius: 10px; 
+	-moz-border-radius: 10px; 
+}
+.registration_chk .regi_form tbody tr td input.input_l{width:95%;}
+.registration_chk .regi_form tbody tr td .cap {vertical-align: middle;}
+.registration_chk .btnbox {margin:70px 0 0; text-align: center;}
+.registration_chk .btnbox a{font-family:'GmarketSans'; display:inline-block; height:60px;line-height: 60px;padding:0 30px;min-width:180px; background-color: #E72295; color:#fff; font-size:24px; 	font-weight: 600;
+	border-radius:60px;
+	-webkit- border-radius:60px;
+	-moz- border-radius:60px;
+}
+.registration_chk .btnbox a:hover, .registration_chk .btnbox a:focus { background-color: #e40b8a; }
 
 
 
@@ -332,23 +353,31 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 	#footer_content address {font-size:14px; line-height:24px;word-break: keep-all; text-align: left;}
 
 
-	
+		
 
 	/* sub */
-	.subvisual {height:170px;}
-	.subvisual .sub_in {width:auto; padding:0 20px;}
-	.subvisual .sub_in .subtxt {padding:25px 0 0 0;}
-	.subvisual .sub_in .subtxt h3 {margin:0 0 17px 0;}
-	.subvisual .sub_in .subtxt h3 img{width: 60%;max-width: 280px;}
-	.subvisual .sub_in .subtxt h4 img{width: 37%;max-width: 170px;}
+	.sub_container {width:100%;background:url('../images/sub/sub_bg.jpg') center 0 no-repeat #fff;background-size:100%;}
+	#content {width: auto;padding:120px 20px 90px;min-height:500px;}
+	#subtitle {padding:0 0 30px; font-size:28px; }
 
 
-	#cont {width:auto;  padding:40px 20px 0;}
-	#subtitle {margin:0 0 20px 0;}
-	#subtitle h3 {font-size:25px;}
-	#subtitle h3:after {width:1px; height:20px; margin:10px auto;}
-	#con_area {padding:0 0 100px 0;}
+	/* 사전등록 */
+	.registration .regi_form tbody tr th {display:block;font-size:14px; padding:15px 10px ;background-color:#f9f9f9;}
+	.registration .regi_form tbody tr td {display:block;font-size:14px; padding:20px 10px;}
+	.registration .regi_form tbody tr td input.input_s{width:95%;}
+	.registration .regi_form tbody tr td input.input_m{width:28%;}
+	.registration .btnbox {margin:50px 0 0;}
+	.registration .btnbox a{height:60px;line-height: 60px;padding:0 30px;min-width:120px;font-size:22px;}
+	
 
+	/* 사전등록 확인 */
+	.registration_chk .regi_form tbody tr th {display:block;font-size:14px; padding:15px 10px ;background-color:#f9f9f9;}
+	.registration_chk .regi_form tbody tr td {display:block;font-size:14px; padding:20px 10px;}
+	.registration_chk .regi_form tbody tr td input.input_s{width:95%;}
+	.registration_chk .regi_form tbody tr td input.input_m{width:28%;}
+	.registration_chk .btnbox {margin:50px 0 0;}
+	.registration_chk .btnbox a{height:60px;line-height: 60px;padding:0 30px;min-width:120px;font-size:22px;}
+	
 
 	/*Quick Menu */
 	#quick_menu {display: none !important;}
