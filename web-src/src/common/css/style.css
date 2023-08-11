@@ -155,6 +155,8 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 #subtitle h3:after {content:"";display:block; width:1px; height:30px; background-color:#d73a2a; margin:20px auto;}
 #con_area {clear:both; min-height:320px; padding:0 0 200px 0;}
 
+/**/
+
 
 
 
@@ -325,6 +327,14 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 	#con_area {padding:0 0 100px 0;}
 
 
+	/* 사전등록 확인 */
+	.registration_chk .regi_form tbody tr th {display:block;font-size:14px; padding:15px 10px ;background-color:#f9f9f9;}
+	.registration_chk .regi_form tbody tr td {display:block;font-size:14px; padding:20px 10px;}
+	.registration_chk .regi_form tbody tr td input.input_s{width:95%;}
+	.registration_chk .regi_form tbody tr td input.input_m{width:28%;}
+	.registration_chk .btnbox {margin:50px 0 0;}
+	.registration_chk .btnbox a{height:60px;line-height: 60px;padding:0 30px;min-width:120px;font-size:22px;}
+	
 	/*Quick Menu */
 	#quick_menu {display: none !important;}
 
