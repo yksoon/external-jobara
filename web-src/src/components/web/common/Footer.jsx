@@ -3,49 +3,29 @@ import { Link } from "react-router-dom";
 
 function Footer() {
     return (
-        <footer>
-            <div className="footer_content">
-                <img src="/img/common/logo.png" alt="" />
-                <ul className="sitemap">
-                    <li>
-                        <Link to="">회사소개</Link>
-                    </li>
-                    <li>
-                        <Link to="">서비스 소개</Link>
-                    </li>
-                    <li>
-                        <Link to="">공지사항</Link>
-                    </li>
-                    <li>
-                        <Link to="" className="blue">
-                            이용약관
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="" className="blue">
-                            개인정보처리방침
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="">고객센터</Link>
-                    </li>
-                    <li>
-                        <Link to="">제휴문의</Link>
-                    </li>
-                </ul>
-                <address>
-                    법인명:(주)메디씨티 | 경기도 고양시 일산동구 무궁화로
-                    성우사카르타워 43-55, 304호 | 대표:박성민 |
-                    사업자등록번호:588-86-02555
-                    <br />
-                    대표전화 : 031-000-0000 | 이메일 : support@medi-city.co.kr
-                    <br />
-                    통신판매번호:제2023-경기고양-12345호 | 개인정보관리책임자 :
-                    백광동 | 메일 : security@medi-city.co.kr |
-                    Copyright©Medi-City All Rights Reserved.
-                </address>
+        <>
+            {/* footer //S */}
+            <div id="footer">
+                <div id="footer_content">
+                    <address>
+                        <p class="flogo">
+                            <img src="img/web/main/logo.png" alt="" />
+                        </p>
+                        63243 제주특별자치도 제주시 제주대학로 102 인문대학
+                        1호관 3층 8318호 Tel. 064)754-3125~6, 064)754-4412~5
+                        Fax. 064-751-3127, 070-4170-4127
+                        <br />
+                        Copyright © 2013 JEJU NATIONAL UNIVERSITY Leaders in
+                        INdustry-university Cooperation.
+                        <br />본 웹사이트에 게시된 이메일 주소가 전자우편 수집
+                        프로그램이나 그 밖의 기술적 장치를 이용하여 무단으로
+                        수집되는 것을 거부하며, 이를 위반시 정보통신망법에 의해
+                        형사 처벌됨을 유념하시기 바랍니다.
+                    </address>
+                </div>
             </div>
-        </footer>
+            {/* footer //E */}
+        </>
     );
 }
 

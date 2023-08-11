@@ -123,7 +123,7 @@ function App() {
 
     return (
         <>
-            <div className="wrap">
+            <div className="wrapper">
                 <CommonSpinner option={spinnerOption} />
 
                 <ConfirmContextProvider>
