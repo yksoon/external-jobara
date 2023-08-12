@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import $ from "jquery";
 import { useEffect } from "react";
+import { routerPath } from "webPath";
 
 const SubHeader = () => {
     useEffect(() => {
@@ -114,7 +115,7 @@ const SubHeader = () => {
             <div id="header">
                 <div id="header_content">
                     <h1 className="logo">
-                        <Link href="/">
+                        <Link to={routerPath.web_main_url}>
                             <img src="img/web/main/logo.png" alt="" />
                         </Link>
                     </h1>

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { apiPath, routerPath } from "webPath";
 import { useDispatch, useSelector } from "react-redux";
@@ -37,6 +37,20 @@ function SignUp() {
     const { alert } = useAlert();
     const err = { dispatch, alert };
 
+    // 참여프로그램 체크박스
+    const [checkItems, setCheckItems] = useState([]);
+
+    // 체크박스 단일 선택
+    const handleSingleCheck = (checked, id) => {
+        if (checked) {
+            // 단일 선택 시 체크된 아이템을 배열에 추가
+            setCheckItems((prev) => [...prev, id]);
+        } else {
+            // 단일 선택 해제 시 체크된 아이템을 제외한 배열 (필터)
+            setCheckItems(checkItems.filter((el) => el !== id));
+        }
+    };
+
     const signUpRefs = {
         inputID: useRef(null),
         inputPW: useRef(null),
@@ -49,90 +63,90 @@ function SignUp() {
         inputCaptcha: useRef(null),
         inputOrg: useRef(null),
         inputDepartment: useRef(null),
-        inputBirthYear: useRef(null),
-        inputBirthMonth: useRef(null),
-        inputBirthDay: useRef(null),
+        inputBirth: useRef(null),
         inputSpecialized: useRef(null),
         inputAttachmentFile: useRef(null),
     };
 
     // 제출
     const clickForm = () => {
-        if (validation()) {
-            dispatch(
-                set_spinner({
-                    isLoading: true,
-                })
-            );
+        // if (validation()) {
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
 
-            const formData = new FormData();
-            const model = signupMultiModel;
-            let data = {};
+        const formData = new FormData();
+        const model = signupMultiModel;
+        let data = {};
 
-            let fileArr = [];
-            let files = signUpRefs.inputAttachmentFile.current.files;
-            fileArr.push(signUpRefs.inputAttachmentFile.current.files[0]);
+        let fileArr = [];
+        let files = signUpRefs.inputAttachmentFile.current.files;
+        fileArr.push(signUpRefs.inputAttachmentFile.current.files[0]);
 
-            console.log(
-                Array.from(signUpRefs.inputAttachmentFile.current.files)
-            );
+        console.log(Array.from(signUpRefs.inputAttachmentFile.current.files));
 
-            data = {
-                ...model,
-                userId: signUpRefs.inputID.current.value,
-                userPwd: signUpRefs.inputPW.current.value,
-                userNameFirstKo: signUpRefs.inputFirstName.current.value,
-                userNameLastKo: signUpRefs.inputLastName.current.value,
-                mobile1: signUpRefs.inputMobile1.current.value,
-                mobile2: signUpRefs.inputMobile2.current.value,
-                mobile3: signUpRefs.inputMobile3.current.value,
-                securityCode: signUpRefs.inputCaptcha.current.value,
-                organizationNameKo: signUpRefs.inputOrg.current.value,
-                departmentNameKo: signUpRefs.inputDepartment.current.value,
-                birthYyyy: signUpRefs.inputBirthYear.current.value,
-                birthMm: signUpRefs.inputBirthMonth.current.value,
-                birthDd: signUpRefs.inputBirthDay.current.value,
-                specializedNameKo: signUpRefs.inputSpecialized.current.value,
-            };
+        // 생년월일 가공
+        const birthArr = signUpRefs.inputBirth.current.value.split("-");
 
-            // 기본 formData append
-            for (const key in data) {
-                formData.append(key, data[key]);
-            }
+        // TODO: 체크박스 두개 파라미터. 집에서 스웨거 주소 까먹어서...
+        data = {
+            ...model,
+            userId: signUpRefs.inputID.current.value,
+            userPwd: signUpRefs.inputPW.current.value,
+            userNameFirstKo: signUpRefs.inputFirstName.current.value,
+            userNameLastKo: signUpRefs.inputLastName.current.value,
+            mobile1: signUpRefs.inputMobile1.current.value,
+            mobile2: signUpRefs.inputMobile2.current.value,
+            mobile3: signUpRefs.inputMobile3.current.value,
+            securityCode: signUpRefs.inputCaptcha.current.value,
+            organizationNameKo: signUpRefs.inputOrg.current.value,
+            departmentNameKo: signUpRefs.inputDepartment.current.value,
+            birthYyyy: birthArr[0],
+            birthMm: birthArr[1],
+            birthDd: birthArr[2],
+            specializedNameKo: signUpRefs.inputSpecialized.current.value,
+        };
 
-            // 파일 formData append
-            fileArr = Array.from(signUpRefs.inputAttachmentFile.current.files);
-            let len = fileArr.length;
-            for (let i = 0; i < len; i++) {
-                formData.append("attachmentFile", fileArr[i]);
-            }
-
-            const responsLogic = (res) => {
-                dispatch(
-                    set_spinner({
-                        isLoading: true,
-                    })
-                );
-
-                CommonNotify({
-                    type: "alert",
-                    hook: alert,
-                    message: "가입 완료 되었습니다",
-                });
-
-                console.log(res);
-            };
-
-            const restParams = {
-                method: "post_multi",
-                url: apiPath.api_auth_reg_user,
-                data: formData,
-                err: err,
-                callback: (res) => responsLogic(res),
-            };
-
-            CommonRest(restParams);
+        // 기본 formData append
+        for (const key in data) {
+            formData.append(key, data[key]);
         }
+
+        // 파일 formData append
+        fileArr = Array.from(signUpRefs.inputAttachmentFile.current.files);
+        let len = fileArr.length;
+        for (let i = 0; i < len; i++) {
+            formData.append("attachmentFile", fileArr[i]);
+        }
+
+        // const responsLogic = (res) => {
+        //     dispatch(
+        //         set_spinner({
+        //             isLoading: true,
+        //         })
+        //     );
+
+        //     CommonNotify({
+        //         type: "alert",
+        //         hook: alert,
+        //         message: "가입 완료 되었습니다",
+        //     });
+
+        //     console.log(res);
+        // };
+
+        // const restParams = {
+        //     method: "post_multi",
+        //     url: apiPath.api_auth_reg_user,
+        //     data: formData,
+        //     err: err,
+        //     callback: (res) => responsLogic(res),
+        // };
+
+        // CommonRest(restParams);
+        // }
     };
 
     // 검증
@@ -256,55 +270,6 @@ function SignUp() {
 
     return (
         <>
-            {/* 컨텐츠 */}
-            {/* ID Component */}
-            {/* 아이디 */}
-            {/* <SignUpID ref={signUpRefs} /> */}
-
-            {/* PW Component */}
-            {/* 비밀번호 */}
-            {/* <SignUpPW ref={signUpRefs} /> */}
-
-            {/* Name Component */}
-            {/* 이름 */}
-            {/* <SignUpName ref={signUpRefs} /> */}
-
-            {/* Mobile Component */}
-            {/* 휴대전화 */}
-            {/* <SignUpMobile ref={signUpRefs} /> */}
-
-            {/* Org Component */}
-            {/* 학교 */}
-            {/* <SignUpOrg ref={signUpRefs} /> */}
-
-            {/* Department Component */}
-            {/* 학과 */}
-            {/* <SignUpDepartment ref={signUpRefs} /> */}
-
-            {/* Birthday Component */}
-            {/* 생년월일 */}
-            {/* <SignUpBirthday ref={signUpRefs} /> */}
-
-            {/* Specialized Component */}
-            {/* 희망직종 */}
-            {/* <SignUpSpecialized ref={signUpRefs} /> */}
-
-            {/* SignUpSpecialCheck Component */}
-            {/* 체크박스 */}
-            {/* <SignUpSpecialCheck ref={signUpRefs} /> */}
-
-            {/* SignUpFile Component */}
-            {/* 파일첨부 */}
-            {/* <SignUpFile ref={signUpRefs} /> */}
-
-            {/* Captcha Component */}
-            {/* Captcha */}
-            {/* <SignUpCaptcha ref={signUpRefs} /> */}
-
-            {/* <div style={{ marginTop: 20 }}>
-                            <Link onClick={(e) => clickForm()}>제출</Link>
-                        </div> */}
-
             <SubHeader />
 
             {/* 서브컨텐츠     //S */}
@@ -348,7 +313,10 @@ function SignUp() {
 
                                 {/* SignUpSpecialCheck Component */}
                                 {/* 참여프로그램 */}
-                                <SignUpSpecialCheck ref={signUpRefs} />
+                                <SignUpSpecialCheck
+                                    ref={signUpRefs}
+                                    handleSingleCheck={handleSingleCheck}
+                                />
 
                                 {/* SignUpFile Component */}
                                 {/* 파일첨부 */}
@@ -361,12 +329,22 @@ function SignUp() {
                         </table>
 
                         <div className="btnbox">
-                            <Link href="">사전등록하기</Link>
+                            <Link
+                                onClick={(e) => {
+                                    clickForm();
+                                    e.preventDefault();
+                                }}
+                                to={"#"}
+                            >
+                                사전등록하기
+                            </Link>
                         </div>
                     </div>
                 </div>
             </div>
             {/* 서브컨텐츠     //E */}
+
+            <Footer />
         </>
     );
 }

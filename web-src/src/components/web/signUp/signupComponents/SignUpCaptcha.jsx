@@ -66,7 +66,13 @@ const SignUpCaptcha = forwardRef((props, ref) => {
                         )}
                     </span>
                     <span>
-                        <Link onClick={(e) => refreshCaptcha()}>
+                        <Link
+                            onClick={(e) => {
+                                refreshCaptcha();
+                                e.preventDefault();
+                            }}
+                            to={"#"}
+                        >
                             <RefreshIcon />
                         </Link>
                     </span>

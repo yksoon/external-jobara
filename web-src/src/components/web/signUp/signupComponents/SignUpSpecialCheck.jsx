@@ -10,12 +10,14 @@ const SignUpSpecialCheck = forwardRef((props, ref) => {
     const err = { dispatch, alert };
     const [programInfo, setProgramInfo] = useState([]);
 
+    const handleSingleCheck = props.handleSingleCheck;
+
     useEffect(() => {
         getInfo();
     }, []);
 
     const responsLogic = (res) => {
-        // console.log(res);
+        console.log(res);
         let resultInfo = res.data.result_info;
 
         setProgramInfo(resultInfo);
@@ -32,6 +34,7 @@ const SignUpSpecialCheck = forwardRef((props, ref) => {
 
         CommonRest(restParams);
     };
+
     return (
         <>
             <tr>
@@ -39,11 +42,22 @@ const SignUpSpecialCheck = forwardRef((props, ref) => {
                 <td>
                     {programInfo &&
                         programInfo.map((item, idx) => (
-                            <label key={`program_${idx}`}>
-                                <input type="checkbox" />{" "}
-                                <b>{item.additional_name_ko}</b> (
-                                {item.additional_name_en})
-                            </label>
+                            <div key={`programsLabel_${idx}`}>
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        value={item.additional_idx}
+                                        onChange={(e) =>
+                                            handleSingleCheck(
+                                                e.target.checked,
+                                                item.additional_idx
+                                            )
+                                        }
+                                    />{" "}
+                                    <b>{item.additional_name_ko}</b> (
+                                    {item.additional_memo})
+                                </label>
+                            </div>
                         ))}
                     {/* <label>
                         <input type="checkbox" /> <b>NCS 모의고사</b>{" "}
