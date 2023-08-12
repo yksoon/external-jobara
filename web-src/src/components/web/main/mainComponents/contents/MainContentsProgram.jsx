@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 const MainContentsProgram = () => {
     return (
         <>
-            <div class="section02">
+            <div className="section02">
                 <div
-                    class="bar01"
+                    className="bar01"
                     data-aos="fade-right"
                     data-aos-delay="400"
                     data-aos-easing="linear"
@@ -13,89 +13,89 @@ const MainContentsProgram = () => {
                     <img src="img/web/main/bar_green.png" alt="" />
                 </div>
                 <div
-                    class="bar02"
+                    className="bar02"
                     data-aos="fade-left"
                     data-aos-delay="800"
                     data-aos-easing="linear"
                 >
                     <img src="img/web/main/bar_blue.png" alt="" />
                 </div>
-                <div class="cloud">
+                <div className="cloud">
                     <img src="img/web/main/cloud_pink.png" alt="" />
                 </div>
 
-                <div class="program">
+                <div className="program">
                     <h3>프로그램</h3>
                     <ul>
-                        <li class="p01" data-aos="flip-left">
-                            <span class="num">01</span>
+                        <li className="p01" data-aos="flip-left">
+                            <span className="num">01</span>
                             진로탐색
-                            <span class="icon">
+                            <span className="icon">
                                 <img src="img/web/main/picon01.png" alt="" />
                             </span>
                         </li>
                         <li
-                            class="p02"
+                            className="p02"
                             data-aos="flip-left"
                             data-aos-delay="300"
                         >
-                            <span class="num">02</span>
+                            <span className="num">02</span>
                             기업탐색
-                            <span class="icon">
+                            <span className="icon">
                                 <img src="img/web/main/picon02.png" alt="" />
                             </span>
                         </li>
                         <li
-                            class="p03"
+                            className="p03"
                             data-aos="flip-left"
                             data-aos-delay="600"
                         >
-                            <span class="num">03</span>
+                            <span className="num">03</span>
                             면접체험
-                            <span class="icon">
+                            <span className="icon">
                                 <img src="img/web/main/picon03.png" alt="" />
                             </span>
                         </li>
                         <li
-                            class="p04"
+                            className="p04"
                             data-aos="flip-left"
                             data-aos-delay="900"
                         >
-                            <span class="num">04</span>
+                            <span className="num">04</span>
                             NCS 모의고사
-                            <span class="icon">
+                            <span className="icon">
                                 <img src="img/web/main/picon04.png" alt="" />
                             </span>
                         </li>
                         <li
-                            class="p05"
+                            className="p05"
                             data-aos="flip-left"
                             data-aos-delay="1200"
                         >
-                            <span class="num">05</span>
+                            <span className="num">05</span>
                             현직자 토크콘서트
-                            <span class="icon">
+                            <span className="icon">
                                 <img src="img/web/main/picon05.png" alt="" />
                             </span>
                         </li>
                         <li
-                            class="p06"
+                            className="p06"
                             data-aos="flip-left"
                             data-aos-delay="1500"
                         >
-                            <span class="num">06</span>
+                            <span className="num">06</span>
                             기타 이벤트
-                            <span class="icon">
+                            <span className="icon">
                                 <img src="img/web/main/picon06.png" alt="" />
                             </span>
                         </li>
                     </ul>
                 </div>
 
-                <div class="company">
+                <div className="company">
                     <h3>참여기업</h3>
                     <div
-                        class="logobox"
+                        className="logobox"
                         data-aos="fade-up"
                         data-aos-duration="800"
                     >

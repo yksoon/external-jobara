@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.css": "./static/css/main.1d08a7f3.css",
-    "main.js": "./static/js/main.2d9ba51c.js",
-    "static/js/243.c34deb14.chunk.js": "./static/js/243.c34deb14.chunk.js",
-    "static/js/139.b7617616.chunk.js": "./static/js/139.b7617616.chunk.js",
+    "main.css": "./static/css/main.4b4e63ab.css",
+    "main.js": "./static/js/main.0c37b37a.js",
+    "static/js/799.2d1d3caf.chunk.js": "./static/js/799.2d1d3caf.chunk.js",
+    "static/js/608.70f1929c.chunk.js": "./static/js/608.70f1929c.chunk.js",
     "static/js/27.a4feda1c.chunk.js": "./static/js/27.a4feda1c.chunk.js",
-    "static/js/683.494a0bba.chunk.js": "./static/js/683.494a0bba.chunk.js",
+    "static/js/460.3760209c.chunk.js": "./static/js/460.3760209c.chunk.js",
     "static/media/chab.ttf": "./static/media/chab.73854a05b07c4f60f35d.ttf",
     "static/media/Pretendard-Bold.woff": "./static/media/Pretendard-Bold.dd56301118da9e158ce9.woff",
     "static/media/Pretendard-Medium.woff": "./static/media/Pretendard-Medium.f0cc544dcc84cf9f03b3.woff",
@@ -14,11 +14,12 @@
     "static/media/GmarketSansTTFMedium.woff": "./static/media/GmarketSansTTFMedium.c441bbe11105e62d9be7.woff",
     "static/media/GmarketSansTTFLight.woff": "./static/media/GmarketSansTTFLight.f3787517e506710aeb16.woff",
     "static/media/main_bg.png": "./static/media/main_bg.3a72fc654918a8402aec.png",
+    "static/media/sub_bg.jpg": "./static/media/sub_bg.15a0c8d87e92295d159e.jpg",
     "static/media/sec03_bg.png": "./static/media/sec03_bg.aedead899209586b7c1d.png",
     "index.html": "./index.html"
   },
   "entrypoints": [
-    "static/css/main.1d08a7f3.css",
-    "static/js/main.2d9ba51c.js"
+    "static/css/main.4b4e63ab.css",
+    "static/js/main.0c37b37a.js"
   ]
 }

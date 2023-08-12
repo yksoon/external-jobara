@@ -11,6 +11,7 @@ import {
     validateCaptcha,
 } from "react-simple-captcha";
 import { CircularProgress } from "@mui/material";
+import RefreshIcon from "@mui/icons-material/Refresh";
 
 const SignUpCaptcha = forwardRef((props, ref) => {
     const dispatch = useDispatch();
@@ -39,31 +40,45 @@ const SignUpCaptcha = forwardRef((props, ref) => {
         imgPromise.then(() => {
             imgElement.onload = () => {
                 setIsLoading(false);
+
+                inputCaptcha.current.focus();
             };
         });
     };
 
-    const getImg = () => {};
     return (
         <>
-            <div style={{ marginTop: 20 }}>
-                <div style={{ width: 150, height: 50 }}>
-                    {isLoading ? (
-                        <CircularProgress />
-                    ) : (
-                        <img
-                            className="imgClass"
-                            id="captchaImg"
-                            src={imgUrl}
-                            alt=""
-                            decoding="async"
-                            style={{ background: "white" }}
-                        />
-                    )}
-                </div>
-                <Link onClick={(e) => refreshCaptcha()}>새로고침</Link>
-                <input type="text" ref={inputCaptcha} />
-            </div>
+            <tr>
+                <th>자동입력방지</th>
+                <td>
+                    <span className="cap">
+                        {isLoading ? (
+                            <CircularProgress />
+                        ) : (
+                            <img
+                                className="imgClass"
+                                id="captchaImg"
+                                src={imgUrl}
+                                alt=""
+                                decoding="async"
+                                style={{ background: "white" }}
+                            />
+                        )}
+                    </span>
+                    <span>
+                        <Link
+                            onClick={(e) => {
+                                refreshCaptcha();
+                                e.preventDefault();
+                            }}
+                            to={"#"}
+                        >
+                            <RefreshIcon />
+                        </Link>
+                    </span>
+                    <input type="text" className="input_s" ref={inputCaptcha} />
+                </td>
+            </tr>
         </>
     );
 });
