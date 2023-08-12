@@ -120,6 +120,7 @@ function SignUp() {
         for (let i = 0; i < len; i++) {
             formData.append("attachmentFile", fileArr[i]);
         }
+        //aaaa
 
         // const responsLogic = (res) => {
         //     dispatch(
