@@ -21,29 +21,11 @@ const SignUpCaptcha = forwardRef((props, ref) => {
     const [isLoading, setIsLoading] = useState(false);
     const imgUrl = "http://jejujobara.com:60000/v1/captcha/img";
 
-    useEffect(() => {
-        // getImg("팡순이3");
-    }, []);
-
     const refreshCaptcha = () => {
-        setIsLoading(true);
-
         let imgElement = document.getElementById("captchaImg");
+
         imgElement.src = "";
         imgElement.src = imgUrl;
-
-        // promise 선언
-        let imgPromise = new Promise((resolve, reject) => {
-            resolve();
-        });
-
-        imgPromise.then(() => {
-            imgElement.onload = () => {
-                setIsLoading(false);
-
-                inputCaptcha.current.focus();
-            };
-        });
     };
 
     return (
@@ -53,7 +35,7 @@ const SignUpCaptcha = forwardRef((props, ref) => {
                 <td>
                     <span className="cap">
                         {isLoading ? (
-                            <CircularProgress />
+                            ""
                         ) : (
                             <img
                                 className="imgClass"
@@ -71,7 +53,6 @@ const SignUpCaptcha = forwardRef((props, ref) => {
                                 refreshCaptcha();
                                 e.preventDefault();
                             }}
-                            to={"#"}
                         >
                             <RefreshIcon />
                         </Link>

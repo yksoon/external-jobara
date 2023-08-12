@@ -293,6 +293,14 @@ function Header({ props }) {
                         <nav>
                             <ul id="nav">
                                 <li>
+                                    <Link
+                                        to={routerPath.web_main_url}
+                                        id="nav5"
+                                    >
+                                        홈
+                                    </Link>
+                                </li>
+                                <li>
                                     <Link href="" id="nav1">
                                         박람회안내
                                     </Link>
@@ -308,6 +316,14 @@ function Header({ props }) {
                                         id="nav3"
                                     >
                                         사전등록
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        to={routerPath.web_signupchk_url}
+                                        id="nav3"
+                                    >
+                                        사전등록 확인
                                     </Link>
                                 </li>
                                 <li>

@@ -34,9 +34,13 @@ const routerPath = {
     // /signup
     web_signup_url: `${base_url}signup`,
 
-    // 회원가입 완료
-    // /signupok
-    web_signupok_url: `${base_url}signupok`,
+    // 사전등록 확인
+    // /signupchk
+    web_signupchk_url: `${base_url}signupchk`,
+
+    // 사전등록 수정
+    // /signup_mod
+    web_signup_mod_url: `${base_url}signup_mod`,
 
     // ---------------------- admin -------------------------
     // 메인
@@ -83,8 +87,8 @@ const apiPath = {
     api_auth_signout: `${version + slash}signout`,
 
     // /v1/_user
-    // POST(multi)
-    // 등록
+    // POST(multi) 등록
+    // PUT(multi) 수정
     api_auth_reg_user: `${version + slash}_user`,
 
     // ------------------ Refresh ------------------

@@ -34,6 +34,18 @@ div.mo_title > h4{font-size: 24px;font-weight: 700;}
 .alert .noti_icon {text-align:center;display: block;margin:0 0 24px;}
 .alert .noti_icon img {width: 80px;}
 .alert{ -ms-overflow-style: none; } .alert::-webkit-scrollbar{ display:none; }
+a.backbtn {
+    display: inline-block;
+    height: 53px;
+    line-height: 53px;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 50px;
+    transition: all 0.3s;
+    border: 1px solid #ddd;
+    padding: 0 60px;
+    color: #bdbdbd;
+}
 /* alert */
 
 

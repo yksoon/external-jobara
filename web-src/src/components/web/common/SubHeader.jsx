@@ -142,6 +142,14 @@ const SubHeader = () => {
                             </li>
                             <li>
                                 <Link href="">사전등록</Link>
+                                <div className="submenu">
+                                    <Link to={routerPath.web_signup_url}>
+                                        사전등록
+                                    </Link>
+                                    <Link to={routerPath.web_signupchk_url}>
+                                        사전등록 확인
+                                    </Link>
+                                </div>
                             </li>
                             <li>
                                 <Link href="">참여기업</Link>
@@ -168,6 +176,14 @@ const SubHeader = () => {
                         <nav>
                             <ul id="nav">
                                 <li>
+                                    <Link
+                                        to={routerPath.web_main_url}
+                                        id="nav5"
+                                    >
+                                        홈
+                                    </Link>
+                                </li>
+                                <li>
                                     <Link href="" id="nav1">
                                         박람회안내
                                     </Link>
@@ -178,8 +194,19 @@ const SubHeader = () => {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="" id="nav3">
+                                    <Link
+                                        to={routerPath.web_signup_url}
+                                        id="nav3"
+                                    >
                                         사전등록
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        to={routerPath.web_signupchk_url}
+                                        id="nav3"
+                                    >
+                                        사전등록 확인
                                     </Link>
                                 </li>
                                 <li>

@@ -1,56 +1,35 @@
-import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { apiPath, routerPath } from "webPath";
-import { useDispatch, useSelector } from "react-redux";
-import { RestServer } from "common/js/Rest";
-
-import Header from "components/web/common/Header";
-import Footer from "components/web/common/Footer";
-
-import {
-    CommonConsole,
-    CommonNotify,
-    CommonRest,
-    CommonSpinner,
-} from "common/js/Common";
-import { set_spinner } from "redux/actions/commonAction";
-import useAlert from "hook/useAlert";
-
-import SignUpID from "./signupComponents/SignUpID";
-import SignUpPW from "./signupComponents/SignUpPW";
-import SignUpCaptcha from "./signupComponents/SignUpCaptcha";
-import SignUpName from "./signupComponents/SignUpName";
-import SignUpMobile from "./signupComponents/SignUpMobile";
-import SignUpOrg from "./signupComponents/SignUpOrg";
-import SignUpDepartment from "./signupComponents/SignUpDepartment";
-import SignUpBirthday from "./signupComponents/SignUpBirthday";
-import SignUpSpecialized from "./signupComponents/SignUpSpecialized";
-import SignUpSpecialCheck from "./signupComponents/SignUpSpecialCheck";
-import SignUpFile from "./signupComponents/SignUpFile";
-import { signupModel, signupMultiModel } from "models/user/signUp";
-import { idPattern, pwPattern } from "common/js/Pattern";
+import Footer from "../common/Footer";
 import SubHeader from "../common/SubHeader";
+import SignUpModID from "./signUpModComponents/SignUpModID";
+import { useEffect, useRef, useState } from "react";
+import SignUpModName from "./signUpModComponents/SignUpModName";
+import SignUpModMobile from "./signUpModComponents/SignUpModMobile";
+import SignUpModOrg from "./signUpModComponents/SignUpModOrg";
+import SignUpModDepartment from "./signUpModComponents/SignUpModDepartment";
+import SignUpModBirthday from "./signUpModComponents/SignUpModBirthday";
+import SignUpModSpecialized from "./signUpModComponents/SignUpModSpecialized";
+import SignUpModSpecialCheck from "./signUpModComponents/SignUpModSpecialCheck";
+import SignUpModFile from "./signUpModComponents/SignUpModFile";
+import { useDispatch, useSelector } from "react-redux";
+import { apiPath, routerPath } from "webPath";
+import useAlert from "hook/useAlert";
+import { set_spinner } from "redux/actions/commonAction";
+import { CommonNotify, CommonRest } from "common/js/Common";
+import { idPattern } from "common/js/Pattern";
+import { signupMultiModel } from "models/user/signUp";
 
-// 회원가입
-function SignUp() {
+const SignUpMod = () => {
     const dispatch = useDispatch();
     const { alert } = useAlert();
     const err = { dispatch, alert };
-    const navigate = useNavigate();
 
+    const navigate = useNavigate();
     // 참여프로그램 체크박스
     const [checkItems, setCheckItems] = useState([]);
 
-    // 체크박스 단일 선택
-    const handleSingleCheck = (checked, id) => {
-        if (checked) {
-            // 단일 선택 시 체크된 아이템을 배열에 추가
-            setCheckItems((prev) => [...prev, id]);
-        } else {
-            // 단일 선택 해제 시 체크된 아이템을 제외한 배열 (필터)
-            setCheckItems(checkItems.filter((el) => el !== id));
-        }
-    };
+    const userToken = useSelector((state) => state.userInfo.userToken);
+    const userInfo = useSelector((state) => state.userInfo.userInfo);
 
     const signUpRefs = {
         inputID: useRef(null),
@@ -61,12 +40,63 @@ function SignUp() {
         inputMobile1: useRef(null),
         inputMobile2: useRef(null),
         inputMobile3: useRef(null),
-        inputCaptcha: useRef(null),
+        // inputCaptcha: useRef(null),
         inputOrg: useRef(null),
         inputDepartment: useRef(null),
         inputBirth: useRef(null),
         inputSpecialized: useRef(null),
         inputAttachmentFile: useRef(null),
+    };
+
+    useEffect(() => {
+        if (!userToken) {
+            navigate(routerPath.web_main_url);
+        } else {
+            getDefaultValue();
+        }
+    }, []);
+
+    const getDefaultValue = () => {
+        dispatch(
+            set_spinner({
+                isLoading: true,
+            })
+        );
+
+        // console.log("userInfouserInfouserInfo", userInfo);
+
+        if (userInfo) {
+            // 생일 가공
+            const year = userInfo.birth_yyyy;
+            const month = userInfo.birth_mm;
+            const day = userInfo.birth_dd;
+            const birthday = year + "-" + month + "-" + day;
+
+            signUpRefs.inputID.current.value = userInfo.user_id;
+            signUpRefs.inputFirstName.current.value =
+                userInfo.user_name_first_ko;
+            signUpRefs.inputLastName.current.value = userInfo.user_name_last_ko;
+            signUpRefs.inputBirth.current.value = birthday;
+            signUpRefs.inputMobile1.current.value = userInfo.mobile1;
+            signUpRefs.inputMobile2.current.value = userInfo.mobile2;
+            signUpRefs.inputMobile3.current.value = userInfo.mobile3;
+            signUpRefs.inputOrg.current.value = userInfo.organization_name_ko;
+            signUpRefs.inputDepartment.current.value =
+                userInfo.department_name_ko;
+            signUpRefs.inputSpecialized.current.value =
+                userInfo.specialized_name_ko;
+        }
+    };
+
+    // 체크박스 단일 선택
+    const handleSingleCheck = (checked, id) => {
+        if (checked) {
+            // 단일 선택 시 체크된 아이템을 배열에 추가
+            setCheckItems((prev) => [...prev, id]);
+        } else {
+            // 단일 선택 해제 시 체크된 아이템을 제외한 배열 (필터)
+            setCheckItems(checkItems.filter((el) => el !== id));
+        }
     };
 
     // 제출
@@ -102,7 +132,7 @@ function SignUp() {
                 mobile1: signUpRefs.inputMobile1.current.value,
                 mobile2: signUpRefs.inputMobile2.current.value,
                 mobile3: signUpRefs.inputMobile3.current.value,
-                securityCode: signUpRefs.inputCaptcha.current.value,
+                // securityCode: signUpRefs.inputCaptcha.current.value,
                 organizationNameKo: signUpRefs.inputOrg.current.value,
                 departmentNameKo: signUpRefs.inputDepartment.current.value,
                 birthYyyy: birthArr[0],
@@ -127,11 +157,6 @@ function SignUp() {
             const responsLogic = (res) => {
                 let result_code = res.headers.result_code;
                 if (result_code === "0000") {
-                    // 등록 완료 후 확인페이지 이동
-                    const goToChk = () => {
-                        navigate(routerPath.web_signupchk_url);
-                    };
-
                     dispatch(
                         set_spinner({
                             isLoading: false,
@@ -141,8 +166,7 @@ function SignUp() {
                     CommonNotify({
                         type: "alert",
                         hook: alert,
-                        message: "사전등록이 완료 되었습니다",
-                        callback: goToChk(),
+                        message: "사전등록 수정이 완료 되었습니다",
                     });
                 } else {
                     dispatch(
@@ -160,7 +184,7 @@ function SignUp() {
             };
 
             const restParams = {
-                method: "post_multi",
+                method: "put_multi",
                 url: apiPath.api_auth_reg_user, // /v1/_user
                 data: formData,
                 err: err,
@@ -174,16 +198,16 @@ function SignUp() {
     // 검증
     const validation = () => {
         // --------------------아이디----------------------
-        if (!signUpRefs.inputID.current.value) {
-            signupAlert("아이디를 입력해주세요");
-            signUpRefs.inputID.current.focus();
-            return false;
-        }
-        if (!idPattern.test(signUpRefs.inputID.current.value)) {
-            signupAlert("아이디는 4글자이상 20글자 이하입니다");
-            signUpRefs.inputID.current.focus();
-            return false;
-        }
+        // if (!signUpRefs.inputID.current.value) {
+        //     signupAlert("아이디를 입력해주세요");
+        //     signUpRefs.inputID.current.focus();
+        //     return false;
+        // }
+        // if (!idPattern.test(signUpRefs.inputID.current.value)) {
+        //     signupAlert("아이디는 4글자이상 20글자 이하입니다");
+        //     signUpRefs.inputID.current.focus();
+        //     return false;
+        // }
 
         // --------------------비밀번호----------------------
         // if (!signUpRefs.inputPW.current.value) {
@@ -269,11 +293,11 @@ function SignUp() {
         }
 
         // --------------------captcha----------------------
-        if (!signUpRefs.inputCaptcha.current.value) {
-            signupAlert("보안번호를 입력해주세요");
-            signUpRefs.inputCaptcha.current.focus();
-            return false;
-        }
+        // if (!signUpRefs.inputCaptcha.current.value) {
+        //     signupAlert("보안번호를 입력해주세요");
+        //     signUpRefs.inputCaptcha.current.focus();
+        //     return false;
+        // }
         return true;
     };
 
@@ -293,7 +317,7 @@ function SignUp() {
             {/* 서브컨텐츠     //S */}
             <div id="container" className="sub_container">
                 <div id="content">
-                    <h2 id="subtitle">사전등록</h2>
+                    <h2 id="subtitle">사전등록수정</h2>
                     <div className="registration">
                         <table className="regi_form">
                             <colgroup>
@@ -303,50 +327,46 @@ function SignUp() {
                             <tbody>
                                 {/* ID Component */}
                                 {/* 아이디 */}
-                                <SignUpID ref={signUpRefs} />
-
-                                {/* PW Component */}
-                                {/* 비밀번호 */}
-                                {/* <SignUpPW ref={signUpRefs} /> */}
+                                <SignUpModID ref={signUpRefs} />
 
                                 {/* Name Component */}
                                 {/* 이름 */}
-                                <SignUpName ref={signUpRefs} />
+                                <SignUpModName ref={signUpRefs} />
 
                                 {/* Mobile Component */}
                                 {/* 휴대전화 */}
-                                <SignUpMobile ref={signUpRefs} />
+                                <SignUpModMobile ref={signUpRefs} />
 
                                 {/* Org Component */}
                                 {/* 학교 */}
-                                <SignUpOrg ref={signUpRefs} />
+                                <SignUpModOrg ref={signUpRefs} />
 
                                 {/* Department Component */}
                                 {/* 학과 */}
-                                <SignUpDepartment ref={signUpRefs} />
+                                <SignUpModDepartment ref={signUpRefs} />
 
                                 {/* Birthday Component */}
                                 {/* 생년월일 */}
-                                <SignUpBirthday ref={signUpRefs} />
+                                <SignUpModBirthday ref={signUpRefs} />
 
                                 {/* Specialized Component */}
                                 {/* 희망직종 */}
-                                <SignUpSpecialized ref={signUpRefs} />
+                                <SignUpModSpecialized ref={signUpRefs} />
 
                                 {/* SignUpSpecialCheck Component */}
                                 {/* 참여프로그램 */}
-                                <SignUpSpecialCheck
+                                <SignUpModSpecialCheck
                                     ref={signUpRefs}
                                     handleSingleCheck={handleSingleCheck}
+                                    userInfo={userInfo}
                                 />
 
                                 {/* SignUpFile Component */}
                                 {/* 파일첨부 */}
-                                <SignUpFile ref={signUpRefs} />
-
-                                {/* Captcha Component */}
-                                {/* Captcha */}
-                                <SignUpCaptcha ref={signUpRefs} />
+                                <SignUpModFile
+                                    ref={signUpRefs}
+                                    userInfo={userInfo}
+                                />
                             </tbody>
                         </table>
 
@@ -357,7 +377,7 @@ function SignUp() {
                                     e.preventDefault();
                                 }}
                             >
-                                사전등록하기
+                                사전등록수정하기
                             </Link>
                         </div>
                     </div>
@@ -368,6 +388,6 @@ function SignUp() {
             <Footer />
         </>
     );
-}
+};
 
-export default SignUp;
+export default SignUpMod;

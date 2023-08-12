@@ -1,7 +1,7 @@
 import { mobile1Pattern, mobile2Pattern } from "common/js/Pattern";
 import { forwardRef } from "react";
 
-const SignUpMobile = forwardRef((props, ref) => {
+const SignUpModMobile = forwardRef((props, ref) => {
     const { inputMobile1, inputMobile2, inputMobile3 } = ref;
 
     const mobileHandler = (e) => {
@@ -76,4 +76,4 @@ const SignUpMobile = forwardRef((props, ref) => {
     );
 });
 
-export default SignUpMobile;
+export default SignUpModMobile;
