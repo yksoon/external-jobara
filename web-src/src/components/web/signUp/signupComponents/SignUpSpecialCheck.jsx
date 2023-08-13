@@ -2,14 +2,16 @@ import { CommonRest } from "common/js/Common";
 import useAlert from "hook/useAlert";
 import { forwardRef, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 import { set_spinner } from "redux/actions/commonAction";
-import { apiPath } from "webPath";
+import { apiPath, routerPath } from "webPath";
 
 const SignUpSpecialCheck = forwardRef((props, ref) => {
     const dispatch = useDispatch();
     const { alert } = useAlert();
     const err = { dispatch, alert };
     const [programInfo, setProgramInfo] = useState([]);
+    const navigate = useNavigate();
 
     const handleSingleCheck = props.handleSingleCheck;
 
@@ -31,7 +33,13 @@ const SignUpSpecialCheck = forwardRef((props, ref) => {
     };
 
     const errLogic = (error) => {
-        console.log("11111111111", error);
+        dispatch(
+            set_spinner({
+                isLoading: false,
+            })
+        );
+
+        navigate(routerPath.web_main_url);
     };
 
     const getInfo = () => {
