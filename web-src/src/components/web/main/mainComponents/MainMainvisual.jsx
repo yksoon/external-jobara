@@ -24,7 +24,7 @@ const MainMainvisual = () => {
     }, [viewSchedule]);
 
     const imgLoded = (e) => {
-        console.log(e);
+        // console.log(e);
         setImgChange(true);
     };
 
