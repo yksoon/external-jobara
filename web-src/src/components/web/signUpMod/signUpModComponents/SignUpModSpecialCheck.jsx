@@ -2,8 +2,9 @@ import { CommonRest } from "common/js/Common";
 import useAlert from "hook/useAlert";
 import { forwardRef, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 import { set_spinner } from "redux/actions/commonAction";
-import { apiPath } from "webPath";
+import { apiPath, routerPath } from "webPath";
 
 const SignUpModSpecialCheck = forwardRef((props, ref) => {
     const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const SignUpModSpecialCheck = forwardRef((props, ref) => {
 
     const handleSingleCheck = props.handleSingleCheck;
     const userInfo = props.userInfo;
+    const navigate = useNavigate();
 
     useEffect(() => {
         getInfo();
@@ -31,6 +33,16 @@ const SignUpModSpecialCheck = forwardRef((props, ref) => {
         );
     };
 
+    const errLogic = (error) => {
+        dispatch(
+            set_spinner({
+                isLoading: false,
+            })
+        );
+
+        navigate(routerPath.web_main_url);
+    };
+
     const getInfo = () => {
         const restParams = {
             method: "get",
@@ -38,6 +50,7 @@ const SignUpModSpecialCheck = forwardRef((props, ref) => {
             data: {},
             err: err,
             callback: (res) => responsLogic(res),
+            errCallback: (error) => errLogic(error),
         };
 
         CommonRest(restParams);

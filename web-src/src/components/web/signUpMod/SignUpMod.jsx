@@ -72,6 +72,9 @@ const SignUpMod = () => {
             const day = userInfo.birth_dd;
             const birthday = year + "-" + month + "-" + day;
 
+            // 참여프로그램 세팅
+            setCheckItems(userInfo.additional_info);
+
             signUpRefs.inputID.current.value = userInfo.user_id;
             signUpRefs.inputFirstName.current.value =
                 userInfo.user_name_first_ko;
@@ -140,6 +143,9 @@ const SignUpMod = () => {
                 birthDd: birthArr[2],
                 specializedNameKo: signUpRefs.inputSpecialized.current.value,
                 additionalIdxs: checkItems.join(),
+                organizationIdx: userInfo.organization_idx,
+                specializedIdx: userInfo.specialized_idx,
+                departmentIdx: userInfo.department_idx,
             };
 
             // 기본 formData append
@@ -286,11 +292,11 @@ const SignUpMod = () => {
         }
 
         // --------------------파일----------------------
-        if (!signUpRefs.inputAttachmentFile.current.value) {
-            signupAlert("이력서를 첨부해주세요");
-            signUpRefs.inputAttachmentFile.current.focus();
-            return false;
-        }
+        // if (!signUpRefs.inputAttachmentFile.current.value) {
+        //     signupAlert("이력서를 첨부해주세요");
+        //     signUpRefs.inputAttachmentFile.current.focus();
+        //     return false;
+        // }
 
         // --------------------captcha----------------------
         // if (!signUpRefs.inputCaptcha.current.value) {

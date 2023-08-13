@@ -2,6 +2,7 @@ import { CommonRest } from "common/js/Common";
 import useAlert from "hook/useAlert";
 import { forwardRef, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { set_spinner } from "redux/actions/commonAction";
 import { apiPath } from "webPath";
 
 const SignUpSpecialCheck = forwardRef((props, ref) => {
@@ -21,6 +22,16 @@ const SignUpSpecialCheck = forwardRef((props, ref) => {
         let resultInfo = res.data.result_info;
 
         setProgramInfo(resultInfo);
+
+        dispatch(
+            set_spinner({
+                isLoading: false,
+            })
+        );
+    };
+
+    const errLogic = (error) => {
+        console.log("11111111111", error);
     };
 
     const getInfo = () => {
@@ -30,6 +41,7 @@ const SignUpSpecialCheck = forwardRef((props, ref) => {
             data: {},
             err: err,
             callback: (res) => responsLogic(res),
+            errCallback: (error) => errLogic(error),
         };
 
         CommonRest(restParams);

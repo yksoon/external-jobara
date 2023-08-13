@@ -168,7 +168,7 @@ const CommonSpinner = (props) => {
 };
 
 // 에러처리
-const CommonErrorCatch = (error, dispatch, alert) => {
+const CommonErrorCatch = async (error, dispatch, alert, errCallback) => {
     // 오류발생시 실행
     CommonConsole("log", error);
 
@@ -184,6 +184,8 @@ const CommonErrorCatch = (error, dispatch, alert) => {
                 type: "alert",
                 hook: alert,
                 message: "잠시 후 다시 시도해주세요",
+                callback: (error) => errCallback(error),
+                error: error,
             });
         }
         // 비정상접근 or 비정상토큰
@@ -205,6 +207,8 @@ const CommonErrorCatch = (error, dispatch, alert) => {
                 type: "alert",
                 hook: alert,
                 message: error.response.headers.result_message_ko,
+                callback: (error) => errCallback(error),
+                error: error,
             });
         }
     } else {
@@ -227,6 +231,8 @@ const CommonErrorCatch = (error, dispatch, alert) => {
             type: "alert",
             hook: alert,
             message: "잠시 후 다시 시도해주세요",
+            callback: (error) => errCallback(error),
+            error: error,
         });
     }
 };
@@ -236,7 +242,8 @@ const CommonNotify = async (option) => {
     const type = option.type;
     const hook = option.hook;
     const message = option.message;
-    const callback = option.callback ? option.callback : null;
+    const error = option.error ? option.error : null;
+    const callback = option.callback ? (prams) => option.callback(prams) : null;
 
     switch (type) {
         case "confirm":
@@ -253,7 +260,7 @@ const CommonNotify = async (option) => {
                     const type = typeof callback;
 
                     if (type === "function") {
-                        callback();
+                        callback(error);
                     }
                 }
             }
@@ -274,7 +281,7 @@ const CommonNotify = async (option) => {
                     const type = typeof callback;
 
                     if (type === "function") {
-                        callback();
+                        callback(error);
                     }
                 }
             }
@@ -295,7 +302,7 @@ url : ""
 data : {}
 callback : callback()
 */
-const CommonRest = async (restParams) => {
+const CommonRest = async (restParams = {}) => {
     const dispatch = restParams.err.dispatch;
     const alert = restParams.err.alert ? restParams.err.alert : "";
 
@@ -308,7 +315,13 @@ const CommonRest = async (restParams) => {
             restParams.callback(response);
         })
         .catch((error) => {
-            CommonErrorCatch(error, dispatch, alert);
+            CommonErrorCatch(error, dispatch, alert, (error) =>
+                restParams.errCallback(error)
+            );
+
+            // console.log(restParams);
+
+            // restParams.errCallback(error);
             // console.log(error);
             // func(error);
         });

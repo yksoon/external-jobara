@@ -20,7 +20,7 @@ const Router = () => {
     // 페이지 url 라우팅 추가 필요시 아래에 추가하세요
     return (
         <>
-            // Route 밖에 Suspense로 감싼다
+            {/* Route 밖에 Suspense로 감싼다 */}
             <Suspense
                 fallback={
                     <Backdrop
