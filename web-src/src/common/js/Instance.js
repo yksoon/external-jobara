@@ -8,11 +8,10 @@ let token;
 const Instance = axios.create({
     headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
     },
     timeout: 5000,
 });
-
+Instance.defaults.withCredentials = true;
 /*
     REST CONNECTION 시 Request 를 가로채서
     request.headers 를 셋팅한다.
@@ -40,10 +39,10 @@ Instance.interceptors.request.use(
 const Instance_multi = axios.create({
     headers: {
         "Content-Type": "multipart/form-data",
-        "Access-Control-Allow-Origin": "*",
     },
     timeout: 5000,
 });
+Instance_multi.defaults.withCredentials = true;
 
 Instance_multi.interceptors.request.use(
     (config) => {
