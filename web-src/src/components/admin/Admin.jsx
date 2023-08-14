@@ -44,6 +44,7 @@ const Admin = () => {
         const data = {};
         RestServer("get", url, data)
             .then((response) => {
+                console.log("222222222222222222", response);
                 const res = response;
                 const result_code = res.headers.result_code;
                 let resData = [];
