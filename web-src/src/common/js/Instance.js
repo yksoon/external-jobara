@@ -8,6 +8,7 @@ let token;
 const Instance = axios.create({
     headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
     },
     timeout: 5000,
 });
@@ -39,6 +40,7 @@ Instance.interceptors.request.use(
 const Instance_multi = axios.create({
     headers: {
         "Content-Type": "multipart/form-data",
+        "Access-Control-Allow-Origin": "*",
     },
     timeout: 5000,
 });
