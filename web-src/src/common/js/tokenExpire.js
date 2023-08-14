@@ -39,7 +39,7 @@ const tokenExpire = (dispatch, alert) => {
                     })
                 );
 
-                window.location.replace(routerPath.login_url);
+                window.location.replace(routerPath.admin_login_url);
             }
         })
         .catch(function (error) {

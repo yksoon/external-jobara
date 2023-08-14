@@ -32,16 +32,6 @@ const SignUpSpecialCheck = forwardRef((props, ref) => {
         );
     };
 
-    const errLogic = (error) => {
-        dispatch(
-            set_spinner({
-                isLoading: false,
-            })
-        );
-
-        navigate(routerPath.web_main_url);
-    };
-
     const getInfo = () => {
         const restParams = {
             method: "get",
@@ -49,7 +39,6 @@ const SignUpSpecialCheck = forwardRef((props, ref) => {
             data: {},
             err: err,
             callback: (res) => responsLogic(res),
-            errCallback: (error) => errLogic(error),
         };
 
         CommonRest(restParams);

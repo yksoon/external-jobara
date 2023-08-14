@@ -1,24 +1,54 @@
-import { Instance, Instance_multi } from "./Instance";
+import {
+    Instance,
+    Instance_multi,
+    Instance_admin,
+    Instance_admin_multi,
+} from "./Instance";
 
-const RestServer = (method, url, data) => {
+const RestServer = (method, url, data, admin) => {
     switch (method) {
         case "get":
-            return Instance.get(url, data);
+            const retGet =
+                admin === "Y"
+                    ? Instance_admin.get(url, data)
+                    : Instance.get(url, data);
+            return retGet;
 
         case "post":
-            return Instance.post(url, data);
+            const retPost =
+                admin === "Y"
+                    ? Instance_admin.post(url, data)
+                    : Instance.post(url, data);
+            return retPost;
 
         case "put":
-            return Instance.put(url, data);
+            const retPut =
+                admin === "Y"
+                    ? Instance_admin.put(url, data)
+                    : Instance.put(url, data);
+            return retPut;
 
         case "delete":
-            return Instance.delete(url, data);
+            const retDelete =
+                admin === "Y"
+                    ? Instance_admin.delete(url, data)
+                    : Instance.delete(url, data);
+            return retDelete;
 
         case "post_multi":
-            return Instance_multi.post(url, data);
+            const retAdminPost =
+                admin === "Y"
+                    ? Instance_admin_multi.post(url, data)
+                    : Instance_multi.post(url, data);
+            return retAdminPost;
 
         case "put_multi":
-            return Instance_multi.put(url, data);
+            const retAdminPut =
+                admin === "Y"
+                    ? Instance_admin_multi.put(url, data)
+                    : Instance_multi.put(url, data);
+            return retAdminPut;
+
         default:
             break;
     }

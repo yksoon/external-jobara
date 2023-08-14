@@ -18,6 +18,7 @@ import { set_spinner } from "redux/actions/commonAction";
 import { CommonNotify, CommonRest } from "common/js/Common";
 import { idPattern } from "common/js/Pattern";
 import { signupMultiModel } from "models/user/signUp";
+import { set_user_info } from "redux/actions/userInfoAction";
 
 const SignUpMod = () => {
     const dispatch = useDispatch();
@@ -73,7 +74,14 @@ const SignUpMod = () => {
             const birthday = year + "-" + month + "-" + day;
 
             // 참여프로그램 세팅
-            setCheckItems(userInfo.additional_info);
+            let additionalArr = [];
+            let length = userInfo.additional_info.length;
+
+            for (let i = 0; i < length; i++) {
+                additionalArr.push(userInfo.additional_info[i].additional_idx);
+            }
+
+            setCheckItems(additionalArr);
 
             signUpRefs.inputID.current.value = userInfo.user_id;
             signUpRefs.inputFirstName.current.value =
@@ -173,6 +181,7 @@ const SignUpMod = () => {
                         type: "alert",
                         hook: alert,
                         message: "사전등록 수정이 완료 되었습니다",
+                        callback: () => requestUserInfo(),
                     });
                 } else {
                     dispatch(
@@ -199,6 +208,26 @@ const SignUpMod = () => {
 
             CommonRest(restParams);
         }
+    };
+
+    const requestUserInfo = () => {
+        const userIdx = userInfo.user_idx;
+
+        const restParams = {
+            method: "get",
+            url: apiPath.api_auth_user_idx + userIdx, // /v1/user/{user_idx}
+            data: {},
+            err: err,
+            callback: (res) => responsLogicUserInfo(res),
+        };
+
+        CommonRest(restParams);
+
+        const responsLogicUserInfo = (res) => {
+            const resultInfo = res.data.result_info;
+
+            dispatch(set_user_info(JSON.stringify(resultInfo)));
+        };
     };
 
     // 검증
@@ -365,6 +394,7 @@ const SignUpMod = () => {
                                     ref={signUpRefs}
                                     handleSingleCheck={handleSingleCheck}
                                     userInfo={userInfo}
+                                    checkItems={checkItems}
                                 />
 
                                 {/* SignUpFile Component */}

@@ -23,13 +23,13 @@ const SideNav = (props) => {
     const navigate = useNavigate();
     const { alert } = useAlert();
 
-    let userInfo;
+    let userInfoAdmin;
     const switchPage = props.switchPage;
 
     const dispatch = useDispatch();
 
     (() => {
-        userInfo = props.userInfo;
+        userInfoAdmin = props.userInfoAdmin;
     })();
 
     const navList = props.menuList;
@@ -217,10 +217,15 @@ const SideNav = (props) => {
             <header>
                 <div className="gnb">
                     <div className="adm_profile">
-                        <Link onClick={(e) => modUser(userInfo.user_idx)}>
+                        <Link onClick={(e) => modUser(userInfoAdmin.user_idx)}>
                             <p>
-                                <span>{userInfo && userInfo.user_name_ko}</span>
-                                <span>({userInfo && userInfo.user_id})</span>
+                                <span>
+                                    {userInfoAdmin &&
+                                        userInfoAdmin.user_name_ko}
+                                </span>
+                                <span>
+                                    ({userInfoAdmin && userInfoAdmin.user_id})
+                                </span>
                             </p>
                         </Link>
 

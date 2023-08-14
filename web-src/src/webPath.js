@@ -135,6 +135,12 @@ const apiPath = {
     // api_user_check: `${base_api_url + slash + version + slash}user/_check`,
     api_user_check: `${slash + version + slash}user/_check`,
 
+    // /v1/user/{user_idx}
+    // GET
+    // 유저 상세
+    // api_auth_user_idx: `${base_api_url + slash + version + slash}user/`,
+    api_auth_user_idx: `${slash + version + slash}user/`,
+
     // ------------------ Schedule API 스케줄 관리 API ------------------
     // /v1/schedules
     // GET

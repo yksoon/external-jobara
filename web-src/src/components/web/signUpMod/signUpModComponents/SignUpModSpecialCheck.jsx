@@ -14,13 +14,14 @@ const SignUpModSpecialCheck = forwardRef((props, ref) => {
 
     const handleSingleCheck = props.handleSingleCheck;
     const userInfo = props.userInfo;
+    const checkItems = props.checkItems;
     const navigate = useNavigate();
 
     useEffect(() => {
         getInfo();
     }, []);
 
-    const responsLogic = (res) => {
+    const responsLogic = async (res) => {
         // console.log(res);
         let resultInfo = res.data.result_info;
 
@@ -33,16 +34,6 @@ const SignUpModSpecialCheck = forwardRef((props, ref) => {
         );
     };
 
-    const errLogic = (error) => {
-        dispatch(
-            set_spinner({
-                isLoading: false,
-            })
-        );
-
-        navigate(routerPath.web_main_url);
-    };
-
     const getInfo = () => {
         const restParams = {
             method: "get",
@@ -50,7 +41,6 @@ const SignUpModSpecialCheck = forwardRef((props, ref) => {
             data: {},
             err: err,
             callback: (res) => responsLogic(res),
-            errCallback: (error) => errLogic(error),
         };
 
         CommonRest(restParams);
@@ -73,6 +63,13 @@ const SignUpModSpecialCheck = forwardRef((props, ref) => {
                                                 e.target.checked,
                                                 item.additional_idx
                                             )
+                                        }
+                                        checked={
+                                            checkItems.includes(
+                                                item.additional_idx
+                                            )
+                                                ? true
+                                                : false
                                         }
                                     />{" "}
                                     <b>{item.additional_name_ko}</b> (

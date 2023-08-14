@@ -95,7 +95,6 @@ const signupMultiModel = {
     firstSigninYn: "",
     lastSigninDttm: "",
     fileContent: "",
-    attachmentFile: [],
     userIdxs: "",
 };
 

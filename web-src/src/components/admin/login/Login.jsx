@@ -3,6 +3,7 @@ import {
     CommonConsole,
     CommonErrorCatch,
     CommonNotify,
+    CommonRest,
 } from "common/js/Common";
 import { RestServer } from "common/js/Rest";
 import React, { useEffect, useRef } from "react";
@@ -16,18 +17,26 @@ import {
     set_user_token,
 } from "redux/actions/userInfoAction";
 import { apiPath, routerPath } from "webPath";
+import {
+    init_user_info_admin,
+    set_user_info_admin,
+    set_user_token_admin,
+} from "redux/actions/userInfoAdminAction";
 
 const Login = () => {
-    const userToken = useSelector((state) => state.userInfo.userToken);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { alert } = useAlert();
+    const err = { dispatch, alert };
+    const userTokenAdmin = useSelector(
+        (state) => state.userInfoAdmin.userTokenAdmin
+    );
+    const navigate = useNavigate();
 
     const inputID = useRef(null);
     const inputPW = useRef(null);
 
     useEffect(() => {
-        if (userToken) {
+        if (userTokenAdmin) {
             navigate(routerPath.admin_main_url);
         } else {
             dispatch(set_page("dashboard"));
@@ -70,64 +79,72 @@ const Login = () => {
     const login = () => {
         // /v1/signin
         // POST
-        let url = apiPath.api_auth_signin;
-        let data = {
+        const url = apiPath.api_auth_signin;
+        const data = {
             // signup_type: "000",
             user_id: inputID.current.value,
             user_pwd: inputPW.current.value,
             admin_yn: "Y",
         };
 
-        RestServer("post", url, data)
-            .then((response) => {
-                let res = response;
-                let result_code = res.headers.result_code;
+        // 처리 완료 후 로직
+        const responsLogic = (res) => {
+            let result_code = res.headers.result_code;
 
-                if (result_code === "0000") {
-                    let user_info = response.data.result_info;
+            if (result_code === "0000") {
+                let user_info = res.data.result_info;
 
-                    // 블랙리스트
-                    let deleteKey = [
-                        "md_licenses_number",
-                        // "signin_policy",
-                        // "signin_policy_cd",
-                        "user_pwd",
-                        "user_role",
-                        "user_salt",
-                    ];
+                // 블랙리스트
+                let deleteKey = [
+                    "md_licenses_number",
+                    // "signin_policy",
+                    // "signin_policy_cd",
+                    "user_pwd",
+                    "user_role",
+                    "user_salt",
+                ];
 
-                    for (let i = 0; i < deleteKey.length; i++) {
-                        delete user_info[deleteKey[i]];
-                    }
-
-                    dispatch(init_user_info);
-
-                    sessionStorage.setItem(
-                        "userInfo",
-                        JSON.stringify(user_info)
-                    );
-                    dispatch(set_user_info(JSON.stringify(user_info)));
-
-                    dispatch(set_user_token(JSON.stringify(user_info)));
-
-                    navigate(routerPath.admin_main_url);
-                } else {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
-
-                    CommonNotify({
-                        type: "alert",
-                        hook: alert,
-                        message: res.headers.result_message_ko,
-                    });
+                for (let i = 0; i < deleteKey.length; i++) {
+                    delete user_info[deleteKey[i]];
                 }
-            })
-            .catch((error) => {
-                CommonErrorCatch(error, dispatch, alert);
-            });
+
+                dispatch(init_user_info_admin(null));
+
+                sessionStorage.setItem(
+                    "userInfoAdmin",
+                    JSON.stringify(user_info)
+                );
+                dispatch(set_user_info_admin(JSON.stringify(user_info)));
+
+                dispatch(set_user_token_admin(JSON.stringify(user_info)));
+
+                navigate(routerPath.admin_main_url);
+            } else {
+                dispatch(
+                    set_spinner({
+                        isLoading: false,
+                    })
+                );
+
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: res.headers.result_message_ko,
+                });
+            }
+        };
+
+        // 파라미터
+        const restParams = {
+            method: "post",
+            url: url,
+            data: data,
+            err: err,
+            callback: (res) => responsLogic(res),
+            admin: "Y",
+        };
+
+        CommonRest(restParams);
     };
 
     const handleOnKeyPress = (e) => {

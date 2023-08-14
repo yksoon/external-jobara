@@ -28,23 +28,23 @@ const SignUpModFile = forwardRef((props, ref) => {
             <tr>
                 <th>이력서업로드</th>
                 <td>
-                    <div>
+                    <div style={{ marginBottom: 5 }}>
                         {fileList.length !== 0 &&
                             fileList.map((item, idx) => (
-                                // <Link
-                                //     to={`${fileBaseUrl}${item.file_path_enc}`}
-                                //     key={`file_${idx}`}
-                                // >
-                                //     {item.file_name}{" "}
-                                // </Link>
-                                <span>
-                                    <img
-                                        key={`file_${idx}`}
-                                        src={`${fileBaseUrl}${item.file_path_enc}`}
-                                        alt=""
-                                    />
-                                    {item.file_name}
-                                </span>
+                                <Link
+                                    to={`${fileBaseUrl}${item.file_path_enc}`}
+                                    key={`file_${idx}`}
+                                >
+                                    {item.file_name}{" "}
+                                </Link>
+                                // <span>
+                                //     <img
+                                //         key={`file_${idx}`}
+                                //         src={`${fileBaseUrl}${item.file_path_enc}`}
+                                //         alt=""
+                                //     />
+                                //     {item.file_name}
+                                // </span>
                             ))}
                     </div>
                     <input

@@ -30,6 +30,7 @@ function App() {
     const navigate = useNavigate();
     const location = useLocation();
     const userToken = useSelector((state) => state.userInfo.userToken);
+    const userInfo = useSelector((state) => state.userInfo.userInfo);
 
     useEffect(() => {
         // localStorage.clear();

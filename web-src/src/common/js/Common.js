@@ -168,7 +168,7 @@ const CommonSpinner = (props) => {
 };
 
 // 에러처리
-const CommonErrorCatch = async (error, dispatch, alert, errCallback) => {
+const CommonErrorCatch = async (error, dispatch, alert) => {
     // 오류발생시 실행
     CommonConsole("log", error);
 
@@ -184,8 +184,6 @@ const CommonErrorCatch = async (error, dispatch, alert, errCallback) => {
                 type: "alert",
                 hook: alert,
                 message: "잠시 후 다시 시도해주세요",
-                callback: (error) => errCallback(error),
-                error: error,
             });
         }
         // 비정상접근 or 비정상토큰
@@ -207,8 +205,6 @@ const CommonErrorCatch = async (error, dispatch, alert, errCallback) => {
                 type: "alert",
                 hook: alert,
                 message: error.response.headers.result_message_ko,
-                callback: (error) => errCallback(error),
-                error: error,
             });
         }
     } else {
@@ -231,8 +227,6 @@ const CommonErrorCatch = async (error, dispatch, alert, errCallback) => {
             type: "alert",
             hook: alert,
             message: "잠시 후 다시 시도해주세요",
-            callback: (error) => errCallback(error),
-            error: error,
         });
     }
 };
@@ -242,8 +236,7 @@ const CommonNotify = async (option) => {
     const type = option.type;
     const hook = option.hook;
     const message = option.message;
-    const error = option.error ? option.error : null;
-    const callback = option.callback ? (prams) => option.callback(prams) : null;
+    const callback = option.callback ? () => option.callback() : null;
 
     switch (type) {
         case "confirm":
@@ -260,7 +253,7 @@ const CommonNotify = async (option) => {
                     const type = typeof callback;
 
                     if (type === "function") {
-                        callback(error);
+                        callback();
                     }
                 }
             }
@@ -281,7 +274,7 @@ const CommonNotify = async (option) => {
                     const type = typeof callback;
 
                     if (type === "function") {
-                        callback(error);
+                        callback();
                     }
                 }
             }
@@ -309,15 +302,14 @@ const CommonRest = async (restParams = {}) => {
     const method = restParams.method;
     const url = restParams.url;
     const data = restParams.data;
+    const admin = restParams.admin;
 
-    await RestServer(method, url, data)
+    await RestServer(method, url, data, admin)
         .then((response) => {
             restParams.callback(response);
         })
         .catch((error) => {
-            CommonErrorCatch(error, dispatch, alert, (error) =>
-                restParams.errCallback(error)
-            );
+            CommonErrorCatch(error, dispatch, alert);
 
             // console.log(restParams);
 
