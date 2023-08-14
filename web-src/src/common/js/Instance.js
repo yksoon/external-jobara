@@ -16,7 +16,8 @@ let token;
 // application/json
 const Instance = axios.create({
     headers: {
-        "Content-Type": "application/json",
+        // "Content-Type": "application/json",
+        "Content-Type": "text/plain",
     },
     timeout: 5000,
 });
