@@ -14,9 +14,9 @@ import { apiPath, routerPath } from "webPath";
 
 const Admin = () => {
     const navigate = useNavigate();
-    let userInfo = useSelector((state) => state.userInfo.userInfo);
-    let userToken = useSelector((state) => state.userInfo.userToken);
-    let page = useSelector((state) => state.page.page);
+    const userInfo = useSelector((state) => state.userInfo.userInfo);
+    const userToken = useSelector((state) => state.userInfo.userToken);
+    const page = useSelector((state) => state.page.page);
     const dispatch = useDispatch();
     const { alert } = useAlert();
 
