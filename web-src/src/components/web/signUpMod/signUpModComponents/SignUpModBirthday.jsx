@@ -8,7 +8,11 @@ const SignUpModBirthday = forwardRef((props, ref) => {
             <tr>
                 <th>생년월일</th>
                 <td>
-                    <input type="date" ref={inputBirth} />
+                    <input
+                        type="date"
+                        className="input_date"
+                        ref={inputBirth}
+                    />
                 </td>
             </tr>
         </>

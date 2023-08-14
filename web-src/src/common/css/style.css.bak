@@ -169,7 +169,6 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 	-moz-border-radius: 10px; 
 }
 .registration .regi_form tbody tr td input.input_l{width:95%;}
-.registration .regi_form tbody tr td input.input_date{width:30%;}
 .registration .regi_form tbody tr td .cap {vertical-align: middle;}
 .registration .btnbox {margin:70px 0 0; text-align: center;}
 .registration .btnbox a{font-family:'GmarketSans'; display:inline-block; height:60px;line-height: 60px;padding:0 30px;min-width:180px; background-color: #E72295; color:#fff; font-size:24px; 	font-weight: 600;
@@ -367,7 +366,6 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 	.registration .regi_form tbody tr td {display:block;font-size:14px; padding:20px 10px;}
 	.registration .regi_form tbody tr td input.input_s{width:95%;}
 	.registration .regi_form tbody tr td input.input_m{width:28%;}
-	.registration .regi_form tbody tr td input.input_date{width:95%;}
 	.registration .btnbox {margin:50px 0 0;}
 	.registration .btnbox a{height:60px;line-height: 60px;padding:0 30px;min-width:120px;font-size:22px;}
 

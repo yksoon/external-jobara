@@ -68,6 +68,5 @@
     },
     "devDependencies": {
         "redux-devtools-extension": "^2.13.9"
-    },
-    "proxy": "http://210.116.101.159:60000"
+    }
 }
