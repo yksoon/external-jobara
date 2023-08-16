@@ -41,7 +41,7 @@ const Router = () => {
                     {/* URL : / */}
                     <Route path={routerPath.web_main_url} element={<Main />} />
 
-                    {/* 회원가입 */}
+                    {/* 사전등록 */}
                     {/* URL : /signup */}
                     <Route
                         path={routerPath.web_signup_url}

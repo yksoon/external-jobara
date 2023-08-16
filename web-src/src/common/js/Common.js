@@ -208,12 +208,13 @@ const CommonErrorCatch = async (error, dispatch, alert) => {
             });
         }
     } else {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-                error: "Y",
-            })
-        );
+        // TODO: 네트워크 에러 잡은 후 주석 풀자
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //         error: "Y",
+        //     })
+        // );
     }
     // 타임아웃
     if (error.message === "timeout of 5000ms exceeded") {

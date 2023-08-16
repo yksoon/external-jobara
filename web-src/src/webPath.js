@@ -64,14 +64,14 @@ const apiPath = {
     // /v1/_codes
     // POST
     // 공통 코드
-    api_codes: `${base_api_url + slash + version + slash}_codes`,
-    // api_codes: `${slash + version + slash}_codes`,
+    // api_codes: `${base_api_url + slash + version + slash}_codes`,
+    api_codes: `${slash + version + slash}_codes`,
 
     // /v1/info/result
     // GET
     // 공통 코드
-    api_result: `${base_api_url + slash + version + slash}info/result`,
-    // api_result: `${slash + version + slash}info/result`,
+    // api_result: `${base_api_url + slash + version + slash}info/result`,
+    api_result: `${slash + version + slash}info/result`,
 
     // /v1/captcha/img
     // GET

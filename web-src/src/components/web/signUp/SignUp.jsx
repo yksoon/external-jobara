@@ -52,18 +52,18 @@ function SignUp() {
         }
     };
 
-    useEffect(() => {
-        // 로딩
-        startLoding();
-    }, []);
+    // useEffect(() => {
+    //     // 로딩
+    //     startLoding();
+    // }, []);
 
-    const startLoding = () => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
-    };
+    // const startLoding = () => {
+    //     dispatch(
+    //         set_spinner({
+    //             isLoading: true,
+    //         })
+    //     );
+    // };
 
     const signUpRefs = {
         inputID: useRef(null),
