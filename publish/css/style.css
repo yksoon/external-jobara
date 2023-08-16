@@ -156,11 +156,12 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 .sub_container {width:100%;background:url('../img/sub/sub_bg.jpg') center 0 no-repeat #fff;}
 .sub_container {font-family: 'Pretendard';}
 #content {width: 1200px; margin:0 auto; padding:180px 0 130px;min-height:850px;}
-#subtitle {font-family:'GmarketSans';padding:0 0 80px; font-size:35px; font-weight:900; color:#111;letter-spacing: -0.03em; text-align: center;}
+#subtitle {font-family:'GmarketSans';padding:0 0 40px; font-size:35px; font-weight:900; color:#111;letter-spacing: -0.03em; text-align: center;}
 
 .list_dot li::before {display:inline-block;content:"";width:4px;height:4px;background:#E72295;vertical-align: middle;border-radius: 50%;margin:0 10px 4px 0;}
 .list_dot li {line-height: 30px;}
 
+.linebox {padding: 30px;border: 1px solid #ddd;border-radius: 20px;}
 
 /* 사전등록 */
 .registration .regi_form {border-top:1px solid #E72295;}
@@ -207,6 +208,19 @@ a.table_btn span {font-size: 20px;color: #fff;line-height: 28px;    vertical-ali
 	-moz- border-radius:60px;
 }
 .registration_chk .btnbox a:hover, .registration_chk .btnbox a:focus { background-color: #e40b8a; }
+
+.venue_bus {display:flex;margin:40px 0 0;}
+.venue_bus .linebox {width:49%;}
+.venue_bus .linebox:first-child{margin:0 2% 0 0;}
+.venue_bus .linebox h4 {font-size: 21px;font-weight: 900;color: #111;}
+.venue_bus .linebox h4::after {display:block;content:"";width:24px;height:2px;background: #e40b8a;margin:16px 0 20px;}
+.venue_bus .linebox h4 span {font-size: 18px;font-weight: 700;vertical-align: middle;}
+.venue_bus .linebox h5 {font-size: 16px;font-weight: 700;color: #333;margin:0 0 10px;}
+.venue_bus .linebox p {font-size: 16px;word-break:keep-all;vertical-align: middle;}
+.venue_bus .linebox p span {font-size: 16px;vertical-align: middle;}
+.venue_bus .linebox > div {margin:0 0 20px;}
+.venue_bus .linebox > div:last-child {margin:0;}
+
 
 
 
@@ -390,6 +404,16 @@ a.table_btn span {font-size: 20px;color: #fff;line-height: 28px;    vertical-ali
 
 	/*Quick Menu */
 	#quick_menu {display: none !important;}
+
+	.venue_bus {display:block;}
+	.venue_bus .linebox {width:100%;}
+	.venue_bus .linebox:first-child{margin:0 0 20px 0;}
+	.venue_bus .linebox h4 {font-size: 18px;}
+	.venue_bus .linebox h4 span {font-size: 18px;}
+	.venue_bus .linebox h5 {font-size: 16px;}
+	.venue_bus .linebox p {font-size: 14px;word-break:keep-all;vertical-align: middle;}
+	.venue_bus .linebox p span {font-size: 14px;vertical-align: middle;}
+	.venue_bus .linebox > div:last-child {margin:0;}
 
 
 }
