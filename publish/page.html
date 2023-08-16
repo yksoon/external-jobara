@@ -20,8 +20,10 @@
         table tbody tr td.r {text-align: center;background: #d54a4a;color: #fff;}
         table tbody tr td a:link {text-decoration: underline;color: blue;}
         table tbody tr td a:visited {text-decoration: underline;color: blue;}
-        table tbody tr.tit {background:#111;}
-        table tbody tr.tit th { color: #fff; font-size: 16px; padding: 4px 10px;}
+        table tbody tr.tit {background:#ddd;}
+        table tbody tr.r_tit {background:#111;}
+        table tbody tr.r_tit th { color: #fff; font-size: 16px; padding: 4px 10px;}
+        table tbody tr.tit th { color: #111; font-size: 16px; padding: 4px 10px;}
     </style>
 </head>
 <body>
@@ -41,7 +43,6 @@
                 </tr>
             </thead>
                 <tbody>
-                    
                    <tr>
                         <th>메인</th>
                         <td><a href="index.html" target="_blank">index.html</a></td>
@@ -58,7 +59,7 @@
                     <tr style="background:#ddd;">
                         <th>인사말</th>
                         <td>삭제</td>
-                        <td class="g">완료</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <th>행사장소</th>
@@ -107,8 +108,35 @@
                         <td><a href="" target="_blank">notice.html</a></td>
                         <td></td>
                     </tr>
+                    <tr class="r_tit">
+                        <th colspan="3">관리자</th>
+                    </tr>
+                    <tr>
+                        <th>대시보드(통계)</th>
+                        <td><a href="" target="_blank">adm/index.html</a></td>
+                        <td class="g">완료</td>
+                    </tr>
+                    <tr>
+                        <th>사전등록관리</th>
+                        <td><a href="" target="_blank">adm/member_list.html</a></td>
+                        <td class="g">완료</td>
+                    </tr>
+                    <tr>
+                        <th>일정관리</th>
+                        <td><a href="" target="_blank">adm/date.html</a></td>
+                        <td class="g">완료</td>
+                    </tr>
+                    <tr class="tit">
+                        <th colspan="3">게시판관리</th>
+                    </tr>
+                    <tr>
+                        <th>공지사항</th>
+                        <td><a href="" target="_blank">adm/notice.html</a></td>
+                        <td class="g">완료</td>
+                    </tr>
             </tbody>
         </table>
+        
     </div>
 </body>
 </html>
