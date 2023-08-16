@@ -19,7 +19,7 @@ const SignUpCaptcha = forwardRef((props, ref) => {
     const { inputCaptcha } = ref;
     const err = { dispatch, alert };
     const [isLoading, setIsLoading] = useState(false);
-    const imgUrl = "http://jejujobara.com:60000/v1/captcha/img";
+    const imgUrl = "http://jejujobara.com:60000/jobara/v1/captcha/img";
 
     const refreshCaptcha = () => {
         let imgElement = document.getElementById("captchaImg");

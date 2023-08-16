@@ -165,15 +165,19 @@ const Admin = () => {
     };
     return (
         <>
-            {userInfoAdmin && (
-                <SideNav
-                    userInfoAdmin={userInfoAdmin}
-                    switchPage={switchPage}
-                    menuList={menuList}
-                />
-            )}
+            <div className="wrap">
+                <div className="admin">
+                    {userInfoAdmin && (
+                        <SideNav
+                            userInfoAdmin={userInfoAdmin}
+                            switchPage={switchPage}
+                            menuList={menuList}
+                        />
+                    )}
 
-            {renderPage(page)}
+                    {renderPage(page)}
+                </div>
+            </div>
         </>
     );
 };

@@ -5,7 +5,6 @@ import {
     CommonNotify,
     CommonRest,
 } from "common/js/Common";
-import { RestServer } from "common/js/Rest";
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -150,49 +149,58 @@ const SignIn = () => {
 
     return (
         <>
-            <div className="login_wrap">
-                <div className="login">
-                    <h1>
-                        <img src="img/common/logo.png" alt="" />
-                    </h1>
-                    <p>로그인을 해주세요</p>
-                    <div className="input_id">
-                        <h5>아이디</h5>
-                        <input
-                            type="text"
-                            className="input"
-                            placeholder="ID"
-                            ref={inputID}
-                            onKeyDown={handleOnKeyPress} // Enter 입력 이벤트 함수
-                            defaultValue="support"
-                        />
-                    </div>
-                    <div>
-                        <h5>비밀번호</h5>
-                        <input
-                            type="password"
-                            className="input"
-                            placeholder="PW"
-                            ref={inputPW}
-                            onKeyDown={handleOnKeyPress} // Enter 입력 이벤트 함수
-                            defaultValue="1234qwer!@"
-                        />
-                    </div>
-                    <div className="flex login_btn">
-                        <div>
-                            {/* <input type="checkbox" id="id_remember" />{" "}
+            <div className="wrap">
+                <div className="admin">
+                    <div className="login_wrap">
+                        <div className="login">
+                            <h1>
+                                <img
+                                    src="img/web/main/maintxt.png"
+                                    alt=""
+                                    style={{ width: "210px" }}
+                                />
+                            </h1>
+                            <p>로그인을 해주세요</p>
+                            <div className="input_id">
+                                <h5>아이디</h5>
+                                <input
+                                    type="text"
+                                    className="input"
+                                    placeholder="ID"
+                                    ref={inputID}
+                                    onKeyDown={handleOnKeyPress} // Enter 입력 이벤트 함수
+                                    defaultValue="support"
+                                />
+                            </div>
+                            <div>
+                                <h5>비밀번호</h5>
+                                <input
+                                    type="password"
+                                    className="input"
+                                    placeholder="PW"
+                                    ref={inputPW}
+                                    onKeyDown={handleOnKeyPress} // Enter 입력 이벤트 함수
+                                    defaultValue="1234qwer!@"
+                                />
+                            </div>
+                            <div className="flex login_btn">
+                                <div>
+                                    {/* <input type="checkbox" id="id_remember" />{" "}
                             <label htmlFor="id_remember">아이디 저장</label> */}
-                        </div>
-                        <div>
-                            <Link className="subbtn on" onClick={clickLogin}>
-                                로그인
-                            </Link>
+                                </div>
+                                <div>
+                                    <Link
+                                        className="subbtn on"
+                                        onClick={clickLogin}
+                                    >
+                                        로그인
+                                    </Link>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            {/* <div className="login_wrap"></div> */}
         </>
     );
 };

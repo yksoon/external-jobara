@@ -16,6 +16,7 @@ import "common/css/default.css";
 import "common/css/style.css";
 import "common/css/common.css";
 import "common/css/aos.css";
+import "common/css/adm.css";
 
 const persistor = persistStore(store);
 
