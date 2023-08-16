@@ -5,6 +5,7 @@ import {
     CommonErrorCatch,
     CommonModal,
     CommonNotify,
+    CommonRest,
 } from "common/js/Common";
 import { RestServer } from "common/js/Rest";
 import { apiPath } from "webPath";
@@ -15,6 +16,10 @@ import useConfirm from "hook/useConfirm";
 import useAlert from "hook/useAlert";
 
 const UserList = () => {
+    const dispatch = useDispatch();
+    const { alert } = useAlert();
+    const err = { dispatch, alert };
+
     const [isOpen, setIsOpen] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
     const [userList, setUserList] = useState([]);
@@ -23,9 +28,6 @@ const UserList = () => {
     const [checkItems, setCheckItems] = useState([]);
     const [pageInfo, setPageInfo] = useState({});
     const { confirm } = useConfirm();
-    const { alert } = useAlert();
-
-    const dispatch = useDispatch();
 
     useEffect(() => {
         reqUserList(1, 10);
@@ -55,44 +57,50 @@ const UserList = () => {
 
         // /v1/user/infos
         // POST
-        let url = apiPath.api_admin_user_infos;
-        let data = {
+        const url = apiPath.api_admin_user_infos;
+        const data = {
             page_num: pageNum,
             page_size: pageSize,
         };
 
-        RestServer("post", url, data)
-            .then((response) => {
-                let res = response;
-                let result_code = res.headers.result_code;
+        // 파라미터
+        const restParams = {
+            method: "post",
+            url: url,
+            data: data,
+            err: err,
+            callback: (res) => responsLogic(res),
+            admin: "Y",
+        };
+        CommonRest(restParams);
 
-                // 성공
-                if (result_code === "0000") {
-                    let result_info = res.data.result_info;
-                    let page_info = res.data.page_info;
+        const responsLogic = (res) => {
+            let result_code = res.headers.result_code;
 
-                    setUserList(result_info);
-                    setPageInfo(page_info);
+            // 성공
+            if (result_code === "0000") {
+                let result_info = res.data.result_info;
+                let page_info = res.data.page_info;
 
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
-                } else {
-                    // 에러
-                    CommonConsole("log", response);
+                setUserList(result_info);
+                setPageInfo(page_info);
 
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
-                }
-            })
-            .catch((error) => {
-                CommonErrorCatch(error, dispatch, alert);
-            });
+                dispatch(
+                    set_spinner({
+                        isLoading: false,
+                    })
+                );
+            } else {
+                // 에러
+                CommonConsole("log", res);
+
+                dispatch(
+                    set_spinner({
+                        isLoading: false,
+                    })
+                );
+            }
+        };
     };
 
     // 회원 정보 수정

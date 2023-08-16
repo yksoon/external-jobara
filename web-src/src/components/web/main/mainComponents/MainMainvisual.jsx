@@ -205,7 +205,7 @@ const MainMainvisual = () => {
                         data-aos-auration="800"
                         data-aos-delay="500"
                     >
-                        <Link to="" className="m01 active">
+                        <Link to="" className="m01">
                             박람회안내
                         </Link>
                         <Link to="" className="m02">

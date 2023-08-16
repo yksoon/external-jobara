@@ -33,31 +33,40 @@ const SignUpCaptcha = forwardRef((props, ref) => {
             <tr>
                 <th>자동입력방지</th>
                 <td>
-                    <span className="cap">
-                        {isLoading ? (
-                            ""
-                        ) : (
-                            <img
-                                className="imgClass"
-                                id="captchaImg"
-                                src={imgUrl}
-                                alt=""
-                                decoding="async"
-                                style={{ background: "white" }}
-                            />
-                        )}
-                    </span>
-                    <span>
-                        <Link
-                            onClick={(e) => {
-                                refreshCaptcha();
-                                e.preventDefault();
-                            }}
-                        >
-                            <RefreshIcon />
-                        </Link>
-                    </span>
-                    <input type="text" className="input_s" ref={inputCaptcha} />
+                    <div className="cap_wrap">
+                        <div>
+                            <span className="cap">
+                                {isLoading ? (
+                                    <CircularProgress />
+                                ) : (
+                                    <img
+                                        className="imgClass"
+                                        id="captchaImg"
+                                        src={imgUrl}
+                                        alt=""
+                                        decoding="async"
+                                        style={{ background: "white" }}
+                                    />
+                                )}
+                            </span>
+                            <span className="cap_refresh">
+                                <Link
+                                    onClick={(e) => {
+                                        refreshCaptcha();
+                                        e.preventDefault();
+                                    }}
+                                >
+                                    <RefreshIcon />
+                                    새로고침
+                                </Link>
+                            </span>
+                        </div>
+                        <input
+                            type="text"
+                            className="input_s"
+                            ref={inputCaptcha}
+                        />
+                    </div>
                 </td>
             </tr>
         </>
