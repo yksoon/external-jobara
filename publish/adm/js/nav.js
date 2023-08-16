@@ -29,6 +29,9 @@ function navList(listName) {
             location.href = "member_list.html";
             break;
 
+        case "dateList":
+            location.href = "date.html";
+            break;
 
         default:
             break;
