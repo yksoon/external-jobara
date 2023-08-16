@@ -33,6 +33,10 @@ function navList(listName) {
             location.href = "date.html";
             break;
 
+        case "notice":
+            location.href = "notice.html";
+            break;
+
         default:
             break;
     }

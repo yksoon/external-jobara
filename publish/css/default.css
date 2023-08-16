@@ -49,6 +49,7 @@
 
 
 /* */
+* {box-sizing: border-box;;}
 BODY {font-size:14px; color:#111; font-family: "Pretendard", Dotum, "돋움", Verdana, Arial, sans-serif;}
 header {margin:0; padding:0;}
 h5 {
