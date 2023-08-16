@@ -19,20 +19,14 @@ const ConfirmModal = () => {
                                 >
                                     <img src="img/common/alert.png" alt="" />
                                 </span> */}
-                                <h3>
+                                <h3>JOBARA</h3>
+                                <p>
                                     {message
                                         ? decodeURI(message)
                                               .replaceAll("%20", " ")
                                               .replaceAll("%40", "@")
                                               .replaceAll("%3A", ":")
                                         : ""}
-                                </h3>
-                                <p>
-                                    {/* {message
-                                        ? decodeURI(message)
-                                              .replaceAll("%20", " ")
-                                              .replaceAll("%40", "@")
-                                        : ""} */}
                                 </p>
                             </div>
                             <div className="btn_box">
