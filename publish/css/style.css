@@ -46,7 +46,7 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 #nav {display:none;}
 
 
-#mainvisual { width:100%; height:960px; background:url('../images/main/main_bg.png') center 0 no-repeat;}
+#mainvisual { width:100%; height:960px; background:url('../img/main/main_bg.png') center 0 no-repeat;}
 #mainvisual  .main_txt {width:1400px; margin:0 auto;position:relative;}
 #mainvisual  .main_txt h2{text-align: center;padding:70px 0 0 0;}
 #mainvisual  .main_txt .txt1{font-family:'GmarketSans'; position:absolute;top:150px; right:240px;font-size: 29px;font-weight:400; color:#0092E5;letter-spacing:-0.02em;}
@@ -120,7 +120,7 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 .section02 .company .logobox a:hover img{filter: grayscale(0);opacity:1;}
 
 
-.section03 {width:100%; padding:200px 0;background:url('../images/main/sec03_bg.png') center 100% no-repeat; background-size:100%;}
+.section03 {width:100%; padding:200px 0;background:url('../img/main/sec03_bg.png') center 100% no-repeat; background-size:100%;}
 .section03 .notice{width:1400px; margin:0 auto;}
 .section03 .notice h3{font-family:'GmarketSans';font-weight:900;color:#000;text-align: center;font-size:38px;letter-spacing: -0.04em;margin:0 0 30px 0;}
 .section03 .notice ul li{width:100%; height:62px;line-height:62px;border:1px solid #ccc;  box-sizing:border-box;position:relative;margin:0 0 20px 0;padding:0 40px;
@@ -153,16 +153,19 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 
 
 /* sub */
-.sub_container {width:100%;background:url('../images/sub/sub_bg.jpg') center 0 no-repeat #fff;}
+.sub_container {width:100%;background:url('../img/sub/sub_bg.jpg') center 0 no-repeat #fff;}
+.sub_container {font-family: 'Pretendard';}
 #content {width: 1200px; margin:0 auto; padding:180px 0 130px;min-height:850px;}
 #subtitle {font-family:'GmarketSans';padding:0 0 80px; font-size:35px; font-weight:900; color:#111;letter-spacing: -0.03em; text-align: center;}
 
+.list_dot li::before {display:inline-block;content:"";width:4px;height:4px;background:#E72295;vertical-align: middle;border-radius: 50%;margin:0 10px 4px 0;}
+.list_dot li {line-height: 30px;}
 
 
 /* 사전등록 */
 .registration .regi_form {border-top:1px solid #E72295;}
-.registration .regi_form tbody tr th {font-family:'GmarketSans'; font-size:17px; color:#000; padding:30px 10px 30px 30px;text-align: left;border-bottom:1px solid #ddd;}
-.registration .regi_form tbody tr td {font-family:'GmarketSans'; font-size:17px; color:#444;  font-weight:400; padding:20px 10px;border-bottom:1px solid #ddd;}
+.registration .regi_form tbody tr th {font-family:'Pretendard'; font-size:17px; color:#000; padding:30px 10px 30px 30px;text-align: left;border-bottom:1px solid #ddd;}
+.registration .regi_form tbody tr td {font-family:'Pretendard'; font-size:17px; color:#444;  font-weight:400; padding:20px 10px;border-bottom:1px solid #ddd;}
 .registration .regi_form tbody tr td input {border:1px solid #ccc; height:40px; line-height:40px;text-indent: 10px; font-family:'GmarketSans';vertical-align: middle;
 	border-radius: 10px; 
 	-webkit-border-radius: 10px; 
@@ -178,6 +181,9 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 	-moz- border-radius:60px;
 }
 .registration .btnbox a:hover, .registration .btnbox a:focus { background-color: #e40b8a; }
+
+a.table_btn {font-size:14px;padding:0 10px;display: inline-block;background:#e40b8a;border-radius: 50px;color: #fff; vertical-align: middle;height:28px;line-height: 1;width:fit-content;}
+a.table_btn span {font-size: 20px;color: #fff;line-height: 28px;    vertical-align: middle;}
 
 
 
@@ -282,7 +288,7 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 
 
 
-	#mainvisual { width:100%; height:auto; background:url('../images/main/main_bg.png') center 0 no-repeat;background-size:contain;}
+	#mainvisual { width:100%; height:auto; background:url('../img/main/main_bg.png') center 0 no-repeat;background-size:contain;}
 	#mainvisual  .main_txt {width:auto;padding:0 20px;}
 	#mainvisual  .main_txt h2{padding:70px 0 0 0;}
 	#mainvisual  .main_txt h2 img{width:60%;}
@@ -357,7 +363,7 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 		
 
 	/* sub */
-	.sub_container {width:100%;background:url('../images/sub/sub_bg.jpg') center 0 no-repeat #fff;background-size:100%;}
+	.sub_container {width:100%;background:url('../img/sub/sub_bg.jpg') center 0 no-repeat #fff;background-size:100%;}
 	#content {width: auto;padding:120px 20px 90px;min-height:500px;}
 	#subtitle {padding:0 0 30px; font-size:28px; }
 
