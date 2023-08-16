@@ -211,6 +211,12 @@ const SignUpMod = () => {
     };
 
     const requestUserInfo = () => {
+        dispatch(
+            set_spinner({
+                isLoading: true,
+            })
+        );
+
         const userIdx = userInfo.user_idx;
 
         const restParams = {
@@ -224,9 +230,17 @@ const SignUpMod = () => {
         CommonRest(restParams);
 
         const responsLogicUserInfo = (res) => {
+            dispatch(
+                set_spinner({
+                    isLoading: false,
+                })
+            );
+
             const resultInfo = res.data.result_info;
 
             dispatch(set_user_info(JSON.stringify(resultInfo)));
+
+            window.location.reload();
         };
     };
 

@@ -13,7 +13,8 @@ const MainContents = () => {
                 <MainContentsProgram />
 
                 {/* 공지사항 */}
-                <MainContentsNoti />
+                {/* <MainContentsNoti /> */}
+                <br />
             </div>
         </>
     );

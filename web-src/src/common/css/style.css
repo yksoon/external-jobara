@@ -163,11 +163,12 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 .registration .regi_form {border-top:1px solid #E72295;}
 .registration .regi_form tbody tr th {font-family:'GmarketSans'; font-size:17px; color:#000; padding:30px 10px 30px 30px;text-align: left;border-bottom:1px solid #ddd;}
 .registration .regi_form tbody tr td {font-family:'GmarketSans'; font-size:17px; color:#444;  font-weight:400; padding:20px 10px;border-bottom:1px solid #ddd;}
-.registration .regi_form tbody tr td input {border:1px solid #ccc; height:40px; line-height:40px;text-indent: 10px; font-family:'GmarketSans';vertical-align: middle;
+.registration .regi_form tbody tr td input {border:1px solid #ccc; height:40px; line-height:46px;text-indent: 10px; font-family:'GmarketSans';vertical-align: middle;margin:0 5px;
 	border-radius: 10px; 
 	-webkit-border-radius: 10px; 
 	-moz-border-radius: 10px; 
 }
+.registration .regi_form tbody tr td input.hold {background:#efefef;color:#9e9e9e;}
 .registration .regi_form tbody tr td input.input_l{width:95%;}
 .registration .regi_form tbody tr td input.input_date{width:30%;}
 .registration .regi_form tbody tr td .cap {vertical-align: middle;}
@@ -178,6 +179,11 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 	-moz-border-radius:60px;
 }
 .registration .btnbox a:hover, .registration .btnbox a:focus { background-color: #e40b8a; }
+
+.registration .regi_file div {margin: 0 0 10px;}
+.registration .regi_file div a:first-child {margin:15px 0 0;}
+.registration .regi_file div a {display:block;line-height:26px;vertical-align:middle;    display: flex;align-content: center;margin:5px 0 0;color:#818181;}
+.registration .regi_file img{width:24px;}
 
 
 
@@ -384,6 +390,7 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 	.registration_chk .regi_form tbody tr td input.input_m{width:28%;}
 	.registration_chk .btnbox {margin:50px 0 0;}
 	.registration_chk .btnbox a{height:60px;line-height: 60px;padding:0 30px;min-width:120px;font-size:22px;}
+	
 	
 
 	/*Quick Menu */

@@ -20,7 +20,6 @@ const SignUpSpecialCheck = forwardRef((props, ref) => {
     }, []);
 
     const responsLogic = (res) => {
-        console.log(res);
         let resultInfo = res.data.result_info;
 
         setProgramInfo(resultInfo);

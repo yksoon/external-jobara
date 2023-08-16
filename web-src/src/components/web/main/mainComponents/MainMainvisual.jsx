@@ -217,9 +217,9 @@ const MainMainvisual = () => {
                         <Link to="" className="m04">
                             참여기업
                         </Link>
-                        <Link to="" className="m05">
+                        {/* <Link to="" className="m05">
                             공지
-                        </Link>
+                        </Link> */}
                     </div>
                 </div>
             </div>

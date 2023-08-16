@@ -154,9 +154,9 @@ const SubHeader = () => {
                             <li>
                                 <Link href="">참여기업</Link>
                             </li>
-                            <li>
+                            {/* <li>
                                 <Link href="">공지</Link>
-                            </li>
+                            </li> */}
                         </ul>
                     </div>
 
@@ -214,11 +214,11 @@ const SubHeader = () => {
                                         참여기업
                                     </Link>
                                 </li>
-                                <li>
+                                {/* <li>
                                     <Link href="" id="nav5">
                                         공지
                                     </Link>
-                                </li>
+                                </li> */}
                             </ul>
                         </nav>
                     </div>

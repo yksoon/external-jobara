@@ -82,6 +82,11 @@ const apiPath = {
     api_captcha_img: `${base_api_url + slash + version + slash}captcha/img`,
     // api_captcha_img: `${slash + version + slash}captcha/img`,
 
+    // /v1/_file/000/
+    // GET
+    // 파일 다운로드
+    api_file: `${base_api_url + slash + version + slash}_file/000/`,
+
     // ------------------ Auth ------------------
 
     // /v1/signin

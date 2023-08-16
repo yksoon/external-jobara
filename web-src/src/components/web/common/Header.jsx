@@ -184,11 +184,11 @@ function Header({ props }) {
                                         참여기업
                                     </Link>
                                 </li>
-                                <li>
+                                {/* <li>
                                     <Link href="" id="nav5">
                                         공지
                                     </Link>
-                                </li>
+                                </li> */}
                             </ul>
                         </nav>
                     </div>

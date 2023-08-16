@@ -53,7 +53,7 @@ const SignUpModMobile = forwardRef((props, ref) => {
                         className="input_m"
                         ref={inputMobile1}
                         onChange={(e) => mobileHandler(e)}
-                    />{" "}
+                    />
                     -
                     <input
                         type="text"
@@ -61,7 +61,7 @@ const SignUpModMobile = forwardRef((props, ref) => {
                         className="input_m"
                         ref={inputMobile2}
                         onChange={(e) => mobileHandler(e)}
-                    />{" "}
+                    />
                     -
                     <input
                         type="text"
