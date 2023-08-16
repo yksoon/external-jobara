@@ -28,6 +28,11 @@ const MainMainvisual = () => {
         setImgChange(true);
     };
 
+    // URL 열기
+    const openUrl = (url) => {
+        window.open(url, "_blank", "noopener, noreferrer");
+    };
+
     return (
         <>
             <div id="mainvisual">
@@ -99,31 +104,51 @@ const MainMainvisual = () => {
 
                     {imgChange && (
                         <p className="host">
-                            <Link href="">
+                            <Link
+                                onClick={() =>
+                                    openUrl("https://www.moe.go.kr/")
+                                }
+                            >
                                 <img
                                     src="img/web/main/host01.png"
                                     alt="교육부"
                                 />
                             </Link>
-                            <Link href="">
+                            <Link
+                                onClick={() =>
+                                    openUrl("https://www.nrf.re.kr/")
+                                }
+                            >
                                 <img
                                     src="img/web/main/host02.png"
                                     alt="한국연구재단"
                                 />
                             </Link>
-                            <Link href="">
+                            <Link
+                                onClick={() =>
+                                    openUrl("https://www.jeju.go.kr/")
+                                }
+                            >
                                 <img
                                     src="img/web/main/host03.png"
                                     alt="제주특별자치도"
                                 />
                             </Link>
-                            <Link href="">
+                            <Link
+                                onClick={() =>
+                                    openUrl("https://www.jejunu.ac.kr/")
+                                }
+                            >
                                 <img
                                     src="img/web/main/host04.png"
                                     alt="제주대학교"
                                 />
                             </Link>
-                            <Link href="">
+                            <Link
+                                onClick={() =>
+                                    openUrl("https://lincplus.jejunu.ac.kr/")
+                                }
+                            >
                                 <img
                                     src="img/web/main/host05.png"
                                     alt="제주대학교LINC사업단"
@@ -141,19 +166,31 @@ const MainMainvisual = () => {
                                     alt="어울림"
                                 />
                             </Link>
-                            <Link href="">
+                            <Link
+                                onClick={() =>
+                                    openUrl("http://www.jejuiucc.or.kr/")
+                                }
+                            >
                                 <img
                                     src="img/web/main/host08.png"
                                     alt="제주산학융합원"
                                 />
                             </Link>
-                            <Link href="">
+                            <Link
+                                onClick={() =>
+                                    openUrl("https://www.chu.ac.kr/")
+                                }
+                            >
                                 <img
                                     src="img/web/main/host09_1.png"
                                     alt="제주한라대학교"
                                 />
                             </Link>
-                            <Link href="">
+                            <Link
+                                onClick={() =>
+                                    openUrl("https://www.jtu.ac.kr/")
+                                }
+                            >
                                 <img
                                     src="img/web/main/host11.png"
                                     alt="제주관광대학교"

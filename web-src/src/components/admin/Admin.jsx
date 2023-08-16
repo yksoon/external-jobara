@@ -36,7 +36,7 @@ const Admin = () => {
 
     useEffect(() => {
         if (!userTokenAdmin) {
-            navigate(routerPath.admin_login_url);
+            navigate(routerPath.admin_signin_url);
         } else {
             requestMenu();
         }

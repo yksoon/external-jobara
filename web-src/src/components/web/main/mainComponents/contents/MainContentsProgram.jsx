@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 
 const MainContentsProgram = () => {
+    // URL 열기
+    const openUrl = (url) => {
+        window.open(url, "_blank", "noopener, noreferrer");
+    };
+
     return (
         <>
             <div className="section02">
@@ -99,7 +104,9 @@ const MainContentsProgram = () => {
                         data-aos="fade-up"
                         data-aos-duration="800"
                     >
-                        <Link href="">
+                        <Link
+                            onClick={() => openUrl("https://www.jejuair.net/")}
+                        >
                             <img src="img/web/main/com01.png" alt="제주에어" />
                         </Link>
                         <Link href="">

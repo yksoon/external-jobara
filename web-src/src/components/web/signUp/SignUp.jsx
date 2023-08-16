@@ -2,17 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { apiPath, routerPath } from "webPath";
 import { useDispatch, useSelector } from "react-redux";
-import { RestServer } from "common/js/Rest";
 
-import Header from "components/web/common/Header";
+import SubHeader from "../common/SubHeader";
 import Footer from "components/web/common/Footer";
 
-import {
-    CommonConsole,
-    CommonNotify,
-    CommonRest,
-    CommonSpinner,
-} from "common/js/Common";
+import { CommonConsole, CommonNotify, CommonRest } from "common/js/Common";
 import { set_spinner } from "redux/actions/commonAction";
 import useAlert from "hook/useAlert";
 
@@ -27,9 +21,8 @@ import SignUpBirthday from "./signupComponents/SignUpBirthday";
 import SignUpSpecialized from "./signupComponents/SignUpSpecialized";
 import SignUpSpecialCheck from "./signupComponents/SignUpSpecialCheck";
 import SignUpFile from "./signupComponents/SignUpFile";
-import { signupModel, signupMultiModel } from "models/user/signUp";
+import { signupMultiModel } from "models/user/signUp";
 import { idPattern, pwPattern } from "common/js/Pattern";
-import SubHeader from "../common/SubHeader";
 
 // 회원가입
 function SignUp() {

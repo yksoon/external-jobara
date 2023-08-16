@@ -7,7 +7,7 @@ import { Backdrop, CircularProgress } from "@mui/material";
 
 import NotFoundPage from "NotFoundPage";
 import Admin from "components/admin/Admin";
-import Login from "components/admin/login/Login";
+import SignIn from "components/admin/signin/SignIn";
 import SignUpChk from "components/web/signUpChk/SignUpChk";
 import SignUpMod from "components/web/signUpMod/SignUpMod";
 
@@ -71,10 +71,10 @@ const Router = () => {
                     />
 
                     {/* 로그인 */}
-                    {/* URL : /admin/login */}
+                    {/* URL : /admin/signin */}
                     <Route
-                        path={routerPath.admin_login_url}
-                        element={<Login />}
+                        path={routerPath.admin_signin_url}
+                        element={<SignIn />}
                     />
 
                     {/* 404 */}

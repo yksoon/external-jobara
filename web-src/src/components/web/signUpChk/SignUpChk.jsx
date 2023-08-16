@@ -161,6 +161,12 @@ function SignUpChk() {
         };
     };
 
+    const handleOnKeyPress = (e) => {
+        if (e.key === "Enter") {
+            clickSubmit(); // Enter 입력이 되면 클릭 이벤트 실행
+        }
+    };
+
     return (
         <>
             <SubHeader />
@@ -183,6 +189,7 @@ function SignUpChk() {
                                             type="text"
                                             className="input_s"
                                             ref={signUpChkRefs.inputID}
+                                            onKeyDown={handleOnKeyPress} // Enter 입력 이벤트 함수
                                             autoFocus
                                         />
                                     </td>
@@ -196,6 +203,7 @@ function SignUpChk() {
                                             id="mobile1"
                                             ref={signUpChkRefs.inputMobile1}
                                             onChange={(e) => mobileHandler(e)}
+                                            onKeyDown={handleOnKeyPress} // Enter 입력 이벤트 함수
                                         />{" "}
                                         -
                                         <input
@@ -204,6 +212,7 @@ function SignUpChk() {
                                             id="mobile2"
                                             ref={signUpChkRefs.inputMobile2}
                                             onChange={(e) => mobileHandler(e)}
+                                            onKeyDown={handleOnKeyPress} // Enter 입력 이벤트 함수
                                         />{" "}
                                         -
                                         <input
@@ -212,6 +221,7 @@ function SignUpChk() {
                                             id="mobile3"
                                             ref={signUpChkRefs.inputMobile3}
                                             onChange={(e) => mobileHandler(e)}
+                                            onKeyDown={handleOnKeyPress} // Enter 입력 이벤트 함수
                                         />
                                     </td>
                                 </tr>

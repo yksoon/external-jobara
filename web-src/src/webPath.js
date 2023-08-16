@@ -15,11 +15,14 @@ const port = "60000";
 
 const version = "v1";
 
+const gateway = "jobara";
+
 // 기본 url
 // const base_url = protocol + host + colon + port + slash + version + slash;
 const base_url = "/";
+const base_api_url = protocol + host + colon + port + slash + gateway;
 // const base_api_url = protocol + host + colon + port;
-const base_api_url = process.env.REACT_APP_DB_HOST;
+// const base_api_url = process.env.REACT_APP_DB_HOST;
 // const base_api_url = "http://localhost:3005";
 // "proxy": "http://jejujobara.com:60000"
 
@@ -51,8 +54,8 @@ const routerPath = {
     admin_main_url: `${base_url + admin}`,
 
     // 로그인
-    // /admin/login
-    admin_login_url: `${base_url + admin + slash}login${slash}`,
+    // /admin/signin
+    admin_signin_url: `${base_url + admin + slash}signin${slash}`,
 };
 
 // api
@@ -64,14 +67,14 @@ const apiPath = {
     // /v1/_codes
     // POST
     // 공통 코드
-    // api_codes: `${base_api_url + slash + version + slash}_codes`,
-    api_codes: `${slash + version + slash}_codes`,
+    api_codes: `${base_api_url + slash + version + slash}_codes`,
+    // api_codes: `${slash + version + slash}_codes`,
 
     // /v1/info/result
     // GET
     // 공통 코드
-    // api_result: `${base_api_url + slash + version + slash}info/result`,
-    api_result: `${slash + version + slash}info/result`,
+    api_result: `${base_api_url + slash + version + slash}info/result`,
+    // api_result: `${slash + version + slash}info/result`,
 
     // /v1/captcha/img
     // GET
@@ -84,7 +87,6 @@ const apiPath = {
     // /v1/signin
     // POST
     // 로그인
-    // TODO: 파라미터명 통일시키자
     api_auth_signin: `${base_api_url + slash + version + slash}signin`,
     // api_auth_signin: `${slash + version + slash}signin`,
 

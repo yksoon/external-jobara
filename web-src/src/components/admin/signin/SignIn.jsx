@@ -11,11 +11,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { set_spinner } from "redux/actions/commonAction";
 import { set_page } from "redux/actions/pageActios";
-import {
-    init_user_info,
-    set_user_info,
-    set_user_token,
-} from "redux/actions/userInfoAction";
 import { apiPath, routerPath } from "webPath";
 import {
     init_user_info_admin,
@@ -23,7 +18,7 @@ import {
     set_user_token_admin,
 } from "redux/actions/userInfoAdminAction";
 
-const Login = () => {
+const SignIn = () => {
     const dispatch = useDispatch();
     const { alert } = useAlert();
     const err = { dispatch, alert };
@@ -40,7 +35,7 @@ const Login = () => {
             navigate(routerPath.admin_main_url);
         } else {
             dispatch(set_page("dashboard"));
-            dispatch(init_user_info);
+            dispatch(init_user_info_admin(null));
             inputID.current.focus();
         }
     }, []);
@@ -202,4 +197,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default SignIn;

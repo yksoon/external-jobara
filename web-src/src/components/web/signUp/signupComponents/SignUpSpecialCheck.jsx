@@ -68,15 +68,6 @@ const SignUpSpecialCheck = forwardRef((props, ref) => {
                                 </label>
                             </div>
                         ))}
-                    {/* <label>
-                        <input type="checkbox" /> <b>NCS 모의고사</b>{" "}
-                        (10:00~15:00 체육관 내 강의실)
-                    </label>
-                    <br />
-                    <label>
-                        <input type="checkbox" /> <b>현직자 토크콘서트</b>{" "}
-                        (15:00~17:00 / 체육관 내)
-                    </label> */}
                 </td>
             </tr>
         </>
