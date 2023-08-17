@@ -160,80 +160,80 @@ const UserList = () => {
     };
 
     // 회원 선택 삭제
-    const clickRemove = () => {
-        //선택여부 확인
-        checkItems.length === 0
-            ? CommonNotify({
-                  type: "alert",
-                  hook: alert,
-                  message: "사용자를 선택해주세요",
-              })
-            : CommonNotify({
-                  type: "confirm",
-                  hook: confirm,
-                  message: "선택된 사용자를 삭제 하시겠습니까?",
-                  callback: () => removeUser(),
-              });
-    };
+    // const clickRemove = () => {
+    //     //선택여부 확인
+    //     checkItems.length === 0
+    //         ? CommonNotify({
+    //               type: "alert",
+    //               hook: alert,
+    //               message: "사용자를 선택해주세요",
+    //           })
+    //         : CommonNotify({
+    //               type: "confirm",
+    //               hook: confirm,
+    //               message: "선택된 사용자를 삭제 하시겠습니까?",
+    //               callback: () => removeUser(),
+    //           });
+    // };
 
     // 삭제 confirm callback
-    const removeUser = () => {
-        let checkItemsStr = checkItems.join();
+    // const removeUser = () => {
+    //     let checkItemsStr = checkItems.join();
 
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+    //     dispatch(
+    //         set_spinner({
+    //             isLoading: true,
+    //         })
+    //     );
 
-        // account/v1/user/user/{user_idx}
-        // DELETE
-        const url = apiPath.api_admin_user_remove + `/${checkItemsStr}`;
-        const data = {};
+    //     // account/v1/user/user/{user_idx}
+    //     // DELETE
+    //     const url = apiPath.api_admin_user_remove + `/${checkItemsStr}`;
+    //     const data = {};
 
-        RestServer("delete", url, data)
-            .then((response) => {
-                let res = response;
-                let result_code = res.headers.result_code;
-                let result_info = res.data.result_info;
+    //     RestServer("delete", url, data)
+    //         .then((response) => {
+    //             let res = response;
+    //             let result_code = res.headers.result_code;
+    //             let result_info = res.data.result_info;
 
-                // 성공
-                if (result_code === "0000") {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+    //             // 성공
+    //             if (result_code === "0000") {
+    //                 dispatch(
+    //                     set_spinner({
+    //                         isLoading: false,
+    //                     })
+    //                 );
 
-                    CommonNotify({
-                        type: "alert",
-                        hook: alert,
-                        message: response.headers.result_message_ko,
-                    });
+    //                 CommonNotify({
+    //                     type: "alert",
+    //                     hook: alert,
+    //                     message: response.headers.result_message_ko,
+    //                 });
 
-                    handleNeedUpdate();
-                }
-                // 에러
-                else {
-                    CommonConsole("log", response);
+    //                 handleNeedUpdate();
+    //             }
+    //             // 에러
+    //             else {
+    //                 CommonConsole("log", response);
 
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+    //                 dispatch(
+    //                     set_spinner({
+    //                         isLoading: false,
+    //                     })
+    //                 );
 
-                    CommonNotify({
-                        type: "alert",
-                        hook: alert,
-                        message: response.headers.result_message_ko,
-                    });
-                }
-            })
-            .catch((error) => {
-                CommonErrorCatch(error, dispatch, alert);
-            });
-    };
+    //                 CommonNotify({
+    //                     type: "alert",
+    //                     hook: alert,
+    //                     message: response.headers.result_message_ko,
+    //                 });
+    //             }
+    //         })
+    //         .catch((error) => {
+    //             CommonErrorCatch(error, dispatch, alert);
+    //         });
+    // };
 
     // 체크박스 단일 선택
     const handleSingleCheck = (checked, id) => {
@@ -268,7 +268,7 @@ const UserList = () => {
         <>
             <div className="content">
                 <div className="title">
-                    <h3>회원 리스트</h3>
+                    <h3>사전등록 리스트</h3>
                 </div>
                 <div className="con_area">
                     <div className="adm_search">
@@ -279,37 +279,39 @@ const UserList = () => {
                                 <option value="">소속</option>
                             </select>{" "}
                             <input type="text" className="input" />{" "}
-                            <Link className="subbtn off">검색</Link>
+                            <Link className="btn btn02">검색</Link>
                         </div>
                         <div>
-                            <Link className="subbtn del" onClick={clickRemove}>
-                                선택삭제
-                            </Link>{" "}
-                            <Link className="subbtn on" onClick={regUser}>
-                                회원등록
-                            </Link>{" "}
-                            <Link className="subbtn on">엑셀 다운로드</Link>
+                            <Link
+                                className="btn btn01"
+                                title="#memberInsert"
+                                onClick={regUser}
+                            >
+                                임의등록
+                            </Link>
+                            {/* <a href="" class="btn btn01">엑셀 다운로드</a> */}
                         </div>
                     </div>
                     <div className="adm_table">
                         <table className="table_a">
                             <colgroup>
-                                <col width="2%" />
+                                <col width="3%" />
+                                <col width="4%" />
+                                <col width="10%" />
                                 <col width="5%" />
-                                <col width="7%" />
-                                <col width="5%" />
-                                <col width="10%" />
                                 <col width="10%" />
                                 <col width="10%" />
                                 <col width="8%" />
                                 <col width="8%" />
                                 <col width="8%" />
-                                <col width="7%" />
+                                <col width="8%" />
+                                <col width="8%" />
+                                <col width="6%" />
                                 <col width="6%" />
                             </colgroup>
                             <thead>
                                 <tr>
-                                    <th>
+                                    <th rowSpan="2">
                                         <input
                                             type="checkbox"
                                             name="select-all"
@@ -326,17 +328,27 @@ const UserList = () => {
                                             }
                                         />
                                     </th>
-                                    <th>고유번호</th>
-                                    <th>구분</th>
-                                    <th>상태</th>
-                                    <th>아이디</th>
-                                    <th>이름</th>
-                                    <th>연락처</th>
-                                    <th>소속</th>
-                                    <th>전공과</th>
-                                    <th>전공분야</th>
-                                    <th>가입일</th>
-                                    <th>정보수정</th>
+                                    <th rowSpan="2">고유번호</th>
+                                    <th rowSpan="2">ID</th>
+                                    <th rowSpan="2">이름</th>
+                                    <th rowSpan="2">연락처</th>
+                                    <th rowSpan="2">학교</th>
+                                    <th rowSpan="2">학과</th>
+                                    <th rowSpan="2">생년월일</th>
+                                    <th rowSpan="2">희망직종</th>
+                                    <th colSpan="2">참여프로그램</th>
+                                    <th rowSpan="2">이력서 보기</th>
+                                    <th rowSpan="2">정보수정</th>
+                                </tr>
+                                <tr>
+                                    <th>NCS 모의고사</th>
+                                    <th
+                                        style={{
+                                            borderRight: "1px solid #ddd",
+                                        }}
+                                    >
+                                        현직자 토크콘서트
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -365,17 +377,46 @@ const UserList = () => {
                                                 />
                                             </td>
                                             <td>{item.user_key}</td>
-                                            <td>{item.user_role}</td>
-                                            <td>{item.user_status}</td>
                                             <td>{item.user_id}</td>
                                             <td>{item.user_name_ko}</td>
                                             <td>{`${item.mobile1}-${item.mobile2}-${item.mobile3}`}</td>
-                                            <td>{item.organization_name_ko}</td>
-                                            <td>{item.department_name_ko}</td>
-                                            <td>{item.specialized_name_ko}</td>
                                             <td>
-                                                {item.reg_dttm.split(" ")[0]}
+                                                {item.organization_name_ko
+                                                    ? item.organization_name_ko
+                                                    : "-"}
                                             </td>
+                                            <td>
+                                                {item.department_name_ko
+                                                    ? item.department_name_ko
+                                                    : "-"}
+                                            </td>
+                                            <td>
+                                                {item.birth_yyyy === null
+                                                    ? "-"
+                                                    : `${item.birth_yyyy}-${item.birth_mm}-${item.birth_dd}`}
+                                            </td>
+                                            <td>
+                                                {item.specialized_name_ko
+                                                    ? item.specialized_name_ko
+                                                    : "-"}
+                                            </td>
+                                            <td>
+                                                {item.additional_info.filter(
+                                                    (e) =>
+                                                        e.additional_idx === 1
+                                                ).length !== 0
+                                                    ? "V"
+                                                    : ""}
+                                            </td>
+                                            <td>
+                                                {item.additional_info.filter(
+                                                    (e) =>
+                                                        e.additional_idx === 2
+                                                ).length !== 0
+                                                    ? "V"
+                                                    : ""}
+                                            </td>
+                                            <td>이력서</td>
                                             <td>
                                                 <Link
                                                     className="tablebtn"

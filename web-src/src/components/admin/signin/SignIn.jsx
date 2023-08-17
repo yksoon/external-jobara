@@ -169,7 +169,6 @@ const SignIn = () => {
                                     placeholder="ID"
                                     ref={inputID}
                                     onKeyDown={handleOnKeyPress} // Enter 입력 이벤트 함수
-                                    defaultValue="support"
                                 />
                             </div>
                             <div>
@@ -180,7 +179,6 @@ const SignIn = () => {
                                     placeholder="PW"
                                     ref={inputPW}
                                     onKeyDown={handleOnKeyPress} // Enter 입력 이벤트 함수
-                                    defaultValue="1234qwer!@"
                                 />
                             </div>
                             <div className="flex login_btn">

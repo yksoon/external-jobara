@@ -3,6 +3,7 @@ import {
     CommonErrorCatch,
     CommonModal,
     CommonNotify,
+    CommonRest,
 } from "common/js/Common";
 import { RestServer } from "common/js/Rest";
 import React, { useEffect, useState } from "react";
@@ -14,19 +15,21 @@ import { apiPath, routerPath } from "webPath";
 
 import $ from "jquery";
 import useAlert from "hook/useAlert";
+import { init_user_info_admin } from "redux/actions/userInfoAdminAction";
 
 const SideNav = (props) => {
+    const dispatch = useDispatch();
+    const { alert } = useAlert();
+    const err = { dispatch, alert };
+
     const [isOpen, setIsOpen] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
     const [modUserData, setModUserData] = useState(null);
     const [isNeedUpdate, setIsNeedUpdate] = useState(false);
     const navigate = useNavigate();
-    const { alert } = useAlert();
 
     let userInfoAdmin;
     const switchPage = props.switchPage;
-
-    const dispatch = useDispatch();
 
     (() => {
         userInfoAdmin = props.userInfoAdmin;
@@ -135,58 +138,39 @@ const SideNav = (props) => {
         const url = apiPath.api_auth_signout;
         let data = {};
 
-        RestServer("post", url, data)
-            .then(function (response) {
-                // response
-                let result_code = response.headers.result_code;
+        // 파라미터
+        const restParams = {
+            method: "post",
+            url: url,
+            data: data,
+            err: err,
+            callback: (res) => responsLogic(res),
+            admin: "Y",
+        };
+        CommonRest(restParams);
 
-                if (result_code === "0000") {
-                    // localStorage.removeItem("userInfo");
-                    dispatch(init_user_info(null));
+        const responsLogic = (res) => {
+            // response
+            let result_code = res.headers.result_code;
 
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+            if (result_code === "0000") {
+                // localStorage.removeItem("userInfo");
+                dispatch(init_user_info_admin(null));
 
-                    // dispatch(
-                    //     set_page({
-                    //         page: "dashboard",
-                    //     })
-                    // );
-                    navigate(routerPath.admin_login_url);
-                }
-            })
-            .catch(function (error) {
-                // 오류발생시 실행
-                CommonConsole("log", error);
-                CommonConsole("decLog", error);
-                // CommonConsole("alertMsg", error);
-
-                // Spinner
                 dispatch(
                     set_spinner({
                         isLoading: false,
                     })
                 );
 
-                CommonNotify({
-                    type: "alert",
-                    hook: alert,
-                    message: error.response.headers.result_message_ko,
-                });
-
                 // dispatch(
                 //     set_page({
                 //         page: "dashboard",
                 //     })
                 // );
-                // dispatch(set_user_info(null));
-                dispatch(init_user_info);
-
-                navigate(routerPath.login_url);
-            });
+                navigate(routerPath.admin_signin_url);
+            }
+        };
     };
 
     const depth1click = (e) => {
@@ -219,13 +203,8 @@ const SideNav = (props) => {
                     <div className="adm_profile">
                         <Link onClick={(e) => modUser(userInfoAdmin.user_idx)}>
                             <p>
-                                <span>
-                                    {userInfoAdmin &&
-                                        userInfoAdmin.user_name_ko}
-                                </span>
-                                <span>
-                                    ({userInfoAdmin && userInfoAdmin.user_id})
-                                </span>
+                                {userInfoAdmin && userInfoAdmin.user_name_ko}(
+                                {userInfoAdmin && userInfoAdmin.user_id})
                             </p>
                         </Link>
 
@@ -233,10 +212,12 @@ const SideNav = (props) => {
                             <Link onClick={signOut} className="font-12">
                                 로그아웃
                             </Link>{" "}
-                            {/* TODO 나중에 할거야 */}
-                            {/* <Link to={routerPath.main_url} className="font-12">
+                            <Link
+                                to={routerPath.web_main_url}
+                                className="font-12"
+                            >
                                 HOMEPAGE
-                            </Link> */}
+                            </Link>
                         </div>
                     </div>
                     <ul className="sub_gnb">
