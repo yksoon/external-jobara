@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { apiPath, routerPath } from "webPath";
 import useAlert from "hook/useAlert";
 import { set_spinner } from "redux/actions/commonAction";
-import { CommonNotify, CommonRest } from "common/js/Common";
+import { CommonCheckDate, CommonNotify, CommonRest } from "common/js/Common";
 import { idPattern } from "common/js/Pattern";
 import { signupMultiModel } from "models/user/signUp";
 import { set_user_info } from "redux/actions/userInfoAction";
@@ -24,13 +24,56 @@ const SignUpMod = () => {
     const dispatch = useDispatch();
     const { alert } = useAlert();
     const err = { dispatch, alert };
-
+    const checkSchedule = useSelector((state) => state.schedule.checkSchedule);
+    const ip = useSelector((state) => state.ipInfo.ipInfo);
     const navigate = useNavigate();
+
     // 참여프로그램 체크박스
     const [checkItems, setCheckItems] = useState([]);
 
     const userToken = useSelector((state) => state.userInfo.userToken);
     const userInfo = useSelector((state) => state.userInfo.userInfo);
+
+    useEffect(() => {
+        startLoding();
+
+        CommonCheckDate(
+            checkSchedule,
+            ip,
+            alert,
+            checkDatecallback,
+            dispatch
+        ).then((res) => {
+            if (!res) {
+                navigate(routerPath.web_main_url);
+            } else {
+                if (!userToken) {
+                    navigate(routerPath.web_main_url);
+                } else {
+                    getDefaultValue();
+                }
+            }
+        });
+    }, []);
+
+    // 사전등록 기간 체크 콜백
+    const checkDatecallback = () => {
+        dispatch(
+            set_spinner({
+                isLoading: false,
+            })
+        );
+
+        navigate(routerPath.web_main_url);
+    };
+
+    const startLoding = () => {
+        dispatch(
+            set_spinner({
+                isLoading: true,
+            })
+        );
+    };
 
     const signUpRefs = {
         inputID: useRef(null),
@@ -48,14 +91,6 @@ const SignUpMod = () => {
         inputSpecialized: useRef(null),
         inputAttachmentFile: useRef(null),
     };
-
-    useEffect(() => {
-        if (!userToken) {
-            navigate(routerPath.web_main_url);
-        } else {
-            getDefaultValue();
-        }
-    }, []);
 
     const getDefaultValue = () => {
         dispatch(
@@ -198,15 +233,24 @@ const SignUpMod = () => {
                 }
             };
 
-            const restParams = {
-                method: "put_multi",
-                url: apiPath.api_auth_reg_user, // /v1/_user
-                data: formData,
-                err: err,
-                callback: (res) => responsLogic(res),
-            };
+            // 사전등록 체크
+            CommonCheckDate(checkSchedule, ip, alert, checkDatecallback).then(
+                (res) => {
+                    if (!res) {
+                        navigate(routerPath.web_main_url);
+                    } else {
+                        const restParams = {
+                            method: "put_multi",
+                            url: apiPath.api_auth_reg_user, // /v1/_user
+                            data: formData,
+                            err: err,
+                            callback: (res) => responsLogic(res),
+                        };
 
-            CommonRest(restParams);
+                        CommonRest(restParams);
+                    }
+                }
+            );
         }
     };
 

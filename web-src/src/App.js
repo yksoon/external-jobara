@@ -4,7 +4,12 @@ import { RestServer } from "common/js/Rest";
 import axios from "axios";
 import Router from "Router";
 import { useDispatch, useSelector } from "react-redux";
-import { CommonRest, CommonSpinner } from "common/js/Common";
+import {
+    CommonCheckDate,
+    CommonNotify,
+    CommonRest,
+    CommonSpinner,
+} from "common/js/Common";
 import {
     set_codes,
     set_result_code,
@@ -16,7 +21,6 @@ import { ConfirmContextProvider } from "context/ContextProvider";
 import { AlertContextProvider } from "context/ContextProvider";
 import ConfirmModal from "common/js/commonNoti/ConfirmModal";
 import AlertModal from "common/js/commonNoti/AlertModal";
-import useAlert from "hook/useAlert";
 import {
     set_check_schedule,
     set_schedule,
@@ -25,8 +29,8 @@ import {
 import { init_user_info } from "redux/actions/userInfoAction";
 
 function App() {
-    let ipInfo = useSelector((state) => state.ipInfo.ipInfo);
     const dispatch = useDispatch();
+    let ipInfo = useSelector((state) => state.ipInfo.ipInfo);
     const navigate = useNavigate();
     const location = useLocation();
     const userToken = useSelector((state) => state.userInfo.userToken);

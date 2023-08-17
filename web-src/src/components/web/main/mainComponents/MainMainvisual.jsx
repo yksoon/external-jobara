@@ -9,6 +9,10 @@ const MainMainvisual = () => {
     const [startYear, setStartYear] = useState("");
     const [startMonth, setStartMonth] = useState("");
     const [startDay, setStartDay] = useState("");
+    const [dayOfWeek, setDayOfWeek] = useState("");
+    const [startTime, setStartTime] = useState("");
+    const [endTime, setEndTime] = useState("");
+    const [spot, setSpot] = useState("");
     const [imgChange, setImgChange] = useState(false);
 
     useEffect(() => {
@@ -20,6 +24,16 @@ const MainMainvisual = () => {
             setStartYear(startDateArr[0]);
             setStartMonth(startDateArr[1]);
             setStartDay(startDateArr[2]);
+
+            setDayOfWeek(viewSchedule.start_week);
+
+            let startTimeArr = viewSchedule.start_time.split(":");
+            setStartTime(startTimeArr[0] + ":" + startTimeArr[1]);
+
+            let endTimeArr = viewSchedule.end_time.split(":");
+            setEndTime(endTimeArr[0] + ":" + endTimeArr[1]);
+
+            setSpot(viewSchedule.spot);
         }
     }, [viewSchedule]);
 
@@ -58,9 +72,12 @@ const MainMainvisual = () => {
                                     {startMonth && startMonth}.{" "}
                                     {startDay && startDay}
                                 </span>{" "}
-                                (목) <span className="blue">10:00 ~ 18:00</span>
+                                ({dayOfWeek}){" "}
+                                <span className="blue">
+                                    {startTime} ~ {endTime}
+                                </span>
                                 <br />
-                                제주대학교 체육관
+                                {spot}
                             </p>
                         ) : (
                             <div
@@ -205,7 +222,7 @@ const MainMainvisual = () => {
                         data-aos-auration="800"
                         data-aos-delay="500"
                     >
-                        <Link to="" className="m01">
+                        <Link to={routerPath.web_intro_url} className="m01">
                             박람회안내
                         </Link>
                         <Link to="" className="m02">

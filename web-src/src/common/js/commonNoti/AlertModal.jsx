@@ -1,10 +1,19 @@
 import { Link } from "react-router-dom";
 import useAlert from "hook/useAlert";
+import $ from "jquery";
 
 const AlertModal = () => {
     const { alertList } = useAlert();
 
     if (alertList.length <= 0) return null;
+
+    const escKeyModalClose = (e) => {
+        if (e.keyCode === 27 && document.getElementById("okBtn") !== null) {
+            document.getElementById("okBtn").click();
+            return false;
+        }
+    };
+    window.addEventListener("keydown", escKeyModalClose);
 
     return (
         <div className="alert_wrap block">
@@ -30,7 +39,11 @@ const AlertModal = () => {
                                 </p>
                             </div>
                             <div className="btn_box">
-                                <Link className="backbtn" onClick={ok.click}>
+                                <Link
+                                    className="backbtn"
+                                    id="okBtn"
+                                    onClick={ok.click}
+                                >
                                     {ok.text}
                                     <span>
                                         <img

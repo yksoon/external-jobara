@@ -10,6 +10,8 @@ import Admin from "components/admin/Admin";
 import SignIn from "components/admin/signin/SignIn";
 import SignUpChk from "components/web/signUpChk/SignUpChk";
 import SignUpMod from "components/web/signUpMod/SignUpMod";
+import Intro from "components/web/intro/Intro";
+import Location from "components/web/intro/Location";
 
 // Router
 const Router = () => {
@@ -40,6 +42,20 @@ const Router = () => {
                     {/* 메인 */}
                     {/* URL : / */}
                     <Route path={routerPath.web_main_url} element={<Main />} />
+
+                    {/* 행사소개 */}
+                    {/* URL : /intro/intro */}
+                    <Route
+                        path={routerPath.web_intro_url}
+                        element={<Intro />}
+                    />
+
+                    {/* 행사장소 */}
+                    {/* URL : /intro/location */}
+                    <Route
+                        path={routerPath.web_intro_location_url}
+                        element={<Location />}
+                    />
 
                     {/* 사전등록 */}
                     {/* URL : /signup */}

@@ -8,6 +8,7 @@ import tokenExpire from "./tokenExpire";
 import HotelDetailModalMain from "components/admin/hotel/hotelList/hotelDetailModal/HotelDetailModalMain";
 import RegUserModalMain from "components/admin/user/userList/RegUserModalMain";
 import { RestServer } from "./Rest";
+import useAlert from "hook/useAlert";
 
 // Alert (props)
 // isOpen = state 상태값
@@ -236,7 +237,7 @@ const CommonNotify = async (option) => {
     const type = option.type;
     const hook = option.hook;
     const message = option.message;
-    const callback = option.callback ? () => option.callback() : null;
+    const callback = option.callback ? option.callback : null;
 
     switch (type) {
         case "confirm":
@@ -328,31 +329,71 @@ alert : useAlert
 type: ""
 callback : callback()
 */
-// const CommonCheckDate = async (restParams) => {
-//     const dispatch = restParams.err.dispatch;
-//     const alert = restParams.err.alert;
+const CommonCheckDate = async (
+    checkSchedule,
+    ip,
+    alert,
+    callbackFunc,
+    dispatch
+) => {
+    dispatch(
+        set_spinner({
+            isLoading: true,
+        })
+    );
 
-//     const type = restParams.type;
-//     const url = "http://jejujobara.com:60000" + "/" + type;
+    if (Object.keys(checkSchedule).length !== 0) {
+        const allowedIp = checkSchedule.allowed_ip;
 
-//     await RestServer("get", url, {})
-//         .then((response) => {
-//             if (response.headers.result_code === "0000") {
-//                 restParams.callback(response);
-//             } else {
-//                 CommonNotify({
-//                     type: "alert",
-//                     hook: alert,
-//                     message: response.headers.result_message_ko,
-//                 });
-//             }
-//         })
-//         .catch((error) => {
-//             CommonErrorCatch(error, dispatch, alert);
-//             // console.log(error);
-//             // func(error);
-//         });
-// };
+        const nowDate = new Date();
+
+        const startDate = checkSchedule.start_date;
+        const startTime = checkSchedule.start_time;
+        const endDate = checkSchedule.end_date;
+        const endTime = checkSchedule.end_time;
+
+        const startDateTime = new Date(startDate + " " + startTime);
+        const endDateTime = new Date(endDate + " " + endTime);
+
+        if (nowDate > startDateTime && nowDate < endDateTime) {
+            // 사전등록기간 내
+            console.log("checkSchedule OK");
+
+            dispatch(
+                set_spinner({
+                    isLoading: false,
+                })
+            );
+
+            return true;
+        } else {
+            // 사전등록기간 외
+            if (allowedIp.indexOf(ip) === -1) {
+                // 예외 아이피가 없으면
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: "사전등록 기간이 아닙니다",
+                    callback: callbackFunc,
+                });
+
+                return false;
+            }
+        }
+    } else {
+        callbackFunc();
+
+        return false;
+    }
+
+    return true;
+};
+
+// 공용 url 열기
+// 파라미터 : url(string)
+const CommonOpenUrl = (url) => {
+    window.open(url, "_blank", "noopener, noreferrer");
+};
 
 export {
     CommonModal,
@@ -361,5 +402,6 @@ export {
     CommonErrorCatch,
     CommonNotify,
     CommonRest,
-    // CommonCheckDate,
+    CommonOpenUrl,
+    CommonCheckDate,
 };

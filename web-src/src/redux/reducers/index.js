@@ -16,7 +16,14 @@ const persistConfig = {
     key: "root",
     storage: storageSession,
     version: 0,
-    whitelist: ["codes", "userInfo", "ipInfo", "page", "userInfoAdmin"], // 이곳에 추가시 세션스토리지에 저장됨
+    whitelist: [
+        "codes",
+        "userInfo",
+        "ipInfo",
+        "page",
+        "userInfoAdmin",
+        "schedule",
+    ], // 이곳에 추가시 세션스토리지에 저장됨
 };
 
 // 리듀서 추가

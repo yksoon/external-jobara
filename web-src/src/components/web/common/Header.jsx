@@ -154,7 +154,10 @@ function Header({ props }) {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="" id="nav1">
+                                    <Link
+                                        to={routerPath.web_intro_url}
+                                        id="nav1"
+                                    >
                                         박람회안내
                                     </Link>
                                 </li>

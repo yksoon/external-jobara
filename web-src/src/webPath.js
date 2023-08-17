@@ -36,6 +36,14 @@ const routerPath = {
     // /
     web_main_url: `${base_url}`,
 
+    // 행사소개
+    // /intro
+    web_intro_url: `${base_url}intro/intro`,
+
+    // 행사소개
+    // /intro
+    web_intro_location_url: `${base_url}intro/location`,
+
     // 회원가입
     // /signup
     web_signup_url: `${base_url}signup`,

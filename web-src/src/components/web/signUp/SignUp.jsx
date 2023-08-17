@@ -6,7 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import SubHeader from "../common/SubHeader";
 import Footer from "components/web/common/Footer";
 
-import { CommonConsole, CommonNotify, CommonRest } from "common/js/Common";
+import {
+    CommonCheckDate,
+    CommonConsole,
+    CommonNotify,
+    CommonRest,
+} from "common/js/Common";
 import { set_spinner } from "redux/actions/commonAction";
 import useAlert from "hook/useAlert";
 
@@ -29,6 +34,8 @@ function SignUp() {
     const dispatch = useDispatch();
     const { alert } = useAlert();
     const err = { dispatch, alert };
+    const checkSchedule = useSelector((state) => state.schedule.checkSchedule);
+    const ip = useSelector((state) => state.ipInfo.ipInfo);
     const navigate = useNavigate();
 
     // 참여프로그램 체크박스
@@ -48,7 +55,31 @@ function SignUp() {
     useEffect(() => {
         // 로딩
         startLoding();
+
+        // 사전등록 날짜 체크
+        CommonCheckDate(
+            checkSchedule,
+            ip,
+            alert,
+            checkDatecallback,
+            dispatch
+        ).then((res) => {
+            if (!res) {
+                navigate(routerPath.web_main_url);
+            }
+        });
     }, []);
+
+    // 사전등록 기간 체크 콜백
+    const checkDatecallback = () => {
+        dispatch(
+            set_spinner({
+                isLoading: false,
+            })
+        );
+
+        navigate(routerPath.web_main_url);
+    };
 
     const startLoding = () => {
         dispatch(
@@ -165,15 +196,28 @@ function SignUp() {
                 }
             };
 
-            const restParams = {
-                method: "post_multi",
-                url: apiPath.api_auth_reg_user, // /v1/_user
-                data: formData,
-                err: err,
-                callback: (res) => responsLogic(res),
-            };
+            // 사전등록 체크
+            CommonCheckDate(
+                checkSchedule,
+                ip,
+                alert,
+                checkDatecallback,
+                dispatch
+            ).then((res) => {
+                if (!res) {
+                    navigate(routerPath.web_main_url);
+                } else {
+                    const restParams = {
+                        method: "post_multi",
+                        url: apiPath.api_auth_reg_user, // /v1/_user
+                        data: formData,
+                        err: err,
+                        callback: (res) => responsLogic(res),
+                    };
 
-            CommonRest(restParams);
+                    CommonRest(restParams);
+                }
+            });
         }
     };
 

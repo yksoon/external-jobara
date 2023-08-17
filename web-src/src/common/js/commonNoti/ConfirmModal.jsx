@@ -6,6 +6,14 @@ const ConfirmModal = () => {
 
     if (confirmList.length <= 0) return null;
 
+    const escKeyModalClose = (e) => {
+        if (e.keyCode === 27 && document.getElementById("closeBtn") !== null) {
+            document.getElementById("closeBtn").click();
+            return false;
+        }
+    };
+    window.addEventListener("keydown", escKeyModalClose);
+
     return (
         <div className="alert_wrap block">
             {confirmList.map(
@@ -41,6 +49,7 @@ const ConfirmModal = () => {
                                 </Link>{" "}
                                 <Link
                                     className="backbtn"
+                                    id="closeBtn"
                                     onClick={cancel.click}
                                 >
                                     {cancel.text}{" "}

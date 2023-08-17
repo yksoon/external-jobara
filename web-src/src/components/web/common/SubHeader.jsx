@@ -125,11 +125,19 @@ const SubHeader = () => {
                     <div id="gnb">
                         <ul>
                             <li>
-                                <Link href="">박람회안내</Link>
+                                <Link to={routerPath.web_intro_url}>
+                                    박람회안내
+                                </Link>
                                 <div className="submenu">
-                                    <Link href="">행사소개</Link>
-                                    <Link href="">인사말</Link>
-                                    <Link href="">행사장소</Link>
+                                    <Link to={routerPath.web_intro_url}>
+                                        행사소개
+                                    </Link>
+                                    {/* <Link href="">인사말</Link> */}
+                                    <Link
+                                        to={routerPath.web_intro_location_url}
+                                    >
+                                        행사장소
+                                    </Link>
                                 </div>
                             </li>
                             <li>
@@ -184,7 +192,10 @@ const SubHeader = () => {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="" id="nav1">
+                                    <Link
+                                        to={routerPath.web_intro_url}
+                                        id="nav1"
+                                    >
                                         박람회안내
                                     </Link>
                                 </li>

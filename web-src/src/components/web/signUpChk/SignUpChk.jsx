@@ -1,11 +1,11 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "components/web/common/Footer";
 import { apiPath, routerPath } from "webPath";
 import SubHeader from "../common/SubHeader";
 import { mobile1Pattern, mobile2Pattern } from "common/js/Pattern";
-import { CommonNotify, CommonRest } from "common/js/Common";
-import { useDispatch } from "react-redux";
+import { CommonCheckDate, CommonNotify, CommonRest } from "common/js/Common";
+import { useDispatch, useSelector } from "react-redux";
 import useAlert from "hook/useAlert";
 import { signInModel } from "models/user/signIn";
 import { set_spinner } from "redux/actions/commonAction";
@@ -15,6 +15,8 @@ function SignUpChk() {
     const dispatch = useDispatch();
     const { alert } = useAlert();
     const err = { dispatch, alert };
+    const checkSchedule = useSelector((state) => state.schedule.checkSchedule);
+    const ip = useSelector((state) => state.ipInfo.ipInfo);
     const navigate = useNavigate();
 
     const signUpChkRefs = {
@@ -22,6 +24,40 @@ function SignUpChk() {
         inputMobile1: useRef(null),
         inputMobile2: useRef(null),
         inputMobile3: useRef(null),
+    };
+
+    useEffect(() => {
+        // 사전등록 날짜 체크
+        CommonCheckDate(
+            checkSchedule,
+            ip,
+            alert,
+            checkDatecallback,
+            dispatch
+        ).then((res) => {
+            if (!res) {
+                navigate(routerPath.web_main_url);
+            } else {
+                dispatch(
+                    set_spinner({
+                        isLoading: false,
+                    })
+                );
+
+                signUpChkRefs.inputID.current.focus();
+            }
+        });
+    }, []);
+
+    // 사전등록 기간 체크 콜백
+    const checkDatecallback = () => {
+        dispatch(
+            set_spinner({
+                isLoading: false,
+            })
+        );
+
+        navigate(routerPath.web_main_url);
     };
 
     // 모바일 패턴 체크 및 다음칸으로 이동
@@ -65,19 +101,29 @@ function SignUpChk() {
     };
 
     // 알럿
-    const signupAlert = (msg) => {
+    const signupAlert = (params) => {
         CommonNotify({
             type: "alert",
             hook: alert,
-            message: msg,
+            message: params.msg,
+            callback: () => focusFunc(params.ref),
         });
+    };
+
+    // 포커스
+    const focusFunc = (ref) => {
+        ref.current.focus();
     };
 
     // validation
     const validation = () => {
         if (!signUpChkRefs.inputID.current.value) {
-            signupAlert("아이디를 입력해주세요");
-            signUpChkRefs.inputID.current.focus();
+            signUpChkRefs.inputID.current.blur();
+            signupAlert({
+                msg: "아이디를 입력해주세요",
+                ref: signUpChkRefs.inputID,
+            });
+            // signUpChkRefs.inputID.current.focus();
             return false;
         }
 
@@ -86,8 +132,13 @@ function SignUpChk() {
             !signUpChkRefs.inputMobile2.current.value ||
             !signUpChkRefs.inputMobile3.current.value
         ) {
-            signupAlert("연락처를 입력해주세요");
-            signUpChkRefs.inputMobile1.current.focus();
+            signUpChkRefs.inputMobile1.current.blur();
+            signUpChkRefs.inputMobile2.current.blur();
+            signUpChkRefs.inputMobile3.current.blur();
+            signupAlert({
+                msg: "연락처를 입력해주세요",
+                ref: signUpChkRefs.inputMobile1,
+            });
             return false;
         }
 
@@ -191,8 +242,9 @@ function SignUpChk() {
                                             type="text"
                                             className="input_s"
                                             ref={signUpChkRefs.inputID}
-                                            onKeyDown={handleOnKeyPress} // Enter 입력 이벤트 함수
-                                            autoFocus
+                                            onKeyDown={(e) =>
+                                                handleOnKeyPress(e)
+                                            } // Enter 입력 이벤트 함수
                                         />
                                     </td>
                                 </tr>
@@ -205,7 +257,9 @@ function SignUpChk() {
                                             id="mobile1"
                                             ref={signUpChkRefs.inputMobile1}
                                             onChange={(e) => mobileHandler(e)}
-                                            onKeyDown={handleOnKeyPress} // Enter 입력 이벤트 함수
+                                            onKeyDown={(e) =>
+                                                handleOnKeyPress(e)
+                                            } // Enter 입력 이벤트 함수
                                         />{" "}
                                         -
                                         <input
@@ -214,7 +268,9 @@ function SignUpChk() {
                                             id="mobile2"
                                             ref={signUpChkRefs.inputMobile2}
                                             onChange={(e) => mobileHandler(e)}
-                                            onKeyDown={handleOnKeyPress} // Enter 입력 이벤트 함수
+                                            onKeyDown={(e) =>
+                                                handleOnKeyPress(e)
+                                            } // Enter 입력 이벤트 함수
                                         />{" "}
                                         -
                                         <input
@@ -223,7 +279,9 @@ function SignUpChk() {
                                             id="mobile3"
                                             ref={signUpChkRefs.inputMobile3}
                                             onChange={(e) => mobileHandler(e)}
-                                            onKeyDown={handleOnKeyPress} // Enter 입력 이벤트 함수
+                                            onKeyDown={(e) =>
+                                                handleOnKeyPress(e)
+                                            } // Enter 입력 이벤트 함수
                                         />
                                     </td>
                                 </tr>
