@@ -221,6 +221,22 @@ a.table_btn span {font-size: 20px;color: #fff;line-height: 28px;    vertical-ali
 .venue_bus .linebox > div {margin:0 0 20px;}
 .venue_bus .linebox > div:last-child {margin:0;}
 
+/* 행사일정 */
+.pro_table tr th, .pro_table tr td{color: #111;font-size: 18px; font-weight: 600; padding: 20px 10px; border-bottom: 1px solid #ddd;text-align: center;}
+.pro_table tr td {border-right: 1px solid #ddd;color: #111;}
+.pro_table tr :last-child {border-right: none;}
+.pro_table thead tr th {font-weight:800;background:#e40b8a;color: #fff;border-radius: 20px 20px 0 0;}
+.pro_table tr .time {background: #f8f8f8;text-align: center;font-weight: 600;}
+.pro_table tr td.break {background: #efefef;}
+.pro_table tr td.welcome {background: #fff5fd;}
+.pro_table tr td.step {line-height: 26px;word-break: keep-all;font-weight: 700;}
+.pro_table tr td.step span {background: #65c4f2;width:74px;height:74px;line-height:74px;border-radius:50%;margin:0 auto 14px;color: #fff;display: block;font-size: 16px;font-family:'GmarketSans';font-weight: 900;}
+.pro_table tr td.step2 span {background: #bad73c;}
+.pro_table tr td.step3 span {background: #ffa700;}
+.pro_table tr td.step1 {box-shadow: 0 0 0 3px #65c4f2 inset; }
+.pro_table tr td.step2 {box-shadow: 0 0 0 3px #bad73c inset; }
+.pro_table tr td.step3 {box-shadow: 0 0 0 3px #ffa700 inset; }
+
 
 
 
