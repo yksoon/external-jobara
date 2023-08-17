@@ -89,8 +89,8 @@ function SignUp() {
             let data = {};
 
             let fileArr = [];
-            let files = signUpRefs.inputAttachmentFile.current.files;
-            fileArr.push(signUpRefs.inputAttachmentFile.current.files[0]);
+            // let files = signUpRefs.inputAttachmentFile.current.files;
+            // fileArr.push(signUpRefs.inputAttachmentFile.current.files[0]);
 
             // console.log(Array.from(signUpRefs.inputAttachmentFile.current.files));
 

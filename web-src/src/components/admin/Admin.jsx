@@ -56,7 +56,7 @@ const Admin = () => {
             data: data,
             err: err,
             callback: (res) => responsLogic(res),
-            admin: "Y",
+            admin: "Y", // 어드민일때 이 값을 넣으세요~
         };
 
         CommonRest(restParams);
@@ -65,6 +65,7 @@ const Admin = () => {
             const result_code = res.headers.result_code;
             let resData = [];
 
+            // TODO: 상수로 빼
             if (result_code === "0000") {
                 resData = res.data.result_info;
 
@@ -133,6 +134,7 @@ const Admin = () => {
             return item1;
         });
 
+        console.log(depth1);
         menuArr = depth1;
         setMenuList(menuArr);
 

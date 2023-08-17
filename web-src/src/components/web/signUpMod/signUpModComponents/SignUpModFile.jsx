@@ -13,7 +13,7 @@ const SignUpModFile = forwardRef((props, ref) => {
     }, []);
 
     const getFileList = () => {
-        const files = userInfo.file_info;
+        const files = userInfo ? userInfo.file_info : [];
 
         setFileList(files);
     };

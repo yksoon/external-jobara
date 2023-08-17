@@ -294,6 +294,7 @@ method : "post", "get", "delete", "put", "post_multi", "put_multi"
 url : ""
 data : {}
 callback : callback()
+admin: ""
 */
 const CommonRest = async (restParams = {}) => {
     const dispatch = restParams.err.dispatch;
@@ -327,31 +328,31 @@ alert : useAlert
 type: ""
 callback : callback()
 */
-const CommonCheckDate = async (restParams) => {
-    const dispatch = restParams.err.dispatch;
-    const alert = restParams.err.alert;
+// const CommonCheckDate = async (restParams) => {
+//     const dispatch = restParams.err.dispatch;
+//     const alert = restParams.err.alert;
 
-    const type = restParams.type;
-    const url = "http://jejujobara.com:60000" + "/" + type;
+//     const type = restParams.type;
+//     const url = "http://jejujobara.com:60000" + "/" + type;
 
-    await RestServer("get", url, {})
-        .then((response) => {
-            if (response.headers.result_code === "0000") {
-                restParams.callback(response);
-            } else {
-                CommonNotify({
-                    type: "alert",
-                    hook: alert,
-                    message: response.headers.result_message_ko,
-                });
-            }
-        })
-        .catch((error) => {
-            CommonErrorCatch(error, dispatch, alert);
-            // console.log(error);
-            // func(error);
-        });
-};
+//     await RestServer("get", url, {})
+//         .then((response) => {
+//             if (response.headers.result_code === "0000") {
+//                 restParams.callback(response);
+//             } else {
+//                 CommonNotify({
+//                     type: "alert",
+//                     hook: alert,
+//                     message: response.headers.result_message_ko,
+//                 });
+//             }
+//         })
+//         .catch((error) => {
+//             CommonErrorCatch(error, dispatch, alert);
+//             // console.log(error);
+//             // func(error);
+//         });
+// };
 
 export {
     CommonModal,
@@ -360,5 +361,5 @@ export {
     CommonErrorCatch,
     CommonNotify,
     CommonRest,
-    CommonCheckDate,
+    // CommonCheckDate,
 };

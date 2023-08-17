@@ -124,6 +124,7 @@ function SignUpChk() {
             callback: (res) => responsLogic(res),
         };
 
+        // 서버통신 공통 REST
         CommonRest(restParams);
 
         const responsLogic = (res) => {
@@ -161,6 +162,7 @@ function SignUpChk() {
         };
     };
 
+    // 엔터키
     const handleOnKeyPress = (e) => {
         if (e.key === "Enter") {
             clickSubmit(); // Enter 입력이 되면 클릭 이벤트 실행

@@ -21,6 +21,7 @@ const SignUpCaptcha = forwardRef((props, ref) => {
     const [isLoading, setIsLoading] = useState(false);
     const imgUrl = apiPath.api_captcha_img;
 
+    // TODO: 아이폰 확인
     const refreshCaptcha = () => {
         let imgElement = document.getElementById("captchaImg");
 
