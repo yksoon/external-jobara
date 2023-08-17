@@ -80,6 +80,7 @@ a.tablebtn {display:inline-block;width:auto;padding: 0 10px;height: 26px;text-al
 .plusbtn_wrap a {padding:0 8px;border: 1px solid #ddd;display: inline-block;border-radius: 5px;line-height: 21px;}
 
 select {border: 1px solid #ddd;height:28px;line-height:28px;font-size: 14px;color: #333;padding: 0 10px;cursor:pointer;border-radius: 5px;}
+textarea {width:100%;min-height:180px;resize: none;border: 1px solid #ddd;height:28px;line-height:28px;font-size: 14px;color: #333;padding: 0 10px;display:inline-block;min-width:80px;border-radius: 5px;}
 input::placeholder {color: #a6a6a6;}
 input.input {border: 1px solid #ddd;height:28px;line-height:28px;font-size: 14px;color: #333;padding: 0 10px;display:inline-block;min-width:80px;border-radius: 5px;}
 input.input {font-family:inherit;}
@@ -89,6 +90,7 @@ input.login {border: 1px solid #818181;height:36px;line-height:36px;font-size: 1
 label.checkbox {display:flex;width:30px;height:30px;border: 1px solid #bdbdbd;border-radius: 50%;text-align:center;align-items: center;justify-content: center;cursor: pointer;}
 input[type="checkbox"]:checked + label.checkbox {background:#0047a0;border: 1px solid #0047a0;}
 input[type="checkbox"]:checked + label.checkbox svg {fill:#fff;}
+input[type="file"] {font-family: inherit !important;font-size: 12px !important;}
 
 .admin .content {padding:0 0 0 180px;}
 .admin .con_area {padding:20px;}
@@ -188,3 +190,9 @@ div.mo_title > h4{font-size: 21px;font-weight: 700;}
 .error_page > img {width:180px;}
 .error_page a.backbtn {background:#fff;}
 .error_page h3 {font-size: 32px;font-weight: 700;margin: 32px 0 15px;}
+
+/* 공지사항 */
+.admin .adm_notice .file_wrap {display:flex; align-items: center;    justify-content: center;}
+.admin .adm_notice .file_wrap a{display:flex; align-items: center;margin:0 10px 0 0;}
+.admin .adm_notice .file_wrap img{width:18px;}
+.admin .adm_notice .viewer_wrap img{width:12px;margin:0 0 -2px;}
