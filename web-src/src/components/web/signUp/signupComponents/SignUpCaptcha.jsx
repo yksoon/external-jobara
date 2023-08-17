@@ -19,15 +19,27 @@ const SignUpCaptcha = forwardRef((props, ref) => {
     const { inputCaptcha } = ref;
     const err = { dispatch, alert };
     const [isLoading, setIsLoading] = useState(false);
+    const [img, setImg] = useState({});
     const imgUrl = apiPath.api_captcha_img;
 
     // TODO: 아이폰 확인
     const refreshCaptcha = () => {
-        let imgElement = document.getElementById("captchaImg");
+        // let imgElement = document.getElementById("captchaImg");
 
-        imgElement.src = "";
-        imgElement.src = imgUrl;
+        // imgElement.src = "";
+        // imgElement.src = imgUrl;
+        setImg({
+            imageSrc: imgUrl,
+            imageHash: Date.now(),
+        });
     };
+
+    useEffect(() => {
+        setImg({
+            imageSrc: imgUrl,
+            imageHash: Date.now(),
+        });
+    }, []);
 
     return (
         <>
@@ -37,18 +49,14 @@ const SignUpCaptcha = forwardRef((props, ref) => {
                     <div className="cap_wrap">
                         <div>
                             <span className="cap">
-                                {isLoading ? (
-                                    <CircularProgress />
-                                ) : (
-                                    <img
-                                        className="imgClass"
-                                        id="captchaImg"
-                                        src={imgUrl}
-                                        alt=""
-                                        decoding="async"
-                                        style={{ background: "white" }}
-                                    />
-                                )}
+                                <img
+                                    className="imgClass"
+                                    id="captchaImg"
+                                    src={`${img.imageSrc}?${img.imageHash}`}
+                                    alt=""
+                                    decoding="async"
+                                    style={{ background: "white" }}
+                                />
                             </span>
                             <span className="cap_refresh">
                                 <Link
