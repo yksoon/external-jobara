@@ -50,16 +50,17 @@ const SignUpCaptcha = forwardRef((props, ref) => {
                                     />
                                 )}
                             </span>
-                            <span className="cap_refresh">
-                                <Link
-                                    onClick={(e) => {
-                                        refreshCaptcha();
-                                        e.preventDefault();
-                                    }}
-                                >
+                            <span
+                                className="cap_refresh"
+                                onClick={(e) => {
+                                    refreshCaptcha();
+                                    e.preventDefault();
+                                }}
+                            >
+                                <>
                                     <RefreshIcon />
                                     새로고침
-                                </Link>
+                                </>
                             </span>
                         </div>
                         <input
