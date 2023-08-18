@@ -74,7 +74,7 @@ function MobileNav({ props }) {
                             </Link>
                             <ul className="nav_2depth">
                                 <li><Link to={routerPath.web_intro_url}>행사소개</Link></li>
-                                <li><Link to={routerPath.web_Location_url}>행사장소</Link></li>
+                                <li><Link to={routerPath.web_intro_location_url}>행사장소</Link></li>
                             </ul>
                         </li>
                         <li>
@@ -89,8 +89,8 @@ function MobileNav({ props }) {
                             </Link>
                             <ul className="nav_2depth">
                                 <li><Link to={routerPath.web_program_url}>행사일정</Link></li>
-                                <li><Link  to={routerPath.web_program_detail_url}>세부프로그램</Link></li>
-                                <li><Link  to={routerPath.web_program_event_url}>이벤트프로그램</Link></li>
+                                <li><Link to={routerPath.web_program_detail_url}>세부프로그램</Link></li>
+                                <li><Link to={routerPath.web_program_event_url}>이벤트프로그램</Link></li>
                             </ul>
                         </li>
                         <li>
