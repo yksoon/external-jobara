@@ -225,7 +225,7 @@ const MainMainvisual = () => {
                         <Link to={routerPath.web_intro_url} className="m01">
                             박람회안내
                         </Link>
-                        <Link to="" className="m02">
+                        <Link to={routerPath.web_program_url} className="m02">
                             프로그램
                         </Link>
                         <Link to={routerPath.web_signup_url} className="m03">
