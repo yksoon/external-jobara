@@ -12,6 +12,9 @@ import SignUpChk from "components/web/signUpChk/SignUpChk";
 import SignUpMod from "components/web/signUpMod/SignUpMod";
 import Intro from "components/web/intro/Intro";
 import Location from "components/web/intro/Location";
+import Program from "components/web/program/Program";
+import Detail from "components/web/program/Detail";
+import Event from "components/web/program/Event";
 
 // Router
 const Router = () => {
@@ -55,6 +58,26 @@ const Router = () => {
                     <Route
                         path={routerPath.web_intro_location_url}
                         element={<Location />}
+                    />
+
+                    {/* 프로그램 */}
+                    {/* URL : /program/program */}
+                    <Route
+                        path={routerPath.web_program_url}
+                        element={<Program />}
+                    />
+                    {/* 프로그램 */}
+                    {/* URL : /program/detail */}
+                    <Route
+                        path={routerPath.web_program_detail_url}
+                        element={<Detail />}
+                    />
+
+                    {/* 프로그램 */}
+                    {/* URL : /program/event */}
+                    <Route
+                        path={routerPath.web_program_event_url}
+                        element={<Event />}
                     />
 
                     {/* 사전등록 */}
