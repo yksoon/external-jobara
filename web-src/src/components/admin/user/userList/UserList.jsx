@@ -450,6 +450,9 @@ const UserList = () => {
                                                                     alt={
                                                                         item2.file_name
                                                                     }
+                                                                    title={
+                                                                        item2.file_name
+                                                                    }
                                                                 />
                                                             </Link>
                                                         )

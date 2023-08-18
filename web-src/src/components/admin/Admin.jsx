@@ -66,11 +66,11 @@ const Admin = () => {
 
             // TODO: 상수로 빼
             if (result_code === "0000") {
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
 
                 resData = res.data.result_info;
 

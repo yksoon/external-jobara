@@ -42,6 +42,8 @@ Instance.interceptors.request.use(
 const Instance_admin = axios.create({
     headers: {
         "Content-Type": "application/json",
+        // "Content-Type":
+        //     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8",
     },
     timeout: 10000,
 });

@@ -61,16 +61,16 @@ const SignIn = () => {
             return false;
         }
 
+        login();
+    };
+
+    const login = () => {
         dispatch(
             set_spinner({
                 isLoading: true,
             })
         );
 
-        login();
-    };
-
-    const login = () => {
         // /v1/signin
         // POST
         const url = apiPath.api_auth_signin;
@@ -111,6 +111,12 @@ const SignIn = () => {
                 dispatch(set_user_info_admin(JSON.stringify(user_info)));
 
                 dispatch(set_user_token_admin(JSON.stringify(user_info)));
+
+                dispatch(
+                    set_spinner({
+                        isLoading: false,
+                    })
+                );
 
                 navigate(routerPath.admin_main_url);
             } else {
