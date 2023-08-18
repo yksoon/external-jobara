@@ -257,6 +257,11 @@ a.table_btn span {font-size: 20px;color: #fff;line-height: 28px;    vertical-ali
 .pro_detail > div.detail_step2 h4 {color: #B8D73B;}
 .pro_detail > div.detail_step3 h4 {color: #65C4F2;}
 
+/* 준비중입니다 */
+.prepare {text-align: center;}
+.prepare img {width: 400px;max-width: 80%;}
+.prepare p {font-family: 'Gmarket Sans';font-size: 32px;color: #111;font-weight: 900;color: #E8368B;}
+
 
 
 
