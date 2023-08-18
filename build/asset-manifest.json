@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.css": "./static/css/main.b73af067.css",
-    "main.js": "./static/js/main.63df9c76.js",
-    "static/js/89.1c0be3c7.chunk.js": "./static/js/89.1c0be3c7.chunk.js",
+    "main.css": "./static/css/main.a1ac8ede.css",
+    "main.js": "./static/js/main.40d5a762.js",
+    "static/js/89.c2236634.chunk.js": "./static/js/89.c2236634.chunk.js",
     "static/js/614.d4f2b5f3.chunk.js": "./static/js/614.d4f2b5f3.chunk.js",
     "static/js/27.a4feda1c.chunk.js": "./static/js/27.a4feda1c.chunk.js",
     "static/js/683.494a0bba.chunk.js": "./static/js/683.494a0bba.chunk.js",
-    "static/js/789.cadcee26.chunk.js": "./static/js/789.cadcee26.chunk.js",
+    "static/js/21.19b753f4.chunk.js": "./static/js/21.19b753f4.chunk.js",
     "static/media/chab.ttf": "./static/media/chab.73854a05b07c4f60f35d.ttf",
     "static/media/Pretendard-Bold.woff": "./static/media/Pretendard-Bold.dd56301118da9e158ce9.woff",
     "static/media/Pretendard-Medium.woff": "./static/media/Pretendard-Medium.f0cc544dcc84cf9f03b3.woff",
@@ -20,7 +20,7 @@
     "index.html": "./index.html"
   },
   "entrypoints": [
-    "static/css/main.b73af067.css",
-    "static/js/main.63df9c76.js"
+    "static/css/main.a1ac8ede.css",
+    "static/js/main.40d5a762.js"
   ]
 }
