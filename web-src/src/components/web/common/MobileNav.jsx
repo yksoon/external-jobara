@@ -28,6 +28,7 @@ function MobileNav({ props }) {
     };
 
     const menuDepth = (e) => {
+        e.preventDefault();
         $(".nav_2depth").slideUp();
         $(e.target).siblings(".nav_2depth").slideToggle();
     };
@@ -64,7 +65,10 @@ function MobileNav({ props }) {
                         <li>
                             <Link
                                 id="nav1"
-                                onClick={(e) => menuDepth(e)}
+                                onClick={(e) => {
+                                    menuDepth(e);
+                                    e.preventDefault();
+                                }}
                             >
                                 박람회안내
                             </Link>
@@ -76,7 +80,10 @@ function MobileNav({ props }) {
                         <li>
                             <Link 
                                 id="nav2"
-                                onClick={(e) => menuDepth(e)}
+                                onClick={(e) => {
+                                    menuDepth(e);
+                                    e.preventDefault();
+                                }}
                                 >
                                 프로그램
                             </Link>
@@ -89,7 +96,10 @@ function MobileNav({ props }) {
                         <li>
                             <Link
                                 id="nav3"
-                                onClick={(e) => menuDepth(e)}
+                                onClick={(e) => {
+                                    menuDepth(e);
+                                    e.preventDefault();
+                                }}
                             >
                                 사전등록
                             </Link>
