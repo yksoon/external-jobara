@@ -6,9 +6,10 @@ import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import { pwPattern } from "common/js/Pattern";
 import { set_spinner } from "redux/actions/commonAction";
-import { apiPath } from "webPath";
+import { apiPath, routerPath } from "webPath";
 import { RestServer } from "common/js/Rest";
 import useAlert from "hook/useAlert";
+import { signupMultiModel } from "models/user/signUp";
 
 const RegUserModal = (props) => {
     const dispatch = useDispatch();
@@ -49,6 +50,7 @@ const RegUserModal = (props) => {
     const inputDepartment = useRef(null);
     const inputSpecialized = useRef(null);
     const inputBirth = useRef(null);
+    const inputAttachmentFile = useRef(null);
 
     useEffect(() => {
         // 참여프로그램
@@ -188,6 +190,7 @@ const RegUserModal = (props) => {
             });
     };
 
+    // 신규등록
     const regUser = () => {
         let signupData = {
             signup_type: "000",
@@ -237,23 +240,8 @@ const RegUserModal = (props) => {
             });
     };
 
-    // 회원수정
+    // 등록된거 수정
     const modUser = () => {
-        let modData = {
-            signup_type: "000",
-            user_idx: modUserData.user_idx,
-            user_id: inputID.current.value,
-            user_name_first_ko: inputFirstNameKo.current.value,
-            user_name_last_ko: inputLastNameKo.current.value,
-            inter_phone_number: "82",
-            mobile1: inputMobile1.current.value,
-            mobile2: inputMobile2.current.value,
-            mobile3: inputMobile3.current.value,
-            organization_name_ko: inputOrganization.current.value,
-            department_name_ko: inputDepartment.current.value,
-            specialized_name_ko: inputSpecialized.current.value,
-        };
-
         if (checkValidation("mod")) {
             dispatch(
                 set_spinner({
@@ -261,55 +249,101 @@ const RegUserModal = (props) => {
                 })
             );
 
+            const formData = new FormData();
+            const model = signupMultiModel;
+            let data = {};
+
+            let fileArr = [];
+
+            // 생년월일 가공
+            const birthArr = inputBirth.current.value
+                ? inputBirth.current.value.split("-")
+                : "";
+
+            data = {
+                ...model,
+                signupType: "000",
+                userIdx: modUserData.user_idx,
+                userId: inputID.current.value,
+                userNameFirstKo: inputFirstNameKo.current.value,
+                userNameLastKo: inputLastNameKo.current.value,
+                interPhoneNumber: "82",
+                mobile1: inputMobile1.current.value,
+                mobile2: inputMobile2.current.value,
+                mobile3: inputMobile3.current.value,
+                birthYyyy: birthArr[0],
+                birthMm: birthArr[1],
+                birthDd: birthArr[2],
+                additionalIdxs: checkItems.join(),
+                organizationNameKo: inputOrganization.current.value,
+                departmentNameKo: inputDepartment.current.value,
+                specializedNameKo: inputSpecialized.current.value,
+                organizationIdx: modUserData.organization_idx,
+                specializedIdx: modUserData.specialized_idx,
+                departmentIdx: modUserData.department_idx,
+            };
+
+            // 기본 formData append
+            for (const key in data) {
+                formData.append(key, data[key]);
+            }
+
+            // 파일 formData append
+            fileArr = Array.from(inputAttachmentFile.current.files);
+            let len = fileArr.length;
+            for (let i = 0; i < len; i++) {
+                formData.append("attachmentFile", fileArr[i]);
+            }
+
+            const responsLogic = (res) => {
+                let result_code = res.headers.result_code;
+                if (result_code === "0000") {
+                    dispatch(
+                        set_spinner({
+                            isLoading: false,
+                        })
+                    );
+
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: "사전등록 수정이 완료 되었습니다",
+                        callback: () => requestUserInfo(),
+                    });
+                } else {
+                    dispatch(
+                        set_spinner({
+                            isLoading: false,
+                        })
+                    );
+
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: "잠시 후 다시 시도해주세요",
+                    });
+                }
+            };
+
             // 수정
             // /v1/user
             // PUT
-            const url = apiPath.api_admin_user_mod;
-            const data = modData;
+            const restParams = {
+                method: "put_multi",
+                url: apiPath.api_auth_reg_user, // /v1/_user
+                data: formData,
+                err: err,
+                admin: "Y",
+                callback: (res) => responsLogic(res),
+            };
 
-            console.log(data);
-            RestServer("put", url, data)
-                .then((response) => {
-                    let res = response;
-
-                    console.log(res);
-
-                    if (res.headers.result_code === "0000") {
-                        dispatch(
-                            set_spinner({
-                                isLoading: false,
-                            })
-                        );
-
-                        CommonNotify({
-                            type: "alert",
-                            hook: alert,
-                            message: res.headers.result_message_ko,
-                        });
-
-                        handleNeedUpdate();
-                        modalOption.handleModalClose();
-                    } else {
-                        dispatch(
-                            set_spinner({
-                                isLoading: false,
-                            })
-                        );
-
-                        CommonNotify({
-                            type: "alert",
-                            hook: alert,
-                            message: "잠시후 다시 시도해주세요",
-                        });
-
-                        handleNeedUpdate();
-                        modalOption.handleModalClose();
-                    }
-                })
-                .catch((error) => {
-                    CommonErrorCatch(error, dispatch, alert);
-                });
+            CommonRest(restParams);
         }
+    };
+
+    // 수정, 등록 완료 로직
+    const requestUserInfo = () => {
+        window.location.replace(routerPath.admin_main_url);
     };
 
     // 검증 (signup/mod)
@@ -518,7 +552,11 @@ const RegUserModal = (props) => {
                     <tr>
                         <th>이력서업로드</th>
                         <td className="fileicon">
-                            <input type="file" />
+                            <input
+                                type="file"
+                                ref={inputAttachmentFile}
+                                multiple
+                            />
                             <div>
                                 {fileList.length !== 0 &&
                                     fileList.map((item, idx) => (
