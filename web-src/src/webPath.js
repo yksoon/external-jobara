@@ -44,16 +44,16 @@ const routerPath = {
     // /intro
     web_intro_location_url: `${base_url}intro/location`,
 
-    // 프로그램
-    // /program
+    // 행사일정
+    // /program/program
     web_program_url: `${base_url}program/program`,
 
-    // 프로그램
-    // /program
+    // 세부프로그램
+    // /program/detail
     web_program_detail_url: `${base_url}program/detail`,
 
-    // 프로그램
-    // /program
+    // 이벤트프로그램
+    // /program/event
     web_program_event_url: `${base_url}program/event`,
 
     // 회원가입
