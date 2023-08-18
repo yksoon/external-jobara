@@ -44,6 +44,14 @@ const routerPath = {
     // /intro
     web_intro_location_url: `${base_url}intro/location`,
 
+    // 프로그램
+    // /program
+    web_program_url: `${base_url}program/program`,
+
+    // 프로그램
+    // /program
+    web_program_detail_url: `${base_url}program/detail`,
+
     // 회원가입
     // /signup
     web_signup_url: `${base_url}signup`,

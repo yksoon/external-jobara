@@ -146,9 +146,9 @@ const SubHeader = () => {
                                 </div>
                             </li>
                             <li>
-                                <Link href="">프로그램</Link>
+                                <Link to={routerPath.web_program_url}>프로그램</Link>
                                 <div className="submenu">
-                                    <Link href="">행사일정</Link>
+                                    <Link to={routerPath.web_program_url}>행사일정</Link>
                                     <Link href="">세부프로그램</Link>
                                     <Link href="">이벤트프로그램</Link>
                                 </div>
