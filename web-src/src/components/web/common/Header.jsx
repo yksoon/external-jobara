@@ -123,6 +123,11 @@ function Header({ props }) {
         });
     });
 
+    // URL 열기
+    const openUrl = (url) => {
+        window.open(url, "_blank", "noopener, noreferrer");
+    };
+
     return (
         <>
             <div id="header">
@@ -183,7 +188,14 @@ function Header({ props }) {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="" id="nav4">
+                                    <Link
+                                        onClick={() =>
+                                            openUrl(
+                                                "https://lincplus.jejunu.ac.kr/programs/notice.htm?act=view&seq=1364"
+                                            )
+                                        }
+                                        id="nav4"
+                                    >
                                         참여기업
                                     </Link>
                                 </li>

@@ -109,6 +109,11 @@ const SubHeader = () => {
         });
     });
 
+    // URL 열기
+    const openUrl = (url) => {
+        window.open(url, "_blank", "noopener, noreferrer");
+    };
+
     return (
         <>
             {/* header//S */}
@@ -160,7 +165,15 @@ const SubHeader = () => {
                                 </div>
                             </li>
                             <li>
-                                <Link href="">참여기업</Link>
+                                <Link
+                                    onClick={() =>
+                                        openUrl(
+                                            "https://lincplus.jejunu.ac.kr/programs/notice.htm?act=view&seq=1364"
+                                        )
+                                    }
+                                >
+                                    참여기업
+                                </Link>
                             </li>
                             {/* <li>
                                 <Link href="">공지</Link>
@@ -221,7 +234,14 @@ const SubHeader = () => {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="" id="nav4">
+                                    <Link
+                                        onClick={() =>
+                                            openUrl(
+                                                "https://lincplus.jejunu.ac.kr/programs/notice.htm?act=view&seq=1364"
+                                            )
+                                        }
+                                        id="nav4"
+                                    >
                                         참여기업
                                     </Link>
                                 </li>

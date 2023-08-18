@@ -231,7 +231,14 @@ const MainMainvisual = () => {
                         <Link to={routerPath.web_signup_url} className="m03">
                             사전등록
                         </Link>
-                        <Link to="" className="m04">
+                        <Link
+                            onClick={() =>
+                                openUrl(
+                                    "https://lincplus.jejunu.ac.kr/programs/notice.htm?act=view&seq=1364"
+                                )
+                            }
+                            className="m04"
+                        >
                             참여기업
                         </Link>
                         {/* <Link to="" className="m05">
