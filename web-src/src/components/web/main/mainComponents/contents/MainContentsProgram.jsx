@@ -107,180 +107,182 @@ const MainContentsProgram = () => {
                         <Link
                             onClick={() => openUrl("https://www.jejuair.net/")}
                         >
-                            <img src="img/web/main/com01.png" alt="제주에어" />
+                            <img src="img/web/main/com01.png" alt="제주항공" />
                         </Link>
-                        <Link href="">
+                        <Link
+                            onClick={() => openUrl("https://jejusinh.nonghyup.com/user/indexMain.do?siteId=jejusinh")}
+                        >
                             <img src="img/web/main/com02.png" alt="농협은행" />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("https://www.e-jejubank.com/JeJuBankInfo.do")}>
                             <img src="img/web/main/com03.png" alt="제주은행" />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("")}>
                             <img
                                 src="img/web/main/com04.png"
                                 alt="그랜드하야트 제주"
                             />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("http://www.jwmarriottjeju.co.kr/")}>
                             <img
                                 src="img/web/main/com05.png"
                                 alt="jw메리어트 제주"
                             />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("http://kalhotel.co.kr ")}>
                             <img
                                 src="img/web/main/com06.png"
                                 alt="칼호텔서귀포"
                             />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("https://www.shilla.net/jeju")}>
                             <img
                                 src="img/web/main/com07.png"
                                 alt="더신라제주"
                             />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("https://www.thepinx.co.kr")}>
                             <img src="img/web/main/com08.png" alt="skpinx" />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("https://www.xslab.co.kr/default/")}>
                             <img src="img/web/main/com09.png" alt="xslab" />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("https://www.goorm.io/")}>
                             <img src="img/web/main/com10.png" alt="goorm" />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("http://itnewcorp.com")}>
                             <img src="img/web/main/com11.png" alt="itnew" />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("https://www.wayplus.co.kr/")}>
                             <img src="img/web/main/com12.png" alt="wayplus" />
                         </Link>
-                        <Link href="">
+                        <Link>
                             <img src="img/web/main/com13.png" alt="leaflog" />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("https://www.tilon.com/home")}>
                             <img src="img/web/main/com14.png" alt="tilonsoft" />
                         </Link>
-                        <Link href="">
-                            <img src="img/web/main/com15.png" alt="intojeju" />
+                        <Link onClick={() => openUrl("http://www.intothecafe.co.kr/")}>
+                            <img src="img/web/main/com15.png" alt="농업회사법인인투주식회사" />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("http://www.hallasan.co.kr/index.php")}>
                             <img
                                 src="img/web/main/com16.png"
                                 alt="한라산소주"
                             />
                         </Link>
-                        <Link href="">
-                            <img src="img/web/main/com17.png" alt="mayunara" />
+                        <Link onClick={() => openUrl("http://www.jejumayu.com/")}>
+                            <img src="img/web/main/com17.png" alt="제주마유㈜" />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("https://pitterpetter.com/")}>
                             <img
                                 src="img/web/main/com18.png"
                                 alt="pitterpetter"
                             />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("https://kcg.go.kr/jejucgh/main.do")}>
                             <img
                                 src="img/web/main/com19.png"
                                 alt="해양경찰청"
                             />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("https://www.kaflix.com/")}>
                             <img src="img/web/main/com20.png" alt="kaflix" />
                         </Link>
-                        <Link href="">
-                            <img src="img/web/main/com21.png" alt="NC" />
+                        <Link onClick={() => openUrl("https://www.ncf.or.kr/")}>
+                            <img src="img/web/main/com21.png" alt="넥스트챌린지" />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("http://jejusquare.kr")}>
                             <img
                                 src="img/web/main/com22.png"
                                 alt="JEJUSQUARE"
                             />
                         </Link>
-                        <Link href="">
-                            <img src="img/web/main/com23.png" alt="9.81" />
+                        <Link onClick={() => openUrl("https://www.981park.com/")}>
+                            <img src="img/web/main/com23.png" alt="모노리스제주파크(981파크)" />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("https://mombly.kr/")}>
                             <img src="img/web/main/com24.png" alt="MOMBLY" />
                         </Link>
-                        <Link href="">
-                            <img src="img/web/main/com25.png" alt="BUNKER" />
+                        <Link onClick={() => openUrl("https://www.deslumieres.co.kr/bunker")}>
+                            <img src="img/web/main/com25.png" alt="빛의 벙커/ (주)티모넷" />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("http://www.jejuenergy.or.kr/")}>
                             <img
                                 src="img/web/main/com26.png"
                                 alt="제주에너지공사"
                             />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("https://www.komipo.co.kr/kor/main/main.do")}>
                             <img
                                 src="img/web/main/com27.png"
                                 alt="한국중부발전"
                             />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("https://home.kepco.co.kr ")}>
                             <img src="img/web/main/com28.png" alt="한국전력" />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("https://kcg.go.kr/jejucgh/main.do")}>
                             <img src="img/web/main/com29.png" alt="KT" />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("https://www.kctvjeju.com/")}>
                             <img src="img/web/main/com30.png" alt="KCTV" />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("https://www.neople.co.kr")}>
                             <img src="img/web/main/com31.png" alt="NEOPLE" />
                         </Link>
-                        <Link href="">
+                        <Link>
                             <img
                                 src="img/web/main/com32.png"
                                 alt="JEJUINDRONE"
                             />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("https://www.nanoomenergy.com/")}>
                             <img
                                 src="img/web/main/com33.png"
                                 alt="나눔에너지"
                             />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("https://www.daeeun.net/")}>
                             <img src="img/web/main/com34.png" alt="대은계전" />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("https://www.si-imaging.com/kr/")}>
                             <img src="img/web/main/com35.png" alt="SIIS" />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("http://www.windetect.co.kr/")}>
                             <img src="img/web/main/com36.png" alt="WINDETECT" />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("https://www.nia.or.kr/site/nia_kor/main.do")}>
                             <img
                                 src="img/web/main/com37.png"
                                 alt="한국지능정보사회진흥원"
                             />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("ijtohr@ijto.or.kr")}>
                             <img
                                 src="img/web/main/com38.png"
                                 alt="제주관광공사"
                             />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("https://www.jpdc.co.kr/index.htm")}>
                             <img
                                 src="img/web/main/com39.png"
                                 alt="제주특별자치도개발공사"
                             />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("http://www.nps.or.kr")}>
                             <img
                                 src="img/web/main/com40.png"
                                 alt="국민연금공단"
                             />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("https://www.jdcenter.com/main.cs")}>
                             <img
                                 src="img/web/main/com41.png"
                                 alt="제주국제자유도시개발센터"
                             />
                         </Link>
-                        <Link href="">
+                        <Link onClick={() => openUrl("http://jpmeng.co.kr/index.php")}>
                             <img src="img/web/main/com42.png" alt="JPM" />
                         </Link>
                     </div>
