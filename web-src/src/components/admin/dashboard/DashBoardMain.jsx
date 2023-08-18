@@ -15,6 +15,7 @@ const DashBoardMain = () => {
     const navigate = useNavigate();
 
     const [totalCountInfo, setTotalCountInfo] = useState({});
+    const [excelPath, setExcelPath] = useState("");
 
     useEffect(() => {
         getDashboard();
@@ -44,12 +45,6 @@ const DashBoardMain = () => {
         CommonRest(restParams);
 
         const responsLogic = (res) => {
-            dispatch(
-                set_spinner({
-                    isLoading: false,
-                })
-            );
-
             const resultCode = res.headers.result_code;
 
             if (resultCode === "0000") {
@@ -58,6 +53,8 @@ const DashBoardMain = () => {
                 // console.log("###############", res);
 
                 setTotalCountInfo(resultInfo.total_count_info);
+
+                downloadExcel();
             }
         };
     };
@@ -84,6 +81,14 @@ const DashBoardMain = () => {
             if (resultCode === "0000") {
                 console.log("###############", res);
 
+                setExcelPath(res.data);
+
+                dispatch(
+                    set_spinner({
+                        isLoading: false,
+                    })
+                );
+
                 // // Blob은 배열 객체 안의 모든 데이터를 합쳐 blob으로 반환하기 때문에 []안에 담는다!
                 // const blob = new Blob([res.data]);
 
@@ -109,13 +114,15 @@ const DashBoardMain = () => {
                     <div className="adm_search">
                         <div></div>
                         <div>
-                            <Link
-                                className="btn btn01"
-                                title="#memberInsert"
-                                onClick={downloadExcel}
-                            >
-                                엑셀 다운로드
-                            </Link>
+                            {excelPath && (
+                                <Link
+                                    className="btn btn01"
+                                    title="#memberInsert"
+                                    to={excelPath}
+                                >
+                                    엑셀 다운로드
+                                </Link>
+                            )}
                         </div>
                     </div>
                     {/* 차트영역 */}
