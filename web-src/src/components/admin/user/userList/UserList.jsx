@@ -29,6 +29,7 @@ const UserList = () => {
     const [checkItems, setCheckItems] = useState([]);
     const [pageInfo, setPageInfo] = useState({});
     const { confirm } = useConfirm();
+    const fileBaseUrl = apiPath.api_file;
 
     useEffect(() => {
         reqUserList(1, 10);
@@ -44,7 +45,7 @@ const UserList = () => {
     };
 
     const regUser = () => {
-        setModalTitle("회원등록");
+        setModalTitle("사전등록");
         setIsOpen(true);
     };
 
@@ -144,7 +145,7 @@ const UserList = () => {
 
                 setModUserData(result_info);
 
-                setModalTitle("회원수정");
+                setModalTitle("사전등록 수정");
                 setIsOpen(true);
             }
             // 에러
@@ -428,10 +429,26 @@ const UserList = () => {
                                                 )}
                                             </td>
                                             <td className="filebtn">
-                                                <img
+                                                {item.file_info !== 0 &&
+                                                    item.file_info.map(
+                                                        (item2, idx2) => (
+                                                            <Link
+                                                                to={`${fileBaseUrl}${item2.file_path_enc}`}
+                                                                key={`file_${idx2}`}
+                                                            >
+                                                                <img
+                                                                    src="img/common/file.svg"
+                                                                    alt={
+                                                                        item2.file_name
+                                                                    }
+                                                                />
+                                                            </Link>
+                                                        )
+                                                    )}
+                                                {/* <img
                                                     src="img/common/file.svg"
                                                     alt=""
-                                                />
+                                                /> */}
                                             </td>
                                             <td>
                                                 <Link

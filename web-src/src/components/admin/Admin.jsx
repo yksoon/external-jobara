@@ -138,11 +138,11 @@ const Admin = () => {
         menuArr = depth1;
         setMenuList(menuArr);
 
-        dispatch(
-            set_spinner({
-                isLoading: false,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: false,
+        //     })
+        // );
     };
 
     const switchPage = (page) => {
