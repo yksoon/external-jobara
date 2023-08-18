@@ -167,7 +167,9 @@ function Header({ props }) {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="" id="nav2">
+                                    <Link 
+                                        to={routerPath.web_program_url}
+                                        id="nav2">
                                         프로그램
                                     </Link>
                                 </li>

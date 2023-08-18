@@ -149,12 +149,12 @@ const SubHeader = () => {
                                 <Link to={routerPath.web_program_url}>프로그램</Link>
                                 <div className="submenu">
                                     <Link to={routerPath.web_program_url}>행사일정</Link>
-                                    <Link href="">세부프로그램</Link>
-                                    <Link href="">이벤트프로그램</Link>
+                                    <Link to={routerPath.web_program_detail_url}>세부프로그램</Link>
+                                    <Link  to={routerPath.web_program_event_url}>이벤트프로그램</Link>
                                 </div>
                             </li>
                             <li>
-                                <Link href="">사전등록</Link>
+                                <Link to={routerPath.web_signup_url}>사전등록</Link>
                                 <div className="submenu">
                                     <Link to={routerPath.web_signup_url}>
                                         사전등록
