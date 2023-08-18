@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import $ from "jquery";
 import { useEffect } from "react";
 import { routerPath } from "webPath";
+import MobileNav from "./MobileNav";
 
 const SubHeader = () => {
     useEffect(() => {
@@ -12,102 +13,11 @@ const SubHeader = () => {
         $("#nav").slideToggle();
         $("#menu-icon2").toggleClass("open");
     };
-
-    $(function () {
-        $("#nav1_s").hide();
-        $("#nav1").click(function () {
-            $("#nav1_s").slideToggle();
-
-            $("#nav2_s").slideUp();
-            $("#nav3_s").slideUp();
-            $("#nav4_s").slideUp();
-            $("#nav5_s").slideUp();
-            $("#nav6_s").slideUp();
-            $("#nav7_s").slideUp();
-        });
-    });
-
-    $(function () {
-        $("#nav2_s").hide();
-        $("#nav2").click(function () {
-            $("#nav2_s").slideToggle();
-
-            $("#nav1_s").slideUp();
-            $("#nav3_s").slideUp();
-            $("#nav4_s").slideUp();
-            $("#nav5_s").slideUp();
-            $("#nav6_s").slideUp();
-            $("#nav7_s").slideUp();
-        });
-    });
-    $(function () {
-        $("#nav3_s").hide();
-        $("#nav3").click(function () {
-            $("#nav3_s").slideToggle();
-
-            $("#nav1_s").slideUp();
-            $("#nav2_s").slideUp();
-            $("#nav4_s").slideUp();
-            $("#nav5_s").slideUp();
-            $("#nav6_s").slideUp();
-            $("#nav7_s").slideUp();
-        });
-    });
-    $(function () {
-        $("#nav4_s").hide();
-        $("#nav4").click(function () {
-            $("#nav4_s").slideToggle();
-
-            $("#nav1_s").slideUp();
-            $("#nav2_s").slideUp();
-            $("#nav3_s").slideUp();
-            $("#nav5_s").slideUp();
-            $("#nav6_s").slideUp();
-            $("#nav7_s").slideUp();
-        });
-    });
-
-    $(function () {
-        $("#nav5_s").hide();
-        $("#nav5").click(function () {
-            $("#nav5_s").slideToggle();
-
-            $("#nav1_s").slideUp();
-            $("#nav2_s").slideUp();
-            $("#nav3_s").slideUp();
-            $("#nav4_s").slideUp();
-            $("#nav6_s").slideUp();
-            $("#nav7_s").slideUp();
-        });
-    });
-
-    $(function () {
-        $("#nav6_s").hide();
-        $("#nav6").click(function () {
-            $("#nav6_s").slideToggle();
-
-            $("#nav1_s").slideUp();
-            $("#nav2_s").slideUp();
-            $("#nav3_s").slideUp();
-            $("#nav4_s").slideUp();
-            $("#nav5_s").slideUp();
-            $("#nav7_s").slideUp();
-        });
-    });
-
-    $(function () {
-        $("#nav7_s").hide();
-        $("#nav7").click(function () {
-            $("#nav7_s").slideToggle();
-
-            $("#nav1_s").slideUp();
-            $("#nav2_s").slideUp();
-            $("#nav3_s").slideUp();
-            $("#nav4_s").slideUp();
-            $("#nav5_s").slideUp();
-            $("#nav6_s").slideUp();
-        });
-    });
+    const menuDepth = (e) => {
+        //$(".nav_2depth").slideToggle();
+        $(".nav_2depth").slideUp();
+        $(e.target).siblings(".nav_2depth").slideToggle();
+    };
 
     // URL 열기
     const openUrl = (url) => {
@@ -184,75 +94,7 @@ const SubHeader = () => {
                     {/* 서브페이지용 상단메뉴(pc) // E */}
 
                     {/* 모바일 메뉴 // S */}
-                    <div id="top_right">
-                        <div
-                            id="menu-icon2"
-                            className="all_menu"
-                            onClick={(e) => menuClick(e)}
-                        >
-                            <span></span>
-                            <span></span>
-                            <span className="short"></span>
-                        </div>
-                        <nav>
-                            <ul id="nav">
-                                <li>
-                                    <Link
-                                        to={routerPath.web_main_url}
-                                        id="nav5"
-                                    >
-                                        홈
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        to={routerPath.web_intro_url}
-                                        id="nav1"
-                                    >
-                                        박람회안내
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="" id="nav2">
-                                        프로그램
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        to={routerPath.web_signup_url}
-                                        id="nav3"
-                                    >
-                                        사전등록
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        to={routerPath.web_signupchk_url}
-                                        id="nav3"
-                                    >
-                                        사전등록 확인
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        onClick={() =>
-                                            openUrl(
-                                                "https://lincplus.jejunu.ac.kr/programs/notice.htm?act=view&seq=1364"
-                                            )
-                                        }
-                                        id="nav4"
-                                    >
-                                        참여기업
-                                    </Link>
-                                </li>
-                                {/* <li>
-                                    <Link href="" id="nav5">
-                                        공지
-                                    </Link>
-                                </li> */}
-                            </ul>
-                        </nav>
-                    </div>
+                    <MobileNav />
                     {/* 모바일메뉴 // E */}
                 </div>
             </div>

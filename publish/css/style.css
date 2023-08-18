@@ -331,7 +331,7 @@ a.table_btn span {font-size: 20px;color: #fff;line-height: 28px;    vertical-ali
 	  left:0;
 	}
 
-	nav {display: none; position:absolute; top:70px; right:0; width:100%; text-align:left; z-index:1100;}
+	nav {display: block; position:absolute; top:70px; right:0; width:100%; text-align:left; z-index:1100;}
 	#nav {display:block;border-bottom:1px solid #000;}
 	#nav li {position:relative; border-top:1px solid #edebe9; background:#fff;text-align: center;}
 	#nav li a {position:relative; font-family:'GmarketSans';color:#000; font-size:19px; display:block; padding:30px 20px;line-height:19px;}

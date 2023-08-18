@@ -348,9 +348,10 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 	#nav li {position:relative; border-top:1px solid #edebe9; background:#fff;text-align: center;}
 	#nav li a {position:relative; font-family:'GmarketSans';color:#000; font-size:19px; display:block; padding:30px 20px;line-height:19px;}
 	#nav > li > ul {}
-	#nav > li > ul > li {border-bottom:none; border-top:1px solid #253aa3;}
+	#nav > li > ul > li {border-bottom:none; border-top:1px solid #ff5fbd;}
 	#nav > li > ul > li:first-child {border-top:none;}
-	#nav > li > ul > li a {color:#fff; font-size:14px; background:#172a88; font-weight:500;  padding:16px  20px 16px 30px;line-height:15px;}
+	#nav > li > ul > li a {color:#fff; font-size:14px; background:#e40b8a; font-weight:500;  padding:16px  20px 16px 30px;line-height:15px;}
+	.nav_2depth {display:none;}
 
 
 
