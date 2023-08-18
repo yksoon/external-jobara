@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.css": "./static/css/main.d9c2fb54.css",
-    "main.js": "./static/js/main.2a2fbe1f.js",
-    "static/js/89.099fe44e.chunk.js": "./static/js/89.099fe44e.chunk.js",
-    "static/js/614.c128ae71.chunk.js": "./static/js/614.c128ae71.chunk.js",
+    "main.css": "./static/css/main.1174716d.css",
+    "main.js": "./static/js/main.af08bf6f.js",
+    "static/js/89.d563e977.chunk.js": "./static/js/89.d563e977.chunk.js",
+    "static/js/614.6010c4b1.chunk.js": "./static/js/614.6010c4b1.chunk.js",
     "static/js/27.a4feda1c.chunk.js": "./static/js/27.a4feda1c.chunk.js",
     "static/js/460.9029ea62.chunk.js": "./static/js/460.9029ea62.chunk.js",
-    "static/js/21.51fd95ce.chunk.js": "./static/js/21.51fd95ce.chunk.js",
+    "static/js/21.19b753f4.chunk.js": "./static/js/21.19b753f4.chunk.js",
     "static/media/chab.ttf": "./static/media/chab.73854a05b07c4f60f35d.ttf",
     "static/media/Pretendard-Bold.woff": "./static/media/Pretendard-Bold.dd56301118da9e158ce9.woff",
     "static/media/Pretendard-Medium.woff": "./static/media/Pretendard-Medium.f0cc544dcc84cf9f03b3.woff",
@@ -20,7 +20,7 @@
     "index.html": "./index.html"
   },
   "entrypoints": [
-    "static/css/main.d9c2fb54.css",
-    "static/js/main.2a2fbe1f.js"
+    "static/css/main.1174716d.css",
+    "static/js/main.af08bf6f.js"
   ]
 }

@@ -14,6 +14,7 @@ import { set_spinner } from "redux/actions/commonAction";
 import { Pagination } from "@mui/material";
 import useConfirm from "hook/useConfirm";
 import useAlert from "hook/useAlert";
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 
 const UserList = () => {
     const dispatch = useDispatch();
@@ -118,45 +119,51 @@ const UserList = () => {
         const url = apiPath.api_admin_user_info + `/${userIdx}`;
         const data = {};
 
-        RestServer("get", url, data)
-            .then((response) => {
-                let res = response;
-                let result_code = res.headers.result_code;
-                let result_info = res.data.result_info;
+        // 파라미터
+        const restParams = {
+            method: "get",
+            url: url,
+            data: data,
+            err: err,
+            callback: (res) => responsLogic(res),
+            admin: "Y",
+        };
+        CommonRest(restParams);
 
-                // 성공
-                if (result_code === "0000") {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+        const responsLogic = (res) => {
+            let result_code = res.headers.result_code;
+            let result_info = res.data.result_info;
 
-                    setModUserData(result_info);
+            // 성공
+            if (result_code === "0000") {
+                dispatch(
+                    set_spinner({
+                        isLoading: false,
+                    })
+                );
 
-                    setModalTitle("회원수정");
-                    setIsOpen(true);
-                }
-                // 에러
-                else {
-                    CommonConsole("log", response);
+                setModUserData(result_info);
 
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                setModalTitle("회원수정");
+                setIsOpen(true);
+            }
+            // 에러
+            else {
+                CommonConsole("log", res);
 
-                    CommonNotify({
-                        type: "alert",
-                        hook: alert,
-                        message: response.headers.result_message_ko,
-                    });
-                }
-            })
-            .catch((error) => {
-                CommonErrorCatch(error, dispatch, alert);
-            });
+                dispatch(
+                    set_spinner({
+                        isLoading: false,
+                    })
+                );
+
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: res.headers.result_message_ko,
+                });
+            }
+        };
     };
 
     // 회원 선택 삭제
@@ -400,23 +407,32 @@ const UserList = () => {
                                                     ? item.specialized_name_ko
                                                     : "-"}
                                             </td>
-                                            <td>
+                                            <td className="checkicon">
                                                 {item.additional_info.filter(
                                                     (e) =>
                                                         e.additional_idx === 1
-                                                ).length !== 0
-                                                    ? "V"
-                                                    : ""}
+                                                ).length !== 0 ? (
+                                                    <CheckCircleOutlineOutlinedIcon />
+                                                ) : (
+                                                    ""
+                                                )}
                                             </td>
-                                            <td>
+                                            <td className="checkicon">
                                                 {item.additional_info.filter(
                                                     (e) =>
                                                         e.additional_idx === 2
-                                                ).length !== 0
-                                                    ? "V"
-                                                    : ""}
+                                                ).length !== 0 ? (
+                                                    <CheckCircleOutlineOutlinedIcon />
+                                                ) : (
+                                                    ""
+                                                )}
                                             </td>
-                                            <td>이력서</td>
+                                            <td className="filebtn">
+                                                <img
+                                                    src="img/common/file.svg"
+                                                    alt=""
+                                                />
+                                            </td>
                                             <td>
                                                 <Link
                                                     className="tablebtn"
@@ -451,6 +467,7 @@ const UserList = () => {
                 handleModalClose={handleModalClose}
                 component={"RegUserModalMain"}
                 handleNeedUpdate={handleNeedUpdate}
+                modUserData={modUserData}
             />
         </>
     );

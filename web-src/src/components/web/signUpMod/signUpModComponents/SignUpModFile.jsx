@@ -49,14 +49,6 @@ const SignUpModFile = forwardRef((props, ref) => {
                                     <img src="img/common/file.svg" alt="" />
                                     {item.file_name}{" "}
                                 </Link>
-                                // <span>
-                                //     <img
-                                //         key={`file_${idx}`}
-                                //         src={`${fileBaseUrl}${item.file_path_enc}`}
-                                //         alt=""
-                                //     />
-                                //     {item.file_name}
-                                // </span>
                             ))}
                     </div>
                 </td>

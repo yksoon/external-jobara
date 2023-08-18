@@ -43,7 +43,7 @@ const Instance_admin = axios.create({
     headers: {
         "Content-Type": "application/json",
     },
-    timeout: 5000,
+    timeout: 10000,
 });
 
 Instance_admin.interceptors.request.use(
@@ -91,7 +91,7 @@ const Instance_admin_multi = axios.create({
     headers: {
         "Content-Type": "multipart/form-data",
     },
-    timeout: 5000,
+    timeout: 10000,
 });
 
 Instance_admin_multi.interceptors.request.use(

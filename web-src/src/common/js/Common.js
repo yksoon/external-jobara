@@ -41,6 +41,7 @@ const CommonModal = (props) => {
                     <RegUserModalMain
                         handleNeedUpdate={handleNeedUpdate}
                         handleModalClose={modalOption.handleModalClose}
+                        modUserData={props.modUserData}
                     />
                 );
 
@@ -59,22 +60,13 @@ const CommonModal = (props) => {
                 <div className="modal_wrap" id="modal_wrap">
                     <div className={`modal w${modalOption.width}`}>
                         <div
-                            className="modal_content form hotel"
-                            id="hotelInsert"
+                            className="modal_close"
+                            onClick={modalOption.handleModalClose}
                         >
-                            <div className="mo_title">
-                                <h4>{modalOption.title}</h4>
-                                <div
-                                    className="modal_close"
-                                    onClick={modalOption.handleModalClose}
-                                >
-                                    <img
-                                        src="img/common/modal_close.png"
-                                        alt=""
-                                    />
-                                </div>
-                            </div>
-
+                            <img src="img/common/modal_close.png" alt="" />
+                        </div>
+                        <div className="form">
+                            <h4 className="mo_title">{modalOption.title}</h4>
                             {/* 모달 컨텐츠 드가자 */}
 
                             {renderComponent(component)}

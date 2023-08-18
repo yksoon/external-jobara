@@ -59,6 +59,7 @@ a.font-12 {font-size: 12px; font-weight: 500; color: #818181; text-decoration: u
 /* btn */
 a.login {display:inline-block;width: 104px;height: 36px;line-height: 36px;background: #e72295;color: #fff;font-size: 12px;font-weight: 500;text-align: center;border-radius: 50px;}
 .btn_box {margin:0 auto;text-align:center;margin:20px 0 0;}
+.btn_box a {margin: 0 4px;}
 
 a.btn {display:inline-block;width:auto;padding: 0 20px;height: 28px;text-align: center;line-height: 26px;border-radius: 5px;font-size: 14px;}
 a.btn.btn01 {background: #e72295;color:#fff;transition:all 0.3s;}
@@ -81,7 +82,7 @@ a.tablebtn {display:inline-block;width:auto;padding: 0 10px;height: 26px;text-al
 
 select {border: 1px solid #ddd;height:28px;line-height:28px;font-size: 14px;color: #333;padding: 0 10px;cursor:pointer;border-radius: 5px;}
 input::placeholder {color: #a6a6a6;}
-input.input {border: 1px solid #ddd;height:28px;line-height:28px;font-size: 14px;color: #333;padding: 0 10px;display:inline-block;min-width:80px;border-radius: 5px;}
+input.input {border: 1px solid #ddd;height:28px;line-height:28px;font-size: 14px;color: #333;padding: 0 10px;display:inline-block;min-width:80px;border-radius: 5px;margin: 0 4px 0 0;}
 input.input.hold {background: #efefef;color: #bdbdbd;}
 input.input:last-child {margin:0;}
 input.login {border: 1px solid #818181;height:36px;line-height:36px;font-size: 12px;color: #333;padding: 0 10px;border-radius: 5px;}
@@ -112,6 +113,8 @@ div.mo_title > h4{font-size: 21px;font-weight: 700;}
 .modal{ -ms-overflow-style: none; } .modal::-webkit-scrollbar{ display:none; }
 .modal_wrap .modal .modal_close {position:absolute;top:42px;right:50px;cursor:pointer;}
 .modal_wrap .modal .modal_close img {width: 14px;}
+.modal_wrap .fileicon img {width:20px;vertical-align: middle;}
+.modal_wrap .fileicon a {display:inline-block;margin:6px 0 0;}
 /* .modal_content {display:none;} */
 /* 모달 //E */
 
@@ -119,6 +122,7 @@ div.mo_title > h4{font-size: 21px;font-weight: 700;}
 
 /* header */
 .adm_profile {text-align: center;color: #fff;padding:20px 0;}
+.adm_profile p{color: #fff;margin:0 0 6px;}
 
 .admin .gnb {position:fixed;width:180px;height:100vh;top:0;left:0;background:#353535;overflow-y:scroll;}
 .admin .gnb{ -ms-overflow-style: none; } .gnb::-webkit-scrollbar{ display:none; }
@@ -172,10 +176,12 @@ div.mo_title > h4{font-size: 21px;font-weight: 700;}
 .table_a tbody td .inner_table tr:last-child th, .admin .table_a tbody td .inner_table tr:last-child td {border-bottom:none;}
 
 /* 회원등록 */
-.admin .sign {display:flex;    justify-content: center;}
-.admin .sign .input_wrap {margin:0 0 20px;}
-.admin .sign .flex > div {margin:0 10px 0 0;}
-.admin .sign h5 {margin: 0 0 5px;}
+.admin .adm_table .sign {display:flex;    justify-content: center;}
+.admin .adm_table .sign .input_wrap {margin:0 0 20px;}
+.admin .adm_table .sign .flex > div {margin:0 10px 0 0;}
+.admin .adm_table .sign h5 {margin: 0 0 5px;}
+.admin .adm_table .filebtn img {width:20px;}
+.admin .adm_table .checkicon {color:#018b06;}
 
 /* 스피너 */
 /* .spinner {position:fixed;top:0;left:0;width:100%;height:100vh;background:rgba(255,255,255,0.4);z-index:999;}
