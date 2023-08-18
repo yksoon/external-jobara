@@ -22,12 +22,7 @@ const SignUpCaptcha = forwardRef((props, ref) => {
     const [img, setImg] = useState({});
     const imgUrl = apiPath.api_captcha_img;
 
-    // TODO: 아이폰 확인
     const refreshCaptcha = () => {
-        // let imgElement = document.getElementById("captchaImg");
-
-        // imgElement.src = "";
-        // imgElement.src = imgUrl;
         setImg({
             imageSrc: imgUrl,
             imageHash: Date.now(),

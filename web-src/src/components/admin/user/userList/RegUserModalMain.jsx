@@ -10,6 +10,7 @@ import { apiPath, routerPath } from "webPath";
 import { RestServer } from "common/js/Rest";
 import useAlert from "hook/useAlert";
 import { signupMultiModel } from "models/user/signUp";
+import RefreshIcon from "@mui/icons-material/Refresh";
 
 const RegUserModal = (props) => {
     const dispatch = useDispatch();
@@ -32,6 +33,8 @@ const RegUserModal = (props) => {
     const [programInfo, setProgramInfo] = useState([]);
     const [checkItems, setCheckItems] = useState([]);
     const [fileList, setFileList] = useState([]);
+    const [img, setImg] = useState({});
+    const imgUrl = apiPath.api_captcha_img;
     const fileBaseUrl = apiPath.api_file;
 
     const countryBank = useSelector((state) => state.codes.countryBank);
@@ -51,8 +54,15 @@ const RegUserModal = (props) => {
     const inputSpecialized = useRef(null);
     const inputBirth = useRef(null);
     const inputAttachmentFile = useRef(null);
+    const inputCaptcha = useRef(null);
 
     useEffect(() => {
+        // 캠차이미지
+        setImg({
+            imageSrc: imgUrl,
+            imageHash: Date.now(),
+        });
+
         // 참여프로그램
         getInfo();
 
@@ -192,52 +202,99 @@ const RegUserModal = (props) => {
 
     // 신규등록
     const regUser = () => {
-        let signupData = {
-            signup_type: "000",
-            user_id: inputID.current.value,
-            user_name_first_ko: inputFirstNameKo.current.value,
-            user_name_last_ko: inputLastNameKo.current.value,
-            inter_phone_number: "82",
+        dispatch(
+            set_spinner({
+                isLoading: true,
+            })
+        );
+
+        const formData = new FormData();
+        const model = signupMultiModel;
+        let data = {};
+
+        let fileArr = [];
+
+        // 생년월일 가공
+        const birthArr = inputBirth.current.value
+            ? inputBirth.current.value.split("-")
+            : "";
+
+        data = {
+            ...model,
+            userId: inputID.current.value,
+            // userPwd: signUpRefs.inputPW.current.value,
+            userNameFirstKo: inputFirstNameKo.current.value,
+            userNameLastKo: inputLastNameKo.current.value,
             mobile1: inputMobile1.current.value,
             mobile2: inputMobile2.current.value,
             mobile3: inputMobile3.current.value,
-            organization_name_ko: inputOrganization.current.value,
-            department_name_ko: inputDepartment.current.value,
-            specialized_name_ko: inputSpecialized.current.value,
+            organizationNameKo: inputOrganization.current.value,
+            departmentNameKo: inputDepartment.current.value,
+            birthYyyy: birthArr[0],
+            birthMm: birthArr[1],
+            birthDd: birthArr[2],
+            specializedNameKo: inputSpecialized.current.value,
+            additionalIdxs: checkItems.join(),
+            securityCode: inputCaptcha.current.value,
+        };
+
+        // 기본 formData append
+        for (const key in data) {
+            formData.append(key, data[key]);
+        }
+
+        // 파일 formData append
+        fileArr = Array.from(inputAttachmentFile.current.files);
+        let len = fileArr.length;
+        for (let i = 0; i < len; i++) {
+            formData.append("attachmentFile", fileArr[i]);
+        }
+
+        const responsLogic = (res) => {
+            let result_code = res.headers.result_code;
+            if (result_code === "0000") {
+                dispatch(
+                    set_spinner({
+                        isLoading: false,
+                    })
+                );
+
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: "사전등록이 완료 되었습니다",
+                    callback: () => requestUserInfo(),
+                });
+            } else {
+                dispatch(
+                    set_spinner({
+                        isLoading: false,
+                    })
+                );
+
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: "잠시 후 다시 시도해주세요",
+                });
+            }
         };
 
         // 등록
         // /v1/user
-        // POST
-        const url = apiPath.api_admin_user_reg;
-        const data = signupData;
+        // POST mulit
+        const url = apiPath.api_auth_reg_user;
 
-        RestServer("post", url, data)
-            .then((response) => {
-                let res = response;
+        const restParams = {
+            method: "post_multi",
+            url: url, // /v1/_user
+            data: formData,
+            err: err,
+            admin: "Y",
+            callback: (res) => responsLogic(res),
+        };
 
-                console.log(res);
-
-                if (res.headers.result_code === "0000") {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
-
-                    CommonNotify({
-                        type: "alert",
-                        hook: alert,
-                        message: res.headers.result_message_ko,
-                    });
-
-                    handleNeedUpdate();
-                    modalOption.handleModalClose();
-                }
-            })
-            .catch((error) => {
-                CommonErrorCatch(error, dispatch, alert);
-            });
+        CommonRest(restParams);
     };
 
     // 등록된거 수정
@@ -343,7 +400,11 @@ const RegUserModal = (props) => {
 
     // 수정, 등록 완료 로직
     const requestUserInfo = () => {
-        window.location.replace(routerPath.admin_main_url);
+        // 리스트 새로고침
+        handleNeedUpdate();
+
+        // 모달 닫기
+        modalOption.handleModalClose();
     };
 
     // 검증 (signup/mod)
@@ -402,6 +463,31 @@ const RegUserModal = (props) => {
         } else {
             // 단일 선택 해제 시 체크된 아이템을 제외한 배열 (필터)
             setCheckItems(checkItems.filter((el) => el !== id));
+        }
+    };
+
+    // 캠차이미지 새로고침
+    const refreshCaptcha = () => {
+        setImg({
+            imageSrc: imgUrl,
+            imageHash: Date.now(),
+        });
+    };
+
+    // 파일 첨부시
+    const attachFile = (input) => {
+        const maxFileCnt = 5; // 첨부파일 최대 개수
+
+        if (input.files.length > maxFileCnt) {
+            CommonNotify({
+                type: "alert",
+                hook: alert,
+                message: "이미지는 5장까지 업로드 가능합니다.",
+            });
+
+            input.value = "";
+
+            return false;
         }
     };
 
@@ -556,14 +642,14 @@ const RegUserModal = (props) => {
                                 type="file"
                                 ref={inputAttachmentFile}
                                 multiple
+                                onChange={(e) => attachFile(e.target)}
                             />
                             <div>
                                 {fileList.length !== 0 &&
                                     fileList.map((item, idx) => (
-                                        <div>
+                                        <div key={`file_${idx}`}>
                                             <Link
                                                 to={`${fileBaseUrl}${item.file_path_enc}`}
-                                                key={`file_${idx}`}
                                             >
                                                 <img
                                                     src="img/common/file.svg"
@@ -576,6 +662,58 @@ const RegUserModal = (props) => {
                             </div>
                         </td>
                     </tr>
+                    {modUserData && (
+                        <tr>
+                            <th>등록일</th>
+                            <td>{modUserData.reg_dttm}</td>
+                        </tr>
+                    )}
+                    {modUserData && (
+                        <tr>
+                            <th>수정일</th>
+                            <td>{modUserData.mod_dttm}</td>
+                        </tr>
+                    )}
+                    {modUserData ? (
+                        <></>
+                    ) : (
+                        <tr>
+                            <th>자동입력방지</th>
+                            <td>
+                                <div className="cap_wrap">
+                                    <div>
+                                        <span className="cap">
+                                            <img
+                                                className="imgClass"
+                                                id="captchaImg"
+                                                src={`${img.imageSrc}?${img.imageHash}`}
+                                                alt=""
+                                                decoding="async"
+                                                style={{ background: "white" }}
+                                            />
+                                        </span>
+                                        <span className="cap_refresh">
+                                            <Link
+                                                onClick={(e) => {
+                                                    refreshCaptcha();
+                                                    e.preventDefault();
+                                                }}
+                                                to="javascript:void(0);"
+                                            >
+                                                <RefreshIcon />
+                                                새로고침
+                                            </Link>
+                                        </span>
+                                    </div>
+                                    <input
+                                        type="text"
+                                        className="input_s"
+                                        ref={inputCaptcha}
+                                    />
+                                </div>
+                            </td>
+                        </tr>
+                    )}
                     {/* <tr>
                         <th>국적</th>
                         <td>

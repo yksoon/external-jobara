@@ -5,7 +5,6 @@ import { CircularProgress, Dialog, Modal } from "@mui/material";
 import { set_spinner } from "redux/actions/commonAction";
 import { routerPath } from "webPath";
 import tokenExpire from "./tokenExpire";
-import HotelDetailModalMain from "components/admin/hotel/hotelList/hotelDetailModal/HotelDetailModalMain";
 import RegUserModalMain from "components/admin/user/userList/RegUserModalMain";
 import { RestServer } from "./Rest";
 import useAlert from "hook/useAlert";
@@ -33,9 +32,6 @@ const CommonModal = (props) => {
     // 모달 컴포넌트 렌더
     const renderComponent = (component) => {
         switch (component) {
-            case "HotelDetailModalMain":
-                return <HotelDetailModalMain />;
-
             case "RegUserModalMain":
                 return (
                     <RegUserModalMain

@@ -2,7 +2,6 @@ import useAlert from "hook/useAlert";
 import { CommonConsole, CommonErrorCatch, CommonRest } from "common/js/Common";
 import { RestServer } from "common/js/Rest";
 import DashBoardMain from "components/admin/dashboard/DashBoardMain";
-import HotelListMain from "components/admin/hotel/hotelList/HotelListMain";
 import SideNav from "components/admin/nav/SideNav";
 import UserList from "components/admin/user/userList/UserList";
 import React, { useEffect, useState } from "react";
@@ -67,6 +66,12 @@ const Admin = () => {
 
             // TODO: 상수로 빼
             if (result_code === "0000") {
+                dispatch(
+                    set_spinner({
+                        isLoading: false,
+                    })
+                );
+
                 resData = res.data.result_info;
 
                 createMenuList(resData);
@@ -157,9 +162,6 @@ const Admin = () => {
 
             case "userList":
                 return <UserList />;
-
-            case "hotelList":
-                return <HotelListMain />;
 
             default:
                 return <DashBoardMain />;

@@ -221,7 +221,7 @@ const SideNav = (props) => {
                         </div>
                     </div>
                     <ul className="sub_gnb">
-                        <li id="all_gnb">전체 메뉴 보기</li>
+                        {/* <li id="all_gnb">전체 메뉴 보기</li> */}
                         {navList.map((item1, idx1) => (
                             <li key={`depth1_${idx1}`}>
                                 <Link

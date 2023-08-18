@@ -307,13 +307,14 @@ const UserList = () => {
                                 <col width="4%" />
                                 <col width="10%" />
                                 <col width="5%" />
+                                <col width="7%" />
                                 <col width="10%" />
-                                <col width="10%" />
                                 <col width="8%" />
                                 <col width="8%" />
                                 <col width="8%" />
                                 <col width="8%" />
                                 <col width="8%" />
+                                <col width="6%" />
                                 <col width="6%" />
                                 <col width="6%" />
                             </colgroup>
@@ -341,10 +342,11 @@ const UserList = () => {
                                     <th rowSpan="2">이름</th>
                                     <th rowSpan="2">연락처</th>
                                     <th rowSpan="2">학교</th>
-                                    <th rowSpan="2">학과</th>
                                     <th rowSpan="2">생년월일</th>
+                                    <th rowSpan="2">학과</th>
                                     <th rowSpan="2">희망직종</th>
                                     <th colSpan="2">참여프로그램</th>
+                                    <th rowSpan="2">등록일</th>
                                     <th rowSpan="2">이력서 보기</th>
                                     <th rowSpan="2">정보수정</th>
                                 </tr>
@@ -394,14 +396,14 @@ const UserList = () => {
                                                     : "-"}
                                             </td>
                                             <td>
-                                                {item.department_name_ko
-                                                    ? item.department_name_ko
-                                                    : "-"}
-                                            </td>
-                                            <td>
                                                 {item.birth_yyyy === null
                                                     ? "-"
                                                     : `${item.birth_yyyy}-${item.birth_mm}-${item.birth_dd}`}
+                                            </td>
+                                            <td>
+                                                {item.department_name_ko
+                                                    ? item.department_name_ko
+                                                    : "-"}
                                             </td>
                                             <td>
                                                 {item.specialized_name_ko
@@ -427,6 +429,13 @@ const UserList = () => {
                                                 ) : (
                                                     ""
                                                 )}
+                                            </td>
+                                            <td>
+                                                {item.reg_dttm
+                                                    ? item.reg_dttm.split(
+                                                          " "
+                                                      )[0]
+                                                    : "-"}
                                             </td>
                                             <td className="filebtn">
                                                 {item.file_info !== 0 &&

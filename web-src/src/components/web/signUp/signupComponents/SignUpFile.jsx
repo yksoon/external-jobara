@@ -1,11 +1,30 @@
+import { CommonNotify } from "common/js/Common";
+import useAlert from "hook/useAlert";
 import { forwardRef } from "react";
+import { useDispatch } from "react-redux";
 
 const SignUpFile = forwardRef((props, ref) => {
+    const dispatch = useDispatch();
+    const { alert } = useAlert();
+    const err = { dispatch, alert };
+
     const { inputAttachmentFile } = ref;
 
-    const attachFile = (e) => {
-        // console.log(e.target.value);
-        console.log(e.target.files);
+    // 파일 첨부시
+    const attachFile = (input) => {
+        const maxFileCnt = 5; // 첨부파일 최대 개수
+
+        if (input.files.length > maxFileCnt) {
+            CommonNotify({
+                type: "alert",
+                hook: alert,
+                message: "이미지는 5장까지 업로드 가능합니다.",
+            });
+
+            input.value = "";
+
+            return false;
+        }
     };
 
     return (
@@ -21,7 +40,7 @@ const SignUpFile = forwardRef((props, ref) => {
                         type="file"
                         ref={inputAttachmentFile}
                         multiple
-                        onChange={(e) => attachFile(e)}
+                        onChange={(e) => attachFile(e.target)}
                     />
                 </td>
             </tr>

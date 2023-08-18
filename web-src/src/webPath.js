@@ -172,6 +172,12 @@ const apiPath = {
         base_api_url + slash + version + slash
     }meta/_additionals`,
     // api_get_additional: `${slash + version + slash}meta/_additionals`,
+
+    // ------------------ Additional API 스케줄 관리 API ------------------
+    // /v1/dashboard
+    // POST
+    // 대시보드 목록
+    api_admin_dashboard: `${base_api_url + slash + version + slash}dashboard`,
 };
 
 export { routerPath, apiPath };

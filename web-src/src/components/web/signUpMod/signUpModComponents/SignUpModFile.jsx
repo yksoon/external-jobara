@@ -1,8 +1,15 @@
+import { CommonNotify } from "common/js/Common";
+import useAlert from "hook/useAlert";
 import { forwardRef, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { apiPath } from "webPath";
 
 const SignUpModFile = forwardRef((props, ref) => {
+    const dispatch = useDispatch();
+    const { alert } = useAlert();
+    const err = { dispatch, alert };
+
     const { inputAttachmentFile } = ref;
     const [fileList, setFileList] = useState([]);
 
@@ -18,9 +25,21 @@ const SignUpModFile = forwardRef((props, ref) => {
         setFileList(files);
     };
 
-    const attachFile = (e) => {
-        // console.log(e.target.value);
-        console.log(e.target.files);
+    // 파일 첨부시
+    const attachFile = (input) => {
+        const maxFileCnt = 5; // 첨부파일 최대 개수
+
+        if (input.files.length > maxFileCnt) {
+            CommonNotify({
+                type: "alert",
+                hook: alert,
+                message: "이미지는 5장까지 업로드 가능합니다.",
+            });
+
+            input.value = "";
+
+            return false;
+        }
     };
 
     const fileBaseUrl = apiPath.api_file;
@@ -37,7 +56,7 @@ const SignUpModFile = forwardRef((props, ref) => {
                         type="file"
                         ref={inputAttachmentFile}
                         multiple
-                        onChange={(e) => attachFile(e)}
+                        onChange={(e) => attachFile(e.target)}
                     />
                     <div>
                         {fileList.length !== 0 &&
