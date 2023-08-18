@@ -148,8 +148,8 @@ const SubHeader = () => {
                             <li>
                                 <Link href="">프로그램</Link>
                                 <div className="submenu">
-                                    <Link href="">취업연계프로그램</Link>
-                                    <Link href="">무대프로그램</Link>
+                                    <Link href="">행사일정</Link>
+                                    <Link href="">세부프로그램</Link>
                                     <Link href="">이벤트프로그램</Link>
                                 </div>
                             </li>
