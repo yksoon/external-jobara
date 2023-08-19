@@ -15,7 +15,7 @@ const DashBoardMain = () => {
     const navigate = useNavigate();
 
     const [totalCountInfo, setTotalCountInfo] = useState({});
-    const [excelPath, setExcelPath] = useState("");
+    // const [excelPath, setExcelPath] = useState("");
 
     useEffect(() => {
         getDashboard();
@@ -54,20 +54,33 @@ const DashBoardMain = () => {
 
                 setTotalCountInfo(resultInfo.total_count_info);
 
-                downloadExcel();
+                // downloadExcel();
+
+                dispatch(
+                    set_spinner({
+                        isLoading: false,
+                    })
+                );
             }
         };
     };
 
     const downloadExcel = () => {
+        dispatch(
+            set_spinner({
+                isLoading: true,
+            })
+        );
+
         // 대시보드
         // /v1/dashboard
         // POST
         const restParams = {
-            method: "post",
+            method: "post_blob",
             url: apiPath.api_admin_dashboard, // /v1/_user
             data: {
                 file_download_yn: "Y",
+                responseType: "blob",
             },
             err: err,
             admin: "Y",
@@ -79,9 +92,16 @@ const DashBoardMain = () => {
         const responsLogic = (res) => {
             const resultCode = res.headers.result_code;
             if (resultCode === "0000") {
-                console.log("###############", res);
+                const blob = new Blob([res.data], {
+                    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                });
+                console.log("###############", blob);
 
-                setExcelPath(res.data);
+                const blobUrl = window.URL.createObjectURL(blob);
+
+                console.log(blobUrl);
+
+                // setExcelPath(blobUrl);
 
                 dispatch(
                     set_spinner({
@@ -97,9 +117,9 @@ const DashBoardMain = () => {
 
                 // // link 안에 위에서 만든 url을 가지고 있는 a 태그를 만들고 보이지 않도록 해준다.
                 // // a 태그는 노출하지 않고 자동으로 클릭되도록 할 예정!
-                // const link = document.createElement("a");
-                // link.href = res.data;
-                // link.style.display = "none";
+                const link = document.createElement("a");
+                link.href = blobUrl;
+                link.style.display = "none";
             }
         };
     };
@@ -114,15 +134,15 @@ const DashBoardMain = () => {
                     <div className="adm_search">
                         <div></div>
                         <div>
-                            {excelPath && (
-                                <Link
-                                    className="btn btn01"
-                                    title="#memberInsert"
-                                    to={excelPath}
-                                >
-                                    엑셀 다운로드
-                                </Link>
-                            )}
+                            {/* {excelPath && ( */}
+                            <Link
+                                className="btn btn01"
+                                title="#memberInsert"
+                                onClick={downloadExcel}
+                            >
+                                엑셀 다운로드
+                            </Link>
+                            {/* )} */}
                         </div>
                     </div>
                     {/* 차트영역 */}

@@ -147,8 +147,8 @@ const Location = () => {
                                         270, 341, 342, 345, 346, 351, 352, 355,
                                         356, 360, 365, 366(평일), 446, 447, 455,
                                         477, 3003(심야){" "}
-                                        <span className="material-symbols-outlined">
-                                            arrow_right_alt
+                                        <span>
+                                            <ArrowForwardOutlinedIcon />
                                         </span>{" "}
                                         제주대학교 정류장 하차
                                     </p>

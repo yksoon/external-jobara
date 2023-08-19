@@ -25,33 +25,41 @@ const Program = () => {
                             <thead>
                                 <tr>
                                     <th>시간</th>
-                                    <th colspan="3">프로그램</th>
+                                    <th colSpan="3">프로그램</th>
                                     <th>개회식</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td className="time">11:00~12:00</td>
-                                    <td colspan="3">기업 오리엔테이션 및 Company Play</td>
+                                    <td colSpan="3">
+                                        기업 오리엔테이션 및 Company Play
+                                    </td>
                                     <td></td>
                                 </tr>
                                 <tr>
                                     <td className="time">12:00~13:00</td>
-                                    <td colspan="3" className="break">점심시간</td>
+                                    <td colSpan="3" className="break">
+                                        점심시간
+                                    </td>
                                     <td></td>
                                 </tr>
                                 <tr>
                                     <td className="time">13:00~14:00</td>
-                                    <td rowspan="4" className="step step1">
+                                    <td rowSpan="4" className="step step1">
                                         <span>STEP 1</span>
-                                        진로, 직무 탐색 및 이력서, 자기소개서 컨설팅</td>
-                                    <td rowspan="4" className="step step2">
-                                        <span>STEP 2</span>
-                                        기업 채용 정보 상담 및 바로 채용 면접, 글로벌 JOB FAIR
+                                        진로, 직무 탐색 및 이력서, 자기소개서
+                                        컨설팅
                                     </td>
-                                    <td rowspan="4" className="step step3">
+                                    <td rowSpan="4" className="step step2">
+                                        <span>STEP 2</span>
+                                        기업 채용 정보 상담 및 바로 채용 면접,
+                                        글로벌 JOB FAIR
+                                    </td>
+                                    <td rowSpan="4" className="step step3">
                                         <span>STEP 3</span>
-                                        현직자 토크콘서트 및 AI 면접체험관, NCS모의고사
+                                        현직자 토크콘서트 및 AI 면접체험관,
+                                        NCS모의고사
                                     </td>
                                     <td></td>
                                 </tr>
@@ -69,7 +77,7 @@ const Program = () => {
                                 </tr>
                                 <tr>
                                     <td className="time">17:00~17:50</td>
-                                    <td colspan="3">경품추첨 & 폐회</td>
+                                    <td colSpan="3">경품추첨 & 폐회</td>
                                     <td></td>
                                 </tr>
                             </tbody>

@@ -1,8 +1,10 @@
 import {
     Instance,
     Instance_multi,
+    Instance_blob,
     Instance_admin,
     Instance_admin_multi,
+    Instance_admin_blob,
 } from "./Instance";
 
 const RestServer = (method, url, data, admin) => {
@@ -48,6 +50,13 @@ const RestServer = (method, url, data, admin) => {
                     ? Instance_admin_multi.put(url, data)
                     : Instance_multi.put(url, data);
             return retAdminPut;
+
+        case "post_blob":
+            const retPostBlob =
+                admin === "Y"
+                    ? Instance_admin_blob.post(url, data)
+                    : Instance_blob.post(url, data);
+            return retPostBlob;
 
         default:
             break;
