@@ -178,7 +178,8 @@ const CommonErrorCatch = async (error, dispatch, alert) => {
         // 비정상접근 or 비정상토큰
         else if (
             error.response.headers.result_code === "9995" ||
-            error.response.headers.result_code === "2003"
+            error.response.headers.result_code === "2003" ||
+            error.response.headers.result_code === "2000"
         ) {
             tokenExpire(dispatch, alert);
         }
