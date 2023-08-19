@@ -104,7 +104,7 @@ function App() {
     const getResultCode = () => {
         RestServer("get", apiPath.api_result, {})
             .then((response) => {
-                console.log("result_code", response);
+                // console.log("result_code", response);
 
                 dispatch(
                     set_result_code(JSON.stringify(response.data.result_info))
@@ -127,7 +127,7 @@ function App() {
             ],
         })
             .then((response) => {
-                console.log("codes", response);
+                // console.log("codes", response);
 
                 dispatch(set_codes(JSON.stringify(response.data.result_info)));
             })
@@ -144,7 +144,7 @@ function App() {
             exclude_code_types: [],
         })
             .then((response) => {
-                console.log("codesCountryBank", response);
+                // console.log("codesCountryBank", response);
 
                 dispatch(
                     set_country_bank(JSON.stringify(response.data.result_info))
@@ -160,7 +160,7 @@ function App() {
     const getSchedule = () => {
         RestServer("get", apiPath.api_schedule_list, {})
             .then((response) => {
-                console.log("scheduleList", response);
+                // console.log("scheduleList", response);
 
                 const resultData = response.data.result_info;
 

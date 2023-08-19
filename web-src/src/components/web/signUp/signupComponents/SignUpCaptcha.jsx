@@ -59,7 +59,6 @@ const SignUpCaptcha = forwardRef((props, ref) => {
                                         refreshCaptcha();
                                         e.preventDefault();
                                     }}
-                                    to="javascript:void(0);"
                                 >
                                     <RefreshIcon />
                                     새로고침

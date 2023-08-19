@@ -139,7 +139,7 @@ const Admin = () => {
             return item1;
         });
 
-        console.log(depth1);
+        // console.log(depth1);
         menuArr = depth1;
         setMenuList(menuArr);
 

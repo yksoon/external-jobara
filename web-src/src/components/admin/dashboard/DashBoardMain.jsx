@@ -4,15 +4,21 @@ import { CommonNotify, CommonRest } from "common/js/Common";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { apiPath } from "webPath";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { set_spinner } from "redux/actions/commonAction";
 import DashBoardChart from "./components/DashBoardChart";
+import axios from "axios";
 
 const DashBoardMain = () => {
     const dispatch = useDispatch();
     const { alert } = useAlert();
     const err = { dispatch, alert };
     const navigate = useNavigate();
+
+    const userTokenAdmin = useSelector(
+        (state) => state.userInfoAdmin.userTokenAdmin
+    );
+    const ip = useSelector((state) => state.ipInfo.ipInfo);
 
     const [totalCountInfo, setTotalCountInfo] = useState({});
     // const [excelPath, setExcelPath] = useState("");
@@ -75,53 +81,110 @@ const DashBoardMain = () => {
         // 대시보드
         // /v1/dashboard
         // POST
-        const restParams = {
-            method: "post_blob",
-            url: apiPath.api_admin_dashboard, // /v1/_user
+        // const restParams = {
+        //     method: "post_blob",
+        //     url: apiPath.api_admin_dashboard, // /v1/_user
+        //     data: {
+        //         file_download_yn: "Y",
+        //         responseType: "blob",
+        //     },
+        //     err: err,
+        //     admin: "Y",
+        //     callback: (res) => responsLogic(res),
+        // };
+
+        // CommonRest(restParams);
+
+        // const responsLogic = (res) => {
+        //     const resultCode = res.headers.result_code;
+        //     if (resultCode === "0000") {
+        //         const blob = new Blob([res.data], {
+        //             type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        //         });
+        //         console.log("###############", blob);
+
+        //         const blobUrl = window.URL.createObjectURL(blob);
+
+        //         console.log(blobUrl);
+
+        //         // setExcelPath(blobUrl);
+
+        //         dispatch(
+        //             set_spinner({
+        //                 isLoading: false,
+        //             })
+        //         );
+
+        //         // // Blob은 배열 객체 안의 모든 데이터를 합쳐 blob으로 반환하기 때문에 []안에 담는다!
+        //         // const blob = new Blob([res.data]);
+
+        //         // // window 객체의 createObjuctURL을 이용해서 blob:http://~~~ 식의 url을 만들어 준다.
+        //         // const fileUrl = window.URL.createObjectURL(blob);
+
+        //         // // link 안에 위에서 만든 url을 가지고 있는 a 태그를 만들고 보이지 않도록 해준다.
+        //         // // a 태그는 노출하지 않고 자동으로 클릭되도록 할 예정!
+        //         const link = document.createElement("a");
+        //         link.href = blobUrl;
+        //         link.style.display = "none";
+        //     }
+
+        axios({
+            method: "POST",
+            url: apiPath.api_admin_dashboard,
+            responseType: "blob",
+            headers: {
+                "Content-Type": "application/json",
+                "Jobara-Token": userTokenAdmin,
+                "Jobara-Src": ip,
+            },
             data: {
                 file_download_yn: "Y",
-                responseType: "blob",
             },
-            err: err,
-            admin: "Y",
-            callback: (res) => responsLogic(res),
-        };
+        }).then((response) => {
+            dispatch(
+                set_spinner({
+                    isLoading: false,
+                })
+            );
 
-        CommonRest(restParams);
+            // window 객체의 createObjuctURL을 이용해서 blob:http://~~~ 식의 url을 만들어 준다.
+            const url = window.URL.createObjectURL(
+                // Blob은 배열 객체 안의 모든 데이터를 합쳐 blob으로 반환하기 때문에 []안에 담는다!
+                new Blob([response.data], {
+                    type: response.headers["content-type"],
+                })
+            );
 
-        const responsLogic = (res) => {
-            const resultCode = res.headers.result_code;
-            if (resultCode === "0000") {
-                const blob = new Blob([res.data], {
-                    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                });
-                console.log("###############", blob);
+            // link 안에 위에서 만든 url을 가지고 있는 a 태그를 만들고 보이지 않도록 해준다.
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", excelName());
+            document.body.appendChild(link);
+            link.style.display = "none";
+            link.click();
+        });
+    };
 
-                const blobUrl = window.URL.createObjectURL(blob);
+    // 엑셀 이름
+    const excelName = () => {
+        const now = new Date();
+        const year = String(now.getFullYear());
 
-                console.log(blobUrl);
+        let month = String(now.getMonth() + 1);
+        if (month.length === 1) {
+            month = "0" + month;
+        }
 
-                // setExcelPath(blobUrl);
+        let day = String(now.getDate());
+        if (day.length === 1) {
+            day = "0" + day;
+        }
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+        const nowDate = `${year}${month}${day}`;
 
-                // // Blob은 배열 객체 안의 모든 데이터를 합쳐 blob으로 반환하기 때문에 []안에 담는다!
-                // const blob = new Blob([res.data]);
+        const xlsName = `${nowDate}_잡아라_통계자료`;
 
-                // // window 객체의 createObjuctURL을 이용해서 blob:http://~~~ 식의 url을 만들어 준다.
-                // const fileUrl = window.URL.createObjectURL(blob);
-
-                // // link 안에 위에서 만든 url을 가지고 있는 a 태그를 만들고 보이지 않도록 해준다.
-                // // a 태그는 노출하지 않고 자동으로 클릭되도록 할 예정!
-                const link = document.createElement("a");
-                link.href = blobUrl;
-                link.style.display = "none";
-            }
-        };
+        return xlsName;
     };
 
     return (
