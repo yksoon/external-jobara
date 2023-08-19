@@ -4,12 +4,7 @@ import { RestServer } from "common/js/Rest";
 import axios from "axios";
 import Router from "Router";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    CommonCheckDate,
-    CommonNotify,
-    CommonRest,
-    CommonSpinner,
-} from "common/js/Common";
+import { CommonSpinner } from "common/js/Common";
 import {
     set_codes,
     set_result_code,

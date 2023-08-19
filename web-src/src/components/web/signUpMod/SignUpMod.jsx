@@ -232,23 +232,27 @@ const SignUpMod = () => {
             };
 
             // 사전등록 체크
-            CommonCheckDate(checkSchedule, ip, alert, checkDatecallback).then(
-                (res) => {
-                    if (!res) {
-                        navigate(routerPath.web_main_url);
-                    } else {
-                        const restParams = {
-                            method: "put_multi",
-                            url: apiPath.api_auth_reg_user, // /v1/_user
-                            data: formData,
-                            err: err,
-                            callback: (res) => responsLogic(res),
-                        };
+            CommonCheckDate(
+                checkSchedule,
+                ip,
+                alert,
+                checkDatecallback,
+                dispatch
+            ).then((res) => {
+                if (!res) {
+                    navigate(routerPath.web_main_url);
+                } else {
+                    const restParams = {
+                        method: "put_multi",
+                        url: apiPath.api_auth_reg_user, // /v1/_user
+                        data: formData,
+                        err: err,
+                        callback: (res) => responsLogic(res),
+                    };
 
-                        CommonRest(restParams);
-                    }
+                    CommonRest(restParams);
                 }
-            );
+            });
         }
     };
 
