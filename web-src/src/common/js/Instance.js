@@ -38,30 +38,6 @@ Instance.interceptors.request.use(
 );
 
 // application/json
-const Instance_blob = axios.create({
-    headers: {
-        "Content-Type": "application/json",
-        "respons-type": "blob",
-    },
-    timeout: 5000,
-});
-
-Instance_blob.interceptors.request.use(
-    (config) => {
-        // ip = store.getState().ipInfo.ipInfo;
-        // token = store.getState().userInfo.userToken;
-
-        // config.headers["Jobara-Src"] = ip ? ip : "";
-        // config.headers["Jobara-Token"] = token ? token : "";
-        setInterceptors(config);
-        return config;
-    },
-    (err) => {
-        return Promise.reject(err);
-    }
-);
-
-// application/json
 // admin
 const Instance_admin = axios.create({
     headers: {
@@ -135,30 +111,6 @@ Instance_admin_multi.interceptors.request.use(
     }
 );
 
-// multipart/form-data
-// admin
-const Instance_admin_blob = axios.create({
-    headers: {
-        "Content-Type": "application/json",
-        "respons-type": "blob",
-    },
-    timeout: 10000,
-});
-Instance_admin_blob.interceptors.request.use(
-    (config) => {
-        // ip = store.getState().ipInfo.ipInfo;
-        // token = store.getState().userInfo.userToken;
-
-        // config.headers["Jobara-Src"] = ip ? ip : "";
-        // config.headers["Jobara-Token"] = token ? token : "";
-        setInterceptorsAdmin(config);
-        return config;
-    },
-    (err) => {
-        return Promise.reject(err);
-    }
-);
-
 const setInterceptors = (config) => {
     ip = store.getState().ipInfo.ipInfo;
     token = store.getState().userInfo.userToken;
@@ -179,11 +131,4 @@ const setInterceptorsAdmin = (config) => {
     return config;
 };
 
-export {
-    Instance,
-    Instance_multi,
-    Instance_blob,
-    Instance_admin,
-    Instance_admin_multi,
-    Instance_admin_blob,
-};
+export { Instance, Instance_multi, Instance_admin, Instance_admin_multi };

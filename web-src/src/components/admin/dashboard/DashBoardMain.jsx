@@ -81,53 +81,7 @@ const DashBoardMain = () => {
         // 대시보드
         // /v1/dashboard
         // POST
-        // const restParams = {
-        //     method: "post_blob",
-        //     url: apiPath.api_admin_dashboard, // /v1/_user
-        //     data: {
-        //         file_download_yn: "Y",
-        //         responseType: "blob",
-        //     },
-        //     err: err,
-        //     admin: "Y",
-        //     callback: (res) => responsLogic(res),
-        // };
-
-        // CommonRest(restParams);
-
-        // const responsLogic = (res) => {
-        //     const resultCode = res.headers.result_code;
-        //     if (resultCode === "0000") {
-        //         const blob = new Blob([res.data], {
-        //             type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        //         });
-        //         console.log("###############", blob);
-
-        //         const blobUrl = window.URL.createObjectURL(blob);
-
-        //         console.log(blobUrl);
-
-        //         // setExcelPath(blobUrl);
-
-        //         dispatch(
-        //             set_spinner({
-        //                 isLoading: false,
-        //             })
-        //         );
-
-        //         // // Blob은 배열 객체 안의 모든 데이터를 합쳐 blob으로 반환하기 때문에 []안에 담는다!
-        //         // const blob = new Blob([res.data]);
-
-        //         // // window 객체의 createObjuctURL을 이용해서 blob:http://~~~ 식의 url을 만들어 준다.
-        //         // const fileUrl = window.URL.createObjectURL(blob);
-
-        //         // // link 안에 위에서 만든 url을 가지고 있는 a 태그를 만들고 보이지 않도록 해준다.
-        //         // // a 태그는 노출하지 않고 자동으로 클릭되도록 할 예정!
-        //         const link = document.createElement("a");
-        //         link.href = blobUrl;
-        //         link.style.display = "none";
-        //     }
-
+        // !!!!!!!!!!!!! 엑셀 다운로드만 blob으로 response를 받아야하기때문에 rest 함수 사용하지 않고 따로 axios로 호출
         axios({
             method: "POST",
             url: apiPath.api_admin_dashboard,
