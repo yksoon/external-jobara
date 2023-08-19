@@ -194,7 +194,7 @@ const SignIn = () => {
                                 </div>
                                 <div>
                                     <Link
-                                        className="subbtn on"
+                                        className="btn btn01"
                                         onClick={clickLogin}
                                     >
                                         로그인

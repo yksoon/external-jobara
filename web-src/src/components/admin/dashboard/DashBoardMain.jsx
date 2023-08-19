@@ -24,7 +24,9 @@ const DashBoardMain = () => {
     // const [excelPath, setExcelPath] = useState("");
 
     useEffect(() => {
-        getDashboard();
+        if (userTokenAdmin) {
+            getDashboard();
+        }
     }, []);
 
     const getDashboard = () => {
