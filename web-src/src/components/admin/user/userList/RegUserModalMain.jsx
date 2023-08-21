@@ -668,7 +668,7 @@ const RegUserModal = (props) => {
                             <td>{modUserData.reg_dttm}</td>
                         </tr>
                     )}
-                    {modUserData && (
+                    {modUserData.mod_dttm && (
                         <tr>
                             <th>수정일</th>
                             <td>{modUserData.mod_dttm}</td>

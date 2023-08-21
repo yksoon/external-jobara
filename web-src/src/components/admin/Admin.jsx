@@ -10,6 +10,7 @@ import { useNavigate } from "react-router";
 import { set_spinner } from "redux/actions/commonAction";
 import { set_page } from "redux/actions/pageActios";
 import { apiPath, routerPath } from "webPath";
+import Notice from "./board/Notice";
 
 const Admin = () => {
     const dispatch = useDispatch();
@@ -162,6 +163,9 @@ const Admin = () => {
 
             case "userList":
                 return <UserList />;
+
+            case "notice":
+                return <Notice />;
 
             default:
                 return <DashBoardMain />;

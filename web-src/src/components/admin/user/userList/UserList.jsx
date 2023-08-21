@@ -281,11 +281,11 @@ const UserList = () => {
                 <div className="con_area">
                     <div className="adm_search">
                         <div>
-                            <select name="" id="">
+                            {/* <select name="" id="">
                                 <option value="">구분</option>
                                 <option value="">이름</option>
                                 <option value="">소속</option>
-                            </select>{" "}
+                            </select>{" "} */}
                             <input type="text" className="input" />{" "}
                             <Link className="btn btn02">검색</Link>
                         </div>
@@ -299,6 +299,15 @@ const UserList = () => {
                             </Link>
                             {/* <a href="" class="btn btn01">엑셀 다운로드</a> */}
                         </div>
+                    </div>
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            marginBottom: "10px",
+                        }}
+                    >
+                        총 : <b>{pageInfo && pageInfo.total}</b> 명
                     </div>
                     <div className="adm_table">
                         <table className="table_a">
@@ -341,8 +350,8 @@ const UserList = () => {
                                     <th rowSpan="2">ID</th>
                                     <th rowSpan="2">이름</th>
                                     <th rowSpan="2">연락처</th>
-                                    <th rowSpan="2">학교</th>
                                     <th rowSpan="2">생년월일</th>
+                                    <th rowSpan="2">학교</th>
                                     <th rowSpan="2">학과</th>
                                     <th rowSpan="2">희망직종</th>
                                     <th colSpan="2">참여프로그램</th>
@@ -391,14 +400,14 @@ const UserList = () => {
                                             <td>{item.user_name_ko}</td>
                                             <td>{`${item.mobile1}-${item.mobile2}-${item.mobile3}`}</td>
                                             <td>
-                                                {item.organization_name_ko
-                                                    ? item.organization_name_ko
-                                                    : "-"}
-                                            </td>
-                                            <td>
                                                 {item.birth_yyyy === null
                                                     ? "-"
                                                     : `${item.birth_yyyy}-${item.birth_mm}-${item.birth_dd}`}
+                                            </td>
+                                            <td>
+                                                {item.organization_name_ko
+                                                    ? item.organization_name_ko
+                                                    : "-"}
                                             </td>
                                             <td>
                                                 {item.department_name_ko

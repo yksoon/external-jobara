@@ -8,12 +8,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { set_spinner } from "redux/actions/commonAction";
 import DashBoardChart from "./components/DashBoardChart";
 import axios from "axios";
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 
 const DashBoardMain = () => {
     const dispatch = useDispatch();
     const { alert } = useAlert();
     const err = { dispatch, alert };
     const navigate = useNavigate();
+    const fileBaseUrl = apiPath.api_file;
 
     const userTokenAdmin = useSelector(
         (state) => state.userInfoAdmin.userTokenAdmin
@@ -21,6 +23,7 @@ const DashBoardMain = () => {
     const ip = useSelector((state) => state.ipInfo.ipInfo);
 
     const [totalCountInfo, setTotalCountInfo] = useState({});
+    const [totalListInfo, setTotalListInfo] = useState([]);
     // const [excelPath, setExcelPath] = useState("");
 
     useEffect(() => {
@@ -60,7 +63,11 @@ const DashBoardMain = () => {
 
                 // console.log("###############", res);
 
+                // 통계 카운트 인포
                 setTotalCountInfo(resultInfo.total_count_info);
+
+                // 리스트 인포
+                setTotalListInfo(resultInfo.total_list_info);
 
                 // downloadExcel();
 
@@ -164,9 +171,6 @@ const DashBoardMain = () => {
                             {/* )} */}
                         </div>
                     </div>
-                    {/* 차트영역 */}
-                    <DashBoardChart totalCountInfo={totalCountInfo} />
-                    {/* 차트영역 END */}
 
                     {/* 표영역 */}
                     <div style={{ marginTop: 20 }}>
@@ -187,7 +191,8 @@ const DashBoardMain = () => {
                                             totalCountInfo.total_registration_count}
                                     </td>
                                 </tr>
-                                <tr>
+
+                                {/* <tr>
                                     <th>연령별 등록 수</th>
                                     <th>등록구분</th>
                                     <th>참여프로그램</th>
@@ -200,7 +205,6 @@ const DashBoardMain = () => {
                                                 <col width="50%" />
                                             </colgroup>
                                             <tbody>
-                                                {/* 연령별 카운트 */}
                                                 {Object.keys(totalCountInfo)
                                                     .length !== 0 &&
                                                     totalCountInfo.total_age_count.map(
@@ -322,7 +326,6 @@ const DashBoardMain = () => {
                                                 <col width="50%" />
                                             </colgroup>
                                             <tbody>
-                                                {/* 참여프로그램 카운트 */}
                                                 {Object.keys(totalCountInfo)
                                                     .length !== 0 &&
                                                     totalCountInfo.total_additional_count.map(
@@ -345,22 +348,148 @@ const DashBoardMain = () => {
                                                             </tr>
                                                         )
                                                     )}
-                                                {/* <tr>
-                                                    <th>&nbsp;</th>
-                                                    <td>&nbsp;</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>&nbsp;</th>
-                                                    <td>&nbsp;</td>
-                                                </tr> */}
                                             </tbody>
                                         </table>
                                     </td>
-                                </tr>
+                                </tr> */}
                             </tbody>
                         </table>
                     </div>
                     {/* 표영역 END */}
+                    {/* 차트영역 */}
+                    <DashBoardChart totalCountInfo={totalCountInfo} />
+                    {/* 차트영역 END */}
+
+                    {totalListInfo.length !== 0 && (
+                        <div className="adm_table">
+                            <table className="table_a">
+                                <colgroup>
+                                    <col width="4%" />
+                                    <col width="10%" />
+                                    <col width="5%" />
+                                    <col width="7%" />
+                                    <col width="10%" />
+                                    <col width="8%" />
+                                    <col width="8%" />
+                                    <col width="8%" />
+                                    <col width="8%" />
+                                    <col width="8%" />
+                                    <col width="6%" />
+                                    <col width="6%" />
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th rowSpan="2">고유번호</th>
+                                        <th rowSpan="2">ID</th>
+                                        <th rowSpan="2">이름</th>
+                                        <th rowSpan="2">연락처</th>
+                                        <th rowSpan="2">생년월일</th>
+                                        <th rowSpan="2">학교</th>
+                                        <th rowSpan="2">학과</th>
+                                        <th rowSpan="2">희망직종</th>
+                                        <th colSpan="2">참여프로그램</th>
+                                        <th rowSpan="2">등록일</th>
+                                        <th rowSpan="2">이력서 보기</th>
+                                    </tr>
+                                    <tr>
+                                        <th>NCS 모의고사</th>
+                                        <th
+                                            style={{
+                                                borderRight: "1px solid #ddd",
+                                            }}
+                                        >
+                                            현직자 토크콘서트
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {totalListInfo &&
+                                        totalListInfo.map((item, idx) => (
+                                            <tr key={`list_${idx}`}>
+                                                <td>{item.user_key}</td>
+                                                <td>{item.user_id}</td>
+                                                <td>{item.user_name_ko}</td>
+                                                <td>{`${item.mobile1}-${item.mobile2}-${item.mobile3}`}</td>
+                                                <td>
+                                                    {item.birth_yyyy === null
+                                                        ? "-"
+                                                        : `${item.birth_yyyy}-${item.birth_mm}-${item.birth_dd}`}
+                                                </td>
+                                                <td>
+                                                    {item.organization_name_ko
+                                                        ? item.organization_name_ko
+                                                        : "-"}
+                                                </td>
+                                                <td>
+                                                    {item.department_name_ko
+                                                        ? item.department_name_ko
+                                                        : "-"}
+                                                </td>
+                                                <td>
+                                                    {item.specialized_name_ko
+                                                        ? item.specialized_name_ko
+                                                        : "-"}
+                                                </td>
+                                                <td className="checkicon">
+                                                    {item.additional_info.filter(
+                                                        (e) =>
+                                                            e.additional_idx ===
+                                                            1
+                                                    ).length !== 0 ? (
+                                                        <CheckCircleOutlineOutlinedIcon />
+                                                    ) : (
+                                                        ""
+                                                    )}
+                                                </td>
+                                                <td className="checkicon">
+                                                    {item.additional_info.filter(
+                                                        (e) =>
+                                                            e.additional_idx ===
+                                                            2
+                                                    ).length !== 0 ? (
+                                                        <CheckCircleOutlineOutlinedIcon />
+                                                    ) : (
+                                                        ""
+                                                    )}
+                                                </td>
+                                                <td>
+                                                    {item.reg_dttm
+                                                        ? item.reg_dttm.split(
+                                                              " "
+                                                          )[0]
+                                                        : "-"}
+                                                </td>
+                                                <td className="filebtn">
+                                                    {item.file_info !== 0 &&
+                                                        item.file_info.map(
+                                                            (item2, idx2) => (
+                                                                <Link
+                                                                    to={`${fileBaseUrl}${item2.file_path_enc}`}
+                                                                    key={`file_${idx2}`}
+                                                                >
+                                                                    <img
+                                                                        src="img/common/file.svg"
+                                                                        alt={
+                                                                            item2.file_name
+                                                                        }
+                                                                        title={
+                                                                            item2.file_name
+                                                                        }
+                                                                    />
+                                                                </Link>
+                                                            )
+                                                        )}
+                                                    {/* <img
+                                                    src="img/common/file.svg"
+                                                    alt=""
+                                                /> */}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
                 </div>
             </div>
         </>
