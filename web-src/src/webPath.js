@@ -185,11 +185,17 @@ const apiPath = {
     }meta/_additionals`,
     // api_get_additional: `${slash + version + slash}meta/_additionals`,
 
-    // ------------------ Additional API 스케줄 관리 API ------------------
+    // ------------------ Dashboard API 대시보드 관리 API ------------------
     // /v1/dashboard
     // POST
     // 대시보드 목록
     api_admin_dashboard: `${base_api_url + slash + version + slash}dashboard`,
+
+    // ------------------ Board API 게시판 관리 API ------------------
+    // /v1/boards
+    // POST
+    // 게시판 목록
+    api_admin_boards: `${base_api_url + slash + version + slash}boards`,
 };
 
 export { routerPath, apiPath };

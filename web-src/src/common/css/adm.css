@@ -194,5 +194,18 @@ div.mo_title > h4{font-size: 21px;font-weight: 700;}
 .error_page a.backbtn {background:#fff;}
 .error_page h3 {font-size: 32px;font-weight: 700;margin: 32px 0 15px;}
 
+/* 공지사항 */
+.admin .adm_notice .file_wrap {display:flex; align-items: center;    justify-content: center;}
+.admin .adm_notice .file_wrap a{display:flex; align-items: center;margin:0 10px 0 0;}
+.admin .adm_notice .file_wrap img{width:18px;}
+.admin .adm_notice .viewer_wrap img{width:12px;margin:0 0 -2px;}
+
+
+/* 에디터 */
+.ck-editor__editable_inline:not(.ck-comment__input *) {
+    height: 300px;
+    overflow-y: auto;
+}
+
 .MuiPaginationItem-textPrimary.Mui-selected {background:#e72295 !important;}
 .MuiPaginationItem-textPrimary.Mui-selected:hover {background:#e72295 !important;}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
     CommonConsole,
@@ -31,8 +31,10 @@ const UserList = () => {
     const { confirm } = useConfirm();
     const fileBaseUrl = apiPath.api_file;
 
+    const searchKeyword = useRef(null);
+
     useEffect(() => {
-        reqUserList(1, 10);
+        reqUserList(1, 10, "");
     }, [isNeedUpdate]);
 
     const handleNeedUpdate = () => {
@@ -50,7 +52,7 @@ const UserList = () => {
     };
 
     // 유저 리스트
-    const reqUserList = (pageNum, pageSize) => {
+    const reqUserList = (pageNum, pageSize, searchKeyword) => {
         dispatch(
             set_spinner({
                 isLoading: true,
@@ -63,6 +65,7 @@ const UserList = () => {
         const data = {
             page_num: pageNum,
             page_size: pageSize,
+            search_keyword: searchKeyword,
         };
 
         // 파라미터
@@ -80,7 +83,7 @@ const UserList = () => {
             let result_code = res.headers.result_code;
 
             // 성공
-            if (result_code === "0000") {
+            if (result_code === "0000" || result_code === "9997") {
                 let result_info = res.data.result_info;
                 let page_info = res.data.page_info;
 
@@ -269,7 +272,23 @@ const UserList = () => {
 
     // 페이지네이션 이동
     const handleChange = (e, value) => {
-        reqUserList(value, 10);
+        const keyword = searchKeyword.current.value;
+
+        reqUserList(value, 10, keyword);
+    };
+
+    // 검색
+    const doSearch = () => {
+        const keyword = searchKeyword.current.value;
+
+        reqUserList(1, 10, keyword);
+    };
+
+    // 검색 input 엔터키
+    const handleOnKeyPress = (e) => {
+        if (e.key === "Enter") {
+            doSearch(); // Enter 입력이 되면 클릭 이벤트 실행
+        }
     };
 
     return (
@@ -286,15 +305,18 @@ const UserList = () => {
                                 <option value="">이름</option>
                                 <option value="">소속</option>
                             </select>{" "} */}
-                            <input type="text" className="input" />{" "}
-                            <Link className="btn btn02">검색</Link>
+                            <input
+                                type="text"
+                                className="input"
+                                ref={searchKeyword}
+                                onKeyDown={(e) => handleOnKeyPress(e)} // Enter 입력 이벤트 함수
+                            />{" "}
+                            <Link className="btn btn02" onClick={doSearch}>
+                                검색
+                            </Link>
                         </div>
                         <div>
-                            <Link
-                                className="btn btn01"
-                                title="#memberInsert"
-                                onClick={regUser}
-                            >
+                            <Link className="btn btn01" onClick={regUser}>
                                 임의등록
                             </Link>
                             {/* <a href="" class="btn btn01">엑셀 다운로드</a> */}
@@ -371,7 +393,7 @@ const UserList = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {userList &&
+                                {userList.length !== 0 ? (
                                     userList.map((item, idx) => (
                                         <tr key={`list_${idx}`}>
                                             <td>
@@ -482,19 +504,35 @@ const UserList = () => {
                                                 </Link>
                                             </td>
                                         </tr>
-                                    ))}
+                                    ))
+                                ) : (
+                                    <>
+                                        <tr>
+                                            <td
+                                                colSpan="14"
+                                                style={{ height: "55px" }}
+                                            >
+                                                <b>데이터가 없습니다.</b>
+                                            </td>
+                                        </tr>
+                                    </>
+                                )}
                             </tbody>
                         </table>
                     </div>
-                    {pageInfo && (
-                        <div className="pagenation">
-                            <Pagination
-                                count={pageInfo.pages}
-                                onChange={handleChange}
-                                shape="rounded"
-                                color="primary"
-                            />
-                        </div>
+                    {userList.length !== 0 ? (
+                        pageInfo && (
+                            <div className="pagenation">
+                                <Pagination
+                                    count={pageInfo.pages}
+                                    onChange={handleChange}
+                                    shape="rounded"
+                                    color="primary"
+                                />
+                            </div>
+                        )
+                    ) : (
+                        <></>
                     )}
                 </div>
             </div>

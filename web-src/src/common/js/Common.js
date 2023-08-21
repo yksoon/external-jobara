@@ -5,9 +5,10 @@ import { CircularProgress, Dialog, Modal } from "@mui/material";
 import { set_spinner } from "redux/actions/commonAction";
 import { routerPath } from "webPath";
 import tokenExpire from "./tokenExpire";
-import RegUserModalMain from "components/admin/user/userList/RegUserModalMain";
+import RegUserModalMain from "components/admin/user/userList/modal/RegUserModalMain";
 import { RestServer } from "./Rest";
 import useAlert from "hook/useAlert";
+import RegOneLineBoardModal from "components/admin/board/oneLineBoard/modal/RegOneLineBoardModal";
 
 // Alert (props)
 // isOpen = state 상태값
@@ -38,6 +39,14 @@ const CommonModal = (props) => {
                         handleNeedUpdate={handleNeedUpdate}
                         handleModalClose={modalOption.handleModalClose}
                         modUserData={props.modUserData}
+                    />
+                );
+
+            case "RegOneLineBoardModal":
+                return (
+                    <RegOneLineBoardModal
+                        handleNeedUpdate={handleNeedUpdate}
+                        handleModalClose={modalOption.handleModalClose}
                     />
                 );
 

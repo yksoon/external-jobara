@@ -80,48 +80,94 @@ const SideNav = (props) => {
 
         // account/v1/user/info/{user_idx}
         // GET
-        const url = apiPath.api_user_info + `/${userIdx}`;
+        const url = apiPath.api_admin_user_info + `/${userIdx}`;
         const data = {};
 
-        RestServer("get", url, data)
-            .then((response) => {
-                let res = response;
-                let result_code = res.headers.result_code;
-                let result_info = res.data.result_info;
+        // 파라미터
+        const restParams = {
+            method: "get",
+            url: url,
+            data: data,
+            err: err,
+            callback: (res) => responsLogic(res),
+            admin: "Y",
+        };
+        CommonRest(restParams);
 
-                // 성공
-                if (result_code === "0000") {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+        const responsLogic = (res) => {
+            let result_code = res.headers.result_code;
+            let result_info = res.data.result_info;
 
-                    setModUserData(result_info);
+            // 성공
+            if (result_code === "0000") {
+                dispatch(
+                    set_spinner({
+                        isLoading: false,
+                    })
+                );
 
-                    setModalTitle("회원수정");
-                    setIsOpen(true);
-                }
-                // 에러
-                else {
-                    CommonConsole("log", response);
+                setModUserData(result_info);
 
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                setModalTitle("회원수정");
+                setIsOpen(true);
+            }
+            // 에러
+            else {
+                CommonConsole("log", res);
 
-                    CommonNotify({
-                        type: "alert",
-                        hook: alert,
-                        message: response.headers.result_message_ko,
-                    });
-                }
-            })
-            .catch((error) => {
-                CommonErrorCatch(error, dispatch, alert);
-            });
+                dispatch(
+                    set_spinner({
+                        isLoading: false,
+                    })
+                );
+
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: res.headers.result_message_ko,
+                });
+            }
+        };
+
+        // RestServer("get", url, data)
+        //     .then((response) => {
+        //         let res = response;
+        //         let result_code = res.headers.result_code;
+        //         let result_info = res.data.result_info;
+
+        //         // 성공
+        //         if (result_code === "0000") {
+        //             dispatch(
+        //                 set_spinner({
+        //                     isLoading: false,
+        //                 })
+        //             );
+
+        //             setModUserData(result_info);
+
+        //             setModalTitle("회원수정");
+        //             setIsOpen(true);
+        //         }
+        //         // 에러
+        //         else {
+        //             CommonConsole("log", response);
+
+        //             dispatch(
+        //                 set_spinner({
+        //                     isLoading: false,
+        //                 })
+        //             );
+
+        //             CommonNotify({
+        //                 type: "alert",
+        //                 hook: alert,
+        //                 message: response.headers.result_message_ko,
+        //             });
+        //         }
+        //     })
+        //     .catch((error) => {
+        //         CommonErrorCatch(error, dispatch, alert);
+        //     });
     };
 
     // 로그아웃
@@ -308,6 +354,7 @@ const SideNav = (props) => {
                 handleModalClose={handleModalClose}
                 component={"RegUserModalMain"}
                 handleNeedUpdate={handleNeedUpdate}
+                modUserData={modUserData}
             />
         </>
     );

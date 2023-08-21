@@ -6,6 +6,8 @@
     "dependencies": {
         "@babel/core": "^7.22.5",
         "@babel/preset-env": "^7.22.5",
+        "@ckeditor/ckeditor5-build-classic": "^39.0.1",
+        "@ckeditor/ckeditor5-react": "^6.1.0",
         "@emotion/react": "^11.11.1",
         "@emotion/styled": "^11.11.0",
         "@mui/icons-material": "^5.11.16",
@@ -21,6 +23,7 @@
         "buffer": "^6.0.3",
         "chart.js": "^4.3.3",
         "cors": "^2.8.5",
+        "cross-env": "^7.0.3",
         "http-proxy-middleware": "^2.0.6",
         "jquery": "^3.7.0",
         "logger": "^0.0.1",

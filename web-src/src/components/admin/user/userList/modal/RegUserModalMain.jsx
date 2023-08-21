@@ -476,6 +476,7 @@ const RegUserModal = (props) => {
 
     // 파일 첨부시
     const attachFile = (input) => {
+        console.log(input.files);
         const maxFileCnt = 5; // 첨부파일 최대 개수
 
         if (input.files.length > maxFileCnt) {
@@ -668,11 +669,17 @@ const RegUserModal = (props) => {
                             <td>{modUserData.reg_dttm}</td>
                         </tr>
                     )}
-                    {modUserData.mod_dttm && (
-                        <tr>
-                            <th>수정일</th>
-                            <td>{modUserData.mod_dttm}</td>
-                        </tr>
+                    {modUserData ? (
+                        modUserData.mod_dttm ? (
+                            <tr>
+                                <th>수정일</th>
+                                <td>{modUserData.mod_dttm}</td>
+                            </tr>
+                        ) : (
+                            <></>
+                        )
+                    ) : (
+                        <></>
                     )}
                     {modUserData ? (
                         <></>
@@ -698,7 +705,6 @@ const RegUserModal = (props) => {
                                                     refreshCaptcha();
                                                     e.preventDefault();
                                                 }}
-                                                to="javascript:void(0);"
                                             >
                                                 <RefreshIcon />
                                                 새로고침

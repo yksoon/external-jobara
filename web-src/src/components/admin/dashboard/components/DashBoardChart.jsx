@@ -246,7 +246,7 @@ const DashBoardChart = (props) => {
                                 plugins: {
                                     title: {
                                         display: true,
-                                        text: "소속 기관 수 (학교)",
+                                        text: "학교",
                                         align: "center",
                                         padding: {
                                             top: 10,
@@ -270,7 +270,7 @@ const DashBoardChart = (props) => {
                                 plugins: {
                                     title: {
                                         display: true,
-                                        text: "전공과 수 (학과)",
+                                        text: "학과",
                                         align: "center",
                                         padding: {
                                             top: 10,
@@ -294,7 +294,7 @@ const DashBoardChart = (props) => {
                                 plugins: {
                                     title: {
                                         display: true,
-                                        text: "전공분야 수 (희망직종)",
+                                        text: "희망직종",
                                         align: "center",
                                         padding: {
                                             top: 10,

@@ -10,7 +10,8 @@ import { useNavigate } from "react-router";
 import { set_spinner } from "redux/actions/commonAction";
 import { set_page } from "redux/actions/pageActios";
 import { apiPath, routerPath } from "webPath";
-import Notice from "./board/Notice";
+import Notice from "./board/notice/Notice";
+import OneLineBoard from "./board/oneLineBoard/OneLineBoard";
 
 const Admin = () => {
     const dispatch = useDispatch();
@@ -158,14 +159,21 @@ const Admin = () => {
     // 렌더링 페이지
     const renderPage = (page) => {
         switch (page) {
+            // 대시보드
             case "dashboard":
                 return <DashBoardMain />;
 
+            // 사전등록 관리
             case "userList":
                 return <UserList />;
 
+            // 공지사항
             case "notice":
                 return <Notice />;
+
+            // 한줄게시판
+            case "oneLineBoard":
+                return <OneLineBoard />;
 
             default:
                 return <DashBoardMain />;
