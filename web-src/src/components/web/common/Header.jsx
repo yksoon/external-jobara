@@ -46,7 +46,10 @@ function Header({ props }) {
                 <div id="header_content">
                     <h1 className="logo">
                         <a href="/">
-                            <img src="img/web/main/logo.png" alt="" />
+                            <img src="img/web/main/logo_job.png" alt="" />
+                        </a>
+                        <a href="https://lincplus.jejunu.ac.kr/index.htm" target="_blank">
+                            <img src="img/web/main/logo_linc.png" alt="" />
                         </a>
                     </h1>
                     {/* 모바일 메뉴 // S */}

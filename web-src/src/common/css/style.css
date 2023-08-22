@@ -6,7 +6,7 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 
 #header_content {width:100%; margin:0 auto;height:120px;}
 #header_content .logo {position:absolute; top:35px; left:135px; z-index:1000;}
-#header_content .logo a{display:block;}
+#header_content .logo a{display:inline-block;}
 
 
 
@@ -55,8 +55,16 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 #mainvisual  .main_txt .date .pink{ color:#E72295;font-size: 36px; font-weight: 900;}
 #mainvisual  .main_txt .date .blue{ color:#0092E5;font-weight: 900;}
 #mainvisual  .main_txt .menu{position:absolute; top:300px; left:140px;display:flex;flex-direction: column;}
-#mainvisual  .main_txt .menu a{display:block;font-family: 'LOTTERIACHAB';font-size: 32px; color:#DFDFDF;line-height:50px;}
-#mainvisual  .main_txt .menu a.active, #mainvisual  .main_txt .menu a:hover, #mainvisual  .main_txt .menu a:focus{color:#E72295;}
+#mainvisual  .main_txt .menu > ul > li {position: relative;transition:all 0.5s;}
+#mainvisual  .main_txt .menu a.m00 {display:block;font-family: 'LOTTERIACHAB';font-size: 32px; color:#222;line-height:50px;}
+#mainvisual  .main_txt .menu > ul > li > a{display:block;font-family: 'LOTTERIACHAB';font-size: 32px; color:#222;line-height:50px;}
+#mainvisual  .main_txt .menu > ul > li > a.active, #mainvisual  .main_txt .menu > ul > li > a:hover, #mainvisual  .main_txt .menu > ul > li > a:focus{color:#E72295;}
+#mainvisual  .main_txt .menu > ul > li > div.submenu {display:none;width:200px;border-radius: 20px;background: #E72295;padding:14px 20px;right:0;top:0;transition:all 0.5s;}
+#mainvisual  .main_txt .menu > ul > li > div.submenu > a {display: block;color:#fff;font-size: 18px;font-family: "GMarketSans";text-align: center;line-height: 32px;}
+#mainvisual  .main_txt .menu > ul > li:hover > a {color:#E72295;}
+#mainvisual  .main_txt .menu > ul > li:hover > a + div.submenu {display: block;}
+
+#mainvisual  .main_txt .menu a.m00{padding-left:80px;color: #0092E5;}
 #mainvisual  .main_txt .menu a.m01{padding-left:20px;}
 #mainvisual  .main_txt .menu a.m02{padding-left:30px;}
 #mainvisual  .main_txt .menu a.m04{padding-left:20px;}
@@ -97,7 +105,7 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 .section02 .program{width:1400px; margin:0 auto 160px;}
 .section02 .program h3{font-family:'GmarketSans';font-weight:900;color:#000;text-align: center;font-size:38px;letter-spacing: -0.04em;margin:0 0 90px 0;}
 .section02 .program ul{display: flex;flex-wrap: wrap;justify-content: space-between;}
-.section02 .program ul li{font-family:'GmarketSans';position:relative;width:450px;height: 100px;border:1px solid #ccc;line-height: 100px;box-sizing: border-box;margin:0 0 40px 0;font-size: 24px;color:#000;letter-spacing: -0.03em;
+.section02 .program ul li{font-family:'GmarketSans';position:relative;width:450px;border:1px solid #ccc;box-sizing: border-box;margin:0 0 40px 0;font-size: 24px;color:#000;letter-spacing: -0.03em;padding:40px 20px;    height: fit-content;
 	border-radius: 20px;
 	-webkit-border-radius: 20px;
 	-moz-border-radius: 20px;
@@ -108,12 +116,23 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 .section02 .program ul li.p02 .num{color:#BAD73C;}
 .section02 .program ul li.p03 .num{color:#65C4F2;}
 .section02 .program ul li.p04 .num{color:#F15922;}
+.section02 .program ul li.p04 div span{display:block;color:#F15922;font-weight:900;}
 .section02 .program ul li.p05 .num{color:#0092E5;}
+.section02 .program ul li.p05 div span{display:block;color:#0092E5;font-weight:900;}
 .section02 .program ul li.p06 .num{color:#C064E6;}
+.section02 .program ul li.p06 div span{display:block;color:#C064E6;font-weight:900;}
+.section02 .program ul li div {padding:30px 20px 0;font-size: 18px;line-height: 30px;}
+.section02 .program ul li div a {width: 100%;display:block;height:36px;background:#f15922;border-radius: 20px;color: #fff;text-align: center;line-height: 36px;margin:20px 0 0;}
+.section02 .program ul li.p05 div a{background:#0092E5;}
+.section02 .program ul li div h5 {font-weight: 900;}
+.section02 .program ul li div p {font-size: 16px;margin:6px 0 20px;}
+.section02 .program ul li.p05 {margin-top:-80px;}
+.section02 .program ul li.p06 {margin-top:-140px;}
 
 
 .section02 .company{width:1400px; margin:0 auto;}
 .section02 .company h3{font-family:'GmarketSans';font-weight:900;color:#000;text-align: center;font-size:38px;letter-spacing: -0.04em;margin:0 0 25px 0;}
+.section02 .company p{font-family:'GmarketSans';font-size: 21px; color:#111111;letter-spacing: -0.04em;text-align: center;padding:0 0 50px 0;}
 .section02 .company .logobox{display: flex;flex-wrap: wrap;}
 .section02 .company .logobox a{display:flex;width:164px; height:70px;align-items: center;margin:18px;}
 .section02 .company .logobox a img{filter: grayscale(100%);opacity:0.4;}
@@ -207,6 +226,7 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 .registration .regi_form {border-top:1px solid #E72295;}
 .registration .regi_form tbody tr th {font-family:'Pretendard'; font-size:17px; color:#000; padding:30px 10px 30px 30px;text-align: left;border-bottom:1px solid #ddd;}
 .registration .regi_form tbody tr td {font-family:'Pretendard'; font-size:17px; color:#444;  font-weight:400; padding:20px 10px;border-bottom:1px solid #ddd;}
+.registration .regi_form tbody tr td.imgtd img{vertical-align:middle;}
 .registration .regi_form tbody tr td input {border:1px solid #ccc; height:40px; line-height:40px;text-indent: 10px; font-family:'GmarketSans';vertical-align: middle;
 	border-radius: 10px; 
 	-webkit-border-radius: 10px; 
@@ -329,7 +349,7 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 
 	#header_content {height:70px;}
 	#header_content .logo {top:20px; left:20px; z-index:1000;}
-	#header_content .logo a{display:block;}
+	#header_content .logo a{display:inline-block;}
 	#header_content .logo a img{height:28px;}
 
 
@@ -390,7 +410,7 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 	#nav > li > ul {}
 	#nav > li > ul > li {border-bottom:none; border-top:1px solid #ff5fbd;}
 	#nav > li > ul > li:first-child {border-top:none;}
-	#nav > li > ul > li a {color:#fff; font-size:14px; background:#e40b8a; font-weight:500;  padding:16px  20px 16px 30px;line-height:15px;}
+	#nav > li > ul > li a {color:#fff; font-size:14px; background:#e40b8a; font-weight:500;  padding:16px  0;line-height:15px;}
 	.nav_2depth {display:none;}
 
 
@@ -432,15 +452,19 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 	.section02 .program{width:auto; margin:0 auto 80px;padding:0 20px;}
 	.section02 .program h3{font-size:28px;margin:0 0 50px 0;}
 	.section02 .program ul{justify-content:center; flex-direction: column;}
-	.section02 .program ul li{width:auto;height: 70px;line-height: 70px;margin:0 0 20px 0;font-size:17px;}
+	.section02 .program ul li{width:auto;height: fit-content;line-height: 1.2;margin:0 0 20px 0;font-size:17px;padding:40px 10px}
 	.section02 .program ul li.p02, .section02 .program ul li.p05 {margin:0 0 20px 0;}
 	.section02 .program ul li .icon {top:-10px;}
 	.section02 .program ul li .icon img{width:60px;}
 	.section02 .program ul li .num {width:70px;}
+	.section02 .program ul li div h5 {font-size: 16px;}
+	.section02 .program ul li div p {font-size: 14px;line-height: 1.2;}
+	.section02 .program ul li div p:last-child {margin:6px 0 0;}
+	.section02 .program ul li.p06 {margin-top: 0;}
 
 	.section02 .company{width:auto; margin:0 auto;padding:0 20px;}
 	.section02 .company h3{font-size:28px;margin:0 0 20px 0;}
-	.section02 .company .logobox{display: flex;flex-wrap: wrap;}
+	.section02 .company .logobox{display: flex;flex-wrap: wrap;justify-content: center;}
 	.section02 .company .logobox a{display:flex;width:30%; height:auto;margin:5px 1%;}
 	.section02 .company .logobox a img{filter: grayscale(100%);opacity:0.4;width:80%;height:auto;}
 	.section02 .company .logobox a:hover img{filter: grayscale(0);opacity:1;}
@@ -501,12 +525,13 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 
 	/* 사전등록 */
 	.registration .regi_form tbody tr th {display:block;font-size:14px; padding:15px 10px ;background-color:#f9f9f9;}
-	.registration .regi_form tbody tr td {display:block;font-size:14px; padding:20px 10px;}
+	.registration .regi_form tbody tr td {display:block;font-size:14px; padding:20px 10px;line-height: 1.5;}
 	.registration .regi_form tbody tr td input.input_s{width:95%;}
 	.registration .regi_form tbody tr td input.input_m{width:28%;}
 	.registration .regi_form tbody tr td input.input_date{width:95%;}
 	.registration .btnbox {margin:50px 0 0;}
 	.registration .btnbox a{height:60px;line-height: 60px;padding:0 30px;min-width:120px;font-size:22px;}
+	.registration .regi_form tbody tr td.imgtd img {margin:0 10px 10px 0;}
 
 
 	/* 용광순 임의 추가 */

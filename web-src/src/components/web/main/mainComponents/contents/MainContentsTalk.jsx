@@ -1,7 +1,7 @@
 const MainContentsTalk = () => {
     return (
         <>
-            <div className="section04">
+            {/* <div className="section04">
                 <div
                     className="bar01"
                     data-aos="fade-right"
@@ -143,7 +143,7 @@ const MainContentsTalk = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </>
     );
 };

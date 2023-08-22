@@ -31,7 +31,16 @@ const SubHeader = () => {
                 <div id="header_content">
                     <h1 className="logo">
                         <Link to={routerPath.web_main_url}>
-                            <img src="img/web/main/logo.png" alt="" />
+                            <img src="img/web/main/logo_job.png" alt="" />
+                        </Link>
+                        <Link 
+                             onClick={() =>
+                                openUrl(
+                                    "https://lincplus.jejunu.ac.kr/"
+                                )
+                            }
+                        >
+                            <img src="img/web/main/logo_linc.png" alt="" />
                         </Link>
                     </h1>
 
