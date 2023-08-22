@@ -1,5 +1,5 @@
 import { Pagination } from "@mui/material";
-import { CommonConsole, CommonRest } from "common/js/Common";
+import { CommonConsole, CommonModal, CommonRest } from "common/js/Common";
 import useAlert from "hook/useAlert";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -16,12 +16,15 @@ const Notice = () => {
 
     const [boardList, setBoardList] = useState([]);
     const [pageInfo, setPageInfo] = useState({});
+    const [isOpen, setIsOpen] = useState(false);
+    const [modalTitle, setModalTitle] = useState("");
+    const [isNeedUpdate, setIsNeedUpdate] = useState(false);
 
     const searchKeyword = useRef(null);
 
     useEffect(() => {
-        getBoardList(1, 10);
-    }, []);
+        getBoardList(1, 10, "");
+    }, [isNeedUpdate]);
 
     // 리스트 가져오기
     const getBoardList = (pageNum, pageSize, searchKeyword) => {
@@ -88,6 +91,22 @@ const Notice = () => {
         getBoardList(value, 10, keyword);
     };
 
+    // 모달 닫기
+    const handleModalClose = () => {
+        setIsOpen(false);
+    };
+
+    // 화면 재 렌더링
+    const handleNeedUpdate = () => {
+        setIsNeedUpdate(!isNeedUpdate);
+    };
+
+    // 글쓰기
+    const regBoard = () => {
+        setModalTitle("글쓰기");
+        setIsOpen(true);
+    };
+
     return (
         <>
             <div className="content">
@@ -117,7 +136,11 @@ const Notice = () => {
                                     className="btn_box btn_right"
                                     style={{ margin: 0 }}
                                 >
-                                    <Link href="" className="btn btn01">
+                                    <Link
+                                        href=""
+                                        className="btn btn01"
+                                        onClick={regBoard}
+                                    >
                                         글쓰기
                                     </Link>
                                     <Link href="" className="btn btn02">
@@ -207,6 +230,15 @@ const Notice = () => {
                     )}
                 </div>
             </div>
+            <CommonModal
+                isOpen={isOpen}
+                title={modalTitle}
+                width={"800"}
+                handleModalClose={handleModalClose}
+                component={"RegNoticeModal"}
+                handleNeedUpdate={handleNeedUpdate}
+                // modUserData={modUserData}
+            />
         </>
     );
 };

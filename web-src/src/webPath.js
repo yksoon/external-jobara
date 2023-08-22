@@ -196,6 +196,11 @@ const apiPath = {
     // POST
     // 게시판 목록
     api_admin_boards: `${base_api_url + slash + version + slash}boards`,
+
+    // /v1/board
+    // POST MULTI
+    // 게시판 등록
+    api_admin_board: `${base_api_url + slash + version + slash}board`,
 };
 
 export { routerPath, apiPath };

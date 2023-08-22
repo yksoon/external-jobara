@@ -1,17 +1,35 @@
 import { Link } from "react-router-dom";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
+// import { CKEditor } from "@ckeditor/ckeditor5-react";
 import { useEffect, useRef, useState } from "react";
 import { apiPath } from "webPath";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { CommonNotify, CommonRest } from "common/js/Common";
+import { useDispatch } from "react-redux";
+import useAlert from "hook/useAlert";
+import { set_spinner } from "redux/actions/commonAction";
+import { boardModel } from "models/board/board";
+// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
-const RegOneLineBoardModal = () => {
+const RegOneLineBoardModal = (props) => {
+    const dispatch = useDispatch();
+    const { alert } = useAlert();
+    const err = { dispatch, alert };
+
     const [img, setImg] = useState({});
     const imgUrl = apiPath.api_captcha_img;
-    const [boardData, setBoardData] = useState("");
+    // const [boardData, setBoardData] = useState("");
 
     const inputTitle = useRef(null);
     const inputCaptcha = useRef(null);
+
+    const modalOption = {
+        isOpen: props.isOpen,
+        title: props.title,
+        content: props.content,
+        handleModalClose: props.handleModalClose,
+    };
+
+    const handleNeedUpdate = props.handleNeedUpdate;
 
     useEffect(() => {
         // 캡차이미지
@@ -30,9 +48,141 @@ const RegOneLineBoardModal = () => {
     };
 
     const regBoard = () => {
-        console.log(boardData);
+        // console.log(boardData);
+
+        if (checkValidation()) {
+            dispatch(
+                set_spinner({
+                    isLoading: true,
+                })
+            );
+
+            const formData = new FormData();
+            const model = boardModel;
+
+            let data = {};
+
+            let fileArr = [];
+
+            data = {
+                ...model,
+                boardType: "400",
+                mainSubject: inputTitle.current.value,
+                subTitle: "",
+                mainContent: "",
+                showYn: "Y",
+            };
+
+            // 기본 formData append
+            for (const key in data) {
+                formData.append(key, data[key]);
+            }
+
+            // 파일 formData append
+            // fileArr = Array.from(inputAttachmentFile.current.files);
+            // let len = fileArr.length;
+            // for (let i = 0; i < len; i++) {
+            //     formData.append("attachmentFile", fileArr[i]);
+            // }
+
+            // 등록
+            // /v1/board
+            // POST mulit
+            const url = apiPath.api_admin_board;
+
+            const restParams = {
+                method: "post_multi",
+                url: url, // /v1/_user
+                data: formData,
+                err: err,
+                admin: "Y",
+                callback: (res) => responsLogic(res),
+            };
+
+            CommonRest(restParams);
+
+            const responsLogic = (res) => {
+                let result_code = res.headers.result_code;
+                if (result_code === "0000") {
+                    dispatch(
+                        set_spinner({
+                            isLoading: false,
+                        })
+                    );
+
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: "게시글 등록이 완료 되었습니다",
+                        callback: () => requestBoardList(),
+                    });
+                } else {
+                    dispatch(
+                        set_spinner({
+                            isLoading: false,
+                        })
+                    );
+
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: "잠시 후 다시 시도해주세요",
+                    });
+                }
+            };
+
+            // 수정, 등록 완료 로직
+            const requestBoardList = () => {
+                // 리스트 새로고침
+                handleNeedUpdate();
+
+                // 모달 닫기
+                modalOption.handleModalClose();
+            };
+        }
     };
 
+    // 검증
+    const checkValidation = () => {
+        // 내용
+        if (!inputTitle.current.value) {
+            inputTitle.current.blur();
+            boardAlert({
+                msg: "내용을 입력해주세요",
+                ref: inputTitle,
+            });
+            return false;
+        }
+
+        // 캡차
+        if (!inputCaptcha.current.value) {
+            inputCaptcha.current.blur();
+            boardAlert({
+                msg: "자동입력방지 코드를 입력해주세요",
+                ref: inputCaptcha,
+            });
+            return false;
+        }
+
+        return true;
+    };
+
+    // 알럿
+    const boardAlert = (params) => {
+        CommonNotify({
+            type: "alert",
+            hook: alert,
+            message: params.msg,
+            callback: () => focusFunc(params.ref),
+        });
+    };
+
+    // 포커스
+    const focusFunc = (ref) => {
+        ref.current.focus();
+    };
+
+    /*
     // CK에디터 설정
     const editorConfiguration = {
         placeholder: "내용을 입력하세요.",
@@ -63,6 +213,7 @@ const RegOneLineBoardModal = () => {
             },
         };
     };
+    */
 
     return (
         <>
@@ -73,7 +224,7 @@ const RegOneLineBoardModal = () => {
                 </colgroup>
                 <tbody>
                     <tr>
-                        <th>제목</th>
+                        <th>내용</th>
                         <td>
                             <input
                                 type="text"
@@ -88,9 +239,8 @@ const RegOneLineBoardModal = () => {
                             <input type="file" />
                         </td>
                     </tr> */}
-                    <tr>
+                    {/* <tr>
                         <td colSpan="2">
-                            {/* <textarea name="" id="" class="input"></textarea> */}
                             <div className="editor">
                                 <CKEditor
                                     editor={ClassicEditor}
@@ -118,7 +268,7 @@ const RegOneLineBoardModal = () => {
                                 />
                             </div>
                         </td>
-                    </tr>
+                    </tr> */}
                     <tr>
                         <th>자동등록방지</th>
                         <td>
@@ -160,7 +310,11 @@ const RegOneLineBoardModal = () => {
                 <Link href="" className="btn btn01" onClick={regBoard}>
                     등록
                 </Link>
-                <Link href="" className="btn btn02">
+                <Link
+                    href=""
+                    className="btn btn02"
+                    onClick={modalOption.handleModalClose}
+                >
                     취소
                 </Link>
             </div>

@@ -9,6 +9,7 @@ import RegUserModalMain from "components/admin/user/userList/modal/RegUserModalM
 import { RestServer } from "./Rest";
 import useAlert from "hook/useAlert";
 import RegOneLineBoardModal from "components/admin/board/oneLineBoard/modal/RegOneLineBoardModal";
+import RegNoticeModal from "components/admin/board/notice/modal/RegNoticeModal";
 
 // Alert (props)
 // isOpen = state 상태값
@@ -45,6 +46,14 @@ const CommonModal = (props) => {
             case "RegOneLineBoardModal":
                 return (
                     <RegOneLineBoardModal
+                        handleNeedUpdate={handleNeedUpdate}
+                        handleModalClose={modalOption.handleModalClose}
+                    />
+                );
+
+            case "RegNoticeModal":
+                return (
+                    <RegNoticeModal
                         handleNeedUpdate={handleNeedUpdate}
                         handleModalClose={modalOption.handleModalClose}
                     />

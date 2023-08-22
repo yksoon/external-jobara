@@ -202,10 +202,7 @@ div.mo_title > h4{font-size: 21px;font-weight: 700;}
 
 
 /* 에디터 */
-.ck-editor__editable_inline:not(.ck-comment__input *) {
-    height: 300px;
-    overflow-y: auto;
-}
+.ql-container {min-height: 300px !important;}
 
 .MuiPaginationItem-textPrimary.Mui-selected {background:#e72295 !important;}
 .MuiPaginationItem-textPrimary.Mui-selected:hover {background:#e72295 !important;}

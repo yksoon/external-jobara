@@ -639,12 +639,20 @@ const RegUserModal = (props) => {
                     <tr>
                         <th>이력서업로드</th>
                         <td className="fileicon">
-                            <input
-                                type="file"
-                                ref={inputAttachmentFile}
-                                multiple
-                                onChange={(e) => attachFile(e.target)}
-                            />
+                            <div style={{ marginBottom: 5 }}>
+                                <b>
+                                    여러 파일 선택이 가능합니다. 여러 파일 선택
+                                    시 ctrl 누른 후 선택하시면 됩니다.
+                                </b>
+                            </div>
+                            <div>
+                                <input
+                                    type="file"
+                                    ref={inputAttachmentFile}
+                                    multiple
+                                    onChange={(e) => attachFile(e.target)}
+                                />
+                            </div>
                             <div>
                                 {fileList.length !== 0 &&
                                     fileList.map((item, idx) => (
