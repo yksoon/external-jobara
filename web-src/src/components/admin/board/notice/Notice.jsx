@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { set_spinner } from "redux/actions/commonAction";
 import { apiPath } from "webPath";
+import { dummy } from "./dummy";
 
 const Notice = () => {
     const dispatch = useDispatch();
@@ -229,6 +230,7 @@ const Notice = () => {
                         </>
                     )}
                 </div>
+                <div dangerouslySetInnerHTML={{ __html: dummy }}></div>
             </div>
             <CommonModal
                 isOpen={isOpen}

@@ -1,6 +1,7 @@
 import MainContentsInfo from "./contents/MainContentsInfo";
 import MainContentsNoti from "./contents/MainContentsNoti";
 import MainContentsProgram from "./contents/MainContentsProgram";
+import MainContentsTalk from "./contents/MainContentsTalk";
 
 const MainContents = () => {
     return (
@@ -14,6 +15,9 @@ const MainContents = () => {
 
                 {/* 공지사항 */}
                 {/* <MainContentsNoti /> */}
+
+                {/* 응원 댓글 */}
+                <MainContentsTalk />
                 <br />
             </div>
         </>

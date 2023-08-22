@@ -55,6 +55,7 @@ const RegUserModal = (props) => {
     const inputBirth = useRef(null);
     const inputAttachmentFile = useRef(null);
     const inputCaptcha = useRef(null);
+    const inputMemo = useRef(null);
 
     useEffect(() => {
         // 캠차이미지
@@ -142,6 +143,7 @@ const RegUserModal = (props) => {
         inputOrganization.current.value = modUserData.organization_name_ko;
         inputDepartment.current.value = modUserData.department_name_ko;
         inputSpecialized.current.value = modUserData.specialized_name_ko;
+        inputMemo.current.value = modUserData.user_memo;
     };
 
     // 회원등록
@@ -236,6 +238,7 @@ const RegUserModal = (props) => {
             specializedNameKo: inputSpecialized.current.value,
             additionalIdxs: checkItems.join(),
             securityCode: inputCaptcha.current.value,
+            userMemo: inputMemo.current.value,
         };
 
         // 기본 formData append
@@ -338,6 +341,7 @@ const RegUserModal = (props) => {
                 organizationIdx: modUserData.organization_idx,
                 specializedIdx: modUserData.specialized_idx,
                 departmentIdx: modUserData.department_idx,
+                userMemo: inputMemo.current.value,
             };
 
             // 기본 formData append
@@ -494,241 +498,257 @@ const RegUserModal = (props) => {
 
     return (
         <>
-            <table className="table_bb">
-                <colgroup>
-                    <col width="30%" />
-                    <col width="*" />
-                </colgroup>
-                <tbody>
-                    <tr>
-                        <th>ID</th>
-                        <td>
-                            {modUserData ? (
-                                <input
-                                    type="email"
-                                    className="input hold w180"
-                                    ref={inputID}
-                                    readOnly
-                                />
-                            ) : (
-                                <input
-                                    type="email"
-                                    className="input w180"
-                                    ref={inputID}
-                                />
-                            )}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>이름</th>
-                        <td>
-                            <input
-                                type="name"
-                                className="input w120"
-                                placeholder="성"
-                                ref={inputFirstNameKo}
-                            />
-                            <input
-                                type="name"
-                                className="input w120"
-                                placeholder="이름"
-                                ref={inputLastNameKo}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>연락처</th>
-                        <td>
-                            <div id="phone_num" className="m0">
-                                <input
-                                    type="tel"
-                                    className="input w120"
-                                    id="phone_num1"
-                                    defaultValue="010"
-                                    ref={inputMobile1}
-                                    readOnly
-                                />
-                                <input
-                                    type="tel"
-                                    className="input w120"
-                                    id="phone_num2"
-                                    ref={inputMobile2}
-                                />
-                                <input
-                                    type="tel"
-                                    className="input w120"
-                                    id="phone_num3"
-                                    ref={inputMobile3}
-                                />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>학교</th>
-                        <td>
-                            <input
-                                type="text"
-                                className="input w180"
-                                ref={inputOrganization}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>학과</th>
-                        <td>
-                            <input
-                                type="text"
-                                className="input w180"
-                                ref={inputDepartment}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>생년월일</th>
-                        <td>
-                            <input
-                                type="date"
-                                name=""
-                                className="input input_date"
-                                ref={inputBirth}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>희망직종</th>
-                        <td>
-                            <input
-                                type="text"
-                                className="input w180"
-                                ref={inputSpecialized}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>참여프로그램</th>
-                        <td>
-                            {programInfo &&
-                                programInfo.map((item, idx) => (
-                                    <div key={`programsLabel_${idx}`}>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                value={item.additional_idx}
-                                                onChange={(e) =>
-                                                    handleSingleCheck(
-                                                        e.target.checked,
-                                                        item.additional_idx
-                                                    )
-                                                }
-                                                checked={
-                                                    checkItems.includes(
-                                                        item.additional_idx
-                                                    )
-                                                        ? true
-                                                        : false
-                                                }
-                                            />{" "}
-                                            <b>{item.additional_name_ko}</b> (
-                                            {item.additional_memo})
-                                        </label>
-                                    </div>
-                                ))}
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>이력서업로드</th>
-                        <td className="fileicon">
-                            <div style={{ marginBottom: 5 }}>
-                                <b>
-                                    여러 파일 선택이 가능합니다. 여러 파일 선택
-                                    시 ctrl 누른 후 선택하시면 됩니다.
-                                </b>
-                            </div>
-                            <div>
-                                <input
-                                    type="file"
-                                    ref={inputAttachmentFile}
-                                    multiple
-                                    onChange={(e) => attachFile(e.target)}
-                                />
-                            </div>
-                            <div>
-                                {fileList.length !== 0 &&
-                                    fileList.map((item, idx) => (
-                                        <div key={`file_${idx}`}>
-                                            <Link
-                                                to={`${fileBaseUrl}${item.file_path_enc}`}
-                                            >
-                                                <img
-                                                    src="img/common/file.svg"
-                                                    alt=""
-                                                />
-                                                {item.file_name}{" "}
-                                            </Link>
-                                        </div>
-                                    ))}
-                            </div>
-                        </td>
-                    </tr>
-                    {modUserData && (
+            <div className="admin">
+                <table className="table_bb">
+                    <colgroup>
+                        <col width="30%" />
+                        <col width="*" />
+                    </colgroup>
+                    <tbody>
                         <tr>
-                            <th>등록일</th>
-                            <td>{modUserData.reg_dttm}</td>
-                        </tr>
-                    )}
-                    {modUserData ? (
-                        modUserData.mod_dttm ? (
-                            <tr>
-                                <th>수정일</th>
-                                <td>{modUserData.mod_dttm}</td>
-                            </tr>
-                        ) : (
-                            <></>
-                        )
-                    ) : (
-                        <></>
-                    )}
-                    {modUserData ? (
-                        <></>
-                    ) : (
-                        <tr>
-                            <th>자동입력방지</th>
+                            <th>ID</th>
                             <td>
-                                <div className="cap_wrap">
-                                    <div>
-                                        <span className="cap">
-                                            <img
-                                                className="imgClass"
-                                                id="captchaImg"
-                                                src={`${img.imageSrc}?${img.imageHash}`}
-                                                alt=""
-                                                decoding="async"
-                                                style={{ background: "white" }}
-                                            />
-                                        </span>
-                                        <span className="cap_refresh">
-                                            <Link
-                                                onClick={(e) => {
-                                                    refreshCaptcha();
-                                                    e.preventDefault();
-                                                }}
-                                            >
-                                                <RefreshIcon />
-                                                새로고침
-                                            </Link>
-                                        </span>
-                                    </div>
+                                {modUserData ? (
                                     <input
-                                        type="text"
-                                        className="input_s"
-                                        ref={inputCaptcha}
+                                        type="email"
+                                        className="input hold w180"
+                                        ref={inputID}
+                                        readOnly
+                                    />
+                                ) : (
+                                    <input
+                                        type="email"
+                                        className="input w180"
+                                        ref={inputID}
+                                    />
+                                )}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>이름</th>
+                            <td>
+                                <input
+                                    type="name"
+                                    className="input w120"
+                                    placeholder="성"
+                                    ref={inputFirstNameKo}
+                                />
+                                <input
+                                    type="name"
+                                    className="input w120"
+                                    placeholder="이름"
+                                    ref={inputLastNameKo}
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>연락처</th>
+                            <td>
+                                <div id="phone_num" className="m0">
+                                    <input
+                                        type="tel"
+                                        className="input w120"
+                                        id="phone_num1"
+                                        defaultValue="010"
+                                        ref={inputMobile1}
+                                        readOnly
+                                    />
+                                    <input
+                                        type="tel"
+                                        className="input w120"
+                                        id="phone_num2"
+                                        ref={inputMobile2}
+                                    />
+                                    <input
+                                        type="tel"
+                                        className="input w120"
+                                        id="phone_num3"
+                                        ref={inputMobile3}
                                     />
                                 </div>
                             </td>
                         </tr>
-                    )}
-                    {/* <tr>
+                        <tr>
+                            <th>학교</th>
+                            <td>
+                                <input
+                                    type="text"
+                                    className="input w180"
+                                    ref={inputOrganization}
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>학과</th>
+                            <td>
+                                <input
+                                    type="text"
+                                    className="input w180"
+                                    ref={inputDepartment}
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>학번</th>
+                            <td>
+                                <input
+                                    type="text"
+                                    className="input w180"
+                                    ref={inputMemo}
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>생년월일</th>
+                            <td>
+                                <input
+                                    type="date"
+                                    name=""
+                                    className="input input_date"
+                                    ref={inputBirth}
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>희망직종</th>
+                            <td>
+                                <input
+                                    type="text"
+                                    className="input w180"
+                                    ref={inputSpecialized}
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>참여프로그램</th>
+                            <td>
+                                {programInfo &&
+                                    programInfo.map((item, idx) => (
+                                        <div
+                                            key={`programsLabel_${idx}`}
+                                            style={{ padding: "3px 0" }}
+                                        >
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    value={item.additional_idx}
+                                                    onChange={(e) =>
+                                                        handleSingleCheck(
+                                                            e.target.checked,
+                                                            item.additional_idx
+                                                        )
+                                                    }
+                                                    checked={
+                                                        checkItems.includes(
+                                                            item.additional_idx
+                                                        )
+                                                            ? true
+                                                            : false
+                                                    }
+                                                />{" "}
+                                                <b>{item.additional_name_ko}</b>{" "}
+                                                ({item.additional_memo})
+                                            </label>
+                                        </div>
+                                    ))}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>이력서업로드</th>
+                            <td className="fileicon">
+                                <div style={{ marginBottom: 5 }}>
+                                    <b>
+                                        여러 파일 선택이 가능합니다. 여러 파일
+                                        선택 시 ctrl 누른 후 선택하시면 됩니다.
+                                    </b>
+                                </div>
+                                <div>
+                                    <input
+                                        type="file"
+                                        ref={inputAttachmentFile}
+                                        multiple
+                                        onChange={(e) => attachFile(e.target)}
+                                    />
+                                </div>
+                                <div>
+                                    {fileList.length !== 0 &&
+                                        fileList.map((item, idx) => (
+                                            <div key={`file_${idx}`}>
+                                                <Link
+                                                    to={`${fileBaseUrl}${item.file_path_enc}`}
+                                                >
+                                                    <img
+                                                        src="img/common/file.svg"
+                                                        alt=""
+                                                    />
+                                                    {item.file_name}{" "}
+                                                </Link>
+                                            </div>
+                                        ))}
+                                </div>
+                            </td>
+                        </tr>
+                        {modUserData && (
+                            <tr>
+                                <th>등록일</th>
+                                <td>{modUserData.reg_dttm}</td>
+                            </tr>
+                        )}
+                        {modUserData ? (
+                            modUserData.mod_dttm ? (
+                                <tr>
+                                    <th>수정일</th>
+                                    <td>{modUserData.mod_dttm}</td>
+                                </tr>
+                            ) : (
+                                <></>
+                            )
+                        ) : (
+                            <></>
+                        )}
+                        {modUserData ? (
+                            <></>
+                        ) : (
+                            <tr>
+                                <th>자동입력방지</th>
+                                <td>
+                                    <div className="cap_wrap">
+                                        <div>
+                                            <span className="cap">
+                                                <img
+                                                    className="imgClass"
+                                                    id="captchaImg"
+                                                    src={`${img.imageSrc}?${img.imageHash}`}
+                                                    alt=""
+                                                    decoding="async"
+                                                    style={{
+                                                        background: "white",
+                                                    }}
+                                                />
+                                            </span>
+                                            <span className="cap_refresh">
+                                                <Link
+                                                    onClick={(e) => {
+                                                        refreshCaptcha();
+                                                        e.preventDefault();
+                                                    }}
+                                                >
+                                                    <RefreshIcon />
+                                                    새로고침
+                                                </Link>
+                                            </span>
+                                        </div>
+                                        <input
+                                            type="text"
+                                            className="input_s"
+                                            ref={inputCaptcha}
+                                        />
+                                    </div>
+                                </td>
+                            </tr>
+                        )}
+                        {/* <tr>
                         <th>국적</th>
                         <td>
                             <Select
@@ -757,25 +777,26 @@ const RegUserModal = (props) => {
                             />
                         </td>
                     </tr> */}
-                </tbody>
-            </table>
-            <div className="btn_box">
-                {modUserData ? (
-                    <Link className="btn btn01" onClick={modUser}>
-                        수정
-                    </Link>
-                ) : (
-                    <Link className="btn btn01" onClick={signupUser}>
-                        등록
-                    </Link>
-                )}
+                    </tbody>
+                </table>
+                <div className="btn_box">
+                    {modUserData ? (
+                        <Link className="btn btn01" onClick={modUser}>
+                            수정
+                        </Link>
+                    ) : (
+                        <Link className="btn btn01" onClick={signupUser}>
+                            등록
+                        </Link>
+                    )}
 
-                <Link
-                    className="btn btn02"
-                    onClick={modalOption.handleModalClose}
-                >
-                    취소
-                </Link>
+                    <Link
+                        className="btn btn02"
+                        onClick={modalOption.handleModalClose}
+                    >
+                        취소
+                    </Link>
+                </div>
             </div>
         </>
     );

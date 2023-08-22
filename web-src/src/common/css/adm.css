@@ -1,4 +1,3 @@
-
 /* 공통 */
 .flex {display:flex;align-items: center;}
 .flex.between {justify-content: space-between;}
@@ -80,15 +79,15 @@ a.tablebtn {display:inline-block;width:auto;padding: 0 10px;height: 26px;text-al
 .plusbtn_wrap{display:flex;justify-content: space-between;}
 .plusbtn_wrap a {padding:0 8px;border: 1px solid #ddd;display: inline-block;border-radius: 5px;line-height: 21px;}
 
-select {border: 1px solid #ddd;height:28px;line-height:28px;font-size: 14px;color: #333;padding: 0 10px;cursor:pointer;border-radius: 5px;}
-input::placeholder {color: #a6a6a6;}
-input.input {border: 1px solid #ddd;height:28px;line-height:28px;font-size: 14px;color: #333;padding: 0 10px;display:inline-block;min-width:80px;border-radius: 5px;margin: 0 4px 0 0;}
-input.input.hold {background: #efefef;color: #bdbdbd;}
-input.input:last-child {margin:0;}
-input.login {border: 1px solid #818181;height:36px;line-height:36px;font-size: 12px;color: #333;padding: 0 10px;border-radius: 5px;}
-label.checkbox {display:flex;width:30px;height:30px;border: 1px solid #bdbdbd;border-radius: 50%;text-align:center;align-items: center;justify-content: center;cursor: pointer;}
-input[type="checkbox"]:checked + label.checkbox {background:#e72295;border: 1px solid #e72295;}
-input[type="checkbox"]:checked + label.checkbox svg {fill:#fff;}
+.admin select {border: 1px solid #ddd;height:28px;line-height:28px;font-size: 14px;color: #333;padding: 0 10px;cursor:pointer;border-radius: 5px;}
+.admin input::placeholder {color: #a6a6a6;}
+.admin input.input {border: 1px solid #ddd;height:28px;line-height:28px;font-size: 14px;color: #333;padding: 0 10px;display:inline-block;min-width:80px;border-radius: 5px;margin: 0 4px 0 0;}
+.admin input.input.hold {background: #efefef;color: #bdbdbd;}
+.admin input.input:last-child {margin:0;}
+.admin input.login {border: 1px solid #818181;height:36px;line-height:36px;font-size: 12px;color: #333;padding: 0 10px;border-radius: 5px;}
+.admin label.checkbox {display:flex;width:30px;height:30px;border: 1px solid #bdbdbd;border-radius: 50%;text-align:center;align-items: center;justify-content: center;cursor: pointer;}
+.admin input[type="checkbox"]:checked + label.checkbox {background:#e72295;border: 1px solid #e72295;}
+.admin input[type="checkbox"]:checked + label.checkbox svg {fill:#fff;}
 
 .admin .content {padding:0 0 0 180px;}
 .admin .con_area {padding:20px;}
@@ -189,10 +188,10 @@ div.mo_title > h4{font-size: 21px;font-weight: 700;}
 .spinner span.error {color:#1976d2;} */
 
 /* 404 */
-.error_page {padding:120px 0 0;text-align:center;height:100vh;background:#f2f2f2;}
+/* .error_page {padding:120px 0 0;text-align:center;height:100vh;background:#f2f2f2;}
 .error_page > img {width:180px;}
 .error_page a.backbtn {background:#fff;}
-.error_page h3 {font-size: 32px;font-weight: 700;margin: 32px 0 15px;}
+.error_page h3 {font-size: 32px;font-weight: 700;margin: 32px 0 15px;} */
 
 /* 공지사항 */
 .admin .adm_notice .file_wrap {display:flex; align-items: center;    justify-content: center;}
