@@ -7,6 +7,7 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import $ from "jquery";
+import "quill-paste-smart";
 
 const RegNoticeModal = (props) => {
     const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const RegNoticeModal = (props) => {
 
     const inputTitle = useRef(null);
     const inputCaptcha = useRef(null);
-    const quillRef = useRef(null);
+    const quillRef = useRef();
 
     const modalOption = {
         isOpen: props.isOpen,
@@ -52,7 +53,7 @@ const RegNoticeModal = (props) => {
         console.log(files);
         console.log(boardData);
 
-        getFiles();
+        // getFiles();
     };
 
     // 에디터 내부 이미지 파일로 변환
@@ -90,42 +91,121 @@ const RegNoticeModal = (props) => {
 
         return new File([u8arr], fileName, { type: mime });
     };
+    /*
+    const imageHandler = () => {
+        // 1. 이미지를 저장할 input type=file DOM을 만든다.
+        const input = document.createElement("input");
 
-    // const imageHandler = () => {
-    //     // 1. 이미지를 저장할 input type=file DOM을 만든다.
-    //     const input = document.createElement("input");
+        // 속성 써주기
+        input.setAttribute("type", "file");
+        input.setAttribute("accept", "image/*");
+        input.click(); // 에디터 이미지버튼을 클릭하면 이 input이 클릭된다.
+        // input이 클릭되면 파일 선택창이 나타난다.
 
-    //     // 속성 써주기
-    //     input.setAttribute("type", "file");
-    //     input.setAttribute("accept", "image/*");
-    //     input.click(); // 에디터 이미지버튼을 클릭하면 이 input이 클릭된다.
-    //     // input이 클릭되면 파일 선택창이 나타난다.
+        // input에 변화가 생긴다면 = 이미지를 선택
+        input.addEventListener("change", async () => {
+            const file = input.files[0];
+            // multer에 맞는 형식으로 데이터 만들어준다.
+            let fileArr = files;
+            fileArr.push(file);
+            setFiles(fileArr);
 
-    //     // input에 변화가 생긴다면 = 이미지를 선택
-    //     input.addEventListener("change", async () => {
-    //         const file = input.files[0];
-    //         // multer에 맞는 형식으로 데이터 만들어준다.
-    //         let fileArr = files;
-    //         fileArr.push(file);
-    //         setFiles(fileArr);
+            const editor = quillRef.current.getEditor();
 
-    //         const editor = quillRef.current.getEditor();
+            const range = editor.getSelection(true);
+            // 가져온 위치에 이미지를 삽입한다
 
-    //         const range = editor.getSelection(true);
-    //         // 가져온 위치에 이미지를 삽입한다
+            let IMG_URL;
+            let reader = new FileReader(file);
+            reader.onload = (e) => {
+                // IMG_URL = reader.result; // base64
+                IMG_URL = e.target.result;
 
-    //         let IMG_URL;
-    //         let reader = new FileReader(file);
-    //         reader.onload = (e) => {
-    //             // IMG_URL = reader.result; // base64
-    //             IMG_URL = e.target.result;
+                console.log(e);
+            };
 
-    //             console.log(e);
-    //         };
+            editor.insertEmbed(range.index, "image", IMG_URL);
+        });
+    };
+*/
+    const linkHandler = () => {
+        const input = document.createElement("input");
 
-    //         editor.insertEmbed(range.index, "image", IMG_URL);
-    //     });
-    // };
+        input.setAttribute("type", "file");
+        input.setAttribute("multiple", "true");
+        input.click();
+
+        input.addEventListener("change", async () => {
+            const inputFiles = input.files;
+            let fileArr = files;
+
+            const length = inputFiles.length;
+
+            const editor = quillRef.current.getEditor();
+            const range = editor.getSelection();
+
+            for (let i = 0; i < length; i++) {
+                let file = inputFiles[i];
+
+                // 이미지인 경우
+                if (file.type.includes("image")) {
+                    let IMG_URL;
+                    let reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => {
+                        IMG_URL = reader.result;
+
+                        editor?.clipboard.dangerouslyPasteHTML(
+                            range.index,
+                            `<img src="${IMG_URL}" alt="" />`
+                        );
+                    };
+
+                    // editor.insertEmbed(range.index, "image", IMG_URL);
+                }
+                // 이미지 외 인 경우
+                else {
+                    let FILE_URL;
+                    let reader = new FileReader();
+                    reader.readAsDataURL(file);
+
+                    reader.onload = () => {
+                        FILE_URL = reader.result;
+
+                        // console.log(`<a href="${FILE_URL}">${file.name}</a>`);
+
+                        const htmlToInsert = `<a href="${FILE_URL}" download>${file.name}</a>`;
+                        editor?.clipboard.dangerouslyPasteHTML(
+                            range.index,
+                            htmlToInsert
+                        );
+
+                        // editor.insertText(
+                        //     range.index,
+                        //     file.name,
+                        //     "link",
+                        //     FILE_URL
+                        // );
+
+                        // const parser = new DOMParser();
+                        // const doc = parser.parseFromString(
+                        //     htmlToInsert,
+                        //     "text/html"
+                        // );
+
+                        // let initialContent = editor.clipboard.convert(doc);
+                        // editor.setContents(initialContent, "silent");
+                    };
+                }
+                // 배열에 추가
+                fileArr.push(file);
+            }
+
+            setFiles(fileArr);
+
+            console.log(files);
+        });
+    };
 
     // 에디터 설정
     // Quill 에디터에서 사용하고싶은 모듈들을 설정한다.
@@ -144,15 +224,43 @@ const RegNoticeModal = (props) => {
                         { indent: "-1" },
                         { indent: "+1" },
                     ],
-                    ["image"],
+                    ["link"],
                     [{ color: [] }, { background: [] }],
                     ["clean"],
                 ],
-                // handlers: {
-                //     // 이미지 처리는 우리가 직접 imageHandler라는 함수로 처리할 것이다.
-                //     image: imageHandler,
-                // },
+                handlers: {
+                    // 이미지 처리는 우리가 직접 imageHandler라는 함수로 처리할 것이다.
+                    // image: imageHandler,
+                    link: linkHandler,
+                },
             },
+            // clipboard: {
+            //     allowed: {
+            //         tags: [
+            //             "a",
+            //             "b",
+            //             "strong",
+            //             "u",
+            //             "s",
+            //             "i",
+            //             "p",
+            //             "br",
+            //             "ul",
+            //             "ol",
+            //             "li",
+            //             "span",
+            //         ],
+            //         attributes: ["href", "rel", "target", "class"],
+            //     },
+            //     keepSelection: true,
+            //     substituteBlockElements: true,
+            //     magicPasteLinks: true,
+            //     hooks: {
+            //         uponSanitizeElement(node, data, config) {
+            //             console.log(node);
+            //         },
+            //     },
+            // },
         };
     }, []);
 
@@ -166,96 +274,99 @@ const RegNoticeModal = (props) => {
         "image",
         "color",
         "background",
+        "link",
     ];
 
     return (
         <>
-            <table className="table_bb">
-                <colgroup>
-                    <col width="30%" />
-                    <col width="*" />
-                </colgroup>
-                <tbody>
-                    <tr>
-                        <th>제목</th>
-                        <td>
-                            <input
-                                type="text"
-                                className="input wp100"
-                                ref={inputTitle}
-                            />
-                        </td>
-                    </tr>
-                    {/* <tr>
+            <div className="admin">
+                <table className="table_bb">
+                    <colgroup>
+                        <col width="30%" />
+                        <col width="*" />
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>제목</th>
+                            <td>
+                                <input
+                                    type="text"
+                                    className="input wp100"
+                                    ref={inputTitle}
+                                />
+                            </td>
+                        </tr>
+                        {/* <tr>
                         <th>파일첨부</th>
                         <td>
                             <input type="file" />
                         </td>
                     </tr> */}
-                    <tr>
-                        <td colSpan="2">
-                            <div className="editor">
-                                <ReactQuill
-                                    ref={quillRef}
-                                    theme="snow"
-                                    value={boardData}
-                                    onChange={(e) => {
-                                        setBoardData(e);
-                                    }}
-                                    modules={quillModules}
-                                    formats={formats}
-                                />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>자동등록방지</th>
-                        <td>
-                            <div className="cap_wrap">
-                                <div>
-                                    <span className="cap">
-                                        <img
-                                            className="imgClass"
-                                            id="captchaImg"
-                                            src={`${img.imageSrc}?${img.imageHash}`}
-                                            alt=""
-                                            decoding="async"
-                                            style={{ background: "white" }}
-                                        />
-                                    </span>
-                                    <span className="cap_refresh">
-                                        <Link
-                                            onClick={(e) => {
-                                                refreshCaptcha();
-                                                e.preventDefault();
-                                            }}
-                                        >
-                                            <RefreshIcon />
-                                            새로고침
-                                        </Link>
-                                    </span>
+                        <tr>
+                            <td colSpan="2">
+                                <div className="editor">
+                                    <ReactQuill
+                                        ref={quillRef}
+                                        theme="snow"
+                                        value={boardData}
+                                        onChange={(e) => {
+                                            setBoardData(e);
+                                        }}
+                                        modules={quillModules}
+                                        formats={formats}
+                                    />
                                 </div>
-                                <input
-                                    type="text"
-                                    className="input_s"
-                                    ref={inputCaptcha}
-                                />
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div className="btn_box">
-                <Link href="" className="btn btn01" onClick={regBoard}>
-                    등록
-                </Link>
-                <Link
-                    href=""
-                    className="btn btn02"
-                    onClick={modalOption.handleModalClose}
-                >
-                    취소
-                </Link>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>자동등록방지</th>
+                            <td>
+                                <div className="cap_wrap">
+                                    <div>
+                                        <span className="cap">
+                                            <img
+                                                className="imgClass"
+                                                id="captchaImg"
+                                                src={`${img.imageSrc}?${img.imageHash}`}
+                                                alt=""
+                                                decoding="async"
+                                                style={{ background: "white" }}
+                                            />
+                                        </span>
+                                        <span className="cap_refresh">
+                                            <Link
+                                                onClick={(e) => {
+                                                    refreshCaptcha();
+                                                    e.preventDefault();
+                                                }}
+                                            >
+                                                <RefreshIcon />
+                                                새로고침
+                                            </Link>
+                                        </span>
+                                    </div>
+                                    <input
+                                        type="text"
+                                        className="input_s"
+                                        ref={inputCaptcha}
+                                    />
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div className="btn_box">
+                    <Link href="" className="btn btn01" onClick={regBoard}>
+                        등록
+                    </Link>
+                    <Link
+                        href=""
+                        className="btn btn02"
+                        onClick={modalOption.handleModalClose}
+                    >
+                        취소
+                    </Link>
+                </div>
             </div>
         </>
     );

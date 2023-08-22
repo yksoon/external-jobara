@@ -336,12 +336,14 @@ const UserList = () => {
                             <colgroup>
                                 <col width="3%" />
                                 <col width="4%" />
-                                <col width="10%" />
+                                <col width="6%" />
                                 <col width="5%" />
                                 <col width="7%" />
-                                <col width="10%" />
+                                <col width="6%" />
                                 <col width="8%" />
                                 <col width="8%" />
+                                <col width="6%" />
+                                <col width="6%" />
                                 <col width="8%" />
                                 <col width="8%" />
                                 <col width="8%" />
@@ -373,10 +375,11 @@ const UserList = () => {
                                     <th rowSpan="2">이름</th>
                                     <th rowSpan="2">연락처</th>
                                     <th rowSpan="2">생년월일</th>
+                                    <th rowSpan="2">학번</th>
                                     <th rowSpan="2">학교</th>
                                     <th rowSpan="2">학과</th>
                                     <th rowSpan="2">희망직종</th>
-                                    <th colSpan="2">참여프로그램</th>
+                                    <th colSpan="3">참여프로그램</th>
                                     <th rowSpan="2">등록일</th>
                                     <th rowSpan="2">이력서 보기</th>
                                     <th rowSpan="2">정보수정</th>
@@ -389,6 +392,13 @@ const UserList = () => {
                                         }}
                                     >
                                         현직자 토크콘서트
+                                    </th>
+                                    <th
+                                        style={{
+                                            borderRight: "1px solid #ddd",
+                                        }}
+                                    >
+                                        현장참여
                                     </th>
                                 </tr>
                             </thead>
@@ -426,6 +436,7 @@ const UserList = () => {
                                                     ? "-"
                                                     : `${item.birth_yyyy}-${item.birth_mm}-${item.birth_dd}`}
                                             </td>
+                                            <td>{item.user_memo}</td>
                                             <td>
                                                 {item.organization_name_ko
                                                     ? item.organization_name_ko
@@ -455,6 +466,16 @@ const UserList = () => {
                                                 {item.additional_info.filter(
                                                     (e) =>
                                                         e.additional_idx === 2
+                                                ).length !== 0 ? (
+                                                    <CheckCircleOutlineOutlinedIcon />
+                                                ) : (
+                                                    ""
+                                                )}
+                                            </td>
+                                            <td className="checkicon">
+                                                {item.additional_info.filter(
+                                                    (e) =>
+                                                        e.additional_idx === 3
                                                 ).length !== 0 ? (
                                                     <CheckCircleOutlineOutlinedIcon />
                                                 ) : (

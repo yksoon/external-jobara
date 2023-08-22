@@ -25,6 +25,8 @@
         "http-proxy-middleware": "^2.0.6",
         "jquery": "^3.7.0",
         "logger": "^0.0.1",
+        "quill-delta": "^5.1.0",
+        "quill-paste-smart": "^1.4.12",
         "react": "^18.2.0",
         "react-bootstrap": "^2.7.4",
         "react-chartjs-2": "^5.2.0",

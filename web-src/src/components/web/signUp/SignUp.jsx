@@ -28,6 +28,7 @@ import SignUpSpecialCheck from "./signupComponents/SignUpSpecialCheck";
 import SignUpFile from "./signupComponents/SignUpFile";
 import { signupMultiModel } from "models/user/signUp";
 import { idPattern, pwPattern } from "common/js/Pattern";
+import SignUpMemo from "./signupComponents/SignUpMemo";
 
 // 회원가입
 function SignUp() {
@@ -104,6 +105,7 @@ function SignUp() {
         inputBirth: useRef(null),
         inputSpecialized: useRef(null),
         inputAttachmentFile: useRef(null),
+        inputMemo: useRef(null),
     };
 
     // 제출
@@ -146,6 +148,7 @@ function SignUp() {
                 birthMm: birthArr[1],
                 birthDd: birthArr[2],
                 specializedNameKo: signUpRefs.inputSpecialized.current.value,
+                userMemo: signUpRefs.inputMemo.current.value,
                 additionalIdxs: checkItems.join(),
             };
 
@@ -297,6 +300,13 @@ function SignUp() {
             return false;
         }
 
+        // --------------------학번----------------------
+        // if (!signUpRefs.inputMemo.current.value) {
+        //     signupAlert("학번을 입력해주세요");
+        //     signUpRefs.inputMemo.current.focus();
+        //     return false;
+        // }
+
         // --------------------생년월일----------------------
         if (!signUpRefs.inputBirth.current.value) {
             signupAlert("생년월일을 입력해주세요");
@@ -312,11 +322,11 @@ function SignUp() {
         }
 
         // --------------------파일----------------------
-        if (!signUpRefs.inputAttachmentFile.current.value) {
-            signupAlert("이력서를 첨부해주세요");
-            signUpRefs.inputAttachmentFile.current.focus();
-            return false;
-        }
+        // if (!signUpRefs.inputAttachmentFile.current.value) {
+        //     signupAlert("이력서를 첨부해주세요");
+        //     signUpRefs.inputAttachmentFile.current.focus();
+        //     return false;
+        // }
 
         // --------------------captcha----------------------
         if (!signUpRefs.inputCaptcha.current.value) {
@@ -374,6 +384,10 @@ function SignUp() {
                                 {/* Department Component */}
                                 {/* 학과 */}
                                 <SignUpDepartment ref={signUpRefs} />
+
+                                {/* Memo Component */}
+                                {/* 학번 */}
+                                <SignUpMemo ref={signUpRefs} />
 
                                 {/* Birthday Component */}
                                 {/* 생년월일 */}

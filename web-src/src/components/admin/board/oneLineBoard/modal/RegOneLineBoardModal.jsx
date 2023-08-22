@@ -217,29 +217,30 @@ const RegOneLineBoardModal = (props) => {
 
     return (
         <>
-            <table className="table_bb">
-                <colgroup>
-                    <col width="30%" />
-                    <col width="*" />
-                </colgroup>
-                <tbody>
-                    <tr>
-                        <th>내용</th>
-                        <td>
-                            <input
-                                type="text"
-                                className="input wp100"
-                                ref={inputTitle}
-                            />
-                        </td>
-                    </tr>
-                    {/* <tr>
+            <div className="admin">
+                <table className="table_bb">
+                    <colgroup>
+                        <col width="30%" />
+                        <col width="*" />
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>내용</th>
+                            <td>
+                                <input
+                                    type="text"
+                                    className="input wp100"
+                                    ref={inputTitle}
+                                />
+                            </td>
+                        </tr>
+                        {/* <tr>
                         <th>파일첨부</th>
                         <td>
                             <input type="file" />
                         </td>
                     </tr> */}
-                    {/* <tr>
+                        {/* <tr>
                         <td colSpan="2">
                             <div className="editor">
                                 <CKEditor
@@ -269,54 +270,55 @@ const RegOneLineBoardModal = (props) => {
                             </div>
                         </td>
                     </tr> */}
-                    <tr>
-                        <th>자동등록방지</th>
-                        <td>
-                            <div className="cap_wrap">
-                                <div>
-                                    <span className="cap">
-                                        <img
-                                            className="imgClass"
-                                            id="captchaImg"
-                                            src={`${img.imageSrc}?${img.imageHash}`}
-                                            alt=""
-                                            decoding="async"
-                                            style={{ background: "white" }}
-                                        />
-                                    </span>
-                                    <span className="cap_refresh">
-                                        <Link
-                                            onClick={(e) => {
-                                                refreshCaptcha();
-                                                e.preventDefault();
-                                            }}
-                                        >
-                                            <RefreshIcon />
-                                            새로고침
-                                        </Link>
-                                    </span>
+                        <tr>
+                            <th>자동등록방지</th>
+                            <td>
+                                <div className="cap_wrap">
+                                    <div>
+                                        <span className="cap">
+                                            <img
+                                                className="imgClass"
+                                                id="captchaImg"
+                                                src={`${img.imageSrc}?${img.imageHash}`}
+                                                alt=""
+                                                decoding="async"
+                                                style={{ background: "white" }}
+                                            />
+                                        </span>
+                                        <span className="cap_refresh">
+                                            <Link
+                                                onClick={(e) => {
+                                                    refreshCaptcha();
+                                                    e.preventDefault();
+                                                }}
+                                            >
+                                                <RefreshIcon />
+                                                새로고침
+                                            </Link>
+                                        </span>
+                                    </div>
+                                    <input
+                                        type="text"
+                                        className="input_s"
+                                        ref={inputCaptcha}
+                                    />
                                 </div>
-                                <input
-                                    type="text"
-                                    className="input_s"
-                                    ref={inputCaptcha}
-                                />
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div className="btn_box">
-                <Link href="" className="btn btn01" onClick={regBoard}>
-                    등록
-                </Link>
-                <Link
-                    href=""
-                    className="btn btn02"
-                    onClick={modalOption.handleModalClose}
-                >
-                    취소
-                </Link>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div className="btn_box">
+                    <Link href="" className="btn btn01" onClick={regBoard}>
+                        등록
+                    </Link>
+                    <Link
+                        href=""
+                        className="btn btn02"
+                        onClick={modalOption.handleModalClose}
+                    >
+                        취소
+                    </Link>
+                </div>
             </div>
         </>
     );
