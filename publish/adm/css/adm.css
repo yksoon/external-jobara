@@ -197,3 +197,9 @@ div.mo_title > h4{font-size: 21px;font-weight: 700;}
 .admin .adm_notice .file_wrap a{display:flex; align-items: center;margin:0 10px 0 0;}
 .admin .adm_notice .file_wrap img{width:18px;}
 .admin .adm_notice .viewer_wrap img{width:12px;margin:0 0 -2px;}
+
+
+/* 댓글관리 */
+.admin input#talkView {display: none;}
+.admin label.viewbtn {display:inline-block;width:auto;padding: 0 10px;height: 26px;text-align: center;line-height: 26px;border-radius: 5px;font-size: 14px;background: #525252;color:#fff;transition:all 0.3s;cursor:pointer;}
+.admin label.viewbtn.view_Y {background: #e72295;}

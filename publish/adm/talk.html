@@ -98,9 +98,8 @@
                                         <a href="" class="tablebtn">수정</a>
                                     </td>
                                     <td>
-                                        <a href="" class="tablebtn btn01">노출</a>
-                                        <input type="checkbox">
-                                        <label for="" class="tablebtn">노출</label>
+                                        <input type="checkbox" id="talkView">
+                                        <label for="talkView" class="viewbtn view_Y">노출중</label>
                                     </td>
                                 </tr>
                             </tbody>
@@ -118,3 +117,15 @@
 <script src="js/nav.js"></script>
 <script src="js/basic.js"></script>
 
+<script>
+    $("#talkView").click(function(){
+        let talkViewCheck = $('#talkView').is(':checked');
+        if(talkViewCheck){
+            $('.viewbtn').addClass('view_Y');
+            $('.viewbtn').text('노출중');
+        }else{
+            $('.viewbtn').removeClass('view_Y');
+            $('.viewbtn').text('노출안함');
+        }
+    });
+</script>
