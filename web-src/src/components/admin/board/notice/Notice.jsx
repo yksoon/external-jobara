@@ -2,16 +2,17 @@ import { Pagination } from "@mui/material";
 import { CommonConsole, CommonModal, CommonRest } from "common/js/Common";
 import useAlert from "hook/useAlert";
 import { useEffect, useRef, useState } from "react";
+import { NavItem } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { set_spinner } from "redux/actions/commonAction";
 import { apiPath } from "webPath";
-import { dummy } from "./dummy";
 
 const Notice = () => {
     const dispatch = useDispatch();
     const { alert } = useAlert();
     const err = { dispatch, alert };
+    const fileBaseUrl = apiPath.api_file;
 
     const notice = process.env.REACT_APP_NOTICE;
     const isDeveloping = process.env.REACT_APP_ISDEVELOPING;
@@ -26,9 +27,6 @@ const Notice = () => {
 
     useEffect(() => {
         getBoardList(1, 10, "");
-
-        console.log(isDeveloping);
-        console.log(typeof isDeveloping);
     }, [isNeedUpdate]);
 
     // 리스트 가져오기
@@ -46,6 +44,7 @@ const Notice = () => {
             page_num: pageNum,
             page_size: pageSize,
             search_keyword: searchKeyword,
+            board_type: "000",
         };
 
         // 파라미터
@@ -175,41 +174,67 @@ const Notice = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>
-                                                    <input type="checkbox" />
-                                                </td>
-                                                <td>1</td>
-                                                <td>공지사항 제목</td>
-                                                <td>
-                                                    <div className="file_wrap">
-                                                        <Link href="">
-                                                            <img
-                                                                src="img/common/file.svg"
-                                                                alt=""
-                                                            />{" "}
-                                                            파일이름1.docx
-                                                        </Link>
-                                                        <Link href="">
-                                                            <img
-                                                                src="img/common/file.svg"
-                                                                alt=""
-                                                            />{" "}
-                                                            파일이름2.pdf
-                                                        </Link>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="viewer_wrap">
-                                                        <img
-                                                            src="img/common/user_icon.png"
-                                                            alt=""
-                                                        />{" "}
-                                                        16
-                                                    </div>
-                                                </td>
-                                                <td>2023-08-16</td>
-                                            </tr>
+                                            {boardList.length !== 0 &&
+                                                boardList.map((item, idx) => (
+                                                    <tr key={`notice_${idx}`}>
+                                                        <td>
+                                                            <input type="checkbox" />
+                                                        </td>
+                                                        <td>
+                                                            {item.board_idx}
+                                                        </td>
+                                                        <td>{item.subject}</td>
+                                                        <td>
+                                                            <div className="file_wrap">
+                                                                {item.file_info
+                                                                    .length !==
+                                                                    0 &&
+                                                                    item.file_info.map(
+                                                                        (
+                                                                            item2,
+                                                                            idx2
+                                                                        ) => (
+                                                                            <Link
+                                                                                to={`${fileBaseUrl}${item2.file_path_enc}`}
+                                                                                key={`file_${idx2}`}
+                                                                            >
+                                                                                <img
+                                                                                    src="img/common/file.svg"
+                                                                                    alt={
+                                                                                        item2.file_name
+                                                                                    }
+                                                                                    title={
+                                                                                        item2.file_name
+                                                                                    }
+                                                                                />
+                                                                                {
+                                                                                    item2.file_name
+                                                                                }
+                                                                            </Link>
+                                                                        )
+                                                                    )}
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div className="viewer_wrap">
+                                                                <img
+                                                                    src="img/common/user_icon_black.png"
+                                                                    alt=""
+                                                                />{" "}
+                                                                {
+                                                                    item.view_count
+                                                                }
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            {
+                                                                item.reg_dttm.split(
+                                                                    " "
+                                                                )[0]
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                ))}
                                         </tbody>
                                     </table>
                                 </div>
@@ -229,9 +254,9 @@ const Notice = () => {
                                 <></>
                             )}
                             <div className="pagenation"></div>
-                            <div
+                            {/* <div
                                 dangerouslySetInnerHTML={{ __html: dummy }}
-                            ></div>
+                            ></div> */}
                         </>
                     ) : (
                         notice
@@ -241,7 +266,7 @@ const Notice = () => {
             <CommonModal
                 isOpen={isOpen}
                 title={modalTitle}
-                width={"800"}
+                width={"1400"}
                 handleModalClose={handleModalClose}
                 component={"RegNoticeModal"}
                 handleNeedUpdate={handleNeedUpdate}

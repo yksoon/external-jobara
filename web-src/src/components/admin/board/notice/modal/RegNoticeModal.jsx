@@ -1,6 +1,6 @@
 import useAlert from "hook/useAlert";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { apiPath } from "webPath";
 import RefreshIcon from "@mui/icons-material/Refresh";
@@ -8,12 +8,18 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import $ from "jquery";
 import "quill-paste-smart";
-import { CommonNotify } from "common/js/Common";
+import { CommonNotify, CommonRest } from "common/js/Common";
+import { set_spinner } from "redux/actions/commonAction";
+import { boardModel } from "models/board/board";
 
 const RegNoticeModal = (props) => {
     const dispatch = useDispatch();
     const { alert } = useAlert();
     const err = { dispatch, alert };
+
+    const userInfoAdmin = useSelector(
+        (state) => state.userInfoAdmin.userInfoAdmin
+    );
 
     const [boardData, setBoardData] = useState("");
     const [files, setFiles] = useState([]);
@@ -23,6 +29,7 @@ const RegNoticeModal = (props) => {
     const inputTitle = useRef(null);
     const inputCaptcha = useRef(null);
     const quillRef = useRef();
+    const inputAttachmentFile = useRef(null);
 
     const modalOption = {
         isOpen: props.isOpen,
@@ -51,10 +58,162 @@ const RegNoticeModal = (props) => {
 
     // 등록
     const regBoard = () => {
-        console.log(files);
-        console.log(boardData);
+        if (validation()) {
+            dispatch(
+                set_spinner({
+                    isLoading: true,
+                })
+            );
 
-        // getFiles();
+            const formData = new FormData();
+            const model = boardModel;
+            let data = {};
+
+            let fileArr = [];
+
+            data = {
+                ...model,
+                showYn: "Y",
+                userIdx: userInfoAdmin.user_idx,
+                boardType: "000",
+                channelType: "000",
+                categoryType: "900",
+                subject: inputTitle.current.value,
+                subTitle: inputTitle.current.value,
+                content: boardData,
+                alimYn: "N",
+                securityCode: inputCaptcha.current.value,
+            };
+
+            // 기본 formData append
+            for (const key in data) {
+                formData.append(key, data[key]);
+            }
+
+            // 파일 formData append
+            fileArr = Array.from(inputAttachmentFile.current.files);
+            let len = fileArr.length;
+            for (let i = 0; i < len; i++) {
+                formData.append("attachmentFile", fileArr[i]);
+            }
+
+            const responsLogic = (res) => {
+                let result_code = res.headers.result_code;
+                if (result_code === "0000") {
+                    dispatch(
+                        set_spinner({
+                            isLoading: false,
+                        })
+                    );
+
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: "게시물 등록이 완료 되었습니다",
+                        callback: requestBoards(),
+                    });
+                } else {
+                    dispatch(
+                        set_spinner({
+                            isLoading: false,
+                        })
+                    );
+
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: "잠시 후 다시 시도해주세요",
+                    });
+                }
+            };
+
+            const restParams = {
+                method: "post_multi",
+                url: apiPath.api_admin_board, // /v1/board
+                data: formData,
+                err: err,
+                admin: "Y",
+                callback: (res) => responsLogic(res),
+            };
+
+            CommonRest(restParams);
+        }
+    };
+
+    // 수정, 등록 완료 로직
+    const requestBoards = () => {
+        // 리스트 새로고침
+        handleNeedUpdate();
+
+        // 모달 닫기
+        modalOption.handleModalClose();
+    };
+
+    // 파일 첨부시
+    const attachFile = (input) => {
+        const maxFileCnt = 5; // 첨부파일 최대 개수
+
+        if (input.files.length > maxFileCnt) {
+            CommonNotify({
+                type: "alert",
+                hook: alert,
+                message: "파일은 5개까지 업로드 가능합니다.",
+            });
+
+            input.value = "";
+
+            return false;
+        }
+    };
+
+    // 검증
+    const validation = () => {
+        // --------------------제목----------------------
+        if (!inputTitle.current.value) {
+            inputTitle.current.blur();
+            signupAlert({
+                msg: "제목을 입력해주세요",
+                ref: inputTitle,
+            });
+            return false;
+        }
+
+        // --------------------내용----------------------
+        if (!boardData) {
+            quillRef.current.blur();
+            signupAlert({
+                msg: "내용을 입력해주세요",
+                ref: quillRef,
+            });
+            return false;
+        }
+
+        // --------------------자동등록방지----------------------
+        if (!inputCaptcha.current.value) {
+            inputCaptcha.current.blur();
+            signupAlert({
+                msg: "자동등록방지 코드를 입력해주세요",
+                ref: inputCaptcha,
+            });
+            return false;
+        }
+
+        return true;
+    };
+
+    // 알럿
+    const signupAlert = (params) => {
+        CommonNotify({
+            type: "alert",
+            hook: alert,
+            message: params.msg,
+            callback: () => focusFunc(params.ref),
+        });
+    };
+
+    // 포커스
+    const focusFunc = (ref) => {
+        ref.current.focus();
     };
 
     /*
@@ -279,7 +438,12 @@ const RegNoticeModal = (props) => {
                         <tr>
                             <th>파일첨부</th>
                             <td>
-                                <input type="file" />
+                                <input
+                                    type="file"
+                                    ref={inputAttachmentFile}
+                                    onChange={(e) => attachFile(e.target)}
+                                    multiple
+                                />
                             </td>
                         </tr>
                         <tr>

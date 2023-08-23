@@ -1,6 +1,6 @@
 import useAlert from "hook/useAlert";
 import useConfirm from "hook/useConfirm";
-import { CommonNotify, CommonRest } from "common/js/Common";
+import { CommonErrorCatch, CommonNotify, CommonRest } from "common/js/Common";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { apiPath } from "webPath";
@@ -103,29 +103,41 @@ const DashBoardMain = () => {
             data: {
                 file_download_yn: "Y",
             },
-        }).then((response) => {
-            dispatch(
-                set_spinner({
-                    isLoading: false,
-                })
-            );
+        })
+            .then((response) => {
+                dispatch(
+                    set_spinner({
+                        isLoading: false,
+                    })
+                );
 
-            // window 객체의 createObjuctURL을 이용해서 blob:http://~~~ 식의 url을 만들어 준다.
-            const url = window.URL.createObjectURL(
-                // Blob은 배열 객체 안의 모든 데이터를 합쳐 blob으로 반환하기 때문에 []안에 담는다!
-                new Blob([response.data], {
-                    type: response.headers["content-type"],
-                })
-            );
+                console.log(response);
 
-            // link 안에 위에서 만든 url을 가지고 있는 a 태그를 만들고 보이지 않도록 해준다.
-            const link = document.createElement("a");
-            link.href = url;
-            link.setAttribute("download", excelName());
-            document.body.appendChild(link);
-            link.style.display = "none";
-            link.click();
-        });
+                // window 객체의 createObjuctURL을 이용해서 blob:http://~~~ 식의 url을 만들어 준다.
+                const url = window.URL.createObjectURL(
+                    // Blob은 배열 객체 안의 모든 데이터를 합쳐 blob으로 반환하기 때문에 []안에 담는다!
+                    new Blob([response.data], {
+                        type: response.headers["content-type"],
+                    })
+                );
+
+                // link 안에 위에서 만든 url을 가지고 있는 a 태그를 만들고 보이지 않도록 해준다.
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute("download", excelName());
+                document.body.appendChild(link);
+                link.style.display = "none";
+                link.click();
+            })
+            .catch((error) => {
+                dispatch(
+                    set_spinner({
+                        isLoading: false,
+                    })
+                );
+
+                CommonErrorCatch(error, dispatch, alert);
+            });
     };
 
     // 엑셀 이름

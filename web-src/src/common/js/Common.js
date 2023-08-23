@@ -1,3 +1,5 @@
+// Create By YKSoon_
+
 import { React, useEffect, useRef, useState } from "react";
 import $ from "jquery";
 import { Link } from "react-router-dom";
@@ -95,19 +97,18 @@ const CommonModal = (props) => {
 };
 
 // 디버깅용 콘솔
+// TODO: 파라미터 설명
 const CommonConsole = (type, responseData) => {
-    let response;
-
     let result_message_ko;
     let result_message_en;
     let result_code;
     let message;
 
-    if (!responseData.response) {
-        response = responseData;
-    } else {
-        response = responseData.response;
-    }
+    // response 설정
+    let response;
+    !responseData.response
+        ? (response = responseData)
+        : (response = responseData.response);
 
     if (response.headers) {
         result_message_ko = response.headers.result_message_ko;
@@ -123,6 +124,7 @@ const CommonConsole = (type, responseData) => {
             return console.log(responseData);
 
         case "decLog":
+            // 규격상 http request header는 영어밖에 안되기때문에 디코딩 해준다
             return console.log(
                 decodeURI(result_message_ko),
                 decodeURI(result_message_en),
@@ -155,7 +157,7 @@ const CommonSpinner = (props) => {
 
         if (error === "Y") {
             if (!alertMsg) {
-                let spnin = spinner.current && spinner.current.childNodes[0];
+                const spnin = spinner.current && spinner.current.childNodes[0];
                 spinner.current && spnin.classList.add("error");
             } else {
                 alert(decodeURI(alertMsg).replace("%20", " "));
@@ -223,8 +225,12 @@ const CommonErrorCatch = async (error, dispatch, alert) => {
             })
         );
     }
-    // 타임아웃
-    if (error.message === "timeout of 5000ms exceeded") {
+
+    // TODO: 타임아웃 전역 사용 가능하도록
+    const timeOut = 20000;
+
+    // 타임아웃 (axios 타임아웃 걸릴경우)
+    if (error.message === `timeout of ${timeOut}ms exceeded`) {
         dispatch(
             set_spinner({
                 isLoading: false,

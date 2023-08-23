@@ -37,11 +37,11 @@ const routerPath = {
     web_main_url: `${base_url}`,
 
     // 행사소개
-    // /intro
+    // /intro/intro
     web_intro_url: `${base_url}intro/intro`,
 
-    // 행사소개
-    // /intro
+    // 행사장소
+    // /intro/location
     web_intro_location_url: `${base_url}intro/location`,
 
     // 행사일정
