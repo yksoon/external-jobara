@@ -26,6 +26,8 @@ const Notice = () => {
 
     useEffect(() => {
         getBoardList(1, 10, "");
+
+        console.log(isDeveloping);
     }, [isNeedUpdate]);
 
     // 리스트 가져오기
