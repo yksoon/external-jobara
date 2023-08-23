@@ -53,11 +53,14 @@ const Program = () => {
                                     </td>
                                     <td rowSpan="4" className="step step2">
                                         <span>STEP 2</span>
-                                        참여기업 채용 정보 확인 및 채용상담, 글로벌 JOB FAIR
+                                        참여기업 채용 정보 확인 및 채용상담,
+                                        글로벌 JOB FAIR
                                     </td>
                                     <td rowSpan="4" className="step step3">
                                         <span>STEP 3</span>
-                                        취업대비 실전!<br /> - 현장 채용면접, AI 면접체험, NCS모의고사, 현직자토크콘서트 등
+                                        취업대비 실전!
+                                        <br /> - 현장 채용면접, AI 면접체험,
+                                        NCS모의고사, 현직자토크콘서트 등
                                     </td>
                                     <td></td>
                                 </tr>

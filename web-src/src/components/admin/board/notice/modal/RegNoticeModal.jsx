@@ -8,6 +8,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import $ from "jquery";
 import "quill-paste-smart";
+import { CommonNotify } from "common/js/Common";
 
 const RegNoticeModal = (props) => {
     const dispatch = useDispatch();
@@ -56,6 +57,7 @@ const RegNoticeModal = (props) => {
         // getFiles();
     };
 
+    /*
     // 에디터 내부 이미지 파일로 변환
     const getFiles = () => {
         const parser = new DOMParser();
@@ -91,6 +93,8 @@ const RegNoticeModal = (props) => {
 
         return new File([u8arr], fileName, { type: mime });
     };
+    */
+
     /*
     const imageHandler = () => {
         // 1. 이미지를 저장할 input type=file DOM을 만든다.
@@ -128,27 +132,25 @@ const RegNoticeModal = (props) => {
         });
     };
 */
-    const linkHandler = () => {
+    const imageHandler = () => {
         const input = document.createElement("input");
 
         input.setAttribute("type", "file");
         input.setAttribute("multiple", "true");
+        input.setAttribute("accept", "image/*");
         input.click();
 
         input.addEventListener("change", async () => {
             const inputFiles = input.files;
-            let fileArr = files;
-
             const length = inputFiles.length;
 
             const editor = quillRef.current.getEditor();
             const range = editor.getSelection();
 
-            for (let i = 0; i < length; i++) {
-                let file = inputFiles[i];
+            if (isFileImage(inputFiles)) {
+                for (let i = 0; i < length; i++) {
+                    let file = inputFiles[i];
 
-                // 이미지인 경우
-                if (file.type.includes("image")) {
                     let IMG_URL;
                     let reader = new FileReader();
                     reader.readAsDataURL(file);
@@ -160,52 +162,29 @@ const RegNoticeModal = (props) => {
                             `<img src="${IMG_URL}" alt="" />`
                         );
                     };
-
-                    // editor.insertEmbed(range.index, "image", IMG_URL);
                 }
-                // 이미지 외 인 경우
-                else {
-                    let FILE_URL;
-                    let reader = new FileReader();
-                    reader.readAsDataURL(file);
+            } else {
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: "이미지만 업로드 가능합니다.",
+                });
 
-                    reader.onload = () => {
-                        FILE_URL = reader.result;
+                input.value = "";
 
-                        // console.log(`<a href="${FILE_URL}">${file.name}</a>`);
-
-                        const htmlToInsert = `<a href="${FILE_URL}" download>${file.name}</a>`;
-                        editor?.clipboard.dangerouslyPasteHTML(
-                            range.index,
-                            htmlToInsert
-                        );
-
-                        // editor.insertText(
-                        //     range.index,
-                        //     file.name,
-                        //     "link",
-                        //     FILE_URL
-                        // );
-
-                        // const parser = new DOMParser();
-                        // const doc = parser.parseFromString(
-                        //     htmlToInsert,
-                        //     "text/html"
-                        // );
-
-                        // let initialContent = editor.clipboard.convert(doc);
-                        // editor.setContents(initialContent, "silent");
-                    };
-                }
-                // 배열에 추가
-                fileArr.push(file);
+                return false;
             }
-
-            setFiles(fileArr);
-
-            console.log(files);
         });
     };
+
+    // 이미지 파일인지 확인
+    function isFileImage(file) {
+        if (file) {
+            for (let i = 0; i < file.length; i++) {
+                return file[i] && file[i]["type"].split("/")[0] === "image";
+            }
+        }
+    }
 
     // 에디터 설정
     // Quill 에디터에서 사용하고싶은 모듈들을 설정한다.
@@ -224,43 +203,44 @@ const RegNoticeModal = (props) => {
                         { indent: "-1" },
                         { indent: "+1" },
                     ],
-                    ["link"],
+                    // ["link"],
+                    ["image"],
                     [{ color: [] }, { background: [] }],
                     ["clean"],
                 ],
                 handlers: {
                     // 이미지 처리는 우리가 직접 imageHandler라는 함수로 처리할 것이다.
-                    // image: imageHandler,
-                    link: linkHandler,
+                    image: imageHandler,
+                    // link: linkHandler,
                 },
             },
-            // clipboard: {
-            //     allowed: {
-            //         tags: [
-            //             "a",
-            //             "b",
-            //             "strong",
-            //             "u",
-            //             "s",
-            //             "i",
-            //             "p",
-            //             "br",
-            //             "ul",
-            //             "ol",
-            //             "li",
-            //             "span",
-            //         ],
-            //         attributes: ["href", "rel", "target", "class"],
-            //     },
-            //     keepSelection: true,
-            //     substituteBlockElements: true,
-            //     magicPasteLinks: true,
-            //     hooks: {
-            //         uponSanitizeElement(node, data, config) {
-            //             console.log(node);
-            //         },
-            //     },
-            // },
+            clipboard: {
+                allowed: {
+                    tags: [
+                        "a",
+                        "b",
+                        "strong",
+                        "u",
+                        "s",
+                        "i",
+                        "p",
+                        "br",
+                        "ul",
+                        "ol",
+                        "li",
+                        "span",
+                    ],
+                    attributes: ["href", "rel", "target", "class"],
+                },
+                keepSelection: true,
+                substituteBlockElements: true,
+                magicPasteLinks: true,
+                hooks: {
+                    uponSanitizeElement(node, data, config) {
+                        console.log(node);
+                    },
+                },
+            },
         };
     }, []);
 
@@ -296,12 +276,12 @@ const RegNoticeModal = (props) => {
                                 />
                             </td>
                         </tr>
-                        {/* <tr>
-                        <th>파일첨부</th>
-                        <td>
-                            <input type="file" />
-                        </td>
-                    </tr> */}
+                        <tr>
+                            <th>파일첨부</th>
+                            <td>
+                                <input type="file" />
+                            </td>
+                        </tr>
                         <tr>
                             <td colSpan="2">
                                 <div className="editor">
