@@ -12,7 +12,8 @@ const OneLineBoard = () => {
     const { alert } = useAlert();
     const err = { dispatch, alert };
 
-    const isPublish = process.env.REACT_APP_NOTICE;
+    const notice = process.env.REACT_APP_NOTICE;
+    const isDeveloping = process.env.REACT_APP_ISDEVELOPING;
 
     const [boardList, setBoardList] = useState([]);
     const [pageInfo, setPageInfo] = useState({});
@@ -121,9 +122,7 @@ const OneLineBoard = () => {
                     <h3>한줄 게시판</h3>
                 </div>
                 <div className="con_area">
-                    {isPublish ? (
-                        isPublish
-                    ) : (
+                    {isDeveloping ? (
                         <>
                             <div className="adm_search">
                                 <div>
@@ -239,6 +238,8 @@ const OneLineBoard = () => {
                             )}
                             <div className="pagenation"></div>
                         </>
+                    ) : (
+                        notice
                     )}
                 </div>
             </div>

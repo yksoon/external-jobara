@@ -17,7 +17,7 @@ const MainContents = () => {
                 {/* <MainContentsNoti /> */}
 
                 {/* 응원 댓글 */}
-                <MainContentsTalk />
+                {/* <MainContentsTalk /> */}
                 <br />
             </div>
         </>

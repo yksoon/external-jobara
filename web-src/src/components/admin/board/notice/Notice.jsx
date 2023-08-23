@@ -13,7 +13,8 @@ const Notice = () => {
     const { alert } = useAlert();
     const err = { dispatch, alert };
 
-    const isPublish = process.env.REACT_APP_NOTICE;
+    const notice = process.env.REACT_APP_NOTICE;
+    const isDeveloping = process.env.REACT_APP_ISDEVELOPING;
 
     const [boardList, setBoardList] = useState([]);
     const [pageInfo, setPageInfo] = useState({});
@@ -115,17 +116,15 @@ const Notice = () => {
                     <h3>공지사항</h3>
                 </div>
                 <div className="con_area">
-                    {isPublish ? (
-                        isPublish
-                    ) : (
+                    {isDeveloping ? (
                         <>
                             <div className="adm_search">
                                 <div>
                                     {/* <select name="" id="">
-                                        <option value="">구분</option>
-                                        <option value="">이름</option>
-                                        <option value="">소속</option>
-                                    </select> */}
+                                                            <option value="">구분</option>
+                                                            <option value="">이름</option>
+                                                            <option value="">소속</option>
+                                                        </select> */}
                                     <input
                                         type="text"
                                         className="input"
@@ -227,10 +226,14 @@ const Notice = () => {
                                 <></>
                             )}
                             <div className="pagenation"></div>
+                            <div
+                                dangerouslySetInnerHTML={{ __html: dummy }}
+                            ></div>
                         </>
+                    ) : (
+                        notice
                     )}
                 </div>
-                <div dangerouslySetInnerHTML={{ __html: dummy }}></div>
             </div>
             <CommonModal
                 isOpen={isOpen}
