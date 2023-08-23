@@ -122,7 +122,7 @@ const OneLineBoard = () => {
                     <h3>한줄 게시판</h3>
                 </div>
                 <div className="con_area">
-                    {isDeveloping ? (
+                    {isDeveloping === "true" ? (
                         <>
                             <div className="adm_search">
                                 <div>

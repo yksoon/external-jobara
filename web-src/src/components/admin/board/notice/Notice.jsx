@@ -28,6 +28,7 @@ const Notice = () => {
         getBoardList(1, 10, "");
 
         console.log(isDeveloping);
+        console.log(typeof isDeveloping);
     }, [isNeedUpdate]);
 
     // 리스트 가져오기
@@ -118,7 +119,7 @@ const Notice = () => {
                     <h3>공지사항</h3>
                 </div>
                 <div className="con_area">
-                    {isDeveloping ? (
+                    {isDeveloping === "true" ? (
                         <>
                             <div className="adm_search">
                                 <div>
