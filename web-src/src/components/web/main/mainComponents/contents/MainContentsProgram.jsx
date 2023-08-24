@@ -130,7 +130,7 @@ const MainContentsProgram = () => {
                             data-aos-delay="1500"
                         >
                             <span className="num">06</span>
-                            기타 이벤트
+                                현장채용면접
                             <span className="icon">
                                 <img src="img/web/main/picon06.png" alt="" />
                             </span>
