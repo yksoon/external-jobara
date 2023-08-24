@@ -470,7 +470,7 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 	.section02 .company{width:auto; margin:0 auto;padding:0 20px;}
 	.section02 .company h3{font-size:28px;margin:0 0 20px 0;}
 	.section02 .company .logobox{display: flex;flex-wrap: wrap;justify-content: center;}
-	.section02 .company .logobox a{display:flex;width:30%; height:auto;margin:5px 1%;}
+	.section02 .company .logobox a{display:flex;width:30%; height:auto;margin:5px 1%; justify-content: center;}
 	.section02 .company .logobox a img{filter: grayscale(100%);opacity:0.4;width:80%;height:auto;}
 	.section02 .company .logobox a:hover img{filter: grayscale(0);opacity:1;}
 
