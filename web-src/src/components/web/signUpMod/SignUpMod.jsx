@@ -20,6 +20,7 @@ import { idPattern } from "common/js/Pattern";
 import { signupMultiModel } from "models/user/signUp";
 import { set_user_info } from "redux/actions/userInfoAction";
 import SignUpModMemo from "./signUpModComponents/SignUpModMemo";
+import { successCode } from "resultCode";
 
 const SignUpMod = () => {
     const dispatch = useDispatch();
@@ -209,7 +210,7 @@ const SignUpMod = () => {
 
             const responsLogic = (res) => {
                 let result_code = res.headers.result_code;
-                if (result_code === "0000") {
+                if (result_code === successCode.success) {
                     dispatch(
                         set_spinner({
                             isLoading: false,
@@ -399,6 +400,14 @@ const SignUpMod = () => {
         //     signUpRefs.inputAttachmentFile.current.focus();
         //     return false;
         // }
+        if (
+            checkItems.indexOf(4) > -1 &&
+            !signUpRefs.inputAttachmentFile.current.value
+        ) {
+            signupAlert("이력서를 첨부해주세요");
+            signUpRefs.inputAttachmentFile.current.focus();
+            return false;
+        }
 
         // --------------------captcha----------------------
         // if (!signUpRefs.inputCaptcha.current.value) {

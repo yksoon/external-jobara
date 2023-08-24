@@ -3,6 +3,7 @@ import { RestServer } from "./Rest";
 import { set_user_info, set_user_token } from "redux/actions/userInfoAction";
 import { CommonConsole, CommonNotify } from "./Common";
 import { set_alert, set_spinner } from "redux/actions/commonAction";
+import { successCode } from "resultCode";
 
 export default function Login(url, data, resultCode, dispatch, alert) {
     RestServer("post", url, data)
@@ -12,7 +13,7 @@ export default function Login(url, data, resultCode, dispatch, alert) {
 
             let result_code = response.headers.result_code;
 
-            if (result_code === "0000") {
+            if (result_code === successCode.success) {
                 user_info = response.data.result_info;
 
                 // 블랙리스트 (추가한것은 제외)

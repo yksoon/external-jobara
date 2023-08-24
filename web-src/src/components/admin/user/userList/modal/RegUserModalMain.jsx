@@ -11,6 +11,7 @@ import { RestServer } from "common/js/Rest";
 import useAlert from "hook/useAlert";
 import { signupMultiModel } from "models/user/signUp";
 import RefreshIcon from "@mui/icons-material/Refresh";
+import { successCode } from "resultCode";
 
 const RegUserModal = (props) => {
     const dispatch = useDispatch();
@@ -18,14 +19,14 @@ const RegUserModal = (props) => {
     const err = { dispatch, alert };
     // { isOpen, title, content, btn, handleModalClose }
 
-    let modalOption = {
+    const modalOption = {
         isOpen: props.isOpen,
         title: props.title,
         content: props.content,
         handleModalClose: props.handleModalClose,
     };
 
-    let modUserData = props.modUserData ? props.modUserData : null;
+    const modUserData = props.modUserData ? props.modUserData : null;
 
     const handleNeedUpdate = props.handleNeedUpdate;
 
@@ -175,7 +176,7 @@ const RegUserModal = (props) => {
 
                 console.log(res);
 
-                if (res.headers.result_code === "0000") {
+                if (res.headers.result_code === successCode.success) {
                     // setIdStatus(true);
                     console.log(res);
 
@@ -255,7 +256,7 @@ const RegUserModal = (props) => {
 
         const responsLogic = (res) => {
             let result_code = res.headers.result_code;
-            if (result_code === "0000") {
+            if (result_code === successCode.success) {
                 dispatch(
                     set_spinner({
                         isLoading: false,
@@ -358,7 +359,7 @@ const RegUserModal = (props) => {
 
             const responsLogic = (res) => {
                 let result_code = res.headers.result_code;
-                if (result_code === "0000") {
+                if (result_code === successCode.success) {
                     dispatch(
                         set_spinner({
                             isLoading: false,

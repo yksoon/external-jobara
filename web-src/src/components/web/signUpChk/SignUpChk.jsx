@@ -10,6 +10,7 @@ import useAlert from "hook/useAlert";
 import { signInModel } from "models/user/signIn";
 import { set_spinner } from "redux/actions/commonAction";
 import { set_user_info, set_user_token } from "redux/actions/userInfoAction";
+import { successCode } from "resultCode";
 
 function SignUpChk() {
     const dispatch = useDispatch();
@@ -180,7 +181,7 @@ function SignUpChk() {
 
         const responsLogic = (res) => {
             const resultCode = res.headers.result_code;
-            if (resultCode === "0000") {
+            if (resultCode === successCode.success) {
                 dispatch(
                     set_spinner({
                         isLoading: false,

@@ -9,6 +9,7 @@ import { set_spinner } from "redux/actions/commonAction";
 import DashBoardChart from "./components/DashBoardChart";
 import axios from "axios";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import { successCode } from "resultCode";
 
 const DashBoardMain = () => {
     const dispatch = useDispatch();
@@ -58,7 +59,7 @@ const DashBoardMain = () => {
         const responsLogic = (res) => {
             const resultCode = res.headers.result_code;
 
-            if (resultCode === "0000") {
+            if (resultCode === successCode.success) {
                 const resultInfo = res.data.result_info;
 
                 // console.log("###############", res);

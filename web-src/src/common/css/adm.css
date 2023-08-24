@@ -103,7 +103,7 @@
 /* 공통 //E */
 
 /* 모달 //S */
-h4.mo_title {font-size: 21px;font-weight: 700;margin:0 0 20px;padding: 0 0 10px;border-bottom: 1px solid #ddd;;}
+/* h4.mo_title {font-size: 21px;font-weight: 700;margin:0 0 20px;padding: 0 0 10px;border-bottom: 1px solid #ddd;;}
 div.mo_title {font-size: 21px;font-weight: 700;margin:0 0 20px;padding: 0 0 10px;border-bottom: 1px solid #ddd;display:flex;justify-content: space-between;}
 div.mo_title > h4{font-size: 21px;font-weight: 700;}
 .mo_subtitle {font-size:18px;font-weight: 700;margin:0 0 14px;}
@@ -113,7 +113,7 @@ div.mo_title > h4{font-size: 21px;font-weight: 700;}
 .modal_wrap .modal .modal_close {position:absolute;top:42px;right:50px;cursor:pointer;}
 .modal_wrap .modal .modal_close img {width: 14px;}
 .modal_wrap .fileicon img {width:20px;vertical-align: middle;}
-.modal_wrap .fileicon a {display:inline-block;margin:6px 0 0;}
+.modal_wrap .fileicon a {display:inline-block;margin:6px 0 0;} */
 /* .modal_content {display:none;} */
 /* 모달 //E */
 

@@ -29,6 +29,7 @@ import SignUpFile from "./signupComponents/SignUpFile";
 import { signupMultiModel } from "models/user/signUp";
 import { idPattern, pwPattern } from "common/js/Pattern";
 import SignUpMemo from "./signupComponents/SignUpMemo";
+import { successCode } from "resultCode";
 
 // 회원가입
 function SignUp() {
@@ -62,7 +63,7 @@ function SignUp() {
             checkSchedule,
             ip,
             alert,
-            checkDatecallback,
+            () => checkDatecallback(),
             dispatch
         ).then((res) => {
             if (!res) {
@@ -166,7 +167,7 @@ function SignUp() {
 
             const responsLogic = (res) => {
                 let result_code = res.headers.result_code;
-                if (result_code === "0000") {
+                if (result_code === successCode.success) {
                     // 등록 완료 후 확인페이지 이동
                     const goToChk = () => {
                         navigate(routerPath.web_signupchk_url);
@@ -327,6 +328,14 @@ function SignUp() {
         //     signUpRefs.inputAttachmentFile.current.focus();
         //     return false;
         // }
+        if (
+            checkItems.indexOf(4) > -1 &&
+            !signUpRefs.inputAttachmentFile.current.value
+        ) {
+            signupAlert("이력서를 첨부해주세요");
+            signUpRefs.inputAttachmentFile.current.focus();
+            return false;
+        }
 
         // --------------------captcha----------------------
         if (!signUpRefs.inputCaptcha.current.value) {
@@ -413,6 +422,12 @@ function SignUp() {
                                 <SignUpCaptcha ref={signUpRefs} />
                             </tbody>
                         </table>
+                        <div className="registrationNotice">
+                            <p>
+                                ※ 사전등록 완료시 개인정보활용에 동의한 것으로
+                                간주합니다.
+                            </p>
+                        </div>
 
                         <div className="btnbox">
                             <Link

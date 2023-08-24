@@ -12,6 +12,7 @@ import { set_page } from "redux/actions/pageActios";
 import { apiPath, routerPath } from "webPath";
 import Notice from "./board/notice/Notice";
 import OneLineBoard from "./board/oneLineBoard/OneLineBoard";
+import { successCode } from "resultCode";
 
 const Admin = () => {
     const dispatch = useDispatch();
@@ -66,8 +67,7 @@ const Admin = () => {
             const result_code = res.headers.result_code;
             let resData = [];
 
-            // TODO: 상수로 빼
-            if (result_code === "0000") {
+            if (result_code === successCode.success) {
                 // dispatch(
                 //     set_spinner({
                 //         isLoading: false,

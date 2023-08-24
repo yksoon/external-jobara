@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { set_spinner } from "redux/actions/commonAction";
+import { successCode } from "resultCode";
 import { apiPath } from "webPath";
 
 const OneLineBoard = () => {
@@ -42,6 +43,7 @@ const OneLineBoard = () => {
             page_num: pageNum,
             page_size: pageSize,
             search_keyword: searchKeyword,
+            board_type: "400",
         };
 
         // 파라미터
@@ -60,7 +62,10 @@ const OneLineBoard = () => {
             let result_code = res.headers.result_code;
 
             // 성공
-            if (result_code === "0000" || result_code === "9997") {
+            if (
+                result_code === successCode.success ||
+                result_code === successCode.noData
+            ) {
                 let result_info = res.data.result_info;
                 let page_info = res.data.page_info;
 
@@ -147,16 +152,16 @@ const OneLineBoard = () => {
                                     className="btn_box btn_right"
                                     style={{ margin: 0 }}
                                 >
-                                    <Link
+                                    {/* <Link
                                         href=""
                                         className="btn btn01"
                                         onClick={regBoard}
                                     >
                                         글쓰기
-                                    </Link>
-                                    <Link href="" className="btn btn02">
+                                    </Link> */}
+                                    {/* <Link href="" className="btn btn02">
                                         삭제
-                                    </Link>
+                                    </Link> */}
                                 </div>
                             </div>
                             <div className="adm_notice">
@@ -165,10 +170,11 @@ const OneLineBoard = () => {
                                         <colgroup>
                                             <col width="5%" />
                                             <col width="5%" />
+                                            <col width="10%" />
+                                            <col width="10%" />
                                             <col width="*" />
-                                            <col width="20%" />
                                             <col width="10%" />
-                                            <col width="10%" />
+                                            <col width="5%" />
                                         </colgroup>
                                         <thead>
                                             <tr>
@@ -176,10 +182,11 @@ const OneLineBoard = () => {
                                                     <input type="checkbox" />
                                                 </th>
                                                 <th>번호</th>
-                                                <th>제목</th>
-                                                <th>파일</th>
-                                                <th>조회수</th>
+                                                <th>등록자</th>
+                                                <th>연락처</th>
+                                                <th>내용</th>
                                                 <th>등록일</th>
+                                                <th>수정</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -188,35 +195,24 @@ const OneLineBoard = () => {
                                                     <input type="checkbox" />
                                                 </td>
                                                 <td>1</td>
-                                                <td>공지사항 제목</td>
-                                                <td>
-                                                    <div className="file_wrap">
-                                                        <Link href="">
-                                                            <img
-                                                                src="img/common/file.svg"
-                                                                alt=""
-                                                            />{" "}
-                                                            파일이름1.docx
-                                                        </Link>
-                                                        <Link href="">
-                                                            <img
-                                                                src="img/common/file.svg"
-                                                                alt=""
-                                                            />{" "}
-                                                            파일이름2.pdf
-                                                        </Link>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="viewer_wrap">
-                                                        <img
-                                                            src="img/common/user_icon.png"
-                                                            alt=""
-                                                        />{" "}
-                                                        16
-                                                    </div>
-                                                </td>
+                                                <td>등록자</td>
+                                                <td>010-1234-1234</td>
+                                                <td>내용입니다</td>
                                                 <td>2023-08-16</td>
+                                                <td>
+                                                    <Link
+                                                        className="tablebtn"
+                                                        // onClick={(
+                                                        //     e
+                                                        // ) => {
+                                                        //     modBoard(
+                                                        //         item.board_idx
+                                                        //     );
+                                                        // }}
+                                                    >
+                                                        수정
+                                                    </Link>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -236,7 +232,6 @@ const OneLineBoard = () => {
                             ) : (
                                 <></>
                             )}
-                            <div className="pagenation"></div>
                         </>
                     ) : (
                         notice

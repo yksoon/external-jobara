@@ -16,6 +16,7 @@ import { apiPath, routerPath } from "webPath";
 import $ from "jquery";
 import useAlert from "hook/useAlert";
 import { init_user_info_admin } from "redux/actions/userInfoAdminAction";
+import { successCode } from "resultCode";
 
 const SideNav = (props) => {
     const dispatch = useDispatch();
@@ -99,7 +100,7 @@ const SideNav = (props) => {
             let result_info = res.data.result_info;
 
             // 성공
-            if (result_code === "0000") {
+            if (result_code === successCode.success) {
                 dispatch(
                     set_spinner({
                         isLoading: false,
@@ -199,7 +200,7 @@ const SideNav = (props) => {
             // response
             let result_code = res.headers.result_code;
 
-            if (result_code === "0000") {
+            if (result_code === successCode.success) {
                 // localStorage.removeItem("userInfo");
                 dispatch(init_user_info_admin(null));
 

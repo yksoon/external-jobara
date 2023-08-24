@@ -192,15 +192,30 @@ const apiPath = {
     api_admin_dashboard: `${base_api_url + slash + version + slash}dashboard`,
 
     // ------------------ Board API 게시판 관리 API ------------------
-    // /v1/boards
+    // /v1/_boards
     // POST
     // 게시판 목록
-    api_admin_boards: `${base_api_url + slash + version + slash}boards`,
+    api_admin_boards: `${base_api_url + slash + version + slash}_boards`,
 
-    // /v1/board
+    // /v1/_board
     // POST MULTI
     // 게시판 등록
-    api_admin_board: `${base_api_url + slash + version + slash}board`,
+    api_admin_board: `${base_api_url + slash + version + slash}_board`,
+
+    // /v1/board/{board_idx}
+    // GET
+    // 게시판 상세
+    api_admin_get_board: `${base_api_url + slash + version + slash}board`,
+
+    // /v1/board/
+    // PUT MULTI
+    // 게시판 수정
+    api_admin_mod_board: `${base_api_url + slash + version + slash}board`,
+
+    // /v1/board/
+    // DELETE
+    // 게시판 삭제
+    api_admin_remove_board: `${base_api_url + slash + version + slash}board`,
 };
 
 export { routerPath, apiPath };

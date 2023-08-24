@@ -30,7 +30,11 @@ const SignUpFile = forwardRef((props, ref) => {
     return (
         <>
             <tr>
-                <th>이력서업로드</th>
+                <th>
+                    이력서, 자기소개서
+                    <br />
+                    업로드
+                </th>
                 <td className="regi_file">
                     <div>
                         여러 파일 선택이 가능합니다. 여러 파일 선택 시 ctrl 누른

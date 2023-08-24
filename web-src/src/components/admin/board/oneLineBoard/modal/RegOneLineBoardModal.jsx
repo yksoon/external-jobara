@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import useAlert from "hook/useAlert";
 import { set_spinner } from "redux/actions/commonAction";
 import { boardModel } from "models/board/board";
+import { successCode } from "resultCode";
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const RegOneLineBoardModal = (props) => {
@@ -103,7 +104,7 @@ const RegOneLineBoardModal = (props) => {
 
             const responsLogic = (res) => {
                 let result_code = res.headers.result_code;
-                if (result_code === "0000") {
+                if (result_code === successCode.success) {
                     dispatch(
                         set_spinner({
                             isLoading: false,

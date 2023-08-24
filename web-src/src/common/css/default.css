@@ -110,6 +110,7 @@ h1,h2,h3,h4,h5,h6 {
 	font-size:100%;
 	font-weight:normal;
 }
+#noticeModalContent h1, #noticeModalContent h2, #noticeModalContent h3, #noticeModalContent h4, #noticeModalContent h5, #noticeModalContent h6, #noticeModalContent p{font-size:revert;font-weight: revert;}
 q:before,q:after {
 	content:'';
 }

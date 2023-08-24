@@ -15,6 +15,7 @@ import { Pagination } from "@mui/material";
 import useConfirm from "hook/useConfirm";
 import useAlert from "hook/useAlert";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import { successCode } from "resultCode";
 
 const UserList = () => {
     const dispatch = useDispatch();
@@ -83,7 +84,10 @@ const UserList = () => {
             let result_code = res.headers.result_code;
 
             // 성공
-            if (result_code === "0000" || result_code === "9997") {
+            if (
+                result_code === successCode.success ||
+                result_code === successCode.noData
+            ) {
                 let result_info = res.data.result_info;
                 let page_info = res.data.page_info;
 
@@ -139,7 +143,7 @@ const UserList = () => {
             let result_info = res.data.result_info;
 
             // 성공
-            if (result_code === "0000") {
+            if (result_code === successCode.success) {
                 dispatch(
                     set_spinner({
                         isLoading: false,

@@ -11,6 +11,8 @@ import "quill-paste-smart";
 import { CommonNotify, CommonRest } from "common/js/Common";
 import { set_spinner } from "redux/actions/commonAction";
 import { boardModel } from "models/board/board";
+import { successCode } from "resultCode";
+const fileBaseUrl = apiPath.api_file;
 
 const RegNoticeModal = (props) => {
     const dispatch = useDispatch();
@@ -22,7 +24,7 @@ const RegNoticeModal = (props) => {
     );
 
     const [boardData, setBoardData] = useState("");
-    const [files, setFiles] = useState([]);
+    const [fileList, setFileList] = useState([]);
     const [img, setImg] = useState({});
     const imgUrl = apiPath.api_captcha_img;
 
@@ -38,6 +40,8 @@ const RegNoticeModal = (props) => {
         handleModalClose: props.handleModalClose,
     };
 
+    const modNotice = props.modNotice ? props.modNotice : null;
+
     const handleNeedUpdate = props.handleNeedUpdate;
 
     useEffect(() => {
@@ -46,7 +50,32 @@ const RegNoticeModal = (props) => {
             imageSrc: imgUrl,
             imageHash: Date.now(),
         });
+
+        // mod인경우
+        if (modNotice) {
+            getDefaultValue();
+        }
     }, []);
+
+    // 수정일경우 디폴트 세팅
+    const getDefaultValue = () => {
+        // 파일
+        const files = modNotice ? modNotice.file_info : [];
+
+        setFileList(files);
+
+        inputTitle.current.value = modNotice.subject;
+
+        const editor = quillRef.current.getEditor();
+        const range = editor.getSelection();
+
+        const content = modNotice.content;
+        // console.log(
+        //     modNotice.content.replaceAll("&lt;", "<").replaceAll("&gt;", ">")
+        // );
+
+        editor?.clipboard.dangerouslyPasteHTML(1, content);
+    };
 
     // 캡차이미지 새로고침
     const refreshCaptcha = () => {
@@ -99,7 +128,7 @@ const RegNoticeModal = (props) => {
 
             const responsLogic = (res) => {
                 let result_code = res.headers.result_code;
-                if (result_code === "0000") {
+                if (result_code === successCode.success) {
                     dispatch(
                         set_spinner({
                             isLoading: false,
@@ -110,7 +139,7 @@ const RegNoticeModal = (props) => {
                         type: "alert",
                         hook: alert,
                         message: "게시물 등록이 완료 되었습니다",
-                        callback: requestBoards(),
+                        callback: () => requestBoards(),
                     });
                 } else {
                     dispatch(
@@ -130,6 +159,93 @@ const RegNoticeModal = (props) => {
             const restParams = {
                 method: "post_multi",
                 url: apiPath.api_admin_board, // /v1/board
+                data: formData,
+                err: err,
+                admin: "Y",
+                callback: (res) => responsLogic(res),
+            };
+
+            CommonRest(restParams);
+        }
+    };
+
+    // 수정
+    const modBoard = () => {
+        if (validation()) {
+            dispatch(
+                set_spinner({
+                    isLoading: true,
+                })
+            );
+
+            const formData = new FormData();
+            const model = boardModel;
+            let data = {};
+
+            let fileArr = [];
+
+            data = {
+                ...model,
+                showYn: "Y",
+                userIdx: userInfoAdmin.user_idx,
+                boardIdx: modNotice.board_idx,
+                boardType: "000",
+                channelType: "000",
+                categoryType: "900",
+                subject: inputTitle.current.value,
+                subTitle: inputTitle.current.value,
+                content: boardData,
+                alimYn: "N",
+            };
+
+            // 기본 formData append
+            for (const key in data) {
+                formData.append(key, data[key]);
+            }
+
+            // 파일 formData append
+            fileArr = Array.from(inputAttachmentFile.current.files);
+            let len = fileArr.length;
+            for (let i = 0; i < len; i++) {
+                formData.append("attachmentFile", fileArr[i]);
+            }
+
+            const responsLogic = (res) => {
+                let result_code = res.headers.result_code;
+                if (result_code === successCode.success) {
+                    dispatch(
+                        set_spinner({
+                            isLoading: false,
+                        })
+                    );
+
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: "게시물 수정이 완료 되었습니다",
+                        callback: () => requestBoards(),
+                    });
+                } else {
+                    dispatch(
+                        set_spinner({
+                            isLoading: false,
+                        })
+                    );
+
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: "잠시 후 다시 시도해주세요",
+                    });
+                }
+            };
+
+            // 수정
+            // /v1/board
+            // PUT MULTI
+            const restParams = {
+                method: "put_multi",
+                url: apiPath.api_admin_mod_board, // /v1/board
                 data: formData,
                 err: err,
                 admin: "Y",
@@ -168,34 +284,56 @@ const RegNoticeModal = (props) => {
 
     // 검증
     const validation = () => {
-        // --------------------제목----------------------
-        if (!inputTitle.current.value) {
-            inputTitle.current.blur();
-            signupAlert({
-                msg: "제목을 입력해주세요",
-                ref: inputTitle,
-            });
-            return false;
-        }
+        if (!modNotice) {
+            // --------------------제목----------------------
+            if (!inputTitle.current.value) {
+                inputTitle.current.blur();
+                signupAlert({
+                    msg: "제목을 입력해주세요",
+                    ref: inputTitle,
+                });
+                return false;
+            }
 
-        // --------------------내용----------------------
-        if (!boardData) {
-            quillRef.current.blur();
-            signupAlert({
-                msg: "내용을 입력해주세요",
-                ref: quillRef,
-            });
-            return false;
-        }
+            // --------------------내용----------------------
+            if (!boardData) {
+                quillRef.current.blur();
+                signupAlert({
+                    msg: "내용을 입력해주세요",
+                    ref: quillRef,
+                });
+                return false;
+            }
 
-        // --------------------자동등록방지----------------------
-        if (!inputCaptcha.current.value) {
-            inputCaptcha.current.blur();
-            signupAlert({
-                msg: "자동등록방지 코드를 입력해주세요",
-                ref: inputCaptcha,
-            });
-            return false;
+            // --------------------자동등록방지----------------------
+            if (!inputCaptcha.current.value) {
+                inputCaptcha.current.blur();
+                signupAlert({
+                    msg: "자동등록방지 코드를 입력해주세요",
+                    ref: inputCaptcha,
+                });
+                return false;
+            }
+        } else {
+            // --------------------제목----------------------
+            if (!inputTitle.current.value) {
+                inputTitle.current.blur();
+                signupAlert({
+                    msg: "제목을 입력해주세요",
+                    ref: inputTitle,
+                });
+                return false;
+            }
+
+            // --------------------내용----------------------
+            if (!boardData) {
+                quillRef.current.blur();
+                signupAlert({
+                    msg: "내용을 입력해주세요",
+                    ref: quillRef,
+                });
+                return false;
+            }
         }
 
         return true;
@@ -437,13 +575,37 @@ const RegNoticeModal = (props) => {
                         </tr>
                         <tr>
                             <th>파일첨부</th>
-                            <td>
-                                <input
-                                    type="file"
-                                    ref={inputAttachmentFile}
-                                    onChange={(e) => attachFile(e.target)}
-                                    multiple
-                                />
+                            <td className="fileicon">
+                                <div style={{ marginBottom: 5 }}>
+                                    <b>
+                                        여러 파일 선택이 가능합니다. 여러 파일
+                                        선택 시 ctrl 누른 후 선택하시면 됩니다.
+                                    </b>
+                                </div>
+                                <div>
+                                    <input
+                                        type="file"
+                                        ref={inputAttachmentFile}
+                                        multiple
+                                        onChange={(e) => attachFile(e.target)}
+                                    />
+                                </div>
+                                <div>
+                                    {fileList.length !== 0 &&
+                                        fileList.map((item, idx) => (
+                                            <div key={`file_${idx}`}>
+                                                <Link
+                                                    to={`${fileBaseUrl}${item.file_path_enc}`}
+                                                >
+                                                    <img
+                                                        src="img/common/file.svg"
+                                                        alt=""
+                                                    />
+                                                    {item.file_name}{" "}
+                                                </Link>
+                                            </div>
+                                        ))}
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -462,47 +624,57 @@ const RegNoticeModal = (props) => {
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <th>자동등록방지</th>
-                            <td>
-                                <div className="cap_wrap">
-                                    <div>
-                                        <span className="cap">
-                                            <img
-                                                className="imgClass"
-                                                id="captchaImg"
-                                                src={`${img.imageSrc}?${img.imageHash}`}
-                                                alt=""
-                                                decoding="async"
-                                                style={{ background: "white" }}
-                                            />
-                                        </span>
-                                        <span className="cap_refresh">
-                                            <Link
-                                                onClick={(e) => {
-                                                    refreshCaptcha();
-                                                    e.preventDefault();
-                                                }}
-                                            >
-                                                <RefreshIcon />
-                                                새로고침
-                                            </Link>
-                                        </span>
+                        {!modNotice && (
+                            <tr>
+                                <th>자동등록방지</th>
+                                <td>
+                                    <div className="cap_wrap">
+                                        <div>
+                                            <span className="cap">
+                                                <img
+                                                    className="imgClass"
+                                                    id="captchaImg"
+                                                    src={`${img.imageSrc}?${img.imageHash}`}
+                                                    alt=""
+                                                    decoding="async"
+                                                    style={{
+                                                        background: "white",
+                                                    }}
+                                                />
+                                            </span>
+                                            <span className="cap_refresh">
+                                                <Link
+                                                    onClick={(e) => {
+                                                        refreshCaptcha();
+                                                        e.preventDefault();
+                                                    }}
+                                                >
+                                                    <RefreshIcon />
+                                                    새로고침
+                                                </Link>
+                                            </span>
+                                        </div>
+                                        <input
+                                            type="text"
+                                            className="input_s"
+                                            ref={inputCaptcha}
+                                        />
                                     </div>
-                                    <input
-                                        type="text"
-                                        className="input_s"
-                                        ref={inputCaptcha}
-                                    />
-                                </div>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
                 <div className="btn_box">
-                    <Link href="" className="btn btn01" onClick={regBoard}>
-                        등록
-                    </Link>
+                    {modNotice ? (
+                        <Link className="btn btn01" onClick={modBoard}>
+                            수정
+                        </Link>
+                    ) : (
+                        <Link className="btn btn01" onClick={regBoard}>
+                            등록
+                        </Link>
+                    )}
                     <Link
                         href=""
                         className="btn btn02"
