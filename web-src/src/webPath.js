@@ -56,6 +56,10 @@ const routerPath = {
     // /program/event
     web_program_event_url: `${base_url}program/event`,
 
+    // notice
+    // /notice/notice
+    web_notice_url: `${base_url}notice/notice`,
+
     // 회원가입
     // /signup
     web_signup_url: `${base_url}signup`,

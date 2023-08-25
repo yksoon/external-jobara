@@ -94,9 +94,9 @@ const SubHeader = () => {
                                     참여기업
                                 </Link>
                             </li>
-                            {/* <li>
+                            <li>
                                 <Link href="">공지</Link>
-                            </li> */}
+                            </li>
                         </ul>
                     </div>
 
