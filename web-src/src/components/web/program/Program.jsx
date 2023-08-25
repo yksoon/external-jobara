@@ -12,6 +12,7 @@ const Program = () => {
             {/* 서브컨텐츠     //S */}
             <div id="container" className="sub_container">
                 <div id="content">
+                    <h3 className="title_chap"><span>2023 잡아라 페스티벌</span>에 당신을 초대합니다!</h3>
                     <h2 id="subtitle">행사일정</h2>
                     <div className="program">
                         <table className="pro_table">

@@ -10,14 +10,14 @@ const MainContents = () => {
         <>
             <div id="container">
                 {/* 인포 */}
-                <MainContentsInfo />
+                {/* <MainContentsInfo /> */}
+                {/* 응원 댓글 */}
+                {isDeveloping === "true" ? <MainContentsTalk /> : <></>}
                 {/* 프로그램, 참여기업 */}
                 <MainContentsProgram />
                 {/* 공지사항 */}
                 {/* TODO: 개발 끝나면 처리 */}
                 {isDeveloping === "true" ? <MainContentsNoti /> : <></>}
-                {/* 응원 댓글 */}
-                {isDeveloping === "true" ? <MainContentsTalk /> : <></>}
             </div>
         </>
     );
