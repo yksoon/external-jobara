@@ -131,6 +131,7 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 .section02 .program ul li div {padding:30px 20px 0;font-size: 18px;line-height: 30px;}
 .section02 .program ul li div a {width: 100%;display:block;height:36px;background:#f15922;border-radius: 20px;color: #fff;text-align: center;line-height: 36px;margin:20px 0 0;}
 .section02 .program ul li.p05 div a{background:#0092E5;}
+.section02 .program ul li.p06 div a{background:#C064E6;}
 .section02 .program ul li div h5 {font-weight: 900;}
 .section02 .program ul li div p {font-size: 16px;margin:6px 0 20px;}
 .section02 .program ul li.p05 {margin-top:-80px;}
@@ -348,6 +349,7 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 
 .pro_detail .linebox {font-size: 16px;padding: 20px;line-height: 24px;margin:10px 0 0;}
 .pro_detail > div.detail_step1 a {width: 100%;display:block;height:36px;background:#E8368B;border-radius: 20px;color: #fff;text-align: center;line-height: 36px;margin:20px 0 0;}
+.pro_detail > div.detail_step3 a {width: 100%;display:block;height:36px;background:#65C4F2;border-radius: 20px;color: #fff;text-align: center;line-height: 36px;margin:20px 0 0;}
 
 .pro_detail > div.detail_step1 .detail_dot span.color {background: #E8368B;}
 .pro_detail > div.detail_step2 .detail_dot span.color {background: #B8D73B;}

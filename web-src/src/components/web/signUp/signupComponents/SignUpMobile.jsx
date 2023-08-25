@@ -54,7 +54,7 @@ const SignUpMobile = forwardRef((props, ref) => {
                         ref={inputMobile1}
                         onChange={(e) => mobileHandler(e)}
                     />{" "}
-                    -
+                    -{" "}
                     <input
                         type="text"
                         id="mobile2"
@@ -62,7 +62,7 @@ const SignUpMobile = forwardRef((props, ref) => {
                         ref={inputMobile2}
                         onChange={(e) => mobileHandler(e)}
                     />{" "}
-                    -
+                    -{" "}
                     <input
                         type="text"
                         id="mobile3"

@@ -59,8 +59,7 @@ const Program = () => {
                                     </td>
                                     <td rowSpan="4" className="step step3">
                                         <span>STEP 3</span>
-                                        취업대비 실전!
-                                        <br /> - 현장 채용면접, AI 면접체험,
+                                        <br /> 바로채용면접, AI 면접체험,
                                         NCS모의고사, 현직자토크콘서트 등
                                     </td>
                                     <td></td>
@@ -83,7 +82,8 @@ const Program = () => {
                                     <td></td>
                                 </tr>
                             </tbody>
-                        </table>
+                        </table><br/>
+                        <p>※ 운영에 따라 일정이 변경될 수 있습니다.</p>
                     </div>
                 </div>
             </div>
