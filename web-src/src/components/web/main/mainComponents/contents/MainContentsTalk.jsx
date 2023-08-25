@@ -9,6 +9,7 @@ import { apiPath } from "webPath";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { oneLinePattern } from "common/js/Pattern";
 import { boardModel } from "models/board/board";
+import { Skeleton } from "@mui/material";
 
 const MainContentsTalk = () => {
     const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const MainContentsTalk = () => {
     const [boardList, setBoardList] = useState([]);
     const [img, setImg] = useState({});
     const [isNeedUpdate, setIsNeedUpdate] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const imgUrl = apiPath.api_captcha_img;
 
     const oneLineRefs = {
@@ -73,11 +75,13 @@ const MainContentsTalk = () => {
 
                 setBoardList(result_info);
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                setIsLoading(false);
+
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
             } else {
                 // 에러
                 CommonConsole("log", res);
@@ -276,7 +280,70 @@ const MainContentsTalk = () => {
                     </div>
                     <div className="talkbox">
                         <ul>
-                            {boardList.length !== 0 ? (
+                            {isLoading ? (
+                                <>
+                                    <li
+                                        style={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        <p
+                                            style={{
+                                                width: "100%",
+                                                marginBottom: "20px",
+                                            }}
+                                        >
+                                            <Skeleton height={30} />
+                                        </p>
+                                    </li>
+                                    <li
+                                        style={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        <p
+                                            style={{
+                                                width: "100%",
+                                                marginBottom: "20px",
+                                            }}
+                                        >
+                                            <Skeleton height={30} />
+                                        </p>
+                                    </li>
+                                    <li
+                                        style={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        <p
+                                            style={{
+                                                width: "100%",
+                                                marginBottom: "20px",
+                                            }}
+                                        >
+                                            <Skeleton height={30} />
+                                        </p>
+                                    </li>
+                                    <li
+                                        style={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        <p
+                                            style={{
+                                                width: "100%",
+                                                marginBottom: "20px",
+                                            }}
+                                        >
+                                            <Skeleton height={30} />
+                                        </p>
+                                    </li>
+                                </>
+                            ) : boardList.length !== 0 ? (
                                 boardList.map((item, idx) => (
                                     <li key={`main_oneline_${idx}`}>
                                         <span>{item.user_name_ko}</span>
