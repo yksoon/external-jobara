@@ -95,7 +95,7 @@ const SubHeader = () => {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="">공지</Link>
+                                <Link  to={routerPath.web_notice_url}>공지</Link>
                             </li>
                         </ul>
                     </div>

@@ -121,7 +121,7 @@ function MobileNav({ props }) {
                             </Link>
                         </li>
                         <li>
-                            <Link href="" id="nav5">
+                            <Link to={routerPath.web_notice_url} id="nav5">
                                 공지
                             </Link>
                         </li>

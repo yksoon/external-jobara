@@ -31,7 +31,7 @@ const Notice = () => {
     const [isSpinning, setIsSpinning] = useState(false);
 
     useLayoutEffect(() => {
-        getBoardList(1, 5);
+        getBoardList(1, 10);
     }, []);
 
     // 리스트 가져오기
