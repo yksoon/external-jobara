@@ -216,6 +216,13 @@ const apiPath = {
     // DELETE
     // 게시판 삭제
     api_admin_remove_board: `${base_api_url + slash + version + slash}board`,
+
+    // /v1/board/_download
+    // POST
+    // 게시판 엑셀 다운로드
+    api_admin_board_download: `${
+        base_api_url + slash + version + slash
+    }board/_download`,
 };
 
 export { routerPath, apiPath };

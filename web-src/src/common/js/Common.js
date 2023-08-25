@@ -10,6 +10,7 @@ import RegOneLineBoardModal from "components/admin/board/oneLineBoard/modal/RegO
 import RegNoticeModal from "components/admin/board/notice/modal/RegNoticeModal";
 import { errorCode } from "resultCode";
 import MainContentsNoticeModal from "components/web/main/mainComponents/contents/modal/MainContentsNoticeModal";
+import $ from "jquery";
 
 // Alert (props)
 // isOpen = state 상태값
@@ -48,6 +49,7 @@ const CommonModal = (props) => {
                     <RegOneLineBoardModal
                         handleNeedUpdate={handleNeedUpdate}
                         handleModalClose={modalOption.handleModalClose}
+                        modOneLine={props.modOneLine}
                     />
                 );
 
@@ -183,6 +185,11 @@ const CommonSpinner = (props) => {
     // const isLoading = props.option.isLoading;
     const alertMsg = props.option.alert ? props.option.alert : "";
     const error = props.option.error ? props.option.error : "";
+
+    // let height;
+    // $(window).scroll(function () {
+    //     height = $(document).scrollTop();
+    // });
 
     useEffect(() => {
         setIsloading(props.option.isLoading);

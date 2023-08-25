@@ -30,6 +30,7 @@ import { signupMultiModel } from "models/user/signUp";
 import { idPattern, pwPattern } from "common/js/Pattern";
 import SignUpMemo from "./signupComponents/SignUpMemo";
 import { successCode } from "resultCode";
+import { set_check_schedule } from "redux/actions/scheduleAction";
 
 // 회원가입
 function SignUp() {
@@ -39,6 +40,7 @@ function SignUp() {
     const checkSchedule = useSelector((state) => state.schedule.checkSchedule);
     const ip = useSelector((state) => state.ipInfo.ipInfo);
     const navigate = useNavigate();
+    const [state, setState] = useState("1");
 
     // 참여프로그램 체크박스
     const [checkItems, setCheckItems] = useState([]);

@@ -338,19 +338,20 @@ const UserList = () => {
                     <div className="adm_table">
                         <table className="table_a">
                             <colgroup>
-                                <col width="3%" />
-                                <col width="4%" />
+                                <col width="2%" />
+                                {/* <col width="4%" /> */}
                                 <col width="6%" />
                                 <col width="5%" />
                                 <col width="7%" />
                                 <col width="6%" />
-                                <col width="8%" />
+                                <col width="6%" />
                                 <col width="8%" />
                                 <col width="6%" />
                                 <col width="6%" />
                                 <col width="8%" />
                                 <col width="8%" />
                                 <col width="8%" />
+                                <col width="6%" />
                                 <col width="6%" />
                                 <col width="6%" />
                                 <col width="6%" />
@@ -374,7 +375,7 @@ const UserList = () => {
                                             }
                                         />
                                     </th>
-                                    <th rowSpan="2">고유번호</th>
+                                    {/* <th rowSpan="2">고유번호</th> */}
                                     <th rowSpan="2">ID</th>
                                     <th rowSpan="2">이름</th>
                                     <th rowSpan="2">연락처</th>
@@ -383,7 +384,7 @@ const UserList = () => {
                                     <th rowSpan="2">학교</th>
                                     <th rowSpan="2">학과</th>
                                     <th rowSpan="2">희망직종</th>
-                                    <th colSpan="3">참여프로그램</th>
+                                    <th colSpan="4">참여프로그램</th>
                                     <th rowSpan="2">등록일</th>
                                     <th rowSpan="2">이력서 보기</th>
                                     <th rowSpan="2">정보수정</th>
@@ -402,7 +403,14 @@ const UserList = () => {
                                             borderRight: "1px solid #ddd",
                                         }}
                                     >
-                                        현장참여
+                                        버크만진단
+                                    </th>
+                                    <th
+                                        style={{
+                                            borderRight: "1px solid #ddd",
+                                        }}
+                                    >
+                                        바로채용면접
                                     </th>
                                 </tr>
                             </thead>
@@ -431,7 +439,7 @@ const UserList = () => {
                                                     }
                                                 />
                                             </td>
-                                            <td>{item.user_key}</td>
+                                            {/* <td>{item.user_key}</td> */}
                                             <td>{item.user_id}</td>
                                             <td>{item.user_name_ko}</td>
                                             <td>{`${item.mobile1}-${item.mobile2}-${item.mobile3}`}</td>
@@ -486,6 +494,16 @@ const UserList = () => {
                                                     ""
                                                 )}
                                             </td>
+                                            <td className="checkicon">
+                                                {item.additional_info.filter(
+                                                    (e) =>
+                                                        e.additional_idx === 4
+                                                ).length !== 0 ? (
+                                                    <CheckCircleOutlineOutlinedIcon />
+                                                ) : (
+                                                    ""
+                                                )}
+                                            </td>
                                             <td>
                                                 {item.reg_dttm
                                                     ? item.reg_dttm.split(
@@ -525,7 +543,7 @@ const UserList = () => {
                                                         modUser(item.user_idx);
                                                     }}
                                                 >
-                                                    정보 수정
+                                                    수정
                                                 </Link>
                                             </td>
                                         </tr>

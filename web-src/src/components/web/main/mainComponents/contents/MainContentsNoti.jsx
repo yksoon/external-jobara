@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { set_spinner } from "redux/actions/commonAction";
 import { successCode } from "resultCode";
 import { apiPath } from "webPath";
+import $ from "jquery";
 
 const MainContentsNoti = () => {
     const dispatch = useDispatch();
@@ -61,7 +62,6 @@ const MainContentsNoti = () => {
             ) {
                 let result_info = res.data.result_info;
 
-                // console.log(res);
                 setBoardList(result_info);
 
                 setIsLoading(false);
@@ -83,12 +83,16 @@ const MainContentsNoti = () => {
         setIsNeedUpdate(!isNeedUpdate);
     };
 
-    const openNotice = (board_idx) => {
+    const openNotice = (board_idx, e) => {
         dispatch(
             set_spinner({
                 isLoading: true,
             })
         );
+
+        // console.log(e);
+        // let offset = $(`#${e.target.id}`).offset(); //선택한 태그의 위치를 반환
+        // $("html").animate({ scrollTop: offset.top });
 
         const boardIdx = String(board_idx);
 
@@ -165,8 +169,9 @@ const MainContentsNoti = () => {
                             boardList.map((item, idx) => (
                                 <li key={`main_notice_${idx}`}>
                                     <Link
+                                        id={`main_notice_${idx}`}
                                         onClick={(e) => {
-                                            openNotice(item.board_idx);
+                                            openNotice(item.board_idx, e);
                                             e.preventDefault();
                                         }}
                                     >

@@ -213,3 +213,5 @@ div.mo_title > h4{font-size: 21px;font-weight: 700;}
 
 .MuiPaginationItem-textPrimary.Mui-selected {background:#e72295 !important;}
 .MuiPaginationItem-textPrimary.Mui-selected:hover {background:#e72295 !important;}
+
+.admin .talk_txt {border:1px solid #ccc; height:120px; line-height:26px;font-family:'GmarketSans';vertical-align: middle;border-radius: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px; width:100%;resize:none;padding:20px;font-size: 16px;}

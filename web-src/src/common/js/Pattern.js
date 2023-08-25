@@ -19,7 +19,7 @@ const securityPattern = /^[0-9]{6}$/;
 
 // 한줄응원 패턴
 // 모든 글자 1글자이상 글자 이하
-const oneLinePattern = /^.{1,66}$/;
+const oneLinePattern = /^.{1,60}$/;
 
 export {
     pwPattern,

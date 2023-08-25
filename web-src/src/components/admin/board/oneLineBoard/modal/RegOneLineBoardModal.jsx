@@ -22,6 +22,10 @@ const RegOneLineBoardModal = (props) => {
 
     const inputTitle = useRef(null);
     const inputCaptcha = useRef(null);
+    const inputName = useRef(null);
+    const inputMobile1 = useRef(null);
+    const inputMobile2 = useRef(null);
+    const inputMobile3 = useRef(null);
 
     const modalOption = {
         isOpen: props.isOpen,
@@ -29,6 +33,8 @@ const RegOneLineBoardModal = (props) => {
         content: props.content,
         handleModalClose: props.handleModalClose,
     };
+
+    const modOneLine = props.modOneLine ? props.modOneLine : null;
 
     const handleNeedUpdate = props.handleNeedUpdate;
 
@@ -38,7 +44,21 @@ const RegOneLineBoardModal = (props) => {
             imageSrc: imgUrl,
             imageHash: Date.now(),
         });
+
+        getDefaultValue();
     }, []);
+
+    // 수정일경우 디폴트 세팅
+    const getDefaultValue = () => {
+        // 내용
+        inputTitle.current.value = modOneLine.subject;
+
+        inputName.current.value = modOneLine.reg_user_name_ko;
+
+        inputMobile1.current.value = modOneLine.mobile1;
+        inputMobile2.current.value = modOneLine.mobile2;
+        inputMobile3.current.value = modOneLine.mobile3;
+    };
 
     // 캡차이미지 새로고침
     const refreshCaptcha = () => {
@@ -48,10 +68,20 @@ const RegOneLineBoardModal = (props) => {
         });
     };
 
+    // 수정, 등록 완료 로직
+    const requestBoardList = () => {
+        // 리스트 새로고침
+        handleNeedUpdate();
+
+        // 모달 닫기
+        modalOption.handleModalClose();
+    };
+
+    // 등록
     const regBoard = () => {
         // console.log(boardData);
 
-        if (checkValidation()) {
+        if (validation()) {
             dispatch(
                 set_spinner({
                     isLoading: true,
@@ -131,38 +161,41 @@ const RegOneLineBoardModal = (props) => {
                     });
                 }
             };
-
-            // 수정, 등록 완료 로직
-            const requestBoardList = () => {
-                // 리스트 새로고침
-                handleNeedUpdate();
-
-                // 모달 닫기
-                modalOption.handleModalClose();
-            };
         }
     };
 
     // 검증
-    const checkValidation = () => {
-        // 내용
-        if (!inputTitle.current.value) {
-            inputTitle.current.blur();
-            boardAlert({
-                msg: "내용을 입력해주세요",
-                ref: inputTitle,
-            });
-            return false;
-        }
+    const validation = () => {
+        if (!modOneLine) {
+            // 내용
+            if (!inputTitle.current.value) {
+                inputTitle.current.blur();
+                boardAlert({
+                    msg: "내용을 입력해주세요",
+                    ref: inputTitle,
+                });
+                return false;
+            }
 
-        // 캡차
-        if (!inputCaptcha.current.value) {
-            inputCaptcha.current.blur();
-            boardAlert({
-                msg: "자동입력방지 코드를 입력해주세요",
-                ref: inputCaptcha,
-            });
-            return false;
+            // 캡차
+            if (!inputCaptcha.current.value) {
+                inputCaptcha.current.blur();
+                boardAlert({
+                    msg: "자동입력방지 코드를 입력해주세요",
+                    ref: inputCaptcha,
+                });
+                return false;
+            }
+        } else {
+            // 내용
+            if (!inputTitle.current.value) {
+                inputTitle.current.blur();
+                boardAlert({
+                    msg: "내용을 입력해주세요",
+                    ref: inputTitle,
+                });
+                return false;
+            }
         }
 
         return true;
@@ -183,39 +216,83 @@ const RegOneLineBoardModal = (props) => {
         ref.current.focus();
     };
 
-    /*
-    // CK에디터 설정
-    const editorConfiguration = {
-        placeholder: "내용을 입력하세요.",
-        extraPlugins: [uploadPlugin],
-    };
+    // 수정
+    const modBoard = () => {
+        if (validation()) {
+            dispatch(
+                set_spinner({
+                    isLoading: true,
+                })
+            );
 
-    function uploadPlugin(editor) {
-        // (3)
-        editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
-            return customUploadAdapter(loader);
-        };
-    }
+            const formData = new FormData();
+            const model = boardModel;
+            let data = {};
 
-    const data = new FormData();
+            let fileArr = [];
 
-    const customUploadAdapter = (loader) => {
-        // (2)
-        return {
-            upload() {
-                return new Promise((resolve, reject) => {
-                    loader.file.then((file) => {
-                        // data.append("name", file.name);
-                        data.append("attachmentFile", file);
+            data = {
+                ...model,
+                showYn: "Y",
+                boardIdx: modOneLine.board_idx,
+                boardType: "400",
+                channelType: "000",
+                categoryType: "900",
+                subject: inputTitle.current.value,
+                subTitle: inputTitle.current.value,
+                alimYn: "N",
+            };
 
-                        console.log(file);
+            // 기본 formData append
+            for (const key in data) {
+                formData.append(key, data[key]);
+            }
+
+            const responsLogic = (res) => {
+                let result_code = res.headers.result_code;
+                if (result_code === successCode.success) {
+                    dispatch(
+                        set_spinner({
+                            isLoading: false,
+                        })
+                    );
+
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: "게시물 수정이 완료 되었습니다",
+                        callback: () => requestBoardList(),
                     });
-                });
-            },
-        };
-    };
-    */
+                } else {
+                    dispatch(
+                        set_spinner({
+                            isLoading: false,
+                        })
+                    );
 
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: "잠시 후 다시 시도해주세요",
+                    });
+                }
+            };
+
+            // 수정
+            // /v1/board
+            // PUT MULTI
+            const restParams = {
+                method: "put_multi",
+                url: apiPath.api_admin_mod_board, // /v1/board
+                data: formData,
+                err: err,
+                admin: "Y",
+                callback: (res) => responsLogic(res),
+            };
+
+            CommonRest(restParams);
+        }
+    };
     return (
         <>
             <div className="admin">
@@ -226,94 +303,159 @@ const RegOneLineBoardModal = (props) => {
                     </colgroup>
                     <tbody>
                         <tr>
-                            <th>내용</th>
+                            <th>작성자</th>
                             <td>
-                                <input
-                                    type="text"
-                                    className="input wp100"
-                                    ref={inputTitle}
-                                />
-                            </td>
-                        </tr>
-                        {/* <tr>
-                        <th>파일첨부</th>
-                        <td>
-                            <input type="file" />
-                        </td>
-                    </tr> */}
-                        {/* <tr>
-                        <td colSpan="2">
-                            <div className="editor">
-                                <CKEditor
-                                    editor={ClassicEditor}
-                                    config={editorConfiguration}
-                                    data=""
-                                    onReady={(editor) => {
-                                        // You can store the "editor" and use when it is needed.
-                                        console.log(
-                                            "Editor is ready to use!",
-                                            editor
-                                        );
-                                    }}
-                                    onChange={(event, editor) => {
-                                        const data = editor.getData();
-
-                                        setBoardData(data);
-                                        console.log({ event, editor, data });
-                                    }}
-                                    // onBlur={(event, editor) => {
-                                    //     console.log("Blur.", editor);
-                                    // }}
-                                    // onFocus={(event, editor) => {
-                                    //     console.log("Focus.", editor);
-                                    // }}
-                                />
-                            </div>
-                        </td>
-                    </tr> */}
-                        <tr>
-                            <th>자동등록방지</th>
-                            <td>
-                                <div className="cap_wrap">
-                                    <div>
-                                        <span className="cap">
-                                            <img
-                                                className="imgClass"
-                                                id="captchaImg"
-                                                src={`${img.imageSrc}?${img.imageHash}`}
-                                                alt=""
-                                                decoding="async"
-                                                style={{ background: "white" }}
-                                            />
-                                        </span>
-                                        <span className="cap_refresh">
-                                            <Link
-                                                onClick={(e) => {
-                                                    refreshCaptcha();
-                                                    e.preventDefault();
-                                                }}
-                                            >
-                                                <RefreshIcon />
-                                                새로고침
-                                            </Link>
-                                        </span>
-                                    </div>
+                                {modOneLine ? (
                                     <input
                                         type="text"
-                                        className="input_s"
-                                        ref={inputCaptcha}
+                                        className="input hold wp100"
+                                        ref={inputName}
+                                        readOnly
                                     />
-                                </div>
+                                ) : (
+                                    <input
+                                        type="text"
+                                        className="input wp100"
+                                        ref={inputName}
+                                    />
+                                )}
                             </td>
                         </tr>
+                        <tr>
+                            <th>연락처</th>
+                            <td>
+                                {modOneLine ? (
+                                    <>
+                                        <input
+                                            type="tel"
+                                            className="input hold w120"
+                                            id="phone_num1"
+                                            defaultValue="010"
+                                            ref={inputMobile1}
+                                            readOnly
+                                        />
+                                        <input
+                                            type="tel"
+                                            className="input hold w120"
+                                            id="phone_num2"
+                                            ref={inputMobile2}
+                                            readOnly
+                                        />
+                                        <input
+                                            type="tel"
+                                            className="input hold w120"
+                                            id="phone_num3"
+                                            ref={inputMobile3}
+                                            readOnly
+                                        />
+                                    </>
+                                ) : (
+                                    <>
+                                        <input
+                                            type="tel"
+                                            className="input w120"
+                                            id="phone_num1"
+                                            defaultValue="010"
+                                            ref={inputMobile1}
+                                        />
+                                        <input
+                                            type="tel"
+                                            className="input w120"
+                                            id="phone_num2"
+                                            ref={inputMobile2}
+                                        />
+                                        <input
+                                            type="tel"
+                                            className="input w120"
+                                            id="phone_num3"
+                                            ref={inputMobile3}
+                                        />
+                                    </>
+                                )}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>내용</th>
+                            <td>
+                                <textarea
+                                    name=""
+                                    id=""
+                                    className="talk_txt"
+                                    ref={inputTitle}
+                                ></textarea>
+                            </td>
+                        </tr>
+                        {!modOneLine && (
+                            <tr>
+                                <th>자동등록방지</th>
+                                <td>
+                                    <div className="cap_wrap">
+                                        <div>
+                                            <span className="cap">
+                                                <img
+                                                    className="imgClass"
+                                                    id="captchaImg"
+                                                    src={`${img.imageSrc}?${img.imageHash}`}
+                                                    alt=""
+                                                    decoding="async"
+                                                    style={{
+                                                        background: "white",
+                                                    }}
+                                                />
+                                            </span>
+                                            <span className="cap_refresh">
+                                                <Link
+                                                    onClick={(e) => {
+                                                        refreshCaptcha();
+                                                        e.preventDefault();
+                                                    }}
+                                                >
+                                                    <RefreshIcon />
+                                                    새로고침
+                                                </Link>
+                                            </span>
+                                        </div>
+                                        <input
+                                            type="text"
+                                            className="input_s"
+                                            ref={inputCaptcha}
+                                        />
+                                    </div>
+                                </td>
+                            </tr>
+                        )}
+                        {modOneLine && (
+                            <tr>
+                                <th>등록일</th>
+                                <td>{modOneLine.reg_dttm}</td>
+                            </tr>
+                        )}
+                        {modOneLine ? (
+                            modOneLine.mod_dttm ? (
+                                <tr>
+                                    <th>수정일</th>
+                                    <td>{modOneLine.mod_dttm}</td>
+                                </tr>
+                            ) : (
+                                <></>
+                            )
+                        ) : (
+                            <></>
+                        )}
                     </tbody>
                 </table>
                 <div className="btn_box">
-                    <Link href="" className="btn btn01" onClick={regBoard}>
-                        등록
-                    </Link>
+                    {modOneLine ? (
+                        <Link className="btn btn01" onClick={modBoard}>
+                            수정
+                        </Link>
+                    ) : (
+                        <Link className="btn btn01" onClick={regBoard}>
+                            등록
+                        </Link>
+                    )}
+
                     <Link
-                        href=""
                         className="btn btn02"
                         onClick={modalOption.handleModalClose}
                     >

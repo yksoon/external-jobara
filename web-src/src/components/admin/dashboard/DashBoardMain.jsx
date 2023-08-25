@@ -377,14 +377,15 @@ const DashBoardMain = () => {
                         <div className="adm_table">
                             <table className="table_a">
                                 <colgroup>
-                                    <col width="4%" />
-                                    <col width="10%" />
+                                    {/* <col width="4%" /> */}
+                                    <col width="6%" />
                                     <col width="5%" />
+                                    <col width="6%" />
                                     <col width="7%" />
-                                    <col width="10%" />
                                     <col width="8%" />
                                     <col width="8%" />
                                     <col width="8%" />
+                                    <col width="6%" />
                                     <col width="6%" />
                                     <col width="6%" />
                                     <col width="6%" />
@@ -393,7 +394,7 @@ const DashBoardMain = () => {
                                 </colgroup>
                                 <thead>
                                     <tr>
-                                        <th rowSpan="2">고유번호</th>
+                                        {/* <th rowSpan="2">고유번호</th> */}
                                         <th rowSpan="2">ID</th>
                                         <th rowSpan="2">이름</th>
                                         <th rowSpan="2">연락처</th>
@@ -401,7 +402,7 @@ const DashBoardMain = () => {
                                         <th rowSpan="2">학교</th>
                                         <th rowSpan="2">학과</th>
                                         <th rowSpan="2">희망직종</th>
-                                        <th colSpan="3">참여프로그램</th>
+                                        <th colSpan="4">참여프로그램</th>
                                         <th rowSpan="2">등록일</th>
                                         <th rowSpan="2">이력서 보기</th>
                                     </tr>
@@ -419,7 +420,14 @@ const DashBoardMain = () => {
                                                 borderRight: "1px solid #ddd",
                                             }}
                                         >
-                                            현장참여
+                                            버크만진단
+                                        </th>
+                                        <th
+                                            style={{
+                                                borderRight: "1px solid #ddd",
+                                            }}
+                                        >
+                                            바로채용면접
                                         </th>
                                     </tr>
                                 </thead>
@@ -427,7 +435,7 @@ const DashBoardMain = () => {
                                     {totalListInfo &&
                                         totalListInfo.map((item, idx) => (
                                             <tr key={`list_${idx}`}>
-                                                <td>{item.user_key}</td>
+                                                {/* <td>{item.user_key}</td> */}
                                                 <td>{item.user_id}</td>
                                                 <td>{item.user_name_ko}</td>
                                                 <td>{`${item.mobile1}-${item.mobile2}-${item.mobile3}`}</td>
@@ -478,6 +486,17 @@ const DashBoardMain = () => {
                                                         (e) =>
                                                             e.additional_idx ===
                                                             3
+                                                    ).length !== 0 ? (
+                                                        <CheckCircleOutlineOutlinedIcon />
+                                                    ) : (
+                                                        ""
+                                                    )}
+                                                </td>
+                                                <td className="checkicon">
+                                                    {item.additional_info.filter(
+                                                        (e) =>
+                                                            e.additional_idx ===
+                                                            4
                                                     ).length !== 0 ? (
                                                         <CheckCircleOutlineOutlinedIcon />
                                                     ) : (
