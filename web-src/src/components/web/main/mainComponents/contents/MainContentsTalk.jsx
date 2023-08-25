@@ -1,6 +1,6 @@
 import { CommonConsole, CommonNotify, CommonRest } from "common/js/Common";
 import useAlert from "hook/useAlert";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { set_spinner } from "redux/actions/commonAction";
@@ -266,7 +266,8 @@ const MainContentsTalk = () => {
                 <div className="talk">
                     <div className="title">
                         <h3 data-aos="fade-up">
-                            <span>2023 잡아라 페스티벌</span> 응원글 한줄로 치킨을 잡아라!!
+                            <span>2023 잡아라 페스티벌</span> 응원글 한줄로
+                            치킨을 잡아라!!
                         </h3>
                         <p>
                             2023 잡아라 페스티벌에 참석하시는 모든 청년들을 위해
@@ -383,8 +384,12 @@ const MainContentsTalk = () => {
                                     contentFix(e);
                                 }}
                             ></textarea>
-                        </div><br/>
-                        <p>※ 당첨자 발표는 9월 20일 홈페이지에서 확인 가능합니다.</p>
+                        </div>
+                        <br />
+                        <p>
+                            ※ 당첨자 발표는 9월 20일 홈페이지에서 확인
+                            가능합니다.
+                        </p>
                     </div>
                 </div>
             </div>

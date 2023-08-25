@@ -15,6 +15,8 @@ import Location from "components/web/intro/Location";
 import Program from "components/web/program/Program";
 import Detail from "components/web/program/Detail";
 import Event from "components/web/program/Event";
+import { CommonSpinner } from "common/js/Common";
+import { useSelector } from "react-redux";
 
 // Router
 const Router = () => {

@@ -1,6 +1,6 @@
 // Create By YKSoon_
 
-import { React, useEffect, useRef, useState } from "react";
+import { React, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Backdrop, CircularProgress, Modal } from "@mui/material";
 import { set_spinner } from "redux/actions/commonAction";
 import tokenExpire from "./tokenExpire";
@@ -191,7 +191,7 @@ const CommonSpinner = (props) => {
     //     height = $(document).scrollTop();
     // });
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         setIsloading(props.option.isLoading);
 
         if (error === "Y") {

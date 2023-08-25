@@ -302,227 +302,212 @@ const Notice = () => {
                     <h3>공지사항</h3>
                 </div>
                 <div className="con_area">
-                    {isDeveloping === "true" ? (
-                        <>
-                            <div className="adm_search">
-                                <div>
-                                    {/* <select name="" id="">
+                    <>
+                        <div className="adm_search">
+                            <div>
+                                {/* <select name="" id="">
                                                             <option value="">구분</option>
                                                             <option value="">이름</option>
                                                             <option value="">소속</option>
                                                         </select> */}
-                                    <input
-                                        type="text"
-                                        className="input"
-                                        ref={searchKeyword}
-                                    />
-                                    <Link
-                                        className="btn btn02"
-                                        onClick={doSearch}
-                                    >
-                                        검색
-                                    </Link>
-                                </div>
-                                <div
-                                    className="btn_box btn_right"
-                                    style={{ margin: 0 }}
-                                >
-                                    <Link
-                                        href=""
-                                        className="btn btn01"
-                                        onClick={regBoard}
-                                    >
-                                        글쓰기
-                                    </Link>
-                                    <Link
-                                        className="btn btn02"
-                                        onClick={removeBoard}
-                                    >
-                                        삭제
-                                    </Link>
-                                </div>
+                                <input
+                                    type="text"
+                                    className="input"
+                                    ref={searchKeyword}
+                                />
+                                <Link className="btn btn02" onClick={doSearch}>
+                                    검색
+                                </Link>
                             </div>
-                            <div className="adm_notice">
-                                <div className="adm_table">
-                                    <table className="table_a">
-                                        <colgroup>
-                                            <col width="5%" />
-                                            <col width="5%" />
-                                            <col width="*" />
-                                            <col width="20%" />
-                                            <col width="10%" />
-                                            <col width="10%" />
-                                            <col width="5%" />
-                                        </colgroup>
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    <input
-                                                        type="checkbox"
-                                                        name="select-all"
-                                                        onChange={(e) =>
-                                                            handleAllCheck(
-                                                                e.target.checked
-                                                            )
-                                                        }
-                                                        checked={
-                                                            checkItems &&
-                                                            boardList &&
-                                                            checkItems.length ===
-                                                                boardList.length
-                                                                ? true
-                                                                : false
-                                                        }
-                                                    />
-                                                </th>
-                                                <th>번호</th>
-                                                <th>제목</th>
-                                                <th>파일</th>
-                                                <th>조회수</th>
-                                                <th>등록일</th>
-                                                <th>게시글수정</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {boardList.length !== 0 ? (
-                                                boardList.map((item, idx) => (
-                                                    <tr key={`notice_${idx}`}>
-                                                        <td>
-                                                            <input
-                                                                type="checkbox"
-                                                                name={`userIdx_${item.board_idx}`}
-                                                                id={
+                            <div
+                                className="btn_box btn_right"
+                                style={{ margin: 0 }}
+                            >
+                                <Link
+                                    href=""
+                                    className="btn btn01"
+                                    onClick={regBoard}
+                                >
+                                    글쓰기
+                                </Link>
+                                <Link
+                                    className="btn btn02"
+                                    onClick={removeBoard}
+                                >
+                                    삭제
+                                </Link>
+                            </div>
+                        </div>
+                        <div className="adm_notice">
+                            <div className="adm_table">
+                                <table className="table_a">
+                                    <colgroup>
+                                        <col width="5%" />
+                                        <col width="5%" />
+                                        <col width="*" />
+                                        <col width="20%" />
+                                        <col width="10%" />
+                                        <col width="10%" />
+                                        <col width="5%" />
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <input
+                                                    type="checkbox"
+                                                    name="select-all"
+                                                    onChange={(e) =>
+                                                        handleAllCheck(
+                                                            e.target.checked
+                                                        )
+                                                    }
+                                                    checked={
+                                                        checkItems &&
+                                                        boardList &&
+                                                        checkItems.length ===
+                                                            boardList.length
+                                                            ? true
+                                                            : false
+                                                    }
+                                                />
+                                            </th>
+                                            <th>번호</th>
+                                            <th>제목</th>
+                                            <th>파일</th>
+                                            <th>조회수</th>
+                                            <th>등록일</th>
+                                            <th>게시글수정</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {boardList.length !== 0 ? (
+                                            boardList.map((item, idx) => (
+                                                <tr key={`notice_${idx}`}>
+                                                    <td>
+                                                        <input
+                                                            type="checkbox"
+                                                            name={`userIdx_${item.board_idx}`}
+                                                            id={item.board_idx}
+                                                            defaultValue={
+                                                                item.board_idx
+                                                            }
+                                                            onChange={(e) =>
+                                                                handleSingleCheck(
+                                                                    e.target
+                                                                        .checked,
                                                                     item.board_idx
-                                                                }
-                                                                defaultValue={
+                                                                )
+                                                            }
+                                                            checked={
+                                                                checkItems.includes(
                                                                     item.board_idx
-                                                                }
-                                                                onChange={(e) =>
-                                                                    handleSingleCheck(
-                                                                        e.target
-                                                                            .checked,
-                                                                        item.board_idx
-                                                                    )
-                                                                }
-                                                                checked={
-                                                                    checkItems.includes(
-                                                                        item.board_idx
-                                                                    )
-                                                                        ? true
-                                                                        : false
-                                                                }
-                                                            />
-                                                        </td>
-                                                        <td>{item.row_num}</td>
-                                                        <td>{item.subject}</td>
-                                                        <td>
-                                                            <div className="file_wrap">
-                                                                {item.file_info
-                                                                    .length !==
-                                                                    0 &&
-                                                                    item.file_info.map(
-                                                                        (
-                                                                            item2,
-                                                                            idx2
-                                                                        ) => (
-                                                                            <Link
-                                                                                to={`${fileBaseUrl}${item2.file_path_enc}`}
-                                                                                key={`file_${idx2}`}
-                                                                            >
-                                                                                <img
-                                                                                    src="img/common/file.svg"
-                                                                                    alt={
-                                                                                        item2.file_name
-                                                                                    }
-                                                                                    title={
-                                                                                        item2.file_name
-                                                                                    }
-                                                                                />
-                                                                                {
+                                                                )
+                                                                    ? true
+                                                                    : false
+                                                            }
+                                                        />
+                                                    </td>
+                                                    <td>{item.row_num}</td>
+                                                    <td>{item.subject}</td>
+                                                    <td>
+                                                        <div className="file_wrap">
+                                                            {item.file_info
+                                                                .length !== 0 &&
+                                                                item.file_info.map(
+                                                                    (
+                                                                        item2,
+                                                                        idx2
+                                                                    ) => (
+                                                                        <Link
+                                                                            to={`${fileBaseUrl}${item2.file_path_enc}`}
+                                                                            key={`file_${idx2}`}
+                                                                        >
+                                                                            <img
+                                                                                src="img/common/file.svg"
+                                                                                alt={
                                                                                     item2.file_name
                                                                                 }
-                                                                            </Link>
-                                                                        )
-                                                                    )}
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div className="viewer_wrap">
-                                                                <img
-                                                                    src="img/common/user_icon_black.png"
-                                                                    alt=""
-                                                                />{" "}
-                                                                {
-                                                                    item.view_count
-                                                                }
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            {
-                                                                item.reg_dttm.split(
-                                                                    " "
-                                                                )[0]
-                                                            }
-                                                        </td>
-                                                        <td>
-                                                            <Link
-                                                                className="tablebtn"
-                                                                onClick={(
-                                                                    e
-                                                                ) => {
-                                                                    modBoard(
-                                                                        item.board_idx
-                                                                    );
-                                                                }}
-                                                            >
-                                                                수정
-                                                            </Link>
-                                                        </td>
-                                                    </tr>
-                                                ))
-                                            ) : (
-                                                <>
-                                                    <tr>
-                                                        <td
-                                                            colSpan="7"
-                                                            style={{
-                                                                height: "55px",
+                                                                                title={
+                                                                                    item2.file_name
+                                                                                }
+                                                                            />
+                                                                            {
+                                                                                item2.file_name
+                                                                            }
+                                                                        </Link>
+                                                                    )
+                                                                )}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div className="viewer_wrap">
+                                                            <img
+                                                                src="img/common/user_icon_black.png"
+                                                                alt=""
+                                                            />{" "}
+                                                            {item.view_count}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        {
+                                                            item.reg_dttm.split(
+                                                                " "
+                                                            )[0]
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <Link
+                                                            className="tablebtn"
+                                                            onClick={(e) => {
+                                                                modBoard(
+                                                                    item.board_idx
+                                                                );
                                                             }}
                                                         >
-                                                            <b>
-                                                                데이터가
-                                                                없습니다.
-                                                            </b>
-                                                        </td>
-                                                    </tr>
-                                                </>
-                                            )}
-                                        </tbody>
-                                    </table>
-                                </div>
+                                                            수정
+                                                        </Link>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <>
+                                                <tr>
+                                                    <td
+                                                        colSpan="7"
+                                                        style={{
+                                                            height: "55px",
+                                                        }}
+                                                    >
+                                                        <b>
+                                                            데이터가 없습니다.
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                            </>
+                                        )}
+                                    </tbody>
+                                </table>
                             </div>
-                            {boardList.length !== 0 ? (
-                                pageInfo && (
-                                    <div className="pagenation">
-                                        <Pagination
-                                            count={pageInfo.pages}
-                                            onChange={handleChange}
-                                            shape="rounded"
-                                            color="primary"
-                                        />
-                                    </div>
-                                )
-                            ) : (
-                                <></>
-                            )}
-                            <div className="pagenation"></div>
-                            {/* <div
+                        </div>
+                        {boardList.length !== 0 ? (
+                            pageInfo && (
+                                <div className="pagenation">
+                                    <Pagination
+                                        count={pageInfo.pages}
+                                        onChange={handleChange}
+                                        shape="rounded"
+                                        color="primary"
+                                    />
+                                </div>
+                            )
+                        ) : (
+                            <></>
+                        )}
+                        <div className="pagenation"></div>
+                        {/* <div
                                 dangerouslySetInnerHTML={{ __html: dummy }}
                             ></div> */}
-                        </>
-                    ) : (
-                        notice
-                    )}
+                    </>
                 </div>
             </div>
             <CommonModal

@@ -287,150 +287,129 @@ const OneLineBoard = () => {
                     <h3>한줄 게시판</h3>
                 </div>
                 <div className="con_area">
-                    {isDeveloping === "true" ? (
-                        <>
-                            <div className="adm_search">
-                                <div>
-                                    {/* <select name="" id="">
+                    <div className="adm_search">
+                        <div>
+                            {/* <select name="" id="">
                                         <option value="">구분</option>
                                         <option value="">이름</option>
                                         <option value="">소속</option>
                                     </select> */}
-                                    <input
-                                        type="text"
-                                        className="input"
-                                        ref={searchKeyword}
-                                    />
-                                    <Link
-                                        className="btn btn02"
-                                        onClick={doSearch}
-                                    >
-                                        검색
-                                    </Link>
-                                </div>
-                                <div
-                                    className="btn_box btn_right"
-                                    style={{ margin: 0 }}
-                                >
-                                    {/* <Link
+                            <input
+                                type="text"
+                                className="input"
+                                ref={searchKeyword}
+                            />
+                            <Link className="btn btn02" onClick={doSearch}>
+                                검색
+                            </Link>
+                        </div>
+                        <div
+                            className="btn_box btn_right"
+                            style={{ margin: 0 }}
+                        >
+                            {/* <Link
                                         href=""
                                         className="btn btn01"
                                         onClick={regBoard}
                                     >
                                         글쓰기
                                     </Link> */}
-                                    {/* <Link href="" className="btn btn02">
+                            {/* <Link href="" className="btn btn02">
                                         삭제
                                     </Link> */}
-                                    <Link
-                                        className="btn btn01"
-                                        onClick={downloadExcel}
-                                    >
-                                        엑셀 다운로드
-                                    </Link>
-                                </div>
-                            </div>
-                            <div className="adm_notice">
-                                <div className="adm_table">
-                                    <table className="table_a">
-                                        <colgroup>
-                                            <col width="5%" />
-                                            <col width="5%" />
-                                            <col width="10%" />
-                                            <col width="10%" />
-                                            <col width="*" />
-                                            <col width="10%" />
-                                            <col width="5%" />
-                                        </colgroup>
-                                        <thead>
-                                            <tr>
-                                                <th>
+                            <Link className="btn btn01" onClick={downloadExcel}>
+                                엑셀 다운로드
+                            </Link>
+                        </div>
+                    </div>
+                    <div className="adm_notice">
+                        <div className="adm_table">
+                            <table className="table_a">
+                                <colgroup>
+                                    <col width="5%" />
+                                    <col width="5%" />
+                                    <col width="10%" />
+                                    <col width="10%" />
+                                    <col width="*" />
+                                    <col width="10%" />
+                                    <col width="5%" />
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <input type="checkbox" />
+                                        </th>
+                                        <th>번호</th>
+                                        <th>등록자</th>
+                                        <th>연락처</th>
+                                        <th>내용</th>
+                                        <th>등록일</th>
+                                        <th>수정</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {boardList.length !== 0 ? (
+                                        boardList.map((item, idx) => (
+                                            <tr key={`oneline_board_${idx}`}>
+                                                <td>
                                                     <input type="checkbox" />
-                                                </th>
-                                                <th>번호</th>
-                                                <th>등록자</th>
-                                                <th>연락처</th>
-                                                <th>내용</th>
-                                                <th>등록일</th>
-                                                <th>수정</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {boardList.length !== 0 ? (
-                                                boardList.map((item, idx) => (
-                                                    <tr
-                                                        key={`oneline_board_${idx}`}
+                                                </td>
+                                                <td>{item.row_num}</td>
+                                                <td>{item.user_name_ko}</td>
+                                                <td>{`${item.mobile1}-${item.mobile2}-${item.mobile3}`}</td>
+                                                <td>{item.subject}</td>
+                                                <td>
+                                                    {
+                                                        item.reg_dttm.split(
+                                                            " "
+                                                        )[0]
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <Link
+                                                        className="tablebtn"
+                                                        onClick={(e) => {
+                                                            modBoard(
+                                                                item.board_idx
+                                                            );
+                                                        }}
                                                     >
-                                                        <td>
-                                                            <input type="checkbox" />
-                                                        </td>
-                                                        <td>{item.row_num}</td>
-                                                        <td>
-                                                            {item.user_name_ko}
-                                                        </td>
-                                                        <td>{`${item.mobile1}-${item.mobile2}-${item.mobile3}`}</td>
-                                                        <td>{item.subject}</td>
-                                                        <td>
-                                                            {
-                                                                item.reg_dttm.split(
-                                                                    " "
-                                                                )[0]
-                                                            }
-                                                        </td>
-                                                        <td>
-                                                            <Link
-                                                                className="tablebtn"
-                                                                onClick={(
-                                                                    e
-                                                                ) => {
-                                                                    modBoard(
-                                                                        item.board_idx
-                                                                    );
-                                                                }}
-                                                            >
-                                                                수정
-                                                            </Link>
-                                                        </td>
-                                                    </tr>
-                                                ))
-                                            ) : (
-                                                <>
-                                                    <tr>
-                                                        <td
-                                                            colSpan="7"
-                                                            style={{
-                                                                height: "55px",
-                                                            }}
-                                                        >
-                                                            <b>
-                                                                데이터가
-                                                                없습니다.
-                                                            </b>
-                                                        </td>
-                                                    </tr>
-                                                </>
-                                            )}
-                                        </tbody>
-                                    </table>
-                                </div>
+                                                        수정
+                                                    </Link>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <>
+                                            <tr>
+                                                <td
+                                                    colSpan="7"
+                                                    style={{
+                                                        height: "55px",
+                                                    }}
+                                                >
+                                                    <b>데이터가 없습니다.</b>
+                                                </td>
+                                            </tr>
+                                        </>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {boardList.length !== 0 ? (
+                        pageInfo && (
+                            <div className="pagenation">
+                                <Pagination
+                                    count={pageInfo.pages}
+                                    onChange={handleChange}
+                                    shape="rounded"
+                                    color="primary"
+                                />
                             </div>
-                            {boardList.length !== 0 ? (
-                                pageInfo && (
-                                    <div className="pagenation">
-                                        <Pagination
-                                            count={pageInfo.pages}
-                                            onChange={handleChange}
-                                            shape="rounded"
-                                            color="primary"
-                                        />
-                                    </div>
-                                )
-                            ) : (
-                                <></>
-                            )}
-                        </>
+                        )
                     ) : (
-                        notice
+                        <></>
                     )}
                 </div>
             </div>

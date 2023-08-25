@@ -1,12 +1,13 @@
-import { Skeleton } from "@mui/material";
+import { Box, Button, CircularProgress, Modal, Skeleton } from "@mui/material";
 import {
     CommonConsole,
     CommonModal,
     CommonNotify,
     CommonRest,
+    CommonTest,
 } from "common/js/Common";
 import useAlert from "hook/useAlert";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { set_spinner } from "redux/actions/commonAction";
@@ -25,8 +26,9 @@ const MainContentsNoti = () => {
     const [isNeedUpdate, setIsNeedUpdate] = useState(false);
     const [modNotice, setModNotice] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [isSpinning, setIsSpinning] = useState(false);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         getBoardList(1, 5);
     }, []);
 
@@ -84,15 +86,16 @@ const MainContentsNoti = () => {
     };
 
     const openNotice = (board_idx, e) => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+        setIsSpinning(true);
 
-        // console.log(e);
-        // let offset = $(`#${e.target.id}`).offset(); //선택한 태그의 위치를 반환
-        // $("html").animate({ scrollTop: offset.top });
+        //console.log(e);
+        //let offset = $(`#${e.target.id}`).offset(); //선택한 태그의 위치를 반환
+        //$("html").animate({ scrollTop: offset.top });
 
         const boardIdx = String(board_idx);
 
@@ -109,6 +112,7 @@ const MainContentsNoti = () => {
             err: err,
             callback: (res) => responsLogic(res),
         };
+
         CommonRest(restParams);
 
         const responsLogic = (res) => {
@@ -117,11 +121,13 @@ const MainContentsNoti = () => {
 
             // 성공
             if (result_code === successCode.success) {
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinning(false);
 
                 setModNotice(result_info);
 
@@ -201,6 +207,11 @@ const MainContentsNoti = () => {
                 handleNeedUpdate={handleNeedUpdate}
                 modNotice={modNotice}
             />
+            {isSpinning && (
+                <div className="spinner">
+                    <CircularProgress />
+                </div>
+            )}
         </>
     );
 };

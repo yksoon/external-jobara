@@ -1,5 +1,5 @@
 import useAlert from "hook/useAlert";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { apiPath } from "webPath";
@@ -24,7 +24,14 @@ const MainContentsNoticeModal = (props) => {
 
     const handleNeedUpdate = props.handleNeedUpdate;
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     // mod인경우
+    //     if (modNotice) {
+    //         getDefaultValue();
+    //     }
+    // }, []);
+
+    useLayoutEffect(() => {
         // mod인경우
         if (modNotice) {
             getDefaultValue();
