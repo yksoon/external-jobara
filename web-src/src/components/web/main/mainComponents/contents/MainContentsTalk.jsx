@@ -266,7 +266,7 @@ const MainContentsTalk = () => {
                 <div className="talk">
                     <div className="title">
                         <h3 data-aos="fade-up">
-                            <span>2023 잡아라 페스티벌</span>을 응원해주세요!
+                            <span>2023 잡아라 페스티벌</span> 응원글 한줄로 치킨을 잡아라!!
                         </h3>
                         <p>
                             2023 잡아라 페스티벌에 참석하시는 모든 청년들을 위해
@@ -291,19 +291,18 @@ const MainContentsTalk = () => {
                     </div>
                     <div className="talkinput">
                         <div className="input_box">
-                            <div>
-                                <p>성</p>
-                                <input
-                                    type="text"
-                                    className="input"
-                                    ref={oneLineRefs.inputUserFirstName}
-                                />
-                            </div>
-                            <div>
+                            <div className="talk_name">
                                 <p>이름</p>
                                 <input
                                     type="text"
                                     className="input"
+                                    placeholder="성"
+                                    ref={oneLineRefs.inputUserFirstName}
+                                />
+                                <input
+                                    type="text"
+                                    className="input"
+                                    placeholder="이름"
                                     ref={oneLineRefs.inputUserLastName}
                                 />
                             </div>
@@ -330,7 +329,7 @@ const MainContentsTalk = () => {
                                     ref={oneLineRefs.inputMobile3}
                                 />
                             </div>
-                            <div>
+                            <div className="talk_cap">
                                 <p>자동입력방지</p>
                                 <div className="cap_wrap">
                                     <div>
@@ -378,12 +377,14 @@ const MainContentsTalk = () => {
                                 name=""
                                 id=""
                                 className="talk_txt"
+                                placeholder="글자수는 60자까지 입력 가능합니다."
                                 ref={oneLineRefs.inputContent}
                                 onChange={(e) => {
                                     contentFix(e);
                                 }}
                             ></textarea>
-                        </div>
+                        </div><br/>
+                        <p>※ 당첨자 발표는 9월 20일 홈페이지에서 확인 가능합니다.</p>
                     </div>
                 </div>
             </div>

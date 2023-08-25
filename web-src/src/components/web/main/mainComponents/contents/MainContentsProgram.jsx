@@ -69,7 +69,7 @@ const MainContentsProgram = () => {
                             data-aos-delay="600"
                         >
                             <span className="num">03</span>
-                            면접체험
+                            AI 면접체험
                             <span className="icon">
                                 <img src="img/web/main/picon03.png" alt="" />
                             </span>
@@ -93,7 +93,7 @@ const MainContentsProgram = () => {
                                 <p>
                                     공공기관 및 대기업 취업 희망자는 필수코스인 NCS 전략 특강 받고 모의고사 풀어보고 우수자는 경품까지! <br/>
                                     사전 신청하세요!
-                                    <span>신청기간: 8. 21 ~ 9. 5</span>
+                                    <span>신청기간: ~ 9. 5.</span>
                                     <Link to={routerPath.web_signup_url}>
                                         사전등록 바로가기
                                     </Link>
@@ -117,7 +117,7 @@ const MainContentsProgram = () => {
                                     직무별 다양한 이야기를 들어보자 ~!<br/>
                                     토크콘서트 후 소규모 멘토링까지!<br/>
                                     사전 신청하세요!
-                                    <span>신청기간: 8. 21 ~ 9. 5</span>
+                                    <span>신청기간: ~ 9. 5.</span>
                                     <Link to={routerPath.web_signup_url}>
                                         사전등록 바로가기
                                     </Link>
@@ -130,16 +130,17 @@ const MainContentsProgram = () => {
                             data-aos-delay="1500"
                         >
                             <span className="num">06</span>
-                                현장채용면접
+                                바로 채용면접
                             <span className="icon">
                                 <img src="img/web/main/picon06.png" alt="" />
                             </span>
                             <div>
                                 <p>
-                                    취업하고 싶은 기업이 있다면! 바로 서류 지원하세요<br/>
-                                    서류 통과자는 현장에서 면접 보고 채용까지-! 
-                                    <span>이력서제출: ~ 9.5</span>
-                                    <span>제출처: linc21@naver.com</span>
+                                현장에서 바로 채용되고 싶다면 서둘러 신청하세요!<br />
+                                사전 서류 신청 하나로 채용까지 쭉~<br />
+                                    <b>사전 서류신청 → 현장면접(서류 통과자) → 바로채용</b>
+                                    <span>신청기간: ~ 9. 5.</span>
+                                    <span>제출처: 홈페이지 사전등록 또는 이메일(linc21@naver.com) </span>
                                 </p>
                             </div>
                         </li>
