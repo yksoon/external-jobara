@@ -13,7 +13,7 @@ const SignUpName = forwardRef((props, ref) => {
                         className="input_s"
                         placeholder="성"
                         ref={inputFirstName}
-                    />
+                    />{" "}
                     <input
                         type="text"
                         className="input_s"

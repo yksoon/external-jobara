@@ -104,6 +104,9 @@ const Detail = () => {
 									<h5>바로채용면접</h5>
 									<p>사전 서류심사를 통과한 지원자의 직접면접 진행 후 현장에서 채용여부 확정</p>
 									<p>취업 성공자에 대한 이벤트 진행</p>
+									<Link to={routerPath.web_signup_url}>
+                                        사전등록 바로가기
+                                    </Link>
 								</li>
 							</ul>
 						</div>

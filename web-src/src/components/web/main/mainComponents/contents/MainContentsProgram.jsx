@@ -141,6 +141,9 @@ const MainContentsProgram = () => {
                                     <b>사전 서류신청 → 현장면접(서류 통과자) → 바로채용</b>
                                     <span>신청기간: ~ 9. 5.</span>
                                     <span>제출처: 홈페이지 사전등록 또는 이메일(linc21@naver.com) </span>
+                                    <Link to={routerPath.web_signup_url}>
+                                        사전등록 바로가기
+                                    </Link>
                                 </p>
                             </div>
                         </li>
