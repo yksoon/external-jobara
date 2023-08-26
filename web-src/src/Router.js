@@ -15,6 +15,9 @@ import Location from "components/web/intro/Location";
 import Program from "components/web/program/Program";
 import Detail from "components/web/program/Detail";
 import Event from "components/web/program/Event";
+import Notice from "components/web/notice/Notice";
+import { CommonSpinner } from "common/js/Common";
+import { useSelector } from "react-redux";
 
 // Router
 const Router = () => {
@@ -79,6 +82,13 @@ const Router = () => {
                         path={routerPath.web_program_event_url}
                         element={<Event />}
                     />
+                    
+                    {/* 공지사항 */}
+                    {/* URL : /notice/notice */}
+                    <Route
+                        path={routerPath.web_notice_url}
+                        element={<Notice />}
+                    />
 
                     {/* 사전등록 */}
                     {/* URL : /signup */}
@@ -96,6 +106,13 @@ const Router = () => {
 
                     {/* 사전등록 수정 */}
                     {/* URL : /signup_mod */}
+                    <Route
+                        path={routerPath.web_signup_mod_url}
+                        element={<SignUpMod />}
+                    />
+
+                    {/* 사전등록 수정 */}
+                    {/* URL : /notice */}
                     <Route
                         path={routerPath.web_signup_mod_url}
                         element={<SignUpMod />}

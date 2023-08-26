@@ -28,6 +28,9 @@ import SignUpSpecialCheck from "./signupComponents/SignUpSpecialCheck";
 import SignUpFile from "./signupComponents/SignUpFile";
 import { signupMultiModel } from "models/user/signUp";
 import { idPattern, pwPattern } from "common/js/Pattern";
+import SignUpMemo from "./signupComponents/SignUpMemo";
+import { successCode } from "resultCode";
+import { set_check_schedule } from "redux/actions/scheduleAction";
 
 // 회원가입
 function SignUp() {
@@ -37,6 +40,7 @@ function SignUp() {
     const checkSchedule = useSelector((state) => state.schedule.checkSchedule);
     const ip = useSelector((state) => state.ipInfo.ipInfo);
     const navigate = useNavigate();
+    const [state, setState] = useState("1");
 
     // 참여프로그램 체크박스
     const [checkItems, setCheckItems] = useState([]);
@@ -61,7 +65,7 @@ function SignUp() {
             checkSchedule,
             ip,
             alert,
-            checkDatecallback,
+            () => checkDatecallback(),
             dispatch
         ).then((res) => {
             if (!res) {
@@ -104,6 +108,7 @@ function SignUp() {
         inputBirth: useRef(null),
         inputSpecialized: useRef(null),
         inputAttachmentFile: useRef(null),
+        inputMemo: useRef(null),
     };
 
     // 제출
@@ -146,6 +151,7 @@ function SignUp() {
                 birthMm: birthArr[1],
                 birthDd: birthArr[2],
                 specializedNameKo: signUpRefs.inputSpecialized.current.value,
+                userMemo: signUpRefs.inputMemo.current.value,
                 additionalIdxs: checkItems.join(),
             };
 
@@ -163,7 +169,7 @@ function SignUp() {
 
             const responsLogic = (res) => {
                 let result_code = res.headers.result_code;
-                if (result_code === "0000") {
+                if (result_code === successCode.success) {
                     // 등록 완료 후 확인페이지 이동
                     const goToChk = () => {
                         navigate(routerPath.web_signupchk_url);
@@ -297,6 +303,13 @@ function SignUp() {
             return false;
         }
 
+        // --------------------학번----------------------
+        // if (!signUpRefs.inputMemo.current.value) {
+        //     signupAlert("학번을 입력해주세요");
+        //     signUpRefs.inputMemo.current.focus();
+        //     return false;
+        // }
+
         // --------------------생년월일----------------------
         if (!signUpRefs.inputBirth.current.value) {
             signupAlert("생년월일을 입력해주세요");
@@ -312,7 +325,15 @@ function SignUp() {
         }
 
         // --------------------파일----------------------
-        if (!signUpRefs.inputAttachmentFile.current.value) {
+        // if (!signUpRefs.inputAttachmentFile.current.value) {
+        //     signupAlert("이력서를 첨부해주세요");
+        //     signUpRefs.inputAttachmentFile.current.focus();
+        //     return false;
+        // }
+        if (
+            checkItems.indexOf(4) > -1 &&
+            !signUpRefs.inputAttachmentFile.current.value
+        ) {
             signupAlert("이력서를 첨부해주세요");
             signUpRefs.inputAttachmentFile.current.focus();
             return false;
@@ -375,6 +396,10 @@ function SignUp() {
                                 {/* 학과 */}
                                 <SignUpDepartment ref={signUpRefs} />
 
+                                {/* Memo Component */}
+                                {/* 학번 */}
+                                <SignUpMemo ref={signUpRefs} />
+
                                 {/* Birthday Component */}
                                 {/* 생년월일 */}
                                 <SignUpBirthday ref={signUpRefs} />
@@ -399,6 +424,12 @@ function SignUp() {
                                 <SignUpCaptcha ref={signUpRefs} />
                             </tbody>
                         </table>
+                        <div className="registrationNotice">
+                            <p>
+                                ※ 사전등록 완료시 개인정보활용에 동의한 것으로
+                                간주합니다.
+                            </p>
+                        </div>
 
                         <div className="btnbox">
                             <Link

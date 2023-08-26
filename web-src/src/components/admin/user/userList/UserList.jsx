@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
     CommonConsole,
@@ -15,6 +15,7 @@ import { Pagination } from "@mui/material";
 import useConfirm from "hook/useConfirm";
 import useAlert from "hook/useAlert";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import { successCode } from "resultCode";
 
 const UserList = () => {
     const dispatch = useDispatch();
@@ -31,8 +32,10 @@ const UserList = () => {
     const { confirm } = useConfirm();
     const fileBaseUrl = apiPath.api_file;
 
+    const searchKeyword = useRef(null);
+
     useEffect(() => {
-        reqUserList(1, 10);
+        reqUserList(1, 10, "");
     }, [isNeedUpdate]);
 
     const handleNeedUpdate = () => {
@@ -50,7 +53,7 @@ const UserList = () => {
     };
 
     // 유저 리스트
-    const reqUserList = (pageNum, pageSize) => {
+    const reqUserList = (pageNum, pageSize, searchKeyword) => {
         dispatch(
             set_spinner({
                 isLoading: true,
@@ -63,6 +66,7 @@ const UserList = () => {
         const data = {
             page_num: pageNum,
             page_size: pageSize,
+            search_keyword: searchKeyword,
         };
 
         // 파라미터
@@ -80,7 +84,10 @@ const UserList = () => {
             let result_code = res.headers.result_code;
 
             // 성공
-            if (result_code === "0000") {
+            if (
+                result_code === successCode.success ||
+                result_code === successCode.noData
+            ) {
                 let result_info = res.data.result_info;
                 let page_info = res.data.page_info;
 
@@ -136,7 +143,7 @@ const UserList = () => {
             let result_info = res.data.result_info;
 
             // 성공
-            if (result_code === "0000") {
+            if (result_code === successCode.success) {
                 dispatch(
                     set_spinner({
                         isLoading: false,
@@ -269,7 +276,23 @@ const UserList = () => {
 
     // 페이지네이션 이동
     const handleChange = (e, value) => {
-        reqUserList(value, 10);
+        const keyword = searchKeyword.current.value;
+
+        reqUserList(value, 10, keyword);
+    };
+
+    // 검색
+    const doSearch = () => {
+        const keyword = searchKeyword.current.value;
+
+        reqUserList(1, 10, keyword);
+    };
+
+    // 검색 input 엔터키
+    const handleOnKeyPress = (e) => {
+        if (e.key === "Enter") {
+            doSearch(); // Enter 입력이 되면 클릭 이벤트 실행
+        }
     };
 
     return (
@@ -281,39 +304,54 @@ const UserList = () => {
                 <div className="con_area">
                     <div className="adm_search">
                         <div>
-                            <select name="" id="">
+                            {/* <select name="" id="">
                                 <option value="">구분</option>
                                 <option value="">이름</option>
                                 <option value="">소속</option>
-                            </select>{" "}
-                            <input type="text" className="input" />{" "}
-                            <Link className="btn btn02">검색</Link>
+                            </select>{" "} */}
+                            <input
+                                type="text"
+                                className="input"
+                                ref={searchKeyword}
+                                onKeyDown={(e) => handleOnKeyPress(e)} // Enter 입력 이벤트 함수
+                            />{" "}
+                            <Link className="btn btn02" onClick={doSearch}>
+                                검색
+                            </Link>
                         </div>
                         <div>
-                            <Link
-                                className="btn btn01"
-                                title="#memberInsert"
-                                onClick={regUser}
-                            >
+                            <Link className="btn btn01" onClick={regUser}>
                                 임의등록
                             </Link>
                             {/* <a href="" class="btn btn01">엑셀 다운로드</a> */}
                         </div>
                     </div>
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            marginBottom: "10px",
+                        }}
+                    >
+                        총 : <b>{pageInfo && pageInfo.total}</b> 명
+                    </div>
                     <div className="adm_table">
                         <table className="table_a">
                             <colgroup>
-                                <col width="3%" />
-                                <col width="4%" />
-                                <col width="10%" />
+                                <col width="2%" />
+                                {/* <col width="4%" /> */}
+                                <col width="6%" />
                                 <col width="5%" />
                                 <col width="7%" />
-                                <col width="10%" />
+                                <col width="6%" />
+                                <col width="6%" />
+                                <col width="8%" />
+                                <col width="6%" />
+                                <col width="6%" />
                                 <col width="8%" />
                                 <col width="8%" />
                                 <col width="8%" />
-                                <col width="8%" />
-                                <col width="8%" />
+                                <col width="6%" />
                                 <col width="6%" />
                                 <col width="6%" />
                                 <col width="6%" />
@@ -337,15 +375,16 @@ const UserList = () => {
                                             }
                                         />
                                     </th>
-                                    <th rowSpan="2">고유번호</th>
+                                    {/* <th rowSpan="2">고유번호</th> */}
                                     <th rowSpan="2">ID</th>
                                     <th rowSpan="2">이름</th>
                                     <th rowSpan="2">연락처</th>
-                                    <th rowSpan="2">학교</th>
                                     <th rowSpan="2">생년월일</th>
+                                    <th rowSpan="2">학번</th>
+                                    <th rowSpan="2">학교</th>
                                     <th rowSpan="2">학과</th>
                                     <th rowSpan="2">희망직종</th>
-                                    <th colSpan="2">참여프로그램</th>
+                                    <th colSpan="4">참여프로그램</th>
                                     <th rowSpan="2">등록일</th>
                                     <th rowSpan="2">이력서 보기</th>
                                     <th rowSpan="2">정보수정</th>
@@ -359,10 +398,24 @@ const UserList = () => {
                                     >
                                         현직자 토크콘서트
                                     </th>
+                                    <th
+                                        style={{
+                                            borderRight: "1px solid #ddd",
+                                        }}
+                                    >
+                                        버크만진단
+                                    </th>
+                                    <th
+                                        style={{
+                                            borderRight: "1px solid #ddd",
+                                        }}
+                                    >
+                                        바로채용면접
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {userList &&
+                                {userList.length !== 0 ? (
                                     userList.map((item, idx) => (
                                         <tr key={`list_${idx}`}>
                                             <td>
@@ -386,19 +439,20 @@ const UserList = () => {
                                                     }
                                                 />
                                             </td>
-                                            <td>{item.user_key}</td>
+                                            {/* <td>{item.user_key}</td> */}
                                             <td>{item.user_id}</td>
                                             <td>{item.user_name_ko}</td>
                                             <td>{`${item.mobile1}-${item.mobile2}-${item.mobile3}`}</td>
                                             <td>
-                                                {item.organization_name_ko
-                                                    ? item.organization_name_ko
-                                                    : "-"}
-                                            </td>
-                                            <td>
                                                 {item.birth_yyyy === null
                                                     ? "-"
                                                     : `${item.birth_yyyy}-${item.birth_mm}-${item.birth_dd}`}
+                                            </td>
+                                            <td>{item.user_memo}</td>
+                                            <td>
+                                                {item.organization_name_ko
+                                                    ? item.organization_name_ko
+                                                    : "-"}
                                             </td>
                                             <td>
                                                 {item.department_name_ko
@@ -424,6 +478,26 @@ const UserList = () => {
                                                 {item.additional_info.filter(
                                                     (e) =>
                                                         e.additional_idx === 2
+                                                ).length !== 0 ? (
+                                                    <CheckCircleOutlineOutlinedIcon />
+                                                ) : (
+                                                    ""
+                                                )}
+                                            </td>
+                                            <td className="checkicon">
+                                                {item.additional_info.filter(
+                                                    (e) =>
+                                                        e.additional_idx === 3
+                                                ).length !== 0 ? (
+                                                    <CheckCircleOutlineOutlinedIcon />
+                                                ) : (
+                                                    ""
+                                                )}
+                                            </td>
+                                            <td className="checkicon">
+                                                {item.additional_info.filter(
+                                                    (e) =>
+                                                        e.additional_idx === 4
                                                 ).length !== 0 ? (
                                                     <CheckCircleOutlineOutlinedIcon />
                                                 ) : (
@@ -469,23 +543,39 @@ const UserList = () => {
                                                         modUser(item.user_idx);
                                                     }}
                                                 >
-                                                    정보 수정
+                                                    수정
                                                 </Link>
                                             </td>
                                         </tr>
-                                    ))}
+                                    ))
+                                ) : (
+                                    <>
+                                        <tr>
+                                            <td
+                                                colSpan="14"
+                                                style={{ height: "55px" }}
+                                            >
+                                                <b>데이터가 없습니다.</b>
+                                            </td>
+                                        </tr>
+                                    </>
+                                )}
                             </tbody>
                         </table>
                     </div>
-                    {pageInfo && (
-                        <div className="pagenation">
-                            <Pagination
-                                count={pageInfo.pages}
-                                onChange={handleChange}
-                                shape="rounded"
-                                color="primary"
-                            />
-                        </div>
+                    {userList.length !== 0 ? (
+                        pageInfo && (
+                            <div className="pagenation">
+                                <Pagination
+                                    count={pageInfo.pages}
+                                    onChange={handleChange}
+                                    shape="rounded"
+                                    color="primary"
+                                />
+                            </div>
+                        )
+                    ) : (
+                        <></>
                     )}
                 </div>
             </div>

@@ -37,11 +37,11 @@ const routerPath = {
     web_main_url: `${base_url}`,
 
     // 행사소개
-    // /intro
+    // /intro/intro
     web_intro_url: `${base_url}intro/intro`,
 
-    // 행사소개
-    // /intro
+    // 행사장소
+    // /intro/location
     web_intro_location_url: `${base_url}intro/location`,
 
     // 행사일정
@@ -55,6 +55,10 @@ const routerPath = {
     // 이벤트프로그램
     // /program/event
     web_program_event_url: `${base_url}program/event`,
+
+    // notice
+    // /notice/notice
+    web_notice_url: `${base_url}notice/notice`,
 
     // 회원가입
     // /signup
@@ -185,11 +189,44 @@ const apiPath = {
     }meta/_additionals`,
     // api_get_additional: `${slash + version + slash}meta/_additionals`,
 
-    // ------------------ Additional API 스케줄 관리 API ------------------
+    // ------------------ Dashboard API 대시보드 관리 API ------------------
     // /v1/dashboard
     // POST
     // 대시보드 목록
     api_admin_dashboard: `${base_api_url + slash + version + slash}dashboard`,
+
+    // ------------------ Board API 게시판 관리 API ------------------
+    // /v1/_boards
+    // POST
+    // 게시판 목록
+    api_admin_boards: `${base_api_url + slash + version + slash}_boards`,
+
+    // /v1/_board
+    // POST MULTI
+    // 게시판 등록
+    api_admin_board: `${base_api_url + slash + version + slash}_board`,
+
+    // /v1/board/{board_idx}
+    // GET
+    // 게시판 상세
+    api_admin_get_board: `${base_api_url + slash + version + slash}board`,
+
+    // /v1/board/
+    // PUT MULTI
+    // 게시판 수정
+    api_admin_mod_board: `${base_api_url + slash + version + slash}board`,
+
+    // /v1/board/
+    // DELETE
+    // 게시판 삭제
+    api_admin_remove_board: `${base_api_url + slash + version + slash}board`,
+
+    // /v1/board/_download
+    // POST
+    // 게시판 엑셀 다운로드
+    api_admin_board_download: `${
+        base_api_url + slash + version + slash
+    }board/_download`,
 };
 
 export { routerPath, apiPath };

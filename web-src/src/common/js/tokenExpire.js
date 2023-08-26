@@ -4,6 +4,7 @@ import { set_spinner } from "redux/actions/commonAction";
 import { apiPath, routerPath } from "webPath";
 import { CommonConsole, CommonNotify } from "./Common";
 import { init_user_info_admin } from "redux/actions/userInfoAdminAction";
+import { successCode } from "resultCode";
 
 const tokenExpire = (dispatch, alert) => {
     dispatch(
@@ -29,7 +30,7 @@ const tokenExpire = (dispatch, alert) => {
             // response
             let result_code = response.headers.result_code;
 
-            if (result_code === "0000") {
+            if (result_code === successCode.success) {
                 // localStorage.removeItem("userInfo");
                 // dispatch(set_user_info(null));
                 dispatch(init_user_info_admin(null));

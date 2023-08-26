@@ -38,7 +38,13 @@ const ConfirmModal = () => {
                                 </p>
                             </div>
                             <div className="btn_box">
-                                <Link className="backbtn on" onClick={ok.click}>
+                                <Link
+                                    className="backbtn on"
+                                    onClick={(e) => {
+                                        ok.click();
+                                        e.preventDefault();
+                                    }}
+                                >
                                     {ok.text}{" "}
                                     <span>
                                         <img
@@ -50,7 +56,10 @@ const ConfirmModal = () => {
                                 <Link
                                     className="backbtn"
                                     id="closeBtn"
-                                    onClick={cancel.click}
+                                    onClick={(e) => {
+                                        cancel.click();
+                                        e.preventDefault();
+                                    }}
                                 >
                                     {cancel.text}{" "}
                                     <span>

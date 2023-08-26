@@ -4,6 +4,8 @@ import store from "redux/store/store";
 let ip;
 let token;
 
+const timeOut = 20000;
+
 /*
     REST CONNECTION 시 Request 를 가로채서
     request.headers 를 셋팅한다.
@@ -19,7 +21,7 @@ const Instance = axios.create({
         "Content-Type": "application/json",
         // "Content-Type": "text/plain",
     },
-    timeout: 5000,
+    timeout: timeOut,
 });
 
 Instance.interceptors.request.use(
@@ -45,7 +47,7 @@ const Instance_admin = axios.create({
         // "Content-Type":
         //     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8",
     },
-    timeout: 10000,
+    timeout: timeOut,
 });
 
 Instance_admin.interceptors.request.use(
@@ -68,7 +70,7 @@ const Instance_multi = axios.create({
     headers: {
         "Content-Type": "multipart/form-data",
     },
-    timeout: 5000,
+    timeout: timeOut,
 });
 
 Instance_multi.interceptors.request.use(
@@ -93,7 +95,7 @@ const Instance_admin_multi = axios.create({
     headers: {
         "Content-Type": "multipart/form-data",
     },
-    timeout: 10000,
+    timeout: timeOut,
 });
 
 Instance_admin_multi.interceptors.request.use(

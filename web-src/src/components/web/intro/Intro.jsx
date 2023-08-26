@@ -66,7 +66,7 @@ const Intro = () => {
                                 </tr>
                                 <tr>
                                     <th>주최</th>
-                                    <td>
+                                    <td className="imgtd">
                                         <img
                                             src="img/web/main/host04.png"
                                             alt="제주대학교"
@@ -80,6 +80,10 @@ const Intro = () => {
                                         <img
                                             src="img/web/main/host02.png"
                                             alt="한국연구재단"
+                                        />&nbsp;&nbsp;{" "}
+                                        <img
+                                            src="img/web/main/host03.png"
+                                            alt="제주특별자치도"
                                         />
                                     </td>
                                 </tr>
@@ -100,22 +104,17 @@ const Intro = () => {
                                     <td>
                                         <ul className="list_dot">
                                             <li>
-                                                <b>진로탐색</b> - 나를 알면
-                                                백전백승, 기업정보 탐색
+                                                <b>진로탐색</b> - 진로탐색 (버크만 진단 등) , 이력서 및 자기소개서 컨설팅
                                             </li>
                                             <li>
-                                                <b>기업탐방</b> - 채용 정보 및
-                                                상담, 글로벌 JOB FAIR, 바로 채용
-                                                면접
+                                                <b>기업탐방</b> - 참여기업 채용 정보 확인 및 채용상담, 글로벌 JOB FAIR
                                             </li>
                                             <li>
-                                                <b>실전취업</b> - AI면접 체험,
-                                                NCS 모의고사, 현직자 토크
-                                                콘서트, Company Play
+                                                <b>취업대비 실전!</b> -  현장 채용면접, AI 면접체험, NCS모의고사, 현직자토크콘서트 등
                                             </li>
                                             <li>
-                                                <b>이벤트</b> - 총장님과의 대화,
-                                                가족회사 홍보관, 기업이벤트 등
+                                                <b>이벤트</b> - 프로필촬영, 나만의 명함 만들기, 가족회사 홍보관, 경품 행사 등
+
                                             </li>
                                         </ul>
                                     </td>

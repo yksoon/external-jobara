@@ -222,28 +222,61 @@ const MainMainvisual = () => {
                         data-aos-auration="800"
                         data-aos-delay="500"
                     >
-                        <Link to={routerPath.web_intro_url} className="m01">
-                            박람회안내
+                        <Link className="m00">
+                            MENU
                         </Link>
-                        <Link to={routerPath.web_program_url} className="m02">
-                            프로그램
-                        </Link>
-                        <Link to={routerPath.web_signup_url} className="m03">
-                            사전등록
-                        </Link>
-                        <Link
-                            onClick={() =>
-                                openUrl(
-                                    "https://lincplus.jejunu.ac.kr/programs/notice.htm?act=view&seq=1364"
-                                )
-                            }
-                            className="m04"
-                        >
-                            참여기업
-                        </Link>
-                        {/* <Link to="" className="m05">
-                            공지
-                        </Link> */}
+                        <ul>
+                            <li>
+                                <Link to={routerPath.web_intro_url}  className="m01">
+                                    박람회안내
+                                </Link>
+                                <div className="submenu">
+                                    <Link to={routerPath.web_intro_url}>
+                                        행사소개
+                                    </Link>
+                                    {/* <Link href="">인사말</Link> */}
+                                    <Link
+                                        to={routerPath.web_intro_location_url}
+                                    >
+                                        행사장소
+                                    </Link>
+                                </div>
+                            </li>
+                            <li>
+                                <Link to={routerPath.web_program_url} className="m02">프로그램</Link>
+                                <div className="submenu">
+                                    <Link to={routerPath.web_program_url}>행사일정</Link>
+                                    <Link to={routerPath.web_program_detail_url}>세부프로그램</Link>
+                                    <Link  to={routerPath.web_program_event_url}>이벤트프로그램</Link>
+                                </div>
+                            </li>
+                            <li>
+                                <Link to={routerPath.web_signup_url} className="m03">사전등록</Link>
+                                <div className="submenu">
+                                    <Link to={routerPath.web_signup_url}>
+                                        사전등록
+                                    </Link>
+                                    <Link to={routerPath.web_signupchk_url}>
+                                        사전등록 확인
+                                    </Link>
+                                </div>
+                            </li>
+                            <li>
+                                <Link
+                                    onClick={() =>
+                                        openUrl(
+                                            "https://lincplus.jejunu.ac.kr/programs/notice.htm?act=view&seq=1364"
+                                        )
+                                    }
+                                    className="m04"
+                                >
+                                    참여기업
+                                </Link>
+                            </li>
+                            <li>
+                                <Link  to={routerPath.web_notice_url}>공지</Link>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>

@@ -10,6 +10,9 @@ import { useNavigate } from "react-router";
 import { set_spinner } from "redux/actions/commonAction";
 import { set_page } from "redux/actions/pageActios";
 import { apiPath, routerPath } from "webPath";
+import Notice from "./board/notice/Notice";
+import OneLineBoard from "./board/oneLineBoard/OneLineBoard";
+import { successCode } from "resultCode";
 
 const Admin = () => {
     const dispatch = useDispatch();
@@ -64,8 +67,7 @@ const Admin = () => {
             const result_code = res.headers.result_code;
             let resData = [];
 
-            // TODO: 상수로 빼
-            if (result_code === "0000") {
+            if (result_code === successCode.success) {
                 // dispatch(
                 //     set_spinner({
                 //         isLoading: false,
@@ -157,11 +159,21 @@ const Admin = () => {
     // 렌더링 페이지
     const renderPage = (page) => {
         switch (page) {
+            // 대시보드
             case "dashboard":
                 return <DashBoardMain />;
 
+            // 사전등록 관리
             case "userList":
                 return <UserList />;
+
+            // 공지사항
+            case "notice":
+                return <Notice />;
+
+            // 한줄게시판
+            case "oneLineBoard":
+                return <OneLineBoard />;
 
             default:
                 return <DashBoardMain />;

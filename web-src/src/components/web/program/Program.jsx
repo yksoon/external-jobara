@@ -12,6 +12,7 @@ const Program = () => {
             {/* 서브컨텐츠     //S */}
             <div id="container" className="sub_container">
                 <div id="content">
+                    <h3 className="title_chap"><span>2023 잡아라 페스티벌</span>에 당신을 초대합니다!</h3>
                     <h2 id="subtitle">행사일정</h2>
                     <div className="program">
                         <table className="pro_table">
@@ -53,13 +54,13 @@ const Program = () => {
                                     </td>
                                     <td rowSpan="4" className="step step2">
                                         <span>STEP 2</span>
-                                        기업 채용 정보 상담 및 바로 채용 면접,
+                                        참여기업 채용 정보 확인 및 채용상담,
                                         글로벌 JOB FAIR
                                     </td>
                                     <td rowSpan="4" className="step step3">
                                         <span>STEP 3</span>
-                                        현직자 토크콘서트 및 AI 면접체험관,
-                                        NCS모의고사
+                                        <br /> 바로채용면접, AI 면접체험,
+                                        NCS모의고사, 현직자토크콘서트 등
                                     </td>
                                     <td></td>
                                 </tr>
@@ -81,7 +82,8 @@ const Program = () => {
                                     <td></td>
                                 </tr>
                             </tbody>
-                        </table>
+                        </table><br/>
+                        <p>※ 운영에 따라 일정이 변경될 수 있습니다.</p>
                     </div>
                 </div>
             </div>

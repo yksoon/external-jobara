@@ -16,6 +16,7 @@ import {
     set_user_info_admin,
     set_user_token_admin,
 } from "redux/actions/userInfoAdminAction";
+import { successCode } from "resultCode";
 
 const SignIn = () => {
     const dispatch = useDispatch();
@@ -85,7 +86,7 @@ const SignIn = () => {
         const responsLogic = (res) => {
             let result_code = res.headers.result_code;
 
-            if (result_code === "0000") {
+            if (result_code === successCode.success) {
                 let user_info = res.data.result_info;
 
                 // 블랙리스트

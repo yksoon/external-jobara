@@ -75,7 +75,7 @@ function App() {
     }, [location]);
 
     // Spinner
-    let spinnerOption = useSelector((state) => state.common.spinner);
+    const spinnerOption = useSelector((state) => state.common.spinner);
 
     // IP
     const getIpInfo = async (callback) => {
@@ -182,8 +182,6 @@ function App() {
     return (
         <>
             <div className="wrapper">
-                <CommonSpinner option={spinnerOption} />
-
                 <ConfirmContextProvider>
                     <AlertContextProvider>
                         <Router />
@@ -192,6 +190,8 @@ function App() {
                     </AlertContextProvider>
                 </ConfirmContextProvider>
             </div>
+
+            <CommonSpinner option={spinnerOption} />
         </>
     );
 }

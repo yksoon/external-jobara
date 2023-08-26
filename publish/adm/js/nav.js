@@ -37,6 +37,10 @@ function navList(listName) {
             location.href = "notice.html";
             break;
 
+        case "talk":
+            location.href = "talk.html";
+            break;
+
         default:
             break;
     }

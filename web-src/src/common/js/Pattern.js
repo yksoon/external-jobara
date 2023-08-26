@@ -17,10 +17,15 @@ const mobile2Pattern = /^[0-9]{1,4}$/;
 // 숫자6자리
 const securityPattern = /^[0-9]{6}$/;
 
+// 한줄응원 패턴
+// 모든 글자 1글자이상 글자 이하
+const oneLinePattern = /^.{1,60}$/;
+
 export {
     pwPattern,
     idPattern,
     mobile1Pattern,
     mobile2Pattern,
     securityPattern,
+    oneLinePattern,
 };

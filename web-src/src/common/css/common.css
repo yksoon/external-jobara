@@ -1,15 +1,18 @@
 /* 모달 //S */
-h4.mo_title {font-size: 24px;font-weight: 700;margin:0 0 20px;padding: 0 0 10px;border-bottom: 1px solid #ddd;;}
-div.mo_title {font-size: 24px;font-weight: 700;margin:0 0 20px;padding: 40px 10px 20px ;border-bottom: 1px solid #ddd;display:flex;justify-content: space-between;position:sticky;top:0;left:0;background:#fff;}
-div.mo_title > h4{font-size: 24px;font-weight: 700;}
-.mo_subtitle {font-size:18px;font-weight: 700;margin:0 0 20px;}
-/* .modal_wrap {display:none;position:fixed;top:0;left:0;width:100%;height:100vh;overflow:hidden;background: rgba(0,0,0,0.4);z-index:999;} */
-.modal_wrap {display:block;position:fixed;top:0;left:0;width:100%;height:100vh;overflow:hidden;background: rgba(0,0,0,0.4);z-index:999;}
-/* .modal_wrap .modal {position:absolute;top:50%;left:50%;transform:translate(-50%, -50%); box-shadow: 5px 5px 15px rgba(0,0,0,0.1);background:#fff;padding:40px;max-height:90%;overflow-y:scroll;z-index:999;border-radius: 5px;} */
-.modal_wrap .modal {position:absolute;top:50%;left:50%;transform:translate(-50%, -50%); box-shadow: 5px 5px 15px rgba(0,0,0,0.1);background:#fff;padding:40px;max-height:840px;overflow-y:scroll;z-index:999;border-radius: 5px;padding:0 40px 40px 40px;z-index:10;}
+.modal_wrap {display:block;position:fixed;top:0;left:0;width:100%;height:100vh;background: rgba(0,0,0,0.4);z-index:999;}
+h4.mo_title {font-size: 21px;font-weight: 700;margin:0 0 20px;padding: 0 0 10px;border-bottom: 1px solid #ddd;}
+h4.notice_title {font-size: 32px;font-weight: 700;margin:0 0 10px;}
+h4.notice_title + p.notice_date {font-size: 18px;color:#818181;border-bottom: 1px solid #ddd;padding: 0 0 10px;margin:0 0 20px;}
+div.mo_title {font-size: 21px;font-weight: 700;margin:0 0 20px;padding: 0 0 10px;border-bottom: 1px solid #ddd;display:flex;justify-content: space-between;}
+div.mo_title > h4{font-size: 21px;font-weight: 700;}
+.mo_subtitle {font-size:18px;font-weight: 700;margin:0 0 14px;}
+/* .modal_wrap {position:fixed;top:0;left:0;width:100%;height:100vh;overflow:hidden;background: rgba(0,0,0,0.4);z-index:999;} */
+.modal_wrap .modal {position:absolute;top:50%;left:50%;transform:translate(-50%, -50%); box-shadow: 5px 5px 15px rgba(0,0,0,0.1);background:#fff;padding:40px;max-height:840px;overflow-y:scroll;z-index:999;border-radius: 5px;}
 .modal{ -ms-overflow-style: none; } .modal::-webkit-scrollbar{ display:none; }
-.modal_wrap .modal .modal_close {position:absolute;top:42px;right:0;cursor:pointer;}
-.modal_wrap .modal .modal_close img {width: 16px;}
+.modal_wrap .modal .modal_close {position:absolute;top:42px;right:50px;cursor:pointer;}
+.modal_wrap .modal .modal_close img {width: 14px;}
+.modal_wrap .fileicon img {width:20px;vertical-align: middle;}
+.modal_wrap .fileicon a {display:inline-block;margin:6px 0 0;}
 .modal_content {display:block;}
 .modal_wrap .noti_modal {width:600px;max-height:500px;text-align: center;padding:30px;z-index:100;}
 
@@ -20,6 +23,10 @@ div.mo_title > h4{font-size: 24px;font-weight: 700;}
 .noti_modal .noti_icon {text-align:center;display: block;margin:0 0 24px;}
 .noti_modal .noti_icon img {width: 80px;}
 .block {display:block;}
+
+.MuiBackdrop-root {background:none !important;}
+
+
 
 /* 리액트 변환함 */
 .modal_btn_footer_box {position:sticky;bottom:-40px;left:0;width:100%;background:#fff;padding:20px 0;margin-bottom: -40px;}
@@ -46,11 +53,13 @@ a.backbtn {
     padding: 0 60px;
     color: #bdbdbd;
 }
+a.backbtn span {margin:0 0 0 10px;}
+.alert .btn_box {margin-top: 20px}
 /* alert */
 
 
 /* 스피너 */
-.spinner {position:fixed;top:0;left:0;width:100%;height:100vh;background:rgba(255,255,255,0.4);z-index:9999;}
+.spinner {position:fixed;top:0;left:0;width:100%;height:100vh;overflow:hidden;background:rgba(255,255,255,0.4);z-index:9999;}
 .spinner span {position:absolute;left:50%;top:50%;transform:translate(-50%, -50%);padding:0 !important;color:#e72295;margin-left: -20px;}
 .spinner span.error {color:#1976d2;}
 

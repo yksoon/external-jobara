@@ -19,6 +19,8 @@ import { CommonCheckDate, CommonNotify, CommonRest } from "common/js/Common";
 import { idPattern } from "common/js/Pattern";
 import { signupMultiModel } from "models/user/signUp";
 import { set_user_info } from "redux/actions/userInfoAction";
+import SignUpModMemo from "./signUpModComponents/SignUpModMemo";
+import { successCode } from "resultCode";
 
 const SignUpMod = () => {
     const dispatch = useDispatch();
@@ -90,6 +92,7 @@ const SignUpMod = () => {
         inputBirth: useRef(null),
         inputSpecialized: useRef(null),
         inputAttachmentFile: useRef(null),
+        inputMemo: useRef(null),
     };
 
     const getDefaultValue = () => {
@@ -131,6 +134,9 @@ const SignUpMod = () => {
                 userInfo.department_name_ko;
             signUpRefs.inputSpecialized.current.value =
                 userInfo.specialized_name_ko;
+            signUpRefs.inputMemo.current.value = userInfo.user_info
+                ? userInfo.user_info
+                : "";
         }
     };
 
@@ -184,9 +190,10 @@ const SignUpMod = () => {
                 birthDd: birthArr[2],
                 specializedNameKo: signUpRefs.inputSpecialized.current.value,
                 additionalIdxs: checkItems.join(),
-                organizationIdx: userInfo.organization_idx,
-                specializedIdx: userInfo.specialized_idx,
-                departmentIdx: userInfo.department_idx,
+                organizationIdx: signUpRefs.organization_idx,
+                specializedIdx: signUpRefs.specialized_idx,
+                departmentIdx: signUpRefs.department_idx,
+                userInfo: signUpRefs.inputMemo.current.value,
             };
 
             // 기본 formData append
@@ -203,7 +210,7 @@ const SignUpMod = () => {
 
             const responsLogic = (res) => {
                 let result_code = res.headers.result_code;
-                if (result_code === "0000") {
+                if (result_code === successCode.success) {
                     dispatch(
                         set_spinner({
                             isLoading: false,
@@ -366,6 +373,13 @@ const SignUpMod = () => {
             return false;
         }
 
+        // --------------------학번----------------------
+        // if (!signUpRefs.inputMemo.current.value) {
+        //     signupAlert("학번을 입력해주세요");
+        //     signUpRefs.inputMemo.current.focus();
+        //     return false;
+        // }
+
         // --------------------생년월일----------------------
         if (!signUpRefs.inputBirth.current.value) {
             signupAlert("생년월일을 입력해주세요");
@@ -386,6 +400,14 @@ const SignUpMod = () => {
         //     signUpRefs.inputAttachmentFile.current.focus();
         //     return false;
         // }
+        if (
+            checkItems.indexOf(4) > -1 &&
+            !signUpRefs.inputAttachmentFile.current.value
+        ) {
+            signupAlert("이력서를 첨부해주세요");
+            signUpRefs.inputAttachmentFile.current.focus();
+            return false;
+        }
 
         // --------------------captcha----------------------
         // if (!signUpRefs.inputCaptcha.current.value) {
@@ -439,6 +461,10 @@ const SignUpMod = () => {
                                 {/* Department Component */}
                                 {/* 학과 */}
                                 <SignUpModDepartment ref={signUpRefs} />
+
+                                {/* Memo Component */}
+                                {/* 학번 */}
+                                <SignUpModMemo ref={signUpRefs} />
 
                                 {/* Birthday Component */}
                                 {/* 생년월일 */}

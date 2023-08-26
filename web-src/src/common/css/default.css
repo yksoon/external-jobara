@@ -49,8 +49,8 @@
 
 
 /* */
-* {box-sizing:border-box;}
-BODY {font-size:16px; color:#111; font-family: "Pretendard", Dotum, "돋움", Verdana, Arial, sans-serif;}
+* {box-sizing: border-box;;}
+BODY {font-size:14px; color:#111; font-family: "Pretendard", Dotum, "돋움", Verdana, Arial, sans-serif;}
 header {margin:0; padding:0;}
 h5 {
 	-webkit-margin-before: 0;
@@ -110,6 +110,7 @@ h1,h2,h3,h4,h5,h6 {
 	font-size:100%;
 	font-weight:normal;
 }
+#noticeModalContent h1, #noticeModalContent h2, #noticeModalContent h3, #noticeModalContent h4, #noticeModalContent h5, #noticeModalContent h6, #noticeModalContent p{font-size:revert;font-weight: revert;}
 q:before,q:after {
 	content:'';
 }
@@ -127,11 +128,11 @@ th {
 	font-weight:bold;
 }
 
-A {color: #444444}
-A:link {color: #444444; text-decoration:none}
-A:visited {color: #444444; text-decoration:none}
-A:active {color: #444444; text-decoration:none}
-A:hover {color: #444444; text-decoration:none}
+a {color: #444444}
+a:link {color: #444444; text-decoration:none}
+a:visited {color: #444444; text-decoration:none}
+a:active {color: #444444; text-decoration:none}
+a:hover {color: #444444; text-decoration:none}
 
 .input{border:1px solid #cccccc; background-color:#FFF;height:20px; vertical-align:middle; }
 .input_select{border:1px solid #cccccc; background-color:#FFF;height:20px; vertical-align:middle; }

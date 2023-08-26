@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { routerPath } from "webPath";
 
 const MainContentsProgram = () => {
     // URL 열기
@@ -38,6 +39,12 @@ const MainContentsProgram = () => {
                             <span className="icon">
                                 <img src="img/web/main/picon01.png" alt="" />
                             </span>
+                            <div>
+                                <h5>나를 알아야 백전백승!</h5>
+                                <p>내가 하고싶은 직무 또는 내가 잘 할 수 있는 직무가 무엇인지 궁금하다면 현장에서 검사해보자</p>
+                                <h5>이력서 및 자기소개서 컨설팅!</h5>
+                                <p>자소서도 잘 써야 어필할 수 있다 전문가 컨설턴트분들께 상담받고 서류 바로 통과해보자~!</p>
+                            </div>
                         </li>
                         <li
                             className="p02"
@@ -49,6 +56,12 @@ const MainContentsProgram = () => {
                             <span className="icon">
                                 <img src="img/web/main/picon02.png" alt="" />
                             </span>
+                            <div>
+                                <h5>채용정보 및 상담</h5>
+                                <p>도내외 기업들의 정보를 확인하고 채용계획도 살펴보기</p>
+                                <h5>글로벌 JOB FAIR</h5>
+                                <p>글로벌 채용 상담 및 인턴십에 관심이 있다면</p>
+                            </div>
                         </li>
                         <li
                             className="p03"
@@ -56,10 +69,14 @@ const MainContentsProgram = () => {
                             data-aos-delay="600"
                         >
                             <span className="num">03</span>
-                            면접체험
+                            AI 면접체험
                             <span className="icon">
                                 <img src="img/web/main/picon03.png" alt="" />
                             </span>
+                            <div>
+                                <h5>실전 AI면접 체험</h5>
+                                <p>AI면접 체험을 하고 면접 분석결과까지 받아보자</p>
+                            </div>
                         </li>
                         <li
                             className="p04"
@@ -71,6 +88,18 @@ const MainContentsProgram = () => {
                             <span className="icon">
                                 <img src="img/web/main/picon04.png" alt="" />
                             </span>
+                            <div>
+                                <h5>NCS 전략 특강 및 모의고사</h5>
+                                <p>
+                                    공공기관 및 대기업 취업 희망자는 필수코스인 NCS 전략 특강 받고 모의고사 풀어보고 우수자는 경품까지! <br/>
+                                    사전 신청하세요!
+                                    <span>신청기간: ~ 9. 5.</span>
+                                    <Link to={routerPath.web_signup_url}>
+                                        사전등록 바로가기
+                                    </Link>
+                                </p>
+                            </div>
+                            
                         </li>
                         <li
                             className="p05"
@@ -82,6 +111,18 @@ const MainContentsProgram = () => {
                             <span className="icon">
                                 <img src="img/web/main/picon05.png" alt="" />
                             </span>
+                            <div>
+                                <p>
+                                    대기업 및 글로벌기업의 현직자를 만나볼 수 있는기회!<br/>
+                                    직무별 다양한 이야기를 들어보자 ~!<br/>
+                                    토크콘서트 후 소규모 멘토링까지!<br/>
+                                    사전 신청하세요!
+                                    <span>신청기간: ~ 9. 5.</span>
+                                    <Link to={routerPath.web_signup_url}>
+                                        사전등록 바로가기
+                                    </Link>
+                                </p>
+                            </div>
                         </li>
                         <li
                             className="p06"
@@ -89,16 +130,29 @@ const MainContentsProgram = () => {
                             data-aos-delay="1500"
                         >
                             <span className="num">06</span>
-                            기타 이벤트
+                                바로 채용면접
                             <span className="icon">
                                 <img src="img/web/main/picon06.png" alt="" />
                             </span>
+                            <div>
+                                <p>
+                                현장에서 바로 채용되고 싶다면 서둘러 신청하세요!<br />
+                                사전 서류 신청 하나로 채용까지 쭉~<br />
+                                    <b>사전 서류신청 → 현장면접(서류 통과자) → 바로채용</b>
+                                    <span>신청기간: ~ 9. 5.</span>
+                                    <span>제출처: 홈페이지 사전등록 또는 이메일(linc21@naver.com) </span>
+                                    <Link to={routerPath.web_signup_url}>
+                                        사전등록 바로가기
+                                    </Link>
+                                </p>
+                            </div>
                         </li>
                     </ul>
                 </div>
 
                 <div className="company">
                     <h3>참여기업</h3>
+                    <p>클릭시 기업 공식 홈페이지로 이동합니다.</p>
                     <div
                         className="logobox"
                         data-aos="fade-up"

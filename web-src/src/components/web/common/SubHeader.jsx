@@ -31,7 +31,16 @@ const SubHeader = () => {
                 <div id="header_content">
                     <h1 className="logo">
                         <Link to={routerPath.web_main_url}>
-                            <img src="img/web/main/logo.png" alt="" />
+                            <img src="img/web/main/logo_job.png" alt="" />
+                        </Link>
+                        <Link 
+                             onClick={() =>
+                                openUrl(
+                                    "https://lincplus.jejunu.ac.kr/"
+                                )
+                            }
+                        >
+                            <img src="img/web/main/logo_linc.png" alt="" />
                         </Link>
                     </h1>
 
@@ -59,8 +68,8 @@ const SubHeader = () => {
                                 <Link to={routerPath.web_program_url}>프로그램</Link>
                                 <div className="submenu">
                                     <Link to={routerPath.web_program_url}>행사일정</Link>
-                                    <Link to={routerPath.web_program_detail_url}>세부프로그램</Link>
-                                    <Link  to={routerPath.web_program_event_url}>이벤트프로그램</Link>
+                                    <Link to={routerPath.web_program_detail_url}>세부 프로그램</Link>
+                                    <Link  to={routerPath.web_program_event_url}>이벤트 프로그램</Link>
                                 </div>
                             </li>
                             <li>
@@ -85,9 +94,9 @@ const SubHeader = () => {
                                     참여기업
                                 </Link>
                             </li>
-                            {/* <li>
-                                <Link href="">공지</Link>
-                            </li> */}
+                            <li>
+                                <Link  to={routerPath.web_notice_url}>공지</Link>
+                            </li>
                         </ul>
                     </div>
 

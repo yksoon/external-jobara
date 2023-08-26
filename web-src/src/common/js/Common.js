@@ -1,13 +1,16 @@
-import { React, useEffect, useRef, useState } from "react";
-import $ from "jquery";
-import { Link } from "react-router-dom";
-import { CircularProgress, Dialog, Modal } from "@mui/material";
+// Create By YKSoon_
+
+import { React, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Backdrop, CircularProgress, Modal } from "@mui/material";
 import { set_spinner } from "redux/actions/commonAction";
-import { routerPath } from "webPath";
 import tokenExpire from "./tokenExpire";
-import RegUserModalMain from "components/admin/user/userList/RegUserModalMain";
+import RegUserModalMain from "components/admin/user/userList/modal/RegUserModalMain";
 import { RestServer } from "./Rest";
-import useAlert from "hook/useAlert";
+import RegOneLineBoardModal from "components/admin/board/oneLineBoard/modal/RegOneLineBoardModal";
+import RegNoticeModal from "components/admin/board/notice/modal/RegNoticeModal";
+import { errorCode } from "resultCode";
+import MainContentsNoticeModal from "components/web/main/mainComponents/contents/modal/MainContentsNoticeModal";
+import $ from "jquery";
 
 // Alert (props)
 // isOpen = state 상태값
@@ -41,6 +44,33 @@ const CommonModal = (props) => {
                     />
                 );
 
+            case "RegOneLineBoardModal":
+                return (
+                    <RegOneLineBoardModal
+                        handleNeedUpdate={handleNeedUpdate}
+                        handleModalClose={modalOption.handleModalClose}
+                        modOneLine={props.modOneLine}
+                    />
+                );
+
+            case "RegNoticeModal":
+                return (
+                    <RegNoticeModal
+                        handleNeedUpdate={handleNeedUpdate}
+                        handleModalClose={modalOption.handleModalClose}
+                        modNotice={props.modNotice}
+                    />
+                );
+
+            case "MainContentsNoticeModal":
+                return (
+                    <MainContentsNoticeModal
+                        handleNeedUpdate={handleNeedUpdate}
+                        handleModalClose={modalOption.handleModalClose}
+                        modNotice={props.modNotice}
+                    />
+                );
+
             default:
                 return;
         }
@@ -50,8 +80,8 @@ const CommonModal = (props) => {
             <Modal
                 open={modalOption.isOpen}
                 onClose={modalOption.handleModalClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
             >
                 <div className="modal_wrap" id="modal_wrap">
                     <div className={`modal w${modalOption.width}`}>
@@ -62,11 +92,33 @@ const CommonModal = (props) => {
                             <img src="img/common/modal_close.png" alt="" />
                         </div>
                         <div className="form">
-                            <h4 className="mo_title">{modalOption.title}</h4>
+                            {component === "MainContentsNoticeModal" ? (
+                                <>
+                                    <h4
+                                        className="notice_title"
+                                        id="transition-modal-title"
+                                    >
+                                        {modalOption.title}
+                                    </h4>
+                                    <p className="notice_date">
+                                        {props.modNotice &&
+                                            props.modNotice.reg_dttm}
+                                    </p>
+                                </>
+                            ) : (
+                                <>
+                                    <h4
+                                        className="mo_title"
+                                        id="transition-modal-title"
+                                    >
+                                        {modalOption.title}
+                                    </h4>
+                                </>
+                            )}
                             {/* 모달 컨텐츠 드가자 */}
-
-                            {renderComponent(component)}
-
+                            <div id="transition-modal-description">
+                                {renderComponent(component)}
+                            </div>
                             {/* 모달 컨텐츠 드가자 END */}
                         </div>
                     </div>
@@ -76,20 +128,21 @@ const CommonModal = (props) => {
     );
 };
 
-// 디버깅용 콘솔
+// -- 디버깅용 콘솔 --
+// 파라미터:
+// type - String
+// responseData - 객체
 const CommonConsole = (type, responseData) => {
-    let response;
-
     let result_message_ko;
     let result_message_en;
     let result_code;
     let message;
 
-    if (!responseData.response) {
-        response = responseData;
-    } else {
-        response = responseData.response;
-    }
+    // response 설정
+    let response;
+    !responseData.response
+        ? (response = responseData)
+        : (response = responseData.response);
 
     if (response.headers) {
         result_message_ko = response.headers.result_message_ko;
@@ -105,6 +158,7 @@ const CommonConsole = (type, responseData) => {
             return console.log(responseData);
 
         case "decLog":
+            // 규격상 http request header는 영어밖에 안되기때문에 디코딩 해준다
             return console.log(
                 decodeURI(result_message_ko),
                 decodeURI(result_message_en),
@@ -132,12 +186,17 @@ const CommonSpinner = (props) => {
     const alertMsg = props.option.alert ? props.option.alert : "";
     const error = props.option.error ? props.option.error : "";
 
-    useEffect(() => {
+    // let height;
+    // $(window).scroll(function () {
+    //     height = $(document).scrollTop();
+    // });
+
+    useLayoutEffect(() => {
         setIsloading(props.option.isLoading);
 
         if (error === "Y") {
             if (!alertMsg) {
-                let spnin = spinner.current && spinner.current.childNodes[0];
+                const spnin = spinner.current && spinner.current.childNodes[0];
                 spinner.current && spnin.classList.add("error");
             } else {
                 alert(decodeURI(alertMsg).replace("%20", " "));
@@ -156,13 +215,20 @@ const CommonSpinner = (props) => {
     );
 };
 
-// 에러처리
+// --에러처리--
+// 파라미터:
+// error - error객체
+// dispatch - useDispatch()
+// alert - useAlert()
 const CommonErrorCatch = async (error, dispatch, alert) => {
     // 오류발생시 실행
     CommonConsole("log", error);
 
     if (error.response) {
-        if (error.response.status === 500 || error.response.status === 503) {
+        if (
+            error.response.status === errorCode.timeOut || // 타임아웃 - 500
+            error.response.status === errorCode.timeOut2 // 타임아웃 - 503
+        ) {
             dispatch(
                 set_spinner({
                     isLoading: false,
@@ -177,9 +243,11 @@ const CommonErrorCatch = async (error, dispatch, alert) => {
         }
         // 비정상접근 or 비정상토큰
         else if (
-            error.response.headers.result_code === "9995" ||
-            error.response.headers.result_code === "2003" ||
-            error.response.headers.result_code === "2000"
+            error.response.headers.result_code === errorCode.abnormalApproach || // 비정상 접근 - "9995"
+            error.response.headers.result_code === errorCode.emptyToken || // 토큰이 없음 - "2000"
+            error.response.headers.result_code === errorCode.tokenExpired || // 토큰 만료 - "2001"
+            error.response.headers.result_code === errorCode.tokenTamperWith || // 올바른 토큰 아닐 시 - "2002"
+            error.response.headers.result_code === errorCode.invalidToken // 올바른 토큰 아닐 시 - "2003"
         ) {
             tokenExpire(dispatch, alert);
         }
@@ -205,8 +273,12 @@ const CommonErrorCatch = async (error, dispatch, alert) => {
             })
         );
     }
-    // 타임아웃
-    if (error.message === "timeout of 5000ms exceeded") {
+
+    // TODO: 타임아웃 전역 사용 가능하도록
+    const timeOut = 20000;
+
+    // 타임아웃 (axios 타임아웃 걸릴경우)
+    if (error.message === `timeout of ${timeOut}ms exceeded`) {
         dispatch(
             set_spinner({
                 isLoading: false,
@@ -348,11 +420,11 @@ const CommonCheckDate = async (
             // 사전등록기간 내
             console.log("checkSchedule OK");
 
-            dispatch(
-                set_spinner({
-                    isLoading: false,
-                })
-            );
+            // dispatch(
+            //     set_spinner({
+            //         isLoading: false,
+            //     })
+            // );
 
             return true;
         } else {

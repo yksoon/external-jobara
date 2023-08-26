@@ -42,7 +42,10 @@ const AlertModal = () => {
                                 <Link
                                     className="backbtn"
                                     id="okBtn"
-                                    onClick={ok.click}
+                                    onClick={(e) => {
+                                        ok.click();
+                                        e.preventDefault();
+                                    }}
                                 >
                                     {ok.text}
                                     <span>

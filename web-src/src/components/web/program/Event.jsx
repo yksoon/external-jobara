@@ -12,7 +12,7 @@ const Event = () => {
             {/* 서브컨텐츠     //S */}
             <div id="container" className="sub_container">
                 <div id="content">
-                    <h2 id="subtitle">이벤트프로그램</h2>
+                    <h2 id="subtitle">이벤트 프로그램</h2>
                     <div className="pro_event">
                         <div className="prepare">
                             <img src="img/web/main/maintxt.png" alt="잡아라 페스티벌" />
