@@ -130,7 +130,7 @@ const Router = () => {
                     {/* 참여기업 상세 */}
                     {/* URL : /company/companylist */}
                     <Route
-                        path={`${routerPath.web_company_detail_url}/:label`}
+                        path={`${routerPath.web_company_detail_url}`}
                         element={<CompanyDetail />}
                     />
 

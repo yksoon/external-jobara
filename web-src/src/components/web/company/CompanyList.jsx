@@ -1,9 +1,7 @@
 import { useLayoutEffect, useState } from "react";
 import Footer from "../common/Footer";
 import SubHeader from "../common/SubHeader";
-import { companyData } from "./companyData";
 import { Link } from "react-router-dom";
-import * as XLSX from "xlsx";
 import readXlsxFile from "read-excel-file";
 import { routerPath } from "webPath";
 
@@ -48,7 +46,7 @@ const CompanyList = () => {
             }
 
             setCompanyList(compArr);
-            console.log(compArr);
+            // console.log(compArr);
         });
     };
 
@@ -67,11 +65,20 @@ const CompanyList = () => {
                                 companyList.map((item, idx) => (
                                     <li key={`company_list_${idx}`}>
                                         <Link
-                                            to={`${routerPath.web_company_detail_url}/${item.companyLabel}`}
+                                            to={`${
+                                                routerPath.web_company_detail_url
+                                            }/?label=${
+                                                item.companyLabel
+                                            }&homepageUrl=${encodeURIComponent(
+                                                item.homepageUrl
+                                            )}`}
                                         >
-                                            <span className="boothnum">
-                                                {item.boothnum}
-                                            </span>
+                                            {item.boothnum && (
+                                                <span className="boothnum">
+                                                    {item.boothnum}
+                                                </span>
+                                            )}
+
                                             <div className="company_logo">
                                                 <img
                                                     src={`img/web/logo/logo_${item.companyLabel}.png`}
