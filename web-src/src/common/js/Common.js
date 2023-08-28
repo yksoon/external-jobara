@@ -11,6 +11,7 @@ import RegNoticeModal from "components/admin/board/notice/modal/RegNoticeModal";
 import { errorCode } from "resultCode";
 import MainContentsNoticeModal from "components/web/main/mainComponents/contents/modal/MainContentsNoticeModal";
 import $ from "jquery";
+import { ClipLoader } from "react-spinners";
 
 // Alert (props)
 // isOpen = state 상태값
@@ -179,38 +180,49 @@ const CommonConsole = (type, responseData) => {
 
 // 스피너
 const CommonSpinner = (props) => {
-    const [isLoading, setIsloading] = useState(false);
-    const spinner = useRef(null);
+    // const [isLoading, setIsloading] = useState(false);
+    // const spinner = useRef(null);
 
     // const isLoading = props.option.isLoading;
-    const alertMsg = props.option.alert ? props.option.alert : "";
-    const error = props.option.error ? props.option.error : "";
+    // const alertMsg = props.option.alert ? props.option.alert : "";
+    // const error = props.option.error ? props.option.error : "";
 
     // let height;
     // $(window).scroll(function () {
     //     height = $(document).scrollTop();
     // });
 
-    useLayoutEffect(() => {
-        setIsloading(props.option.isLoading);
+    // useEffect(() => {
+    //     setIsloading(props.option.isLoading);
 
-        if (error === "Y") {
-            if (!alertMsg) {
-                const spnin = spinner.current && spinner.current.childNodes[0];
-                spinner.current && spnin.classList.add("error");
-            } else {
-                alert(decodeURI(alertMsg).replace("%20", " "));
-            }
-        }
-    }, [props]);
+    //     if (error === "Y") {
+    //         if (!alertMsg) {
+    //             const spnin = spinner.current.childNodes[0];
+    //             spnin.classList.add("error");
+    //         } else {
+    //             alert(decodeURI(alertMsg).replace("%20", " "));
+    //         }
+    //     }
+    // }, [props]);
 
     return (
         <>
-            {isLoading && (
+            {/* {isLoading && (
                 <div className="spinner" ref={spinner}>
                     <CircularProgress />
                 </div>
-            )}
+            )} */}
+            <div className="spinner">
+                {/* <CircularProgress /> */}
+                <ClipLoader
+                    // color={color}
+                    // loading={loading}
+                    // cssOverride={override}
+                    size={150}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                />
+            </div>
         </>
     );
 };

@@ -1,7 +1,12 @@
-import { CommonConsole, CommonNotify, CommonRest } from "common/js/Common";
+import {
+    CommonConsole,
+    CommonNotify,
+    CommonRest,
+    CommonSpinner,
+} from "common/js/Common";
 import useAlert from "hook/useAlert";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { set_spinner } from "redux/actions/commonAction";
 import { successCode } from "resultCode";
@@ -32,6 +37,8 @@ const MainContentsTalk = () => {
         inputCaptcha: useRef(null),
     };
 
+    const spinnerOption = useSelector((state) => state.common.spinner);
+
     useEffect(() => {
         setImg({
             imageSrc: imgUrl,
@@ -43,6 +50,12 @@ const MainContentsTalk = () => {
 
     // 댓글 리스트
     const getOneLineList = (pageNum, pageSize) => {
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+
         // /v1/boards
         // POST
         const url = apiPath.api_admin_boards;
@@ -106,11 +119,13 @@ const MainContentsTalk = () => {
     // 응원하기
     const regOneLineBoard = () => {
         if (validation()) {
-            dispatch(
-                set_spinner({
-                    isLoading: true,
-                })
-            );
+            // dispatch(
+            //     set_spinner({
+            //         isLoading: true,
+            //     })
+            // );
+
+            setIsLoading(true);
 
             const formData = new FormData();
             const model = boardModel;
@@ -151,11 +166,13 @@ const MainContentsTalk = () => {
             const responsLogic = (res) => {
                 let result_code = res.headers.result_code;
                 if (result_code === successCode.success) {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+
+                    setIsLoading(false);
 
                     CommonNotify({
                         type: "alert",
@@ -164,11 +181,11 @@ const MainContentsTalk = () => {
                         callback: () => requestBoards(),
                     });
                 } else {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
 
                     CommonNotify({
                         type: "alert",
@@ -460,6 +477,8 @@ const MainContentsTalk = () => {
                     </div>
                 </div>
             </div>
+            {/* {spinnerOption.isLoading && <CommonSpinner />} */}
+            {isLoading && <CommonSpinner />}
         </>
     );
 };

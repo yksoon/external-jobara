@@ -11,6 +11,7 @@ function Main() {
     useEffect(() => {
         Aos.init();
     });
+
     return (
         <>
             {/* 헤더 */}

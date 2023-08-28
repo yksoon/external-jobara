@@ -12,7 +12,10 @@ import {
 } from "redux/actions/codesAction";
 import { set_ip_info } from "redux/actions/ipInfoAction";
 import { useLocation, useNavigate } from "react-router";
-import { ConfirmContextProvider } from "context/ContextProvider";
+import {
+    ConfirmContextProvider,
+    SpinnerContextProvider,
+} from "context/ContextProvider";
 import { AlertContextProvider } from "context/ContextProvider";
 import ConfirmModal from "common/js/commonNoti/ConfirmModal";
 import AlertModal from "common/js/commonNoti/AlertModal";
@@ -22,6 +25,7 @@ import {
     set_view_schedule,
 } from "redux/actions/scheduleAction";
 import { init_user_info } from "redux/actions/userInfoAction";
+import { Spinner } from "react-bootstrap";
 
 function App() {
     const dispatch = useDispatch();
@@ -187,11 +191,11 @@ function App() {
                         <Router />
                         <AlertModal />
                         <ConfirmModal />
+                        <Spinner />
                     </AlertContextProvider>
                 </ConfirmContextProvider>
             </div>
-
-            <CommonSpinner option={spinnerOption} />
+            <div>{spinnerOption.isLoading && <CommonSpinner />}</div>
         </>
     );
 }

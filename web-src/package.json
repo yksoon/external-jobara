@@ -40,6 +40,7 @@
         "react-select": "^5.7.4",
         "react-simple-captcha": "^9.0.17",
         "react-slick": "^0.29.0",
+        "react-spinners": "^0.13.8",
         "recoil": "^0.7.7",
         "redux": "^4.2.1",
         "redux-logger": "^3.0.6",

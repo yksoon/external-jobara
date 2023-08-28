@@ -2,6 +2,7 @@ import React, { createContext, useState } from "react";
 
 export const ConfirmContext = createContext();
 export const AlertContext = createContext();
+export const SpinnerContext = createContext();
 
 const ConfirmContextProvider = ({ children }) => {
     const [confirmList, setConfirmList] = useState([]);
