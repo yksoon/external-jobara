@@ -213,15 +213,7 @@ const CommonSpinner = (props) => {
                 </div>
             )} */}
             <div className="spinner">
-                {/* <CircularProgress /> */}
-                <ClipLoader
-                    // color={color}
-                    // loading={loading}
-                    // cssOverride={override}
-                    size={150}
-                    aria-label="Loading Spinner"
-                    data-testid="loader"
-                />
+                <CircularProgress />
             </div>
         </>
     );
@@ -417,6 +409,8 @@ const CommonCheckDate = async (
 
     if (Object.keys(checkSchedule).length !== 0) {
         const allowedIp = checkSchedule.allowed_ip;
+        // TODO: 추후 아이디 추가, role 추가
+        // const allowedId = checkSchedule.allowed_id;
 
         const nowDate = new Date();
 

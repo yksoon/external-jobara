@@ -12,7 +12,7 @@ import { set_spinner } from "redux/actions/commonAction";
 import { successCode } from "resultCode";
 import { apiPath } from "webPath";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import { oneLinePattern } from "common/js/Pattern";
+import { oneLinePattern, spacePattern } from "common/js/Pattern";
 import { boardModel } from "models/board/board";
 import { Skeleton } from "@mui/material";
 
@@ -267,6 +267,10 @@ const MainContentsTalk = () => {
     const contentFix = (e) => {
         let val = e.target.value;
 
+        if (val.charAt(0) === " ") {
+            oneLineRefs.inputContent.current.value = val.slice(0, -1);
+        }
+
         let test = oneLinePattern.test(val);
         if (!test) {
             oneLineRefs.inputContent.current.value = val.slice(0, -1);
@@ -478,7 +482,7 @@ const MainContentsTalk = () => {
                 </div>
             </div>
             {/* {spinnerOption.isLoading && <CommonSpinner />} */}
-            {isLoading && <CommonSpinner />}
+            {/* {isLoading && <CommonSpinner />} */}
         </>
     );
 };
