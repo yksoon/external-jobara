@@ -16,7 +16,7 @@ const MainContentsProgram = () => {
     }, []);
 
     const xlxsParsing = async () => {
-        const url = "/잡아라_기업소개리스트.xlsx";
+        const url = "/jobara_company_list.xlsx";
         const file = await (await fetch(url)).arrayBuffer();
         // const workbook = XLSX.read(file);
 

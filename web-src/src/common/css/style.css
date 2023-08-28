@@ -642,8 +642,8 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 	.pro_detail > div ul li p {font-size: 14px;line-height: 24px;}
 
 
-	.company ul li {width:calc(( 100% - 20px ) /2);}
-	.company ul li:nth-child(2n) {margin:0 0 20px;}
+	.company ul li {display:block;width:100%;margin:0 0 20px}
+	.company ul li:nth-child(4n) {margin:0 0 20px;}
 	.booth p.mobile_text {display:block;} 
 
 
