@@ -205,7 +205,7 @@ div.mo_title > h4{font-size: 21px;font-weight: 700;}
 .admin .adm_notice .file_wrap {display:flex; align-items: center;    justify-content: center;}
 .admin .adm_notice .file_wrap a{display:flex; align-items: center;margin:0 10px 0 0;}
 .admin .adm_notice .file_wrap img{width:18px;}
-.admin .adm_notice .viewer_wrap img{width:12px;margin:0 0 -2px;}
+.admin .adm_notice .viewer_wrap img{width:20px;vertical-align: middle;}
 
 
 /* 에디터 */

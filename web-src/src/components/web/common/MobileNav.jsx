@@ -120,11 +120,11 @@ function MobileNav({ props }) {
                                 참여기업
                             </Link>
                         </li>
-                        {/* <li>
-                            <Link href="" id="nav5">
+                        <li>
+                            <Link to={routerPath.web_notice_url} id="nav5">
                                 공지
                             </Link>
-                        </li> */}
+                        </li>
                     </ul>
                 </nav>
             </div>
