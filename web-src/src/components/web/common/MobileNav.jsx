@@ -33,7 +33,6 @@ function MobileNav({ props }) {
         $(e.target).siblings(".nav_2depth").slideToggle();
     };
 
-
     // URL 열기
     const openUrl = (url) => {
         window.open(url, "_blank", "noopener, noreferrer");
@@ -55,10 +54,7 @@ function MobileNav({ props }) {
                 <nav>
                     <ul id="nav">
                         <li>
-                            <Link
-                                to={routerPath.web_main_url}
-                                id="nav5"
-                            >
+                            <Link to={routerPath.web_main_url} id="nav5">
                                 홈
                             </Link>
                         </li>
@@ -73,24 +69,48 @@ function MobileNav({ props }) {
                                 박람회안내
                             </Link>
                             <ul className="nav_2depth">
-                                <li><Link to={routerPath.web_intro_url}>행사소개</Link></li>
-                                <li><Link to={routerPath.web_intro_location_url}>행사장소</Link></li>
+                                <li>
+                                    <Link to={routerPath.web_intro_url}>
+                                        행사소개
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        to={routerPath.web_intro_location_url}
+                                    >
+                                        행사장소
+                                    </Link>
+                                </li>
                             </ul>
                         </li>
                         <li>
-                            <Link 
+                            <Link
                                 id="nav2"
                                 onClick={(e) => {
                                     menuDepth(e);
                                     e.preventDefault();
                                 }}
-                                >
+                            >
                                 프로그램
                             </Link>
                             <ul className="nav_2depth">
-                                <li><Link to={routerPath.web_program_url}>행사일정</Link></li>
-                                <li><Link to={routerPath.web_program_detail_url}>세부 프로그램</Link></li>
-                                <li><Link to={routerPath.web_program_event_url}>이벤트 프로그램</Link></li>
+                                <li>
+                                    <Link to={routerPath.web_program_url}>
+                                        행사일정
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        to={routerPath.web_program_detail_url}
+                                    >
+                                        세부 프로그램
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to={routerPath.web_program_event_url}>
+                                        이벤트 프로그램
+                                    </Link>
+                                </li>
                             </ul>
                         </li>
                         <li>
@@ -104,17 +124,26 @@ function MobileNav({ props }) {
                                 사전등록
                             </Link>
                             <ul className="nav_2depth">
-                                <li><Link to={routerPath.web_signup_url}>사전등록</Link></li>
-                                <li><Link to={routerPath.web_signupchk_url}>사전등록확인</Link></li>
+                                <li>
+                                    <Link to={routerPath.web_signup_url}>
+                                        사전등록
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to={routerPath.web_signupchk_url}>
+                                        사전등록확인
+                                    </Link>
+                                </li>
                             </ul>
                         </li>
                         <li>
                             <Link
-                                onClick={() =>
-                                    openUrl(
-                                        "https://lincplus.jejunu.ac.kr/programs/notice.htm?act=view&seq=1364"
-                                    )
-                                }
+                                // onClick={() =>
+                                //     openUrl(
+                                //         "https://lincplus.jejunu.ac.kr/programs/notice.htm?act=view&seq=1364"
+                                //     )
+                                // }
+                                to={routerPath.web_company_list_url}
                                 id="nav4"
                             >
                                 참여기업

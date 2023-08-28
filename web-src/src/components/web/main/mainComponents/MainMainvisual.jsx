@@ -222,12 +222,13 @@ const MainMainvisual = () => {
                         data-aos-auration="800"
                         data-aos-delay="500"
                     >
-                        <Link className="m00">
-                            MENU
-                        </Link>
+                        <Link className="m00">MENU</Link>
                         <ul>
                             <li>
-                                <Link to={routerPath.web_intro_url}  className="m01">
+                                <Link
+                                    to={routerPath.web_intro_url}
+                                    className="m01"
+                                >
                                     박람회안내
                                 </Link>
                                 <div className="submenu">
@@ -243,15 +244,33 @@ const MainMainvisual = () => {
                                 </div>
                             </li>
                             <li>
-                                <Link to={routerPath.web_program_url} className="m02">프로그램</Link>
+                                <Link
+                                    to={routerPath.web_program_url}
+                                    className="m02"
+                                >
+                                    프로그램
+                                </Link>
                                 <div className="submenu">
-                                    <Link to={routerPath.web_program_url}>행사일정</Link>
-                                    <Link to={routerPath.web_program_detail_url}>세부프로그램</Link>
-                                    <Link  to={routerPath.web_program_event_url}>이벤트프로그램</Link>
+                                    <Link to={routerPath.web_program_url}>
+                                        행사일정
+                                    </Link>
+                                    <Link
+                                        to={routerPath.web_program_detail_url}
+                                    >
+                                        세부프로그램
+                                    </Link>
+                                    <Link to={routerPath.web_program_event_url}>
+                                        이벤트프로그램
+                                    </Link>
                                 </div>
                             </li>
                             <li>
-                                <Link to={routerPath.web_signup_url} className="m03">사전등록</Link>
+                                <Link
+                                    to={routerPath.web_signup_url}
+                                    className="m03"
+                                >
+                                    사전등록
+                                </Link>
                                 <div className="submenu">
                                     <Link to={routerPath.web_signup_url}>
                                         사전등록
@@ -263,18 +282,19 @@ const MainMainvisual = () => {
                             </li>
                             <li>
                                 <Link
-                                    onClick={() =>
-                                        openUrl(
-                                            "https://lincplus.jejunu.ac.kr/programs/notice.htm?act=view&seq=1364"
-                                        )
-                                    }
+                                    // onClick={() =>
+                                    //     openUrl(
+                                    //         "https://lincplus.jejunu.ac.kr/programs/notice.htm?act=view&seq=1364"
+                                    //     )
+                                    // }
+                                    to={routerPath.web_company_list_url}
                                     className="m04"
                                 >
                                     참여기업
                                 </Link>
                             </li>
                             <li>
-                                <Link  to={routerPath.web_notice_url}>공지</Link>
+                                <Link to={routerPath.web_notice_url}>공지</Link>
                             </li>
                         </ul>
                     </div>

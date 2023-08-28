@@ -1,4 +1,11 @@
-import { Box, Button, CircularProgress, Modal, Skeleton } from "@mui/material";
+import {
+    Box,
+    Button,
+    CircularProgress,
+    Modal,
+    Pagination,
+    Skeleton,
+} from "@mui/material";
 import {
     CommonConsole,
     CommonModal,
@@ -23,6 +30,7 @@ const Notice = () => {
     const err = { dispatch, alert };
 
     const [boardList, setBoardList] = useState([]);
+    const [pageInfo, setPageInfo] = useState({});
     const [isOpen, setIsOpen] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
     const [isNeedUpdate, setIsNeedUpdate] = useState(false);
@@ -64,9 +72,11 @@ const Notice = () => {
                 result_code === successCode.success ||
                 result_code === successCode.noData
             ) {
-                let result_info = res.data.result_info;
+                const result_info = res.data.result_info;
+                const page_info = res.data.page_info;
 
                 setBoardList(result_info);
+                setPageInfo(page_info);
 
                 setIsLoading(false);
             } else {
@@ -155,6 +165,15 @@ const Notice = () => {
         };
     };
 
+    // 페이지네이션 이동
+    const handleChange = (e, value) => {
+        // const keyword = searchKeyword.current.value;
+
+        // getBoardList(value, 10, keyword);
+
+        getBoardList(value, 10, "");
+    };
+
     return (
         <>
             {/* 헤더 */}
@@ -203,6 +222,20 @@ const Notice = () => {
                             )}
                         </ul>
                     </div>
+                    {boardList.length !== 0 ? (
+                        pageInfo && (
+                            <div className="pagenation">
+                                <Pagination
+                                    count={pageInfo.pages}
+                                    onChange={handleChange}
+                                    shape="rounded"
+                                    color="primary"
+                                />
+                            </div>
+                        )
+                    ) : (
+                        <></>
+                    )}
                 </div>
             </div>
             <CommonModal
@@ -219,6 +252,9 @@ const Notice = () => {
                     <CircularProgress />
                 </div>
             )}
+
+            {/* 푸터 */}
+            <Footer />
         </>
     );
 };

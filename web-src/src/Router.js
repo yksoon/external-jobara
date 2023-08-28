@@ -18,6 +18,7 @@ import Event from "components/web/program/Event";
 import Notice from "components/web/notice/Notice";
 import { CommonSpinner } from "common/js/Common";
 import { useSelector } from "react-redux";
+import CompanyList from "components/web/company/CompanyList";
 
 // Router
 const Router = () => {
@@ -82,7 +83,7 @@ const Router = () => {
                         path={routerPath.web_program_event_url}
                         element={<Event />}
                     />
-                    
+
                     {/* 공지사항 */}
                     {/* URL : /notice/notice */}
                     <Route
@@ -111,11 +112,18 @@ const Router = () => {
                         element={<SignUpMod />}
                     />
 
-                    {/* 사전등록 수정 */}
+                    {/* 공지사항 */}
                     {/* URL : /notice */}
                     <Route
                         path={routerPath.web_signup_mod_url}
                         element={<SignUpMod />}
+                    />
+
+                    {/* 참여기업 리스트 */}
+                    {/* URL : /company/companylist */}
+                    <Route
+                        path={routerPath.web_company_list_url}
+                        element={<CompanyList />}
                     />
 
                     {/* -------------------------------admin------------------------------- */}

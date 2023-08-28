@@ -60,6 +60,10 @@ const routerPath = {
     // /notice/notice
     web_notice_url: `${base_url}notice/notice`,
 
+    // notice
+    // /notice/notice
+    web_company_list_url: `${base_url}company/companylist`,
+
     // 회원가입
     // /signup
     web_signup_url: `${base_url}signup`,
