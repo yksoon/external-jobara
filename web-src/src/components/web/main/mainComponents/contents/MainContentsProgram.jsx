@@ -1,10 +1,49 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import readXlsxFile from "read-excel-file";
 import { routerPath } from "webPath";
 
 const MainContentsProgram = () => {
+    const [companyData, setCompanyData] = useState([]);
+
     // URL 열기
     const openUrl = (url) => {
         window.open(url, "_blank", "noopener, noreferrer");
+    };
+
+    useEffect(() => {
+        xlxsParsing();
+    }, []);
+
+    const xlxsParsing = async () => {
+        const url = "/잡아라_기업소개리스트.xlsx";
+        const file = await (await fetch(url)).arrayBuffer();
+        // const workbook = XLSX.read(file);
+
+        const map = {
+            label: "companyLabel",
+            부스참여번호: "boothnum",
+            방식: "type",
+            기업명: "companyName",
+            홈페이지: "homepageUrl",
+        };
+
+        readXlsxFile(file, { map }).then(({ rows }) => {
+            // `rows` is an array of rows
+            // each row being an array of cells.
+            // console.log(rows);
+
+            let compArr = [];
+            const length = rows.length;
+            for (let i = 0; i < length; i++) {
+                if (rows[i]["companyLabel"]) {
+                    compArr.push(rows[i]);
+                }
+            }
+
+            setCompanyData(compArr);
+            // console.log(compArr);
+        });
     };
 
     return (
@@ -41,9 +80,17 @@ const MainContentsProgram = () => {
                             </span>
                             <div>
                                 <h5>나를 알아야 백전백승!</h5>
-                                <p>내가 하고싶은 직무 또는 내가 잘 할 수 있는 직무가 무엇인지 궁금하다면 현장에서 검사해보자</p>
+                                <p>
+                                    내가 하고싶은 직무 또는 내가 잘 할 수 있는
+                                    직무가 무엇인지 궁금하다면 현장에서
+                                    검사해보자
+                                </p>
                                 <h5>이력서 및 자기소개서 컨설팅!</h5>
-                                <p>자소서도 잘 써야 어필할 수 있다 전문가 컨설턴트분들께 상담받고 서류 바로 통과해보자~!</p>
+                                <p>
+                                    자소서도 잘 써야 어필할 수 있다 전문가
+                                    컨설턴트분들께 상담받고 서류 바로
+                                    통과해보자~!
+                                </p>
                             </div>
                         </li>
                         <li
@@ -58,9 +105,14 @@ const MainContentsProgram = () => {
                             </span>
                             <div>
                                 <h5>채용정보 및 상담</h5>
-                                <p>도내외 기업들의 정보를 확인하고 채용계획도 살펴보기</p>
+                                <p>
+                                    도내외 기업들의 정보를 확인하고 채용계획도
+                                    살펴보기
+                                </p>
                                 <h5>글로벌 JOB FAIR</h5>
-                                <p>글로벌 채용 상담 및 인턴십에 관심이 있다면</p>
+                                <p>
+                                    글로벌 채용 상담 및 인턴십에 관심이 있다면
+                                </p>
                             </div>
                         </li>
                         <li
@@ -75,7 +127,10 @@ const MainContentsProgram = () => {
                             </span>
                             <div>
                                 <h5>실전 AI면접 체험</h5>
-                                <p>AI면접 체험을 하고 면접 분석결과까지 받아보자</p>
+                                <p>
+                                    AI면접 체험을 하고 면접 분석결과까지
+                                    받아보자
+                                </p>
                             </div>
                         </li>
                         <li
@@ -91,7 +146,9 @@ const MainContentsProgram = () => {
                             <div>
                                 <h5>NCS 전략 특강 및 모의고사</h5>
                                 <p>
-                                    공공기관 및 대기업 취업 희망자는 필수코스인 NCS 전략 특강 받고 모의고사 풀어보고 우수자는 경품까지! <br/>
+                                    공공기관 및 대기업 취업 희망자는 필수코스인
+                                    NCS 전략 특강 받고 모의고사 풀어보고
+                                    우수자는 경품까지! <br />
                                     사전 신청하세요!
                                     <span>신청기간: ~ 9. 5.</span>
                                     <Link to={routerPath.web_signup_url}>
@@ -99,7 +156,6 @@ const MainContentsProgram = () => {
                                     </Link>
                                 </p>
                             </div>
-                            
                         </li>
                         <li
                             className="p05"
@@ -113,9 +169,13 @@ const MainContentsProgram = () => {
                             </span>
                             <div>
                                 <p>
-                                    대기업 및 글로벌기업의 현직자를 만나볼 수 있는기회!<br/>
-                                    직무별 다양한 이야기를 들어보자 ~!<br/>
-                                    토크콘서트 후 소규모 멘토링까지!<br/>
+                                    대기업 및 글로벌기업의 현직자를 만나볼 수
+                                    있는기회!
+                                    <br />
+                                    직무별 다양한 이야기를 들어보자 ~!
+                                    <br />
+                                    토크콘서트 후 소규모 멘토링까지!
+                                    <br />
                                     사전 신청하세요!
                                     <span>신청기간: ~ 9. 5.</span>
                                     <Link to={routerPath.web_signup_url}>
@@ -130,17 +190,26 @@ const MainContentsProgram = () => {
                             data-aos-delay="1500"
                         >
                             <span className="num">06</span>
-                                바로 채용면접
+                            바로 채용면접
                             <span className="icon">
                                 <img src="img/web/main/picon06.png" alt="" />
                             </span>
                             <div>
                                 <p>
-                                현장에서 바로 채용되고 싶다면 서둘러 신청하세요!<br />
-                                사전 서류 신청 하나로 채용까지 쭉~<br />
-                                    <b>사전 서류신청 → 현장면접(서류 통과자) → 바로채용</b>
+                                    현장에서 바로 채용되고 싶다면 서둘러
+                                    신청하세요!
+                                    <br />
+                                    사전 서류 신청 하나로 채용까지 쭉~
+                                    <br />
+                                    <b>
+                                        사전 서류신청 → 현장면접(서류 통과자) →
+                                        바로채용
+                                    </b>
                                     <span>신청기간: ~ 9. 5.</span>
-                                    <span>제출처: 홈페이지 사전등록 또는 이메일(linc21@naver.com) </span>
+                                    <span>
+                                        제출처: 홈페이지 사전등록 또는
+                                        이메일(linc21@naver.com){" "}
+                                    </span>
                                     <Link to={routerPath.web_signup_url}>
                                         사전등록 바로가기
                                     </Link>
@@ -158,17 +227,42 @@ const MainContentsProgram = () => {
                         data-aos="fade-up"
                         data-aos-duration="800"
                     >
-                        <Link
+                        {companyData.length !== 0 &&
+                            companyData.map((item, idx) => (
+                                <Link
+                                    key={`company_main_${idx}`}
+                                    onClick={(e) => {
+                                        openUrl(item.homepageUrl);
+                                        e.preventDefault();
+                                    }}
+                                >
+                                    <img
+                                        src={`img/web/logo/logo_${item.companyLabel}.png`}
+                                        alt={item.companyName}
+                                    />
+                                </Link>
+                            ))}
+                        {/* <Link
                             onClick={() => openUrl("https://www.jejuair.net/")}
                         >
                             <img src="img/web/main/com01.png" alt="제주항공" />
                         </Link>
                         <Link
-                            onClick={() => openUrl("https://jejusinh.nonghyup.com/user/indexMain.do?siteId=jejusinh")}
+                            onClick={() =>
+                                openUrl(
+                                    "https://jejusinh.nonghyup.com/user/indexMain.do?siteId=jejusinh"
+                                )
+                            }
                         >
                             <img src="img/web/main/com02.png" alt="농협은행" />
                         </Link>
-                        <Link onClick={() => openUrl("https://www.e-jejubank.com/JeJuBankInfo.do")}>
+                        <Link
+                            onClick={() =>
+                                openUrl(
+                                    "https://www.e-jejubank.com/JeJuBankInfo.do"
+                                )
+                            }
+                        >
                             <img src="img/web/main/com03.png" alt="제주은행" />
                         </Link>
                         <Link onClick={() => openUrl("")}>
@@ -177,7 +271,11 @@ const MainContentsProgram = () => {
                                 alt="그랜드하야트 제주"
                             />
                         </Link>
-                        <Link onClick={() => openUrl("http://www.jwmarriottjeju.co.kr/")}>
+                        <Link
+                            onClick={() =>
+                                openUrl("http://www.jwmarriottjeju.co.kr/")
+                            }
+                        >
                             <img
                                 src="img/web/main/com05.png"
                                 alt="jw메리어트 제주"
@@ -189,16 +287,26 @@ const MainContentsProgram = () => {
                                 alt="칼호텔서귀포"
                             />
                         </Link>
-                        <Link onClick={() => openUrl("https://www.shilla.net/jeju")}>
+                        <Link
+                            onClick={() =>
+                                openUrl("https://www.shilla.net/jeju")
+                            }
+                        >
                             <img
                                 src="img/web/main/com07.png"
                                 alt="더신라제주"
                             />
                         </Link>
-                        <Link onClick={() => openUrl("https://www.thepinx.co.kr")}>
+                        <Link
+                            onClick={() => openUrl("https://www.thepinx.co.kr")}
+                        >
                             <img src="img/web/main/com08.png" alt="skpinx" />
                         </Link>
-                        <Link onClick={() => openUrl("https://www.xslab.co.kr/default/")}>
+                        <Link
+                            onClick={() =>
+                                openUrl("https://www.xslab.co.kr/default/")
+                            }
+                        >
                             <img src="img/web/main/com09.png" alt="xslab" />
                         </Link>
                         <Link onClick={() => openUrl("https://www.goorm.io/")}>
@@ -207,44 +315,79 @@ const MainContentsProgram = () => {
                         <Link onClick={() => openUrl("http://itnewcorp.com")}>
                             <img src="img/web/main/com11.png" alt="itnew" />
                         </Link>
-                        <Link onClick={() => openUrl("https://www.wayplus.co.kr/")}>
+                        <Link
+                            onClick={() =>
+                                openUrl("https://www.wayplus.co.kr/")
+                            }
+                        >
                             <img src="img/web/main/com12.png" alt="wayplus" />
                         </Link>
                         <Link>
                             <img src="img/web/main/com13.png" alt="leaflog" />
                         </Link>
-                        <Link onClick={() => openUrl("https://www.tilon.com/home")}>
+                        <Link
+                            onClick={() =>
+                                openUrl("https://www.tilon.com/home")
+                            }
+                        >
                             <img src="img/web/main/com14.png" alt="tilonsoft" />
                         </Link>
-                        <Link onClick={() => openUrl("http://www.intothecafe.co.kr/")}>
-                            <img src="img/web/main/com15.png" alt="농업회사법인인투주식회사" />
+                        <Link
+                            onClick={() =>
+                                openUrl("http://www.intothecafe.co.kr/")
+                            }
+                        >
+                            <img
+                                src="img/web/main/com15.png"
+                                alt="농업회사법인인투주식회사"
+                            />
                         </Link>
-                        <Link onClick={() => openUrl("http://www.hallasan.co.kr/index.php")}>
+                        <Link
+                            onClick={() =>
+                                openUrl("http://www.hallasan.co.kr/index.php")
+                            }
+                        >
                             <img
                                 src="img/web/main/com16.png"
                                 alt="한라산소주"
                             />
                         </Link>
-                        <Link onClick={() => openUrl("http://www.jejumayu.com/")}>
-                            <img src="img/web/main/com17.png" alt="제주마유㈜" />
+                        <Link
+                            onClick={() => openUrl("http://www.jejumayu.com/")}
+                        >
+                            <img
+                                src="img/web/main/com17.png"
+                                alt="제주마유㈜"
+                            />
                         </Link>
-                        <Link onClick={() => openUrl("https://pitterpetter.com/")}>
+                        <Link
+                            onClick={() => openUrl("https://pitterpetter.com/")}
+                        >
                             <img
                                 src="img/web/main/com18.png"
                                 alt="pitterpetter"
                             />
                         </Link>
-                        <Link onClick={() => openUrl("https://kcg.go.kr/jejucgh/main.do")}>
+                        <Link
+                            onClick={() =>
+                                openUrl("https://kcg.go.kr/jejucgh/main.do")
+                            }
+                        >
                             <img
                                 src="img/web/main/com19.png"
                                 alt="해양경찰청"
                             />
                         </Link>
-                        <Link onClick={() => openUrl("https://www.kaflix.com/")}>
+                        <Link
+                            onClick={() => openUrl("https://www.kaflix.com/")}
+                        >
                             <img src="img/web/main/com20.png" alt="kaflix" />
                         </Link>
                         <Link onClick={() => openUrl("https://www.ncf.or.kr/")}>
-                            <img src="img/web/main/com21.png" alt="넥스트챌린지" />
+                            <img
+                                src="img/web/main/com21.png"
+                                alt="넥스트챌린지"
+                            />
                         </Link>
                         <Link onClick={() => openUrl("http://jejusquare.kr")}>
                             <img
@@ -252,37 +395,69 @@ const MainContentsProgram = () => {
                                 alt="JEJUSQUARE"
                             />
                         </Link>
-                        <Link onClick={() => openUrl("https://www.981park.com/")}>
-                            <img src="img/web/main/com23.png" alt="모노리스제주파크(981파크)" />
+                        <Link
+                            onClick={() => openUrl("https://www.981park.com/")}
+                        >
+                            <img
+                                src="img/web/main/com23.png"
+                                alt="모노리스제주파크(981파크)"
+                            />
                         </Link>
                         <Link onClick={() => openUrl("https://mombly.kr/")}>
                             <img src="img/web/main/com24.png" alt="MOMBLY" />
                         </Link>
-                        <Link onClick={() => openUrl("https://www.deslumieres.co.kr/bunker")}>
-                            <img src="img/web/main/com25.png" alt="빛의 벙커/ (주)티모넷" />
+                        <Link
+                            onClick={() =>
+                                openUrl("https://www.deslumieres.co.kr/bunker")
+                            }
+                        >
+                            <img
+                                src="img/web/main/com25.png"
+                                alt="빛의 벙커/ (주)티모넷"
+                            />
                         </Link>
-                        <Link onClick={() => openUrl("http://www.jejuenergy.or.kr/")}>
+                        <Link
+                            onClick={() =>
+                                openUrl("http://www.jejuenergy.or.kr/")
+                            }
+                        >
                             <img
                                 src="img/web/main/com26.png"
                                 alt="제주에너지공사"
                             />
                         </Link>
-                        <Link onClick={() => openUrl("https://www.komipo.co.kr/kor/main/main.do")}>
+                        <Link
+                            onClick={() =>
+                                openUrl(
+                                    "https://www.komipo.co.kr/kor/main/main.do"
+                                )
+                            }
+                        >
                             <img
                                 src="img/web/main/com27.png"
                                 alt="한국중부발전"
                             />
                         </Link>
-                        <Link onClick={() => openUrl("https://home.kepco.co.kr ")}>
+                        <Link
+                            onClick={() => openUrl("https://home.kepco.co.kr ")}
+                        >
                             <img src="img/web/main/com28.png" alt="한국전력" />
                         </Link>
-                        <Link onClick={() => openUrl("https://kcg.go.kr/jejucgh/main.do")}>
+                        <Link
+                            onClick={() =>
+                                openUrl("https://kcg.go.kr/jejucgh/main.do")
+                            }
+                        >
                             <img src="img/web/main/com29.png" alt="KT" />
                         </Link>
-                        <Link onClick={() => openUrl("https://www.kctvjeju.com/")}>
+                        <Link
+                            onClick={() => openUrl("https://www.kctvjeju.com/")}
+                        >
                             <img src="img/web/main/com30.png" alt="KCTV" />
                         </Link>
-                        <Link onClick={() => openUrl("https://www.neople.co.kr")}>
+                        <Link
+                            onClick={() => openUrl("https://www.neople.co.kr")}
+                        >
                             <img src="img/web/main/com31.png" alt="NEOPLE" />
                         </Link>
                         <Link>
@@ -291,22 +466,42 @@ const MainContentsProgram = () => {
                                 alt="JEJUINDRONE"
                             />
                         </Link>
-                        <Link onClick={() => openUrl("https://www.nanoomenergy.com/")}>
+                        <Link
+                            onClick={() =>
+                                openUrl("https://www.nanoomenergy.com/")
+                            }
+                        >
                             <img
                                 src="img/web/main/com33.png"
                                 alt="나눔에너지"
                             />
                         </Link>
-                        <Link onClick={() => openUrl("https://www.daeeun.net/")}>
+                        <Link
+                            onClick={() => openUrl("https://www.daeeun.net/")}
+                        >
                             <img src="img/web/main/com34.png" alt="대은계전" />
                         </Link>
-                        <Link onClick={() => openUrl("https://www.si-imaging.com/kr/")}>
+                        <Link
+                            onClick={() =>
+                                openUrl("https://www.si-imaging.com/kr/")
+                            }
+                        >
                             <img src="img/web/main/com35.png" alt="SIIS" />
                         </Link>
-                        <Link onClick={() => openUrl("http://www.windetect.co.kr/")}>
+                        <Link
+                            onClick={() =>
+                                openUrl("http://www.windetect.co.kr/")
+                            }
+                        >
                             <img src="img/web/main/com36.png" alt="WINDETECT" />
                         </Link>
-                        <Link onClick={() => openUrl("https://www.nia.or.kr/site/nia_kor/main.do")}>
+                        <Link
+                            onClick={() =>
+                                openUrl(
+                                    "https://www.nia.or.kr/site/nia_kor/main.do"
+                                )
+                            }
+                        >
                             <img
                                 src="img/web/main/com37.png"
                                 alt="한국지능정보사회진흥원"
@@ -318,7 +513,11 @@ const MainContentsProgram = () => {
                                 alt="제주관광공사"
                             />
                         </Link>
-                        <Link onClick={() => openUrl("https://www.jpdc.co.kr/index.htm")}>
+                        <Link
+                            onClick={() =>
+                                openUrl("https://www.jpdc.co.kr/index.htm")
+                            }
+                        >
                             <img
                                 src="img/web/main/com39.png"
                                 alt="제주특별자치도개발공사"
@@ -330,15 +529,23 @@ const MainContentsProgram = () => {
                                 alt="국민연금공단"
                             />
                         </Link>
-                        <Link onClick={() => openUrl("https://www.jdcenter.com/main.cs")}>
+                        <Link
+                            onClick={() =>
+                                openUrl("https://www.jdcenter.com/main.cs")
+                            }
+                        >
                             <img
                                 src="img/web/main/com41.png"
                                 alt="제주국제자유도시개발센터"
                             />
                         </Link>
-                        <Link onClick={() => openUrl("http://jpmeng.co.kr/index.php")}>
+                        <Link
+                            onClick={() =>
+                                openUrl("http://jpmeng.co.kr/index.php")
+                            }
+                        >
                             <img src="img/web/main/com42.png" alt="JPM" />
-                        </Link>
+                        </Link> */}
                     </div>
                 </div>
             </div>

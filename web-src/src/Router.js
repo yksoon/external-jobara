@@ -19,6 +19,7 @@ import Notice from "components/web/notice/Notice";
 import { CommonSpinner } from "common/js/Common";
 import { useSelector } from "react-redux";
 import CompanyList from "components/web/company/CompanyList";
+import CompanyDetail from "components/web/company/CompanyDetail";
 
 // Router
 const Router = () => {
@@ -124,6 +125,13 @@ const Router = () => {
                     <Route
                         path={routerPath.web_company_list_url}
                         element={<CompanyList />}
+                    />
+
+                    {/* 참여기업 상세 */}
+                    {/* URL : /company/companylist */}
+                    <Route
+                        path={`${routerPath.web_company_detail_url}/:label`}
+                        element={<CompanyDetail />}
                     />
 
                     {/* -------------------------------admin------------------------------- */}

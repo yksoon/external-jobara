@@ -5,6 +5,7 @@ import { companyData } from "./companyData";
 import { Link } from "react-router-dom";
 import * as XLSX from "xlsx";
 import readXlsxFile from "read-excel-file";
+import { routerPath } from "webPath";
 
 // "./잡아라_기업소개리스트_230828.xlsx"
 const CompanyList = () => {
@@ -15,7 +16,7 @@ const CompanyList = () => {
     }, []);
 
     const getCompanyData = () => {
-        setCompanyList(companyData);
+        // setCompanyList(companyData);
 
         xlxsParsing();
     };
@@ -41,14 +42,12 @@ const CompanyList = () => {
             let compArr = [];
             const length = rows.length;
             for (let i = 0; i < length; i++) {
-                if (
-                    rows[i]["companyLabel"] &&
-                    typeof rows[i]["boothnum"] === "number"
-                ) {
+                if (rows[i]["companyLabel"]) {
                     compArr.push(rows[i]);
                 }
             }
 
+            setCompanyList(compArr);
             console.log(compArr);
         });
     };
@@ -67,13 +66,15 @@ const CompanyList = () => {
                             {companyList.length !== 0 &&
                                 companyList.map((item, idx) => (
                                     <li key={`company_list_${idx}`}>
-                                        <Link to="">
+                                        <Link
+                                            to={`${routerPath.web_company_detail_url}/${item.companyLabel}`}
+                                        >
                                             <span className="boothnum">
                                                 {item.boothnum}
                                             </span>
                                             <div className="company_logo">
                                                 <img
-                                                    src={`img/web/main/${item.listImg}`}
+                                                    src={`img/web/logo/logo_${item.companyLabel}.png`}
                                                     alt=""
                                                 />
                                             </div>

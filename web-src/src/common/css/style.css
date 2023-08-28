@@ -141,9 +141,9 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 .section02 .company{width:1400px; margin:0 auto;}
 .section02 .company h3{font-family:'GmarketSans';font-weight:900;color:#000;text-align: center;font-size:38px;letter-spacing: -0.04em;margin:0 0 25px 0;}
 .section02 .company p{font-family:'GmarketSans';font-size: 21px; color:#111111;letter-spacing: -0.04em;text-align: center;padding:0 0 50px 0;}
-.section02 .company .logobox{display: flex;flex-wrap: wrap;}
-.section02 .company .logobox a{display:flex;width:164px; height:70px;align-items: center;margin:18px;}
-.section02 .company .logobox a img{filter: grayscale(100%);opacity:0.4;}
+.section02 .company .logobox{display: flex;flex-wrap: wrap;justify-content: center;}
+.section02 .company .logobox a{display:flex;width:calc( 100% / 6); height:70px;align-items: center;margin:22px;justify-content: center;}
+.section02 .company .logobox a img{filter: grayscale(100%);opacity:0.4;max-width:90%;max-height:90%;}
 .section02 .company .logobox a:hover img{filter: grayscale(0);opacity:1;}
 
 
@@ -524,8 +524,8 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 	.section02 .company{width:auto; margin:0 auto;padding:0 20px;}
 	.section02 .company h3{font-size:28px;margin:0 0 20px 0;}
 	.section02 .company .logobox{display: flex;flex-wrap: wrap;justify-content: center;}
-	.section02 .company .logobox a{display:flex;width:30%; height:auto;margin:5px 1%; justify-content: center;}
-	.section02 .company .logobox a img{filter: grayscale(100%);opacity:0.4;width:80%;height:auto;}
+	.section02 .company .logobox a{display:flex;width:calc( 100% / 3 ); margin:5px 0; justify-content: center;}
+	.section02 .company .logobox a img{filter: grayscale(100%);opacity:0.4;max-width:80%;}
 	.section02 .company .logobox a:hover img{filter: grayscale(0);opacity:1;}
 
 
