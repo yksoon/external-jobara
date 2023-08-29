@@ -15,8 +15,8 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import { oneLinePattern, spacePattern } from "common/js/Pattern";
 import { boardModel } from "models/board/board";
 import { Skeleton } from "@mui/material";
-import { useSetRecoilState } from "recoil";
-import { isSpinnerAtom } from "recoils/atoms";
+// import { useSetRecoilState } from "recoil";
+// import { isSpinnerAtom } from "recoils/atoms";
 
 const MainContentsTalk = () => {
     const dispatch = useDispatch();
@@ -40,7 +40,7 @@ const MainContentsTalk = () => {
     };
 
     const spinnerOption = useSelector((state) => state.common.spinner);
-    const setSpinnerAtom = useSetRecoilState(isSpinnerAtom);
+    // const setSpinnerAtom = useSetRecoilState(isSpinnerAtom);
 
     useEffect(() => {
         setImg({
@@ -283,7 +283,7 @@ const MainContentsTalk = () => {
     const contentFix = (e) => {
         let val = e.target.value;
 
-        if (val.charAt(0) === " ") {
+        if (val.charAt(0) === " " || val.charAt(0) === "　") {
             oneLineRefs.inputContent.current.value = val.slice(0, -1);
         }
 

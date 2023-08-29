@@ -43,6 +43,8 @@
         "react-spinners": "^0.13.8",
         "read-excel-file": "^5.6.1",
         "recoil": "^0.7.7",
+        "recoil-persist": "^5.1.0",
+        "recoilize": "^3.2.0",
         "redux": "^4.2.1",
         "redux-logger": "^3.0.6",
         "redux-persist": "^6.0.0",

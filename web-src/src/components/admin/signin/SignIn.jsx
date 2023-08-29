@@ -9,7 +9,6 @@ import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { set_spinner } from "redux/actions/commonAction";
-import { set_page } from "redux/actions/pageActios";
 import { apiPath, routerPath } from "webPath";
 import {
     init_user_info_admin,
@@ -17,6 +16,8 @@ import {
     set_user_token_admin,
 } from "redux/actions/userInfoAdminAction";
 import { successCode } from "resultCode";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { pageAtom } from "recoils/atoms";
 
 const SignIn = () => {
     const dispatch = useDispatch();
@@ -27,6 +28,10 @@ const SignIn = () => {
     );
     const navigate = useNavigate();
 
+    const setPage = useSetRecoilState(pageAtom);
+
+    // const setPage = useSetRecoilState("page");
+
     const inputID = useRef(null);
     const inputPW = useRef(null);
 
@@ -34,7 +39,7 @@ const SignIn = () => {
         if (userTokenAdmin) {
             navigate(routerPath.admin_main_url);
         } else {
-            dispatch(set_page("dashboard"));
+            setPage("dashboard");
             dispatch(init_user_info_admin(null));
             inputID.current.focus();
         }

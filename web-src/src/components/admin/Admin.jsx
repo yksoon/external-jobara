@@ -8,11 +8,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { set_spinner } from "redux/actions/commonAction";
-import { set_page } from "redux/actions/pageActios";
 import { apiPath, routerPath } from "webPath";
 import Notice from "./board/notice/Notice";
 import OneLineBoard from "./board/oneLineBoard/OneLineBoard";
 import { successCode } from "resultCode";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { pageAtom } from "recoils/atoms";
 
 const Admin = () => {
     const dispatch = useDispatch();
@@ -26,7 +27,13 @@ const Admin = () => {
     const userTokenAdmin = useSelector(
         (state) => state.userInfoAdmin.userTokenAdmin
     );
-    const page = useSelector((state) => state.page.page);
+
+    const page = useRecoilValue(pageAtom);
+
+    const setPage = useSetRecoilState(pageAtom);
+    // const [page, setPage] = useRecoilState(pageAtom);
+    // const page = useRecoilValue(pageAtom);
+    // const setPage = useSetRecoilState("page");
 
     const [menuList, setMenuList] = useState([]);
 
@@ -153,7 +160,7 @@ const Admin = () => {
     };
 
     const switchPage = (page) => {
-        dispatch(set_page(page));
+        setPage(page);
     };
 
     // 렌더링 페이지
@@ -190,7 +197,6 @@ const Admin = () => {
                             menuList={menuList}
                         />
                     )}
-
                     {renderPage(page)}
                 </div>
             </div>

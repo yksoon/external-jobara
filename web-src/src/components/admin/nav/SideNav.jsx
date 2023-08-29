@@ -17,6 +17,8 @@ import $ from "jquery";
 import useAlert from "hook/useAlert";
 import { init_user_info_admin } from "redux/actions/userInfoAdminAction";
 import { successCode } from "resultCode";
+import { useRecoilValue } from "recoil";
+import { pageAtom } from "recoils/atoms";
 
 const SideNav = (props) => {
     const dispatch = useDispatch();
@@ -38,7 +40,7 @@ const SideNav = (props) => {
 
     const navList = props.menuList;
 
-    let page = useSelector((state) => state.page.page);
+    const page = useRecoilValue(pageAtom);
 
     // console.log($(`#${page}`).parents());
 

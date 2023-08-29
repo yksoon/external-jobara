@@ -7,6 +7,7 @@ import store from "redux/store/store";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import { RecoilRoot } from "recoil";
+import RecoilizeDebugger from "recoilize";
 
 // Bootstrap
 // import "common/css/bootstrap.min.css";
@@ -26,11 +27,12 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <BrowserRouter>
         <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-                <RecoilRoot>
+            <RecoilRoot>
+                <PersistGate loading={null} persistor={persistor}>
+                    <RecoilizeDebugger />
                     <App />
-                </RecoilRoot>
-            </PersistGate>
+                </PersistGate>
+            </RecoilRoot>
         </Provider>
     </BrowserRouter>
 );

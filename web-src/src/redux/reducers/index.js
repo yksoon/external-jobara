@@ -7,7 +7,6 @@ import codes from "./reducers/codes";
 import userInfo from "./reducers/userInfo";
 import ipInfo from "./reducers/ipInfo";
 import common from "./reducers/common";
-import page from "./reducers/page";
 import schedule from "./reducers/schedule";
 import userInfoAdmin from "./reducers/userInfoAdmin";
 
@@ -16,14 +15,7 @@ const persistConfig = {
     key: "root",
     storage: storageSession,
     version: 0,
-    whitelist: [
-        "codes",
-        "userInfo",
-        "ipInfo",
-        "page",
-        "userInfoAdmin",
-        "schedule",
-    ], // 이곳에 추가시 세션스토리지에 저장됨
+    whitelist: ["codes", "userInfo", "ipInfo", "userInfoAdmin", "schedule"], // 이곳에 추가시 세션스토리지에 저장됨
 };
 
 // 리듀서 추가
@@ -32,7 +24,6 @@ const rootReducer = combineReducers({
     userInfo,
     ipInfo,
     common,
-    page,
     schedule,
     userInfoAdmin,
 });
