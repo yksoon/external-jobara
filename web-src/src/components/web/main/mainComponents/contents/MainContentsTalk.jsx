@@ -205,6 +205,16 @@ const MainContentsTalk = () => {
 
     // 검증
     const validation = () => {
+        // --------------------내용----------------------
+        if (!oneLineRefs.inputContent.current.value) {
+            oneLineRefs.inputContent.current.blur();
+            regBoardAlert({
+                msg: "내용을을 입력해주세요",
+                ref: oneLineRefs.inputContent,
+            });
+            return false;
+        }
+
         // --------------------이름----------------------
         if (
             !oneLineRefs.inputUserFirstName.current.value ||

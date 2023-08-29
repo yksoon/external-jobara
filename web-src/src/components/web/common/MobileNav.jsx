@@ -143,7 +143,7 @@ function MobileNav({ props }) {
                                 //         "https://lincplus.jejunu.ac.kr/programs/notice.htm?act=view&seq=1364"
                                 //     )
                                 // }
-                                to={routerPath.web_company_list_url}
+                                to={`${routerPath.web_company_url}/list`}
                                 id="nav4"
                             >
                                 참여기업

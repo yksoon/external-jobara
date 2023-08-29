@@ -287,7 +287,7 @@ const MainMainvisual = () => {
                                     //         "https://lincplus.jejunu.ac.kr/programs/notice.htm?act=view&seq=1364"
                                     //     )
                                     // }
-                                    to={routerPath.web_company_list_url}
+                                    to={`${routerPath.web_company_url}/list`}
                                     className="m04"
                                 >
                                     참여기업

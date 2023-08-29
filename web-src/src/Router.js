@@ -20,6 +20,7 @@ import { CommonSpinner } from "common/js/Common";
 import { useSelector } from "react-redux";
 import CompanyList from "components/web/company/CompanyList";
 import CompanyDetail from "components/web/company/CompanyDetail";
+import Company from "components/web/company/Company";
 
 // Router
 const Router = () => {
@@ -120,19 +121,26 @@ const Router = () => {
                         element={<SignUpMod />}
                     />
 
+                    {/* 참여기업 */}
+                    {/* URL : /company/company/ */}
+                    <Route
+                        path={`${routerPath.web_company_url}/:companyName`}
+                        element={<Company />}
+                    />
+
                     {/* 참여기업 리스트 */}
                     {/* URL : /company/companylist */}
-                    <Route
+                    {/* <Route
                         path={routerPath.web_company_list_url}
                         element={<CompanyList />}
-                    />
+                    /> */}
 
                     {/* 참여기업 상세 */}
                     {/* URL : /company/companylist */}
-                    <Route
+                    {/* <Route
                         path={`${routerPath.web_company_detail_url}`}
                         element={<CompanyDetail />}
-                    />
+                    /> */}
 
                     {/* -------------------------------admin------------------------------- */}
                     {/* 메인 */}
