@@ -7,7 +7,7 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 
 #header_content {width:100%; margin:0 auto;height:120px;}
 #header_content .logo {position:absolute; top:35px; left:135px; z-index:1000;}
-#header_content .logo a{display:block;}
+#header_content .logo a{display:inline-block;}
 
 
 
@@ -57,8 +57,8 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 #mainvisual  .main_txt .date .blue{ color:#0092E5;font-weight: 900;}
 #mainvisual  .main_txt .menu{position:absolute; top:300px; left:140px;display:flex;flex-direction: column;}
 #mainvisual  .main_txt .menu > ul > li {position: relative;transition:all 0.5s;}
-#mainvisual  .main_txt .menu a.m00 {display:block;font-family: 'LOTTERIACHAB';font-size: 32px; color:#222;line-height:50px;}
-#mainvisual  .main_txt .menu > ul > li > a{display:block;font-family: 'LOTTERIACHAB';font-size: 32px; color:#222;line-height:50px;}
+#mainvisual  .main_txt .menu a.m00 {display:block;font-family: 'GMarketSans';font-size: 32px; color:#222;line-height:50px;}
+#mainvisual  .main_txt .menu > ul > li > a{display:block;font-family: 'GMarketSans';font-size: 32px; color:#222;line-height:50px;font-weight: 900;}
 #mainvisual  .main_txt .menu > ul > li > a.active, #mainvisual  .main_txt .menu > ul > li > a:hover, #mainvisual  .main_txt .menu > ul > li > a:focus{color:#E72295;}
 #mainvisual  .main_txt .menu > ul > li > div.submenu {display:none;width:200px;border-radius: 20px;background: #E72295;padding:14px 20px;right:0;top:0;transition:all 0.5s;}
 #mainvisual  .main_txt .menu > ul > li > div.submenu > a {display: block;color:#fff;font-size: 18px;font-family: "GMarketSans";text-align: center;line-height: 32px;}
@@ -332,7 +332,7 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 .pro_table tr td.step3 span {background: #ffa700;}
 .pro_table tr td.step1 {box-shadow: 0 0 0 3px #65c4f2 inset; }
 .pro_table tr td.step2 {box-shadow: 0 0 0 3px #bad73c inset; }
-.pro_table tr td.step3 {box-shadow: 0 0 0 3px #ffa700 inset; }
+.pro_table tr td.step3 {box-shadow: 0 0 0 3px #ffa700 inset; letter-spacing: -0.06em;}
 
 /* 세부프로그램 */
 .pro_detail {display:flex;margin:50px 0 0;}
@@ -398,6 +398,7 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 .booth p.mobile_text {display:none;}
 .booth a.booth_home {display:block;width:fit-content;height:38px;line-height:38px;border-radius: 5px;background:#E8368B;margin: 0 0 10px auto;padding:0 30px;font-size: 18px;color:#fff;}
 
+.pointtxt {font-size:16px;color:#ff2929;font-weight:600;margin:6px 0 0;}
 
 
 

@@ -51,7 +51,7 @@ const SignUpID = forwardRef((props, ref) => {
                             idCheck(e);
                         }}
                     />
-                    <p className="pointtxt">아이디는 신청확인 및 수정시 사용되며, 희망하는 아이디로 기입해주세요.</p>
+                    <p className="pointtxt">※ 아이디는 신청확인 및 수정시 사용되며, 희망하는 아이디로 기입해주세요.</p>
                 </td>
             </tr>
         </>

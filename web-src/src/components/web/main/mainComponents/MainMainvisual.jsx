@@ -294,7 +294,7 @@ const MainMainvisual = () => {
                                 </Link>
                             </li>
                             <li>
-                                <Link to={routerPath.web_notice_url}>공지</Link>
+                                <Link to={routerPath.web_notice_url}>공지사항</Link>
                             </li>
                         </ul>
                     </div>
