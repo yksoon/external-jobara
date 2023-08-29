@@ -59,7 +59,7 @@ const Program = () => {
                                     </td>
                                     <td rowSpan="4" className="step step3">
                                         <span>STEP 3</span>
-                                        <br /> 바로채용면접, AI 면접체험,
+                                        바로채용면접, AI 면접체험,
                                         NCS모의고사, 현직자토크콘서트 등
                                     </td>
                                     <td></td>
