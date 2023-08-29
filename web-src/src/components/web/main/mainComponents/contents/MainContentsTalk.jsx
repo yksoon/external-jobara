@@ -58,7 +58,7 @@ const MainContentsTalk = () => {
         //         isLoading: true,
         //     })
         // );
-        setSpinnerAtom(true);
+        // setSpinnerAtom(true);
 
         // /v1/boards
         // POST
@@ -94,7 +94,7 @@ const MainContentsTalk = () => {
 
                 setIsLoading(false);
 
-                setSpinnerAtom(false);
+                // setSpinnerAtom(false);
 
                 // dispatch(
                 //     set_spinner({
