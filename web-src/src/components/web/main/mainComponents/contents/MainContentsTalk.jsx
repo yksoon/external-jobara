@@ -15,6 +15,8 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import { oneLinePattern, spacePattern } from "common/js/Pattern";
 import { boardModel } from "models/board/board";
 import { Skeleton } from "@mui/material";
+import { useSetRecoilState } from "recoil";
+import { isSpinnerAtom } from "recoils/atoms";
 
 const MainContentsTalk = () => {
     const dispatch = useDispatch();
@@ -38,6 +40,7 @@ const MainContentsTalk = () => {
     };
 
     const spinnerOption = useSelector((state) => state.common.spinner);
+    const setSpinnerAtom = useSetRecoilState(isSpinnerAtom);
 
     useEffect(() => {
         setImg({
@@ -55,6 +58,7 @@ const MainContentsTalk = () => {
         //         isLoading: true,
         //     })
         // );
+        setSpinnerAtom(true);
 
         // /v1/boards
         // POST
@@ -89,6 +93,8 @@ const MainContentsTalk = () => {
                 setBoardList(result_info);
 
                 setIsLoading(false);
+
+                setSpinnerAtom(false);
 
                 // dispatch(
                 //     set_spinner({

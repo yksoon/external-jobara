@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import store from "redux/store/store";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
+import { RecoilRoot } from "recoil";
 
 // Bootstrap
 // import "common/css/bootstrap.min.css";
@@ -26,7 +27,9 @@ root.render(
     <BrowserRouter>
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
-                <App />
+                <RecoilRoot>
+                    <App />
+                </RecoilRoot>
             </PersistGate>
         </Provider>
     </BrowserRouter>

@@ -22,6 +22,9 @@ const securityPattern = /^[0-9]{6}$/;
 const oneLinePattern = /^.{1,60}$/;
 const spacePattern = /\s/g;
 
+// 숫자 세자리 콤마 패턴 (replace 사용해서 콤마 찍어줘야됨)
+const commaOfNumber = /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g;
+
 export {
     pwPattern,
     idPattern,
@@ -30,4 +33,5 @@ export {
     securityPattern,
     oneLinePattern,
     spacePattern,
+    commaOfNumber,
 };

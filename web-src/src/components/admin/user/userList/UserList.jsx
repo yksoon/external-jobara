@@ -31,8 +31,13 @@ const UserList = () => {
     const [pageInfo, setPageInfo] = useState({});
     const { confirm } = useConfirm();
     const fileBaseUrl = apiPath.api_file;
+    const [additionalList, setAdditionalList] = useState([]);
 
     const searchKeyword = useRef(null);
+
+    useEffect(() => {
+        getAdditional();
+    }, []);
 
     useEffect(() => {
         reqUserList(1, 10, "");
@@ -50,6 +55,42 @@ const UserList = () => {
     const regUser = () => {
         setModalTitle("사전등록");
         setIsOpen(true);
+    };
+
+    // 참여프로그램 리스트 받아오기
+    const getAdditional = () => {
+        // /v1/meta/_additionals
+        // GET
+        const restParams = {
+            method: "get",
+            url: apiPath.api_get_additional,
+            data: {},
+            err: err,
+            callback: (res) => responsLogic(res),
+        };
+
+        CommonRest(restParams);
+
+        const responsLogic = (res) => {
+            console.log(res);
+
+            const result_code = res.headers.result_code;
+            // 성공
+            if (result_code === successCode.success) {
+                let result_info = res.data.result_info;
+
+                setAdditionalList(result_info);
+            } else {
+                // 에러
+                CommonConsole("log", res);
+
+                dispatch(
+                    set_spinner({
+                        isLoading: false,
+                    })
+                );
+            }
+        };
     };
 
     // 유저 리스트
@@ -384,34 +425,24 @@ const UserList = () => {
                                     <th rowSpan="2">학교</th>
                                     <th rowSpan="2">학과</th>
                                     <th rowSpan="2">희망직종</th>
-                                    <th colSpan="4">참여프로그램</th>
+                                    <th colSpan={`${additionalList.length}`}>
+                                        참여프로그램
+                                    </th>
                                     <th rowSpan="2">등록일</th>
                                     <th rowSpan="2">이력서 보기</th>
                                     <th rowSpan="2">정보수정</th>
                                 </tr>
                                 <tr>
-                                    <th>NCS 모의고사</th>
-                                    <th
-                                        style={{
-                                            borderRight: "1px solid #ddd",
-                                        }}
-                                    >
-                                        현직자 토크콘서트
-                                    </th>
-                                    <th
-                                        style={{
-                                            borderRight: "1px solid #ddd",
-                                        }}
-                                    >
-                                        버크만진단
-                                    </th>
-                                    <th
-                                        style={{
-                                            borderRight: "1px solid #ddd",
-                                        }}
-                                    >
-                                        바로채용면접
-                                    </th>
+                                    {additionalList.map((item, idx) => (
+                                        <th
+                                            key={`admin_additional_${idx}`}
+                                            style={{
+                                                borderRight: "1px solid #ddd",
+                                            }}
+                                        >
+                                            {item.additional_name_ko}
+                                        </th>
+                                    ))}
                                 </tr>
                             </thead>
                             <tbody>
@@ -464,46 +495,24 @@ const UserList = () => {
                                                     ? item.specialized_name_ko
                                                     : "-"}
                                             </td>
-                                            <td className="checkicon">
-                                                {item.additional_info.filter(
-                                                    (e) =>
-                                                        e.additional_idx === 1
-                                                ).length !== 0 ? (
-                                                    <CheckCircleOutlineOutlinedIcon />
-                                                ) : (
-                                                    ""
-                                                )}
-                                            </td>
-                                            <td className="checkicon">
-                                                {item.additional_info.filter(
-                                                    (e) =>
-                                                        e.additional_idx === 2
-                                                ).length !== 0 ? (
-                                                    <CheckCircleOutlineOutlinedIcon />
-                                                ) : (
-                                                    ""
-                                                )}
-                                            </td>
-                                            <td className="checkicon">
-                                                {item.additional_info.filter(
-                                                    (e) =>
-                                                        e.additional_idx === 3
-                                                ).length !== 0 ? (
-                                                    <CheckCircleOutlineOutlinedIcon />
-                                                ) : (
-                                                    ""
-                                                )}
-                                            </td>
-                                            <td className="checkicon">
-                                                {item.additional_info.filter(
-                                                    (e) =>
-                                                        e.additional_idx === 4
-                                                ).length !== 0 ? (
-                                                    <CheckCircleOutlineOutlinedIcon />
-                                                ) : (
-                                                    ""
-                                                )}
-                                            </td>
+                                            {additionalList.map(
+                                                (item2, idx2) => (
+                                                    <td
+                                                        className="checkicon"
+                                                        key={`add_chk_${idx2}`}
+                                                    >
+                                                        {item.additional_info.filter(
+                                                            (e) =>
+                                                                e.additional_idx ===
+                                                                item2.additional_idx
+                                                        ).length !== 0 ? (
+                                                            <CheckCircleOutlineOutlinedIcon />
+                                                        ) : (
+                                                            ""
+                                                        )}
+                                                    </td>
+                                                )
+                                            )}
                                             <td>
                                                 {item.reg_dttm
                                                     ? item.reg_dttm.split(
@@ -552,7 +561,7 @@ const UserList = () => {
                                     <>
                                         <tr>
                                             <td
-                                                colSpan="14"
+                                                colSpan="16"
                                                 style={{ height: "55px" }}
                                             >
                                                 <b>데이터가 없습니다.</b>

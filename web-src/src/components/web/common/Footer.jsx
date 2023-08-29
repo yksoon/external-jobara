@@ -1,7 +1,12 @@
+import { CommonSpinner } from "common/js/Common";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { isSpinnerAtom } from "recoils/atoms";
 
 function Footer() {
+    const isSpinner = useRecoilValue(isSpinnerAtom);
+
     return (
         <>
             {/* footer //S */}
@@ -11,8 +16,9 @@ function Footer() {
                         <p className="flogo">
                             <img src="img/web/main/logo.png" alt="" />
                         </p>
-                        63243 제주특별자치도 제주시 제주대학로 102 산학협력관 4층 410-1호 Tel. 064)754-3125~6, 064)754-4412~5
-                        Fax. 064-751-3127, 070-4170-4127
+                        63243 제주특별자치도 제주시 제주대학로 102 산학협력관
+                        4층 410-1호 Tel. 064)754-3125~6, 064)754-4412~5 Fax.
+                        064-751-3127, 070-4170-4127
                         <br />
                         Copyright © 2013 JEJU NATIONAL UNIVERSITY Leaders in
                         INdustry-university Cooperation.
@@ -24,6 +30,7 @@ function Footer() {
                 </div>
             </div>
             {/* footer //E */}
+            {isSpinner && <CommonSpinner />}
         </>
     );
 }

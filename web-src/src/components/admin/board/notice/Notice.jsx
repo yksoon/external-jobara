@@ -5,6 +5,7 @@ import {
     CommonNotify,
     CommonRest,
 } from "common/js/Common";
+import { commaOfNumber } from "common/js/Pattern";
 import useAlert from "hook/useAlert";
 import useConfirm from "hook/useConfirm";
 import { useEffect, useRef, useState } from "react";
@@ -445,7 +446,12 @@ const Notice = () => {
                                                                 src="img/common/user_icon_black.png"
                                                                 alt=""
                                                             />{" "}
-                                                            {item.view_count}
+                                                            {String(
+                                                                item.view_count
+                                                            ).replace(
+                                                                commaOfNumber,
+                                                                ","
+                                                            )}
                                                         </div>
                                                     </td>
                                                     <td>
