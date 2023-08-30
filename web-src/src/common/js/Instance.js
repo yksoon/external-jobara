@@ -122,7 +122,10 @@ const setInterceptors = (config) => {
     //         : sessionStorage.getItem("ipInfo");
     const recoilSession = JSON.parse(sessionStorage.getItem("recoilSession"));
 
-    ip = sessionStorage.getItem("ipInfo");
+    ip =
+        recoilSession === null
+            ? sessionStorage.getItem("ipInfo")
+            : recoilSession.ipInfo;
     token = recoilSession === null ? "" : recoilSession.userToken;
 
     config.headers["Jobara-Src"] = ip ? ip : "";
@@ -142,7 +145,10 @@ const setInterceptorsAdmin = (config) => {
     //         : sessionStorage.getItem("ipInfo");
     const recoilSession = JSON.parse(sessionStorage.getItem("recoilSession"));
 
-    ip = sessionStorage.getItem("ipInfo");
+    ip =
+        recoilSession === null
+            ? sessionStorage.getItem("ipInfo")
+            : recoilSession.ipInfo;
     token = recoilSession === null ? "" : recoilSession.userTokenAdmin;
 
     config.headers["Jobara-Src"] = ip ? ip : "";

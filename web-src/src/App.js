@@ -53,7 +53,7 @@ function App() {
     const setCheckSchedule = useSetRecoilState(checkScheduleAtom);
 
     useEffect(() => {
-        if (ipInfo === " ") {
+        if (ipInfo === "") {
             getIpInfo();
         } else {
             getResultCode();
@@ -96,16 +96,17 @@ function App() {
     // const spinnerOption = useSelector((state) => state.common.spinner);
 
     // IP
-    const getIpInfo = () => {
+    const getIpInfo = async () => {
         let ip;
 
-        axios
+        await axios
             .get("https://geolocation-db.com/json/")
             .then((res) => {
                 ip = res.data.IPv4;
                 setIpInfo(ip);
                 sessionStorage.setItem("ipInfo", ip);
 
+                // console.log("@@@@@@@@@@@", ip);
                 getResultCode();
                 getCodes();
                 getCountryBank();
