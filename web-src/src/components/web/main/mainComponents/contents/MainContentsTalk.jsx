@@ -1,27 +1,38 @@
 import {
     CommonConsole,
+    CommonErrModule,
     CommonNotify,
     CommonRest,
     CommonSpinner,
 } from "common/js/Common";
 import useAlert from "hook/useAlert";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { set_spinner } from "redux/actions/commonAction";
 import { successCode } from "resultCode";
 import { apiPath } from "webPath";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import { oneLinePattern, spacePattern } from "common/js/Pattern";
+import {
+    mobile1Pattern,
+    mobile2Pattern,
+    oneLinePattern,
+    spacePattern,
+} from "common/js/Pattern";
 import { boardModel } from "models/board/board";
 import { Skeleton } from "@mui/material";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { ipInfoAtom, isSpinnerAtom } from "recoils/atoms";
 // import { useSetRecoilState } from "recoil";
 // import { isSpinnerAtom } from "recoils/atoms";
 
 const MainContentsTalk = () => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
+    // const { alert } = useAlert();
+    // const err = { dispatch, alert };
     const { alert } = useAlert();
-    const err = { dispatch, alert };
+    const err = CommonErrModule();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
+
+    const ipInfo = useRecoilValue(ipInfoAtom);
 
     const [boardList, setBoardList] = useState([]);
     const [img, setImg] = useState({});
@@ -39,7 +50,7 @@ const MainContentsTalk = () => {
         inputCaptcha: useRef(null),
     };
 
-    const spinnerOption = useSelector((state) => state.common.spinner);
+    // const spinnerOption = useSelector((state) => state.common.spinner);
     // const setSpinnerAtom = useSetRecoilState(isSpinnerAtom);
 
     useEffect(() => {
@@ -48,8 +59,12 @@ const MainContentsTalk = () => {
             imageHash: Date.now(),
         });
 
-        getOneLineList(1, 8);
+        // getOneLineList(1, 8);
     }, [isNeedUpdate]);
+
+    useEffect(() => {
+        getOneLineList(1, 8);
+    }, [ipInfo]);
 
     // 댓글 리스트
     const getOneLineList = (pageNum, pageSize) => {
@@ -77,6 +92,7 @@ const MainContentsTalk = () => {
             err: err,
             callback: (res) => responsLogic(res),
         };
+
         CommonRest(restParams);
 
         // 완료 로직
@@ -105,11 +121,13 @@ const MainContentsTalk = () => {
                 // 에러
                 CommonConsole("log", res);
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
             }
         };
     };
@@ -293,6 +311,46 @@ const MainContentsTalk = () => {
         }
     };
 
+    // 모바일 패턴 체크 및 다음칸으로 이동
+    const mobileHandler = (e) => {
+        let id = e.target.id;
+        let val = e.target.value;
+
+        switch (id) {
+            case "mobile1":
+                let test1 = mobile1Pattern.test(val);
+                if (!test1) {
+                    oneLineRefs.inputMobile1.current.value = val.slice(0, -1);
+                }
+                // 다음칸으로 이동
+                if (val.length >= 3) {
+                    oneLineRefs.inputMobile2.current.focus();
+                }
+                break;
+
+            case "mobile2":
+                let test2 = mobile2Pattern.test(val);
+                if (!test2) {
+                    oneLineRefs.inputMobile2.current.value = val.slice(0, -1);
+                }
+                // 다음칸으로 이동
+                if (val.length >= 4) {
+                    oneLineRefs.inputMobile3.current.focus();
+                }
+                break;
+
+            case "mobile3":
+                let test3 = mobile2Pattern.test(val);
+                if (!test3) {
+                    oneLineRefs.inputMobile3.current.value = val.slice(0, -1);
+                }
+                break;
+
+            default:
+                break;
+        }
+    };
+
     return (
         <>
             <div className="section04">
@@ -417,21 +475,27 @@ const MainContentsTalk = () => {
                                     type="text"
                                     className="input"
                                     placeholder="010"
+                                    id="mobile1"
                                     ref={oneLineRefs.inputMobile1}
+                                    onChange={(e) => mobileHandler(e)}
                                 />{" "}
                                 -{" "}
                                 <input
                                     type="text"
                                     className="input"
                                     placeholder="0000"
+                                    id="mobile2"
                                     ref={oneLineRefs.inputMobile2}
+                                    onChange={(e) => mobileHandler(e)}
                                 />{" "}
                                 -{" "}
                                 <input
                                     type="text"
                                     className="input"
                                     placeholder="0000"
+                                    id="mobile3"
                                     ref={oneLineRefs.inputMobile3}
+                                    onChange={(e) => mobileHandler(e)}
                                 />
                             </div>
                             <div className="talk_cap">

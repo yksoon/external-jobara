@@ -1,23 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Modal } from "@mui/material";
 import { Link } from "react-router-dom";
-import { CommonErrorCatch, CommonNotify, CommonRest } from "common/js/Common";
+import { CommonErrModule, CommonNotify, CommonRest } from "common/js/Common";
 import Select from "react-select";
-import { useDispatch, useSelector } from "react-redux";
 import { pwPattern } from "common/js/Pattern";
-import { set_spinner } from "redux/actions/commonAction";
 import { apiPath, routerPath } from "webPath";
 import { RestServer } from "common/js/Rest";
 import useAlert from "hook/useAlert";
 import { signupMultiModel } from "models/user/signUp";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { successCode } from "resultCode";
+import { useResetRecoilState, useSetRecoilState } from "recoil";
+import {
+    isSpinnerAtom,
+    userInfoAdminAtom,
+    userTokenAdminAtom,
+} from "recoils/atoms";
 
 const RegUserModal = (props) => {
-    const dispatch = useDispatch();
     const { alert } = useAlert();
-    const err = { dispatch, alert };
-    // { isOpen, title, content, btn, handleModalClose }
+    const err = CommonErrModule();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
 
     const modalOption = {
         isOpen: props.isOpen,
@@ -37,12 +39,6 @@ const RegUserModal = (props) => {
     const [img, setImg] = useState({});
     const imgUrl = apiPath.api_captcha_img;
     const fileBaseUrl = apiPath.api_file;
-
-    const countryBank = useSelector((state) => state.codes.countryBank);
-    const codes = useSelector((state) => state.codes.codes);
-    const userInfoAdmin = useSelector(
-        (state) => state.userInfoAdmin.userInfoAdmin
-    );
 
     const inputID = useRef(null);
     const inputFirstNameKo = useRef(null);
@@ -76,33 +72,26 @@ const RegUserModal = (props) => {
 
     // 참여프로그램 받아오기
     const getInfo = () => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
 
-        const restParams = {
-            method: "get",
-            url: apiPath.api_get_additional,
-            data: {},
-            err: err,
-            admin: "Y",
-            callback: (res) => responsLogic(res),
-        };
-
-        CommonRest(restParams);
+        setIsSpinner(true);
 
         const responsLogic = (res) => {
             let resultInfo = res.data.result_info;
 
             setProgramInfo(resultInfo);
 
-            dispatch(
-                set_spinner({
-                    isLoading: false,
-                })
-            );
+            // dispatch(
+            //     set_spinner({
+            //         isLoading: false,
+            //     })
+            // );
+
+            setIsSpinner(false);
 
             if (modUserData) {
                 // 참여프로그램 세팅
@@ -118,6 +107,17 @@ const RegUserModal = (props) => {
                 setCheckItems(additionalArr);
             }
         };
+
+        const restParams = {
+            method: "get",
+            url: apiPath.api_get_additional,
+            data: {},
+            err: err,
+            admin: "Y",
+            callback: (res) => responsLogic(res),
+        };
+
+        CommonRest(restParams);
     };
 
     // 수정일경우 디폴트 세팅
@@ -156,60 +156,71 @@ const RegUserModal = (props) => {
 
     // 아이디 중복 체크
     const idDuplicateCheck = () => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+
+        setIsSpinner(true);
 
         // /user/_check
         // POST
         const user_chk_url = apiPath.api_user_check;
-        let data = {
+        const data = {
             signup_type: "000",
             user_id: `${inputID.current.value}`,
         };
 
-        RestServer("post", user_chk_url, data)
-            .then((response) => {
-                let res = response;
+        const restParams = {
+            method: "put_multi",
+            url: user_chk_url, // /user/_check
+            data: data,
+            err: err,
+            admin: "Y",
+            callback: (res) => responsLogic(res),
+        };
 
+        CommonRest(restParams);
+
+        const responsLogic = (res) => {
+            // console.log(res);
+
+            if (res.headers.result_code === successCode.success) {
+                // setIdStatus(true);
                 console.log(res);
 
-                if (res.headers.result_code === successCode.success) {
-                    // setIdStatus(true);
-                    console.log(res);
+                regUser();
+            } else if (res.headers.result_code === "1000") {
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
 
-                    regUser();
-                } else if (res.headers.result_code === "1000") {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                setIsSpinner(false);
 
-                    CommonNotify({
-                        type: "alert",
-                        hook: alert,
-                        message: res.headers.result_message_ko,
-                    });
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: res.headers.result_message_ko,
+                });
 
-                    // setIdStatus(false);
-                    console.log(res);
-                }
-            })
-            .catch((error) => {
-                CommonErrorCatch(error, dispatch, alert);
-            });
+                // setIdStatus(false);
+                console.log(res);
+            }
+        };
     };
 
     // 신규등록
     const regUser = () => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+
+        setIsSpinner(true);
 
         const formData = new FormData();
         const model = signupMultiModel;
@@ -257,11 +268,13 @@ const RegUserModal = (props) => {
         const responsLogic = (res) => {
             let result_code = res.headers.result_code;
             if (result_code === successCode.success) {
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
 
                 CommonNotify({
                     type: "alert",
@@ -270,11 +283,13 @@ const RegUserModal = (props) => {
                     callback: () => requestUserInfo(),
                 });
             } else {
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
 
                 CommonNotify({
                     type: "alert",
@@ -304,11 +319,13 @@ const RegUserModal = (props) => {
     // 등록된거 수정
     const modUser = () => {
         if (checkValidation("mod")) {
-            dispatch(
-                set_spinner({
-                    isLoading: true,
-                })
-            );
+            // dispatch(
+            //     set_spinner({
+            //         isLoading: true,
+            //     })
+            // );
+
+            setIsSpinner(true);
 
             const formData = new FormData();
             const model = signupMultiModel;
@@ -360,11 +377,13 @@ const RegUserModal = (props) => {
             const responsLogic = (res) => {
                 let result_code = res.headers.result_code;
                 if (result_code === successCode.success) {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+
+                    setIsSpinner(false);
 
                     CommonNotify({
                         type: "alert",
@@ -373,11 +392,13 @@ const RegUserModal = (props) => {
                         callback: () => requestUserInfo(),
                     });
                 } else {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+
+                    setIsSpinner(false);
 
                     CommonNotify({
                         type: "alert",

@@ -2,6 +2,7 @@ import { Pagination } from "@mui/material";
 import axios from "axios";
 import {
     CommonConsole,
+    CommonErrModule,
     CommonErrorCatch,
     CommonModal,
     CommonNotify,
@@ -10,28 +11,36 @@ import {
 import useAlert from "hook/useAlert";
 import useConfirm from "hook/useConfirm";
 import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { set_spinner } from "redux/actions/commonAction";
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
+import {
+    ipInfoAtom,
+    isSpinnerAtom,
+    userInfoAdminAtom,
+    userTokenAdminAtom,
+} from "recoils/atoms";
 import { successCode } from "resultCode";
 import { apiPath } from "webPath";
 
 const OneLineBoard = () => {
-    const dispatch = useDispatch();
-    const { alert } = useAlert();
+    // const { alert } = useAlert();
+    // const err = { dispatch, alert };
+    const resetUserInfoAdmin = useResetRecoilState(userInfoAdminAtom);
+    const resetUserTokenAdmin = useResetRecoilState(userTokenAdminAtom);
+
     const { confirm } = useConfirm();
-    const err = { dispatch, alert };
+    const { alert } = useAlert();
+    const err = CommonErrModule();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
 
     const notice = process.env.REACT_APP_NOTICE;
     const isDeveloping = process.env.REACT_APP_ISDEVELOPING;
 
-    const userTokenAdmin = useSelector(
-        (state) => state.userInfoAdmin.userTokenAdmin
-    );
-    const userInfoAdmin = useSelector(
-        (state) => state.userInfoAdmin.userInfoAdmin
-    );
-    const ip = useSelector((state) => state.ipInfo.ipInfo);
+    const userTokenAdmin = useRecoilValue(userTokenAdminAtom);
+    const userInfoAdmin = useRecoilValue(userInfoAdminAtom);
+
+    const ip = useRecoilValue(ipInfoAtom);
+    // const ip = useSelector((state) => state.ipInfo.ipInfo);
 
     const [boardList, setBoardList] = useState([]);
     const [pageInfo, setPageInfo] = useState({});
@@ -49,11 +58,13 @@ const OneLineBoard = () => {
 
     // 리스트 가져오기
     const getBoardList = (pageNum, pageSize, searchKeyword) => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+
+        setIsSpinner(true);
 
         // /v1/boards
         // POST
@@ -91,20 +102,24 @@ const OneLineBoard = () => {
                 setBoardList(result_info);
                 setPageInfo(page_info);
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
             } else {
                 // 에러
                 CommonConsole("log", res);
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
             }
         };
     };
@@ -141,11 +156,13 @@ const OneLineBoard = () => {
 
     // 게시글 수정
     const modBoard = (board_idx) => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+
+        setIsSpinner(true);
 
         const boardIdx = String(board_idx);
 
@@ -171,11 +188,13 @@ const OneLineBoard = () => {
 
             // 성공
             if (result_code === successCode.success) {
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
 
                 setModOneLine(result_info);
 
@@ -186,11 +205,13 @@ const OneLineBoard = () => {
             else {
                 CommonConsole("log", res);
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
 
                 CommonNotify({
                     type: "alert",
@@ -203,11 +224,13 @@ const OneLineBoard = () => {
 
     // 엑셀 다운로드
     const downloadExcel = () => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+
+        setIsSpinner(true);
 
         // 대시보드
         // /v1/board/_download
@@ -229,11 +252,13 @@ const OneLineBoard = () => {
             },
         })
             .then((response) => {
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
 
                 console.log(response);
 
@@ -254,13 +279,22 @@ const OneLineBoard = () => {
                 link.click();
             })
             .catch((error) => {
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
 
-                CommonErrorCatch(error, dispatch, alert);
+                setIsSpinner(false);
+
+                CommonErrorCatch(
+                    error,
+                    // dispatch,
+                    setIsSpinner,
+                    alert,
+                    resetUserInfoAdmin,
+                    resetUserTokenAdmin
+                );
             });
     };
 
@@ -329,11 +363,12 @@ const OneLineBoard = () => {
             });
 
             const removeLogic = () => {
-                dispatch(
-                    set_spinner({
-                        isLoading: true,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: true,
+                //     })
+                // );
+                setIsSpinner(true);
 
                 let data = {};
                 let checkCount = 0;
@@ -362,11 +397,12 @@ const OneLineBoard = () => {
                         checkCount++;
 
                         if (checkCount === length) {
-                            dispatch(
-                                set_spinner({
-                                    isLoading: false,
-                                })
-                            );
+                            // dispatch(
+                            //     set_spinner({
+                            //         isLoading: false,
+                            //     })
+                            // );
+                            setIsSpinner(false);
 
                             CommonNotify({
                                 type: "alert",
@@ -436,6 +472,16 @@ const OneLineBoard = () => {
                                 </Link>
                             )}
                         </div>
+                    </div>
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            marginBottom: "10px",
+                        }}
+                    >
+                        총 : <b>&nbsp; {pageInfo && pageInfo.total} &nbsp;</b>{" "}
+                        건
                     </div>
                     <div className="adm_notice">
                         <div className="adm_table">

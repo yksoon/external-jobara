@@ -1,12 +1,6 @@
-import useAlert from "hook/useAlert";
 import { forwardRef } from "react";
-import { useDispatch } from "react-redux";
 
 const SignUpPW = forwardRef((props, ref) => {
-    const dispatch = useDispatch();
-    const { alert } = useAlert();
-    const err = { dispatch, alert };
-
     const { inputPW, inputPW2 } = ref;
 
     return (

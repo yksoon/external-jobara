@@ -1,22 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import $ from "jquery";
-import { apiPath, routerPath } from "webPath";
-import { RestServer } from "common/js/Rest";
-import Login from "common/js/Login";
 import MobileNav from "./MobileNav";
-import { useSelector, useDispatch } from "react-redux";
-import { init_user_info, set_user_info } from "redux/actions/userInfoAction";
-import {
-    CommonConsole,
-    CommonErrorCatch,
-    CommonNotify,
-} from "common/js/Common";
-import { set_spinner } from "redux/actions/commonAction";
-import useAlert from "hook/useAlert";
-
-let resultCode;
-let loginInfo;
 
 function Header({ props }) {
     useEffect(() => {
@@ -34,12 +18,6 @@ function Header({ props }) {
         $(e.target).siblings(".nav_2depth").slideToggle();
     };
 
-
-    // URL 열기
-    const openUrl = (url) => {
-        window.open(url, "_blank", "noopener, noreferrer");
-    };
-
     return (
         <>
             <div id="header">
@@ -48,7 +26,10 @@ function Header({ props }) {
                         <a href="/">
                             <img src="img/web/main/logo_job.png" alt="" />
                         </a>
-                        <a href="https://lincplus.jejunu.ac.kr/index.htm" target="_blank">
+                        <a
+                            href="https://lincplus.jejunu.ac.kr/index.htm"
+                            target="_blank"
+                        >
                             <img src="img/web/main/logo_linc.png" alt="" />
                         </a>
                     </h1>

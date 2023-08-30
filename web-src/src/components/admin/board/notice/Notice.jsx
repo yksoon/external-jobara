@@ -1,6 +1,7 @@
 import { Pagination } from "@mui/material";
 import {
     CommonConsole,
+    CommonErrModule,
     CommonModal,
     CommonNotify,
     CommonRest,
@@ -10,17 +11,23 @@ import useAlert from "hook/useAlert";
 import useConfirm from "hook/useConfirm";
 import { useEffect, useRef, useState } from "react";
 import { NavItem } from "react-bootstrap";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { set_spinner } from "redux/actions/commonAction";
+import { useSetRecoilState } from "recoil";
+import { isSpinnerAtom } from "recoils/atoms";
 import { successCode } from "resultCode";
 import { apiPath } from "webPath";
 
 const Notice = () => {
-    const dispatch = useDispatch();
-    const { alert } = useAlert();
+    // const dispatch = useDispatch();
+    // const { alert } = useAlert();
+    // const { confirm } = useConfirm();
+    // const err = { dispatch, alert };
+
     const { confirm } = useConfirm();
-    const err = { dispatch, alert };
+    const { alert } = useAlert();
+    const err = CommonErrModule();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
+
     const fileBaseUrl = apiPath.api_file;
 
     const notice = process.env.REACT_APP_NOTICE;
@@ -42,11 +49,13 @@ const Notice = () => {
 
     // 리스트 가져오기
     const getBoardList = (pageNum, pageSize, searchKeyword) => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+
+        setIsSpinner(true);
 
         // /v1/boards
         // POST
@@ -84,20 +93,24 @@ const Notice = () => {
                 setBoardList(result_info);
                 setPageInfo(page_info);
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
             } else {
                 // 에러
                 CommonConsole("log", res);
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
             }
         };
     };
@@ -135,11 +148,13 @@ const Notice = () => {
 
     // 게시글 수정
     const modBoard = (board_idx) => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+
+        setIsSpinner(true);
 
         const boardIdx = String(board_idx);
 
@@ -165,11 +180,13 @@ const Notice = () => {
 
             // 성공
             if (result_code === successCode.success) {
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
 
                 setModNotice(result_info);
 
@@ -180,11 +197,13 @@ const Notice = () => {
             else {
                 CommonConsole("log", res);
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
 
                 CommonNotify({
                     type: "alert",
@@ -238,11 +257,13 @@ const Notice = () => {
             });
 
             const removeLogic = () => {
-                dispatch(
-                    set_spinner({
-                        isLoading: true,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: true,
+                //     })
+                // );
+
+                setIsSpinner(true);
 
                 let data = {};
                 let checkCount = 0;
@@ -271,11 +292,13 @@ const Notice = () => {
                         checkCount++;
 
                         if (checkCount === length) {
-                            dispatch(
-                                set_spinner({
-                                    isLoading: false,
-                                })
-                            );
+                            // dispatch(
+                            //     set_spinner({
+                            //         isLoading: false,
+                            //     })
+                            // );
+
+                            setIsSpinner(false);
 
                             CommonNotify({
                                 type: "alert",

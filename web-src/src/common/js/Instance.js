@@ -1,5 +1,4 @@
 import axios from "axios";
-import store from "redux/store/store";
 
 let ip;
 let token;
@@ -114,8 +113,17 @@ Instance_admin_multi.interceptors.request.use(
 );
 
 const setInterceptors = (config) => {
-    ip = store.getState().ipInfo.ipInfo;
-    token = store.getState().userInfo.userToken;
+    // ip = store.getState().ipInfo.ipInfo;
+    // token = store.getState().userInfo.userToken;
+
+    // ip =
+    //     JSON.parse(sessionStorage.getItem("recoilSession")).ipInfo !== null
+    //         ? JSON.parse(sessionStorage.getItem("recoilSession")).ipInfo
+    //         : sessionStorage.getItem("ipInfo");
+    const recoilSession = JSON.parse(sessionStorage.getItem("recoilSession"));
+
+    ip = sessionStorage.getItem("ipInfo");
+    token = recoilSession === null ? "" : recoilSession.userToken;
 
     config.headers["Jobara-Src"] = ip ? ip : "";
     config.headers["Jobara-Token"] = token ? token : "";
@@ -124,13 +132,38 @@ const setInterceptors = (config) => {
 };
 
 const setInterceptorsAdmin = (config) => {
-    ip = store.getState().ipInfo.ipInfo;
-    token = store.getState().userInfoAdmin.userTokenAdmin;
+    // ip = store.getState().ipInfo.ipInfo;
+    // token = store.getState().userInfoAdmin.userTokenAdmin;
+    // const userTokenAdmin = useRecoilValue(userTokenAdminAtom);
+
+    // ip =
+    //     JSON.parse(sessionStorage.getItem("recoilSession")).ipInfo !== null
+    //         ? JSON.parse(sessionStorage.getItem("recoilSession")).ipInfo
+    //         : sessionStorage.getItem("ipInfo");
+    const recoilSession = JSON.parse(sessionStorage.getItem("recoilSession"));
+
+    ip = sessionStorage.getItem("ipInfo");
+    token = recoilSession === null ? "" : recoilSession.userTokenAdmin;
 
     config.headers["Jobara-Src"] = ip ? ip : "";
     config.headers["Jobara-Token"] = token ? token : "";
 
     return config;
+};
+
+const getIp = async () => {
+    let ip;
+
+    await axios
+        .get("https://geolocation-db.com/json/")
+        .then((res) => {
+            ip = res.data.IPv4;
+        })
+        .catch((error) => {
+            ip = "";
+        });
+
+    return ip;
 };
 
 export { Instance, Instance_multi, Instance_admin, Instance_admin_multi };

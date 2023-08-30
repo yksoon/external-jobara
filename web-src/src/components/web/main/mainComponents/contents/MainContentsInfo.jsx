@@ -1,9 +1,10 @@
 import { Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useRecoilValue } from "recoil";
+import { viewScheduleAtom } from "recoils/atoms";
 
 const MainContentsInfo = () => {
-    const viewSchedule = useSelector((state) => state.schedule.viewSchedule);
+    const viewSchedule = useRecoilValue(viewScheduleAtom);
     const [date, setDate] = useState("");
     const [dayOfWeek, setDayOfWeek] = useState("");
     const [startTime, setStartTime] = useState("");

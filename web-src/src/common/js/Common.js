@@ -2,7 +2,6 @@
 
 import { React, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Backdrop, CircularProgress, Modal } from "@mui/material";
-import { set_spinner } from "redux/actions/commonAction";
 import tokenExpire from "./tokenExpire";
 import RegUserModalMain from "components/admin/user/userList/modal/RegUserModalMain";
 import { RestServer } from "./Rest";
@@ -11,7 +10,14 @@ import RegNoticeModal from "components/admin/board/notice/modal/RegNoticeModal";
 import { errorCode } from "resultCode";
 import MainContentsNoticeModal from "components/web/main/mainComponents/contents/modal/MainContentsNoticeModal";
 import $ from "jquery";
-import { ClipLoader } from "react-spinners";
+import useAlert from "hook/useAlert";
+import { useResetRecoilState, useSetRecoilState } from "recoil";
+import {
+    isSpinnerAtom,
+    userInfoAdminAtom,
+    userTokenAdminAtom,
+} from "recoils/atoms";
+import useConfirm from "hook/useConfirm";
 
 // Alert (props)
 // isOpen = state 상태값
@@ -224,7 +230,13 @@ const CommonSpinner = (props) => {
 // error - error객체
 // dispatch - useDispatch()
 // alert - useAlert()
-const CommonErrorCatch = async (error, dispatch, alert) => {
+const CommonErrorCatch = async (
+    error,
+    setIsSpinner,
+    alert,
+    resetUserInfoAdmin,
+    resetUserTokenAdmin
+) => {
     // 오류발생시 실행
     CommonConsole("log", error);
 
@@ -233,11 +245,12 @@ const CommonErrorCatch = async (error, dispatch, alert) => {
             error.response.status === errorCode.timeOut || // 타임아웃 - 500
             error.response.status === errorCode.timeOut2 // 타임아웃 - 503
         ) {
-            dispatch(
-                set_spinner({
-                    isLoading: false,
-                })
-            );
+            // dispatch(
+            //     set_spinner({
+            //         isLoading: false,
+            //     })
+            // );
+            setIsSpinner(false);
 
             CommonNotify({
                 type: "alert",
@@ -253,15 +266,22 @@ const CommonErrorCatch = async (error, dispatch, alert) => {
             error.response.headers.result_code === errorCode.tokenTamperWith || // 올바른 토큰 아닐 시 - "2002"
             error.response.headers.result_code === errorCode.invalidToken // 올바른 토큰 아닐 시 - "2003"
         ) {
-            tokenExpire(dispatch, alert);
+            tokenExpire(
+                // dispatch,
+                setIsSpinner,
+                alert,
+                resetUserInfoAdmin,
+                resetUserTokenAdmin
+            );
         }
         // 에러
         else {
-            dispatch(
-                set_spinner({
-                    isLoading: false,
-                })
-            );
+            // dispatch(
+            //     set_spinner({
+            //         isLoading: false,
+            //     })
+            // );
+            setIsSpinner(false);
 
             CommonNotify({
                 type: "alert",
@@ -270,12 +290,13 @@ const CommonErrorCatch = async (error, dispatch, alert) => {
             });
         }
     } else {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-                error: "Y",
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //         error: "Y",
+        //     })
+        // );
+        setIsSpinner(true);
     }
 
     // TODO: 타임아웃 전역 사용 가능하도록
@@ -283,11 +304,12 @@ const CommonErrorCatch = async (error, dispatch, alert) => {
 
     // 타임아웃 (axios 타임아웃 걸릴경우)
     if (error.message === `timeout of ${timeOut}ms exceeded`) {
-        dispatch(
-            set_spinner({
-                isLoading: false,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: false,
+        //     })
+        // );
+        setIsSpinner(false);
 
         CommonNotify({
             type: "alert",
@@ -363,8 +385,11 @@ callback : callback()
 admin: ""
 */
 const CommonRest = async (restParams = {}) => {
-    const dispatch = restParams.err.dispatch;
+    // const dispatch = restParams.err.dispatch;
+    const setIsSpinner = restParams.err.setIsSpinner;
     const alert = restParams.err.alert ? restParams.err.alert : "";
+    const resetUserInfoAdmin = restParams.err.resetUserInfoAdmin;
+    const resetUserTokenAdmin = restParams.err.resetUserTokenAdmin;
 
     const method = restParams.method;
     const url = restParams.url;
@@ -376,7 +401,14 @@ const CommonRest = async (restParams = {}) => {
             restParams.callback(response);
         })
         .catch((error) => {
-            CommonErrorCatch(error, dispatch, alert);
+            CommonErrorCatch(
+                error,
+                // dispatch,
+                setIsSpinner,
+                alert,
+                resetUserInfoAdmin,
+                resetUserTokenAdmin
+            );
 
             // console.log(restParams);
 
@@ -399,13 +431,15 @@ const CommonCheckDate = async (
     ip,
     alert,
     callbackFunc,
-    dispatch
+    // dispatch
+    setIsSpinner
 ) => {
-    dispatch(
-        set_spinner({
-            isLoading: true,
-        })
-    );
+    // dispatch(
+    //     set_spinner({
+    //         isLoading: true,
+    //     })
+    // );
+    setIsSpinner(true);
 
     if (Object.keys(checkSchedule).length !== 0) {
         const allowedIp = checkSchedule.allowed_ip;
@@ -462,6 +496,22 @@ const CommonOpenUrl = (url) => {
     window.open(url, "_blank", "noopener, noreferrer");
 };
 
+const CommonErrModule = () => {
+    const { alert } = useAlert();
+    const { confirm } = useConfirm();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
+    const resetUserInfoAdmin = useResetRecoilState(userInfoAdminAtom);
+    const resetUserTokenAdmin = useResetRecoilState(userTokenAdminAtom);
+    const err = {
+        setIsSpinner,
+        alert,
+        resetUserInfoAdmin,
+        resetUserTokenAdmin,
+    };
+
+    return err;
+};
+
 export {
     CommonModal,
     CommonConsole,
@@ -471,4 +521,5 @@ export {
     CommonRest,
     CommonOpenUrl,
     CommonCheckDate,
+    CommonErrModule,
 };

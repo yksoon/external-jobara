@@ -2,6 +2,7 @@ import useAlert from "hook/useAlert";
 import useConfirm from "hook/useConfirm";
 import {
     CommonConsole,
+    CommonErrModule,
     CommonErrorCatch,
     CommonNotify,
     CommonRest,
@@ -9,25 +10,39 @@ import {
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { apiPath } from "webPath";
-import { useDispatch, useSelector } from "react-redux";
-import { set_spinner } from "redux/actions/commonAction";
 import DashBoardChart from "./components/DashBoardChart";
 import axios from "axios";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import { successCode } from "resultCode";
 import { commaOfNumber } from "common/js/Pattern";
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
+import {
+    ipInfoAtom,
+    isSpinnerAtom,
+    userInfoAdminAtom,
+    userTokenAdminAtom,
+} from "recoils/atoms";
 
 const DashBoardMain = () => {
-    const dispatch = useDispatch();
+    // const { alert } = useAlert();
+    const resetUserInfoAdmin = useResetRecoilState(userInfoAdminAtom);
+    const resetUserTokenAdmin = useResetRecoilState(userTokenAdminAtom);
+    // const err = { dispatch, alert, resetUserInfoAdmin, resetUserTokenAdmin };
+
     const { alert } = useAlert();
-    const err = { dispatch, alert };
+    const err = CommonErrModule();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
+
     const navigate = useNavigate();
     const fileBaseUrl = apiPath.api_file;
 
-    const userTokenAdmin = useSelector(
-        (state) => state.userInfoAdmin.userTokenAdmin
-    );
-    const ip = useSelector((state) => state.ipInfo.ipInfo);
+    // const userTokenAdmin = useSelector(
+    //     (state) => state.userInfoAdmin.userTokenAdmin
+    // );
+    const userTokenAdmin = useRecoilValue(userTokenAdminAtom);
+
+    // const ip = useSelector((state) => state.ipInfo.ipInfo);
+    const ip = useRecoilValue(ipInfoAtom);
 
     const [totalCountInfo, setTotalCountInfo] = useState({});
     const [totalListInfo, setTotalListInfo] = useState([]);
@@ -68,22 +83,26 @@ const DashBoardMain = () => {
                 // 에러
                 CommonConsole("log", res);
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
             }
         };
     };
 
     // 대시보드
     const getDashboard = () => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+
+        setIsSpinner(true);
 
         // 대시보드
         // /v1/dashboard
@@ -117,21 +136,25 @@ const DashBoardMain = () => {
 
                 // downloadExcel();
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
             }
         };
     };
 
     const downloadExcel = () => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+
+        setIsSpinner(true);
 
         // 대시보드
         // /v1/dashboard
@@ -151,11 +174,13 @@ const DashBoardMain = () => {
             },
         })
             .then((response) => {
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
 
                 console.log(response);
 
@@ -176,13 +201,22 @@ const DashBoardMain = () => {
                 link.click();
             })
             .catch((error) => {
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
 
-                CommonErrorCatch(error, dispatch, alert);
+                setIsSpinner(false);
+
+                CommonErrorCatch(
+                    error,
+                    // dispatch,
+                    setIsSpinner,
+                    alert,
+                    resetUserInfoAdmin,
+                    resetUserTokenAdmin
+                );
             });
     };
 

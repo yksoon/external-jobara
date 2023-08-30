@@ -1,11 +1,13 @@
 import { Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { ipInfoAtom, viewScheduleAtom } from "recoils/atoms";
 import { routerPath } from "webPath";
 
 const MainMainvisual = () => {
-    const viewSchedule = useSelector((state) => state.schedule.viewSchedule);
+    // const viewSchedule = useSelector((state) => state.schedule.viewSchedule);
+    const viewSchedule = useRecoilValue(viewScheduleAtom);
     const [startYear, setStartYear] = useState("");
     const [startMonth, setStartMonth] = useState("");
     const [startDay, setStartDay] = useState("");
@@ -294,7 +296,9 @@ const MainMainvisual = () => {
                                 </Link>
                             </li>
                             <li>
-                                <Link to={routerPath.web_notice_url}>공지사항</Link>
+                                <Link to={routerPath.web_notice_url}>
+                                    공지사항
+                                </Link>
                             </li>
                         </ul>
                     </div>

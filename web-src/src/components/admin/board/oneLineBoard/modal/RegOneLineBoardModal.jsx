@@ -3,28 +3,30 @@ import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { apiPath } from "webPath";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import { CommonNotify, CommonRest } from "common/js/Common";
-import { useDispatch, useSelector } from "react-redux";
+import { CommonErrModule, CommonNotify, CommonRest } from "common/js/Common";
 import useAlert from "hook/useAlert";
-import { set_spinner } from "redux/actions/commonAction";
 import { boardModel } from "models/board/board";
 import { successCode } from "resultCode";
 import useConfirm from "hook/useConfirm";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { isSpinnerAtom, userInfoAdminAtom } from "recoils/atoms";
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const RegOneLineBoardModal = (props) => {
-    const dispatch = useDispatch();
-    const { alert } = useAlert();
+    // const dispatch = useDispatch();
     const { confirm } = useConfirm();
-    const err = { dispatch, alert };
+    const { alert } = useAlert();
+    const err = CommonErrModule();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
 
     const [img, setImg] = useState({});
     const imgUrl = apiPath.api_captcha_img;
     // const [boardData, setBoardData] = useState("");
 
-    const userInfoAdmin = useSelector(
-        (state) => state.userInfoAdmin.userInfoAdmin
-    );
+    // const userInfoAdmin = useSelector(
+    //     (state) => state.userInfoAdmin.userInfoAdmin
+    // );
+    const userInfoAdmin = useRecoilValue(userInfoAdminAtom);
 
     const inputTitle = useRef(null);
     const inputCaptcha = useRef(null);
@@ -88,11 +90,13 @@ const RegOneLineBoardModal = (props) => {
         // console.log(boardData);
 
         if (validation()) {
-            dispatch(
-                set_spinner({
-                    isLoading: true,
-                })
-            );
+            // dispatch(
+            //     set_spinner({
+            //         isLoading: true,
+            //     })
+            // );
+
+            setIsSpinner(true);
 
             const formData = new FormData();
             const model = boardModel;
@@ -141,11 +145,13 @@ const RegOneLineBoardModal = (props) => {
             const responsLogic = (res) => {
                 let result_code = res.headers.result_code;
                 if (result_code === successCode.success) {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+
+                    setIsSpinner(false);
 
                     CommonNotify({
                         type: "alert",
@@ -154,11 +160,13 @@ const RegOneLineBoardModal = (props) => {
                         callback: () => requestBoardList(),
                     });
                 } else {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+
+                    setIsSpinner(false);
 
                     CommonNotify({
                         type: "alert",
@@ -225,11 +233,13 @@ const RegOneLineBoardModal = (props) => {
     // 수정
     const modBoard = () => {
         if (validation()) {
-            dispatch(
-                set_spinner({
-                    isLoading: true,
-                })
-            );
+            // dispatch(
+            //     set_spinner({
+            //         isLoading: true,
+            //     })
+            // );
+
+            setIsSpinner(true);
 
             const formData = new FormData();
             const model = boardModel;
@@ -257,11 +267,13 @@ const RegOneLineBoardModal = (props) => {
             const responsLogic = (res) => {
                 let result_code = res.headers.result_code;
                 if (result_code === successCode.success) {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+
+                    setIsSpinner(false);
 
                     CommonNotify({
                         type: "alert",
@@ -270,11 +282,13 @@ const RegOneLineBoardModal = (props) => {
                         callback: () => requestBoardList(),
                     });
                 } else {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+
+                    setIsSpinner(false);
 
                     CommonNotify({
                         type: "alert",
@@ -310,11 +324,13 @@ const RegOneLineBoardModal = (props) => {
         });
 
         const removeLogic = () => {
-            dispatch(
-                set_spinner({
-                    isLoading: true,
-                })
-            );
+            // dispatch(
+            //     set_spinner({
+            //         isLoading: true,
+            //     })
+            // );
+
+            setIsSpinner(true);
 
             const data = {};
             const url = apiPath.api_admin_remove_board + `/${board_idx}`;
@@ -333,11 +349,13 @@ const RegOneLineBoardModal = (props) => {
 
             const responsLogic = (res) => {
                 if (res.headers.result_code === successCode.success) {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+
+                    setIsSpinner(false);
 
                     CommonNotify({
                         type: "alert",

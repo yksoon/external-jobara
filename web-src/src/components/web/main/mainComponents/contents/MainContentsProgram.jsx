@@ -2,14 +2,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import readXlsxFile from "read-excel-file";
 import { routerPath } from "webPath";
+import { CommonOpenUrl } from "common/js/Common";
 
 const MainContentsProgram = () => {
     const [companyData, setCompanyData] = useState([]);
-
-    // URL 열기
-    const openUrl = (url) => {
-        window.open(url, "_blank", "noopener, noreferrer");
-    };
 
     useEffect(() => {
         xlxsParsing();
@@ -232,7 +228,7 @@ const MainContentsProgram = () => {
                                 <Link
                                     key={`company_main_${idx}`}
                                     onClick={(e) => {
-                                        openUrl(item.homepageUrl);
+                                        CommonOpenUrl(item.homepageUrl);
                                         e.preventDefault();
                                     }}
                                 >
@@ -243,13 +239,13 @@ const MainContentsProgram = () => {
                                 </Link>
                             ))}
                         {/* <Link
-                            onClick={() => openUrl("https://www.jejuair.net/")}
+                            onClick={() => CommonOpenUrl("https://www.jejuair.net/")}
                         >
                             <img src="img/web/main/com01.png" alt="제주항공" />
                         </Link>
                         <Link
                             onClick={() =>
-                                openUrl(
+                                CommonOpenUrl(
                                     "https://jejusinh.nonghyup.com/user/indexMain.do?siteId=jejusinh"
                                 )
                             }
@@ -258,14 +254,14 @@ const MainContentsProgram = () => {
                         </Link>
                         <Link
                             onClick={() =>
-                                openUrl(
+                                CommonOpenUrl(
                                     "https://www.e-jejubank.com/JeJuBankInfo.do"
                                 )
                             }
                         >
                             <img src="img/web/main/com03.png" alt="제주은행" />
                         </Link>
-                        <Link onClick={() => openUrl("")}>
+                        <Link onClick={() => CommonOpenUrl("")}>
                             <img
                                 src="img/web/main/com04.png"
                                 alt="그랜드하야트 제주"
@@ -273,7 +269,7 @@ const MainContentsProgram = () => {
                         </Link>
                         <Link
                             onClick={() =>
-                                openUrl("http://www.jwmarriottjeju.co.kr/")
+                                CommonOpenUrl("http://www.jwmarriottjeju.co.kr/")
                             }
                         >
                             <img
@@ -281,7 +277,7 @@ const MainContentsProgram = () => {
                                 alt="jw메리어트 제주"
                             />
                         </Link>
-                        <Link onClick={() => openUrl("http://kalhotel.co.kr ")}>
+                        <Link onClick={() => CommonOpenUrl("http://kalhotel.co.kr ")}>
                             <img
                                 src="img/web/main/com06.png"
                                 alt="칼호텔서귀포"
@@ -289,7 +285,7 @@ const MainContentsProgram = () => {
                         </Link>
                         <Link
                             onClick={() =>
-                                openUrl("https://www.shilla.net/jeju")
+                                CommonOpenUrl("https://www.shilla.net/jeju")
                             }
                         >
                             <img
@@ -298,26 +294,26 @@ const MainContentsProgram = () => {
                             />
                         </Link>
                         <Link
-                            onClick={() => openUrl("https://www.thepinx.co.kr")}
+                            onClick={() => CommonOpenUrl("https://www.thepinx.co.kr")}
                         >
                             <img src="img/web/main/com08.png" alt="skpinx" />
                         </Link>
                         <Link
                             onClick={() =>
-                                openUrl("https://www.xslab.co.kr/default/")
+                                CommonOpenUrl("https://www.xslab.co.kr/default/")
                             }
                         >
                             <img src="img/web/main/com09.png" alt="xslab" />
                         </Link>
-                        <Link onClick={() => openUrl("https://www.goorm.io/")}>
+                        <Link onClick={() => CommonOpenUrl("https://www.goorm.io/")}>
                             <img src="img/web/main/com10.png" alt="goorm" />
                         </Link>
-                        <Link onClick={() => openUrl("http://itnewcorp.com")}>
+                        <Link onClick={() => CommonOpenUrl("http://itnewcorp.com")}>
                             <img src="img/web/main/com11.png" alt="itnew" />
                         </Link>
                         <Link
                             onClick={() =>
-                                openUrl("https://www.wayplus.co.kr/")
+                                CommonOpenUrl("https://www.wayplus.co.kr/")
                             }
                         >
                             <img src="img/web/main/com12.png" alt="wayplus" />
@@ -327,14 +323,14 @@ const MainContentsProgram = () => {
                         </Link>
                         <Link
                             onClick={() =>
-                                openUrl("https://www.tilon.com/home")
+                                CommonOpenUrl("https://www.tilon.com/home")
                             }
                         >
                             <img src="img/web/main/com14.png" alt="tilonsoft" />
                         </Link>
                         <Link
                             onClick={() =>
-                                openUrl("http://www.intothecafe.co.kr/")
+                                CommonOpenUrl("http://www.intothecafe.co.kr/")
                             }
                         >
                             <img
@@ -344,7 +340,7 @@ const MainContentsProgram = () => {
                         </Link>
                         <Link
                             onClick={() =>
-                                openUrl("http://www.hallasan.co.kr/index.php")
+                                CommonOpenUrl("http://www.hallasan.co.kr/index.php")
                             }
                         >
                             <img

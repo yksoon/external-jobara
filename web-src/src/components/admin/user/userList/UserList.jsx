@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
     CommonConsole,
+    CommonErrModule,
     CommonErrorCatch,
     CommonModal,
     CommonNotify,
@@ -9,18 +10,22 @@ import {
 } from "common/js/Common";
 import { RestServer } from "common/js/Rest";
 import { apiPath } from "webPath";
-import { useDispatch } from "react-redux";
-import { set_spinner } from "redux/actions/commonAction";
 import { Pagination } from "@mui/material";
 import useConfirm from "hook/useConfirm";
 import useAlert from "hook/useAlert";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import { successCode } from "resultCode";
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
+import {
+    isSpinnerAtom,
+    userInfoAdminAtom,
+    userTokenAdminAtom,
+} from "recoils/atoms";
 
 const UserList = () => {
-    const dispatch = useDispatch();
     const { alert } = useAlert();
-    const err = { dispatch, alert };
+    const err = CommonErrModule();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
 
     const [isOpen, setIsOpen] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
@@ -84,22 +89,24 @@ const UserList = () => {
                 // 에러
                 CommonConsole("log", res);
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+                setIsSpinner(false);
             }
         };
     };
 
     // 유저 리스트
     const reqUserList = (pageNum, pageSize, searchKeyword) => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+        setIsSpinner(true);
 
         // /v1/user/infos
         // POST
@@ -135,31 +142,35 @@ const UserList = () => {
                 setUserList(result_info);
                 setPageInfo(page_info);
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                setIsSpinner(false);
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
             } else {
                 // 에러
                 CommonConsole("log", res);
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                setIsSpinner(false);
+
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
             }
         };
     };
 
     // 회원 정보 수정
     const modUser = (user_idx) => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+        setIsSpinner(true);
 
         let userIdx = String(user_idx);
 
@@ -185,11 +196,13 @@ const UserList = () => {
 
             // 성공
             if (result_code === successCode.success) {
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
 
                 setModUserData(result_info);
 
@@ -200,11 +213,13 @@ const UserList = () => {
             else {
                 CommonConsole("log", res);
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
 
                 CommonNotify({
                     type: "alert",
@@ -374,7 +389,7 @@ const UserList = () => {
                             marginBottom: "10px",
                         }}
                     >
-                        총 : <b>{pageInfo && pageInfo.total}</b> 명
+                        총 : <b>&nbsp;{pageInfo && pageInfo.total}&nbsp;</b> 명
                     </div>
                     <div className="adm_table">
                         <table className="table_a">

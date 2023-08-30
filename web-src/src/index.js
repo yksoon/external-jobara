@@ -2,10 +2,6 @@ import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-import { Provider } from "react-redux";
-import store from "redux/store/store";
-import { persistStore } from "redux-persist";
-import { PersistGate } from "redux-persist/integration/react";
 import { RecoilRoot } from "recoil";
 import RecoilizeDebugger from "recoilize";
 
@@ -20,20 +16,15 @@ import "common/css/common.css";
 import "common/css/aos.css";
 import "common/css/adm.css";
 
-const persistor = persistStore(store);
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
+const app = document.getElementById("app");
 
 root.render(
     <BrowserRouter>
-        <Provider store={store}>
-            <RecoilRoot>
-                <PersistGate loading={null} persistor={persistor}>
-                    <RecoilizeDebugger />
-                    <App />
-                </PersistGate>
-            </RecoilRoot>
-        </Provider>
+        <RecoilRoot>
+            <RecoilizeDebugger root={app} />
+            <App />
+        </RecoilRoot>
     </BrowserRouter>
 );
 

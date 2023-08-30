@@ -1,12 +1,9 @@
 import { CommonNotify } from "common/js/Common";
 import useAlert from "hook/useAlert";
 import { forwardRef } from "react";
-import { useDispatch } from "react-redux";
 
 const SignUpFile = forwardRef((props, ref) => {
-    const dispatch = useDispatch();
     const { alert } = useAlert();
-    const err = { dispatch, alert };
 
     const { inputAttachmentFile } = ref;
 

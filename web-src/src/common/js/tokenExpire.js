@@ -1,17 +1,23 @@
 import { RestServer } from "./Rest";
-import { init_user_info, set_user_info } from "redux/actions/userInfoAction";
-import { set_spinner } from "redux/actions/commonAction";
 import { apiPath, routerPath } from "webPath";
 import { CommonConsole, CommonNotify } from "./Common";
-import { init_user_info_admin } from "redux/actions/userInfoAdminAction";
 import { successCode } from "resultCode";
+import { useResetRecoilState } from "recoil";
+import { userInfoAdminAtom } from "recoils/atoms";
 
-const tokenExpire = (dispatch, alert) => {
-    dispatch(
-        set_spinner({
-            isLoading: true,
-        })
-    );
+const tokenExpire = (
+    // dispatch,
+    setIsSpinner,
+    alert,
+    resetUserInfoAdmin,
+    resetUserTokenAdmin
+) => {
+    // dispatch(
+    //     set_spinner({
+    //         isLoading: true,
+    //     })
+    // );
+    setIsSpinner(true);
 
     // CommonNotify({
     //     type: "alert",
@@ -33,13 +39,18 @@ const tokenExpire = (dispatch, alert) => {
             if (result_code === successCode.success) {
                 // localStorage.removeItem("userInfo");
                 // dispatch(set_user_info(null));
-                dispatch(init_user_info_admin(null));
+                // dispatch(init_user_info_admin(null));
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                resetUserInfoAdmin();
+
+                resetUserTokenAdmin();
+
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+                setIsSpinner(false);
 
                 window.location.replace(routerPath.admin_signin_url);
             }
@@ -50,13 +61,18 @@ const tokenExpire = (dispatch, alert) => {
             CommonConsole("decLog", error);
             // CommonConsole("alertMsg", error);
 
-            dispatch(init_user_info_admin(null));
+            // dispatch(init_user_info_admin(null));
+
+            resetUserInfoAdmin();
+
+            resetUserTokenAdmin();
             // Spinner
-            dispatch(
-                set_spinner({
-                    isLoading: false,
-                })
-            );
+            // dispatch(
+            //     set_spinner({
+            //         isLoading: false,
+            //     })
+            // );
+            setIsSpinner(false);
 
             CommonNotify({
                 type: "alert",

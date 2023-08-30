@@ -4,20 +4,39 @@ import Footer from "components/web/common/Footer";
 import { apiPath, routerPath } from "webPath";
 import SubHeader from "../common/SubHeader";
 import { mobile1Pattern, mobile2Pattern } from "common/js/Pattern";
-import { CommonCheckDate, CommonNotify, CommonRest } from "common/js/Common";
-import { useDispatch, useSelector } from "react-redux";
+import {
+    CommonCheckDate,
+    CommonErrModule,
+    CommonNotify,
+    CommonRest,
+} from "common/js/Common";
 import useAlert from "hook/useAlert";
 import { signInModel } from "models/user/signIn";
-import { set_spinner } from "redux/actions/commonAction";
-import { set_user_info, set_user_token } from "redux/actions/userInfoAction";
 import { successCode } from "resultCode";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import {
+    checkScheduleAtom,
+    ipInfoAtom,
+    isSpinnerAtom,
+    userInfoAtom,
+    userTokenAtom,
+} from "recoils/atoms";
 
 function SignUpChk() {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
+    // const { alert } = useAlert();
+    // const err = { dispatch, alert };
     const { alert } = useAlert();
-    const err = { dispatch, alert };
-    const checkSchedule = useSelector((state) => state.schedule.checkSchedule);
-    const ip = useSelector((state) => state.ipInfo.ipInfo);
+    const err = CommonErrModule();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
+
+    const setUserInfo = useSetRecoilState(userInfoAtom);
+    const setUserToken = useSetRecoilState(userTokenAtom);
+
+    const checkSchedule = useRecoilValue(checkScheduleAtom);
+    const ip = useRecoilValue(ipInfoAtom);
+    // const checkSchedule = useSelector((state) => state.schedule.checkSchedule);
+    // const ip = useSelector((state) => state.ipInfo.ipInfo);
     const navigate = useNavigate();
 
     const signUpChkRefs = {
@@ -34,16 +53,18 @@ function SignUpChk() {
             ip,
             alert,
             checkDatecallback,
-            dispatch
+            // dispatch
+            setIsSpinner
         ).then((res) => {
             if (!res) {
                 navigate(routerPath.web_main_url);
             } else {
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+                setIsSpinner(false);
 
                 signUpChkRefs.inputID.current.focus();
             }
@@ -52,11 +73,12 @@ function SignUpChk() {
 
     // 사전등록 기간 체크 콜백
     const checkDatecallback = () => {
-        dispatch(
-            set_spinner({
-                isLoading: false,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: false,
+        //     })
+        // );
+        setIsSpinner(false);
 
         navigate(routerPath.web_main_url);
     };
@@ -162,11 +184,12 @@ function SignUpChk() {
 
     // signin 요청
     const signInToServer = (data) => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+        setIsSpinner(true);
 
         const restParams = {
             method: "post",
@@ -182,28 +205,34 @@ function SignUpChk() {
         const responsLogic = (res) => {
             const resultCode = res.headers.result_code;
             if (resultCode === successCode.success) {
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
 
                 const resultInfo = res.data.result_info;
 
                 // 리덕스 저장
-                dispatch(set_user_info(JSON.stringify(resultInfo)));
-                dispatch(set_user_token(JSON.stringify(resultInfo)));
+                // dispatch(set_user_info(JSON.stringify(resultInfo)));
+                // dispatch(set_user_token(JSON.stringify(resultInfo)));
+                setUserInfo(resultInfo);
+                setUserToken(resultInfo.token);
 
                 // 사전등록 수정 페이지 이동
                 navigate(routerPath.web_signup_mod_url);
             } else {
                 const resultMsg = res.headers.result_message_ko;
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
 
                 CommonNotify({
                     type: "alert",

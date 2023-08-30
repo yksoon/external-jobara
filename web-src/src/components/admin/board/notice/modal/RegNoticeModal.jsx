@@ -1,6 +1,5 @@
 import useAlert from "hook/useAlert";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { apiPath } from "webPath";
 import RefreshIcon from "@mui/icons-material/Refresh";
@@ -8,22 +7,29 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import $ from "jquery";
 import "quill-paste-smart";
-import { CommonNotify, CommonRest } from "common/js/Common";
-import { set_spinner } from "redux/actions/commonAction";
+import { CommonErrModule, CommonNotify, CommonRest } from "common/js/Common";
 import { boardModel } from "models/board/board";
 import { successCode } from "resultCode";
 import useConfirm from "hook/useConfirm";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { isSpinnerAtom, userInfoAdminAtom } from "recoils/atoms";
 const fileBaseUrl = apiPath.api_file;
 
 const RegNoticeModal = (props) => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
+    // const { alert } = useAlert();
+    // const { confirm } = useConfirm();
+    // const err = { dispatch, alert };
+
     const { alert } = useAlert();
     const { confirm } = useConfirm();
-    const err = { dispatch, alert };
+    const err = CommonErrModule();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
 
-    const userInfoAdmin = useSelector(
-        (state) => state.userInfoAdmin.userInfoAdmin
-    );
+    // const userInfoAdmin = useSelector(
+    //     (state) => state.userInfoAdmin.userInfoAdmin
+    // );
+    const userInfoAdmin = useRecoilValue(userInfoAdminAtom);
 
     const [boardData, setBoardData] = useState("");
     const [fileList, setFileList] = useState([]);
@@ -90,11 +96,12 @@ const RegNoticeModal = (props) => {
     // 등록
     const regBoard = () => {
         if (validation()) {
-            dispatch(
-                set_spinner({
-                    isLoading: true,
-                })
-            );
+            // dispatch(
+            //     set_spinner({
+            //         isLoading: true,
+            //     })
+            // );
+            setIsSpinner(true);
 
             const formData = new FormData();
             const model = boardModel;
@@ -131,11 +138,12 @@ const RegNoticeModal = (props) => {
             const responsLogic = (res) => {
                 let result_code = res.headers.result_code;
                 if (result_code === successCode.success) {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+                    setIsSpinner(false);
 
                     CommonNotify({
                         type: "alert",
@@ -144,11 +152,12 @@ const RegNoticeModal = (props) => {
                         callback: () => requestBoards(),
                     });
                 } else {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+                    setIsSpinner(false);
 
                     CommonNotify({
                         type: "alert",
@@ -174,11 +183,12 @@ const RegNoticeModal = (props) => {
     // 수정
     const modBoard = () => {
         if (validation()) {
-            dispatch(
-                set_spinner({
-                    isLoading: true,
-                })
-            );
+            // dispatch(
+            //     set_spinner({
+            //         isLoading: true,
+            //     })
+            // );
+            setIsSpinner(true);
 
             const formData = new FormData();
             const model = boardModel;
@@ -215,11 +225,12 @@ const RegNoticeModal = (props) => {
             const responsLogic = (res) => {
                 let result_code = res.headers.result_code;
                 if (result_code === successCode.success) {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+                    setIsSpinner(false);
 
                     CommonNotify({
                         type: "alert",
@@ -228,11 +239,12 @@ const RegNoticeModal = (props) => {
                         callback: () => requestBoards(),
                     });
                 } else {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+                    setIsSpinner(false);
 
                     CommonNotify({
                         type: "alert",
@@ -366,11 +378,12 @@ const RegNoticeModal = (props) => {
         });
 
         const removeLogic = () => {
-            dispatch(
-                set_spinner({
-                    isLoading: true,
-                })
-            );
+            // dispatch(
+            //     set_spinner({
+            //         isLoading: true,
+            //     })
+            // );
+            setIsSpinner(true);
 
             const data = {};
             const url = apiPath.api_admin_remove_board + `/${board_idx}`;
@@ -389,11 +402,12 @@ const RegNoticeModal = (props) => {
 
             const responsLogic = (res) => {
                 if (res.headers.result_code === successCode.success) {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+                    setIsSpinner(false);
 
                     CommonNotify({
                         type: "alert",

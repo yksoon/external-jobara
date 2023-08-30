@@ -1,39 +1,49 @@
-import useAlert from "hook/useAlert";
-import { CommonConsole, CommonErrorCatch, CommonRest } from "common/js/Common";
+import {
+    CommonConsole,
+    CommonErrorCatch,
+    CommonErrModule,
+    CommonRest,
+    CommonSpinner,
+} from "common/js/Common";
 import { RestServer } from "common/js/Rest";
 import DashBoardMain from "components/admin/dashboard/DashBoardMain";
 import SideNav from "components/admin/nav/SideNav";
 import UserList from "components/admin/user/userList/UserList";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { set_spinner } from "redux/actions/commonAction";
 import { apiPath, routerPath } from "webPath";
 import Notice from "./board/notice/Notice";
 import OneLineBoard from "./board/oneLineBoard/OneLineBoard";
 import { successCode } from "resultCode";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { pageAtom } from "recoils/atoms";
+import {
+    useRecoilState,
+    useRecoilValue,
+    useResetRecoilState,
+    useSetRecoilState,
+} from "recoil";
+import {
+    isSpinnerAtom,
+    pageAtom,
+    userInfoAdminAtom,
+    userTokenAdminAtom,
+} from "recoils/atoms";
 
 const Admin = () => {
-    const dispatch = useDispatch();
-    const { alert } = useAlert();
-    const err = { dispatch, alert };
+    const err = CommonErrModule();
+    const isSpinner = useRecoilValue(isSpinnerAtom);
 
     const navigate = useNavigate();
-    const userInfoAdmin = useSelector(
-        (state) => state.userInfoAdmin.userInfoAdmin
-    );
-    const userTokenAdmin = useSelector(
-        (state) => state.userInfoAdmin.userTokenAdmin
-    );
 
-    const page = useRecoilValue(pageAtom);
-
-    const setPage = useSetRecoilState(pageAtom);
-    // const [page, setPage] = useRecoilState(pageAtom);
-    // const page = useRecoilValue(pageAtom);
-    // const setPage = useSetRecoilState("page");
+    const userTokenAdmin = useRecoilValue(userTokenAdminAtom);
+    const userInfoAdmin = useRecoilValue(userInfoAdminAtom);
+    // const userInfoAdmin = useSelector(
+    //     (state) => state.userInfoAdmin.userInfoAdmin
+    // );
+    // const userTokenAdmin = useSelector(
+    //     (state) => state.userInfoAdmin.userTokenAdmin
+    // );
+    // recoil
+    const [page, setPage] = useRecoilState(pageAtom);
 
     const [menuList, setMenuList] = useState([]);
 
@@ -200,6 +210,7 @@ const Admin = () => {
                     {renderPage(page)}
                 </div>
             </div>
+            {isSpinner && <CommonSpinner />}
         </>
     );
 };
