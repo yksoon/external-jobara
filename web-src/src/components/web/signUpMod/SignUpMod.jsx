@@ -19,7 +19,6 @@ import {
     CommonNotify,
     CommonRest,
 } from "common/js/Common";
-import { idPattern } from "common/js/Pattern";
 import { signupMultiModel } from "models/user/signUp";
 import SignUpModMemo from "./signUpModComponents/SignUpModMemo";
 import { successCode } from "resultCode";

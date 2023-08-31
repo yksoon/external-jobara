@@ -5,7 +5,6 @@ import { apiPath } from "webPath";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import $ from "jquery";
 import "quill-paste-smart";
 import { CommonErrModule, CommonNotify, CommonRest } from "common/js/Common";
 import { boardModel } from "models/board/board";

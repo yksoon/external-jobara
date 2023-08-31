@@ -1,6 +1,6 @@
 import { CommonErrModule } from "common/js/Common";
 import useAlert from "hook/useAlert";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { isSpinnerAtom } from "recoils/atoms";

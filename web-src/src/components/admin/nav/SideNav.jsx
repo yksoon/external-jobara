@@ -1,12 +1,10 @@
 import {
     CommonConsole,
     CommonErrModule,
-    CommonErrorCatch,
     CommonModal,
     CommonNotify,
     CommonRest,
 } from "common/js/Common";
-import { RestServer } from "common/js/Rest";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { apiPath, routerPath } from "webPath";

@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import $ from "jquery";
-import { apiPath, routerPath } from "webPath";
+import { routerPath } from "webPath";
 
-function MobileNav({ props }) {
+function MobileNav() {
     useEffect(() => {
         $("#nav").hide();
     }, []);
@@ -17,11 +17,6 @@ function MobileNav({ props }) {
         e.preventDefault();
         $(".nav_2depth").slideUp();
         $(e.target).siblings(".nav_2depth").slideToggle();
-    };
-
-    // URL 열기
-    const openUrl = (url) => {
-        window.open(url, "_blank", "noopener, noreferrer");
     };
 
     return (

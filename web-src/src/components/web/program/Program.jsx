@@ -1,7 +1,5 @@
-import { Link } from "react-router-dom";
 import Footer from "../common/Footer";
 import SubHeader from "../common/SubHeader";
-import { CommonOpenUrl } from "common/js/Common";
 
 const Program = () => {
     return (
@@ -12,7 +10,9 @@ const Program = () => {
             {/* 서브컨텐츠     //S */}
             <div id="container" className="sub_container">
                 <div id="content">
-                    <h3 className="title_chap"><span>2023 잡아라 페스티벌</span>에 당신을 초대합니다!</h3>
+                    <h3 className="title_chap">
+                        <span>2023 잡아라 페스티벌</span>에 당신을 초대합니다!
+                    </h3>
                     <h2 id="subtitle">행사일정</h2>
                     <div className="program">
                         <table className="pro_table">
@@ -59,8 +59,8 @@ const Program = () => {
                                     </td>
                                     <td rowSpan="4" className="step step3">
                                         <span>STEP 3</span>
-                                        바로채용면접, AI 면접체험,
-                                        NCS모의고사, 현직자토크콘서트 등
+                                        바로채용면접, AI 면접체험, NCS모의고사,
+                                        현직자토크콘서트 등
                                     </td>
                                     <td></td>
                                 </tr>
@@ -82,7 +82,8 @@ const Program = () => {
                                     <td></td>
                                 </tr>
                             </tbody>
-                        </table><br/>
+                        </table>
+                        <br />
                         <p>※ 운영에 따라 일정이 변경될 수 있습니다.</p>
                     </div>
                 </div>

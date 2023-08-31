@@ -1,9 +1,8 @@
 import { CommonErrModule, CommonRest } from "common/js/Common";
 import { forwardRef, useEffect, useState } from "react";
-import { useNavigate } from "react-router";
 import { useSetRecoilState } from "recoil";
 import { isSpinnerAtom } from "recoils/atoms";
-import { apiPath, routerPath } from "webPath";
+import { apiPath } from "webPath";
 
 const SignUpSpecialCheck = forwardRef((props, ref) => {
     // const dispatch = useDispatch();

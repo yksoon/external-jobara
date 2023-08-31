@@ -3,26 +3,12 @@ import $ from "jquery";
 import { useEffect } from "react";
 import { routerPath } from "webPath";
 import MobileNav from "./MobileNav";
+import { CommonOpenUrl } from "common/js/Common";
 
 const SubHeader = () => {
     useEffect(() => {
         $("#nav").hide();
     }, []);
-
-    const menuClick = () => {
-        $("#nav").slideToggle();
-        $("#menu-icon2").toggleClass("open");
-    };
-    const menuDepth = (e) => {
-        //$(".nav_2depth").slideToggle();
-        $(".nav_2depth").slideUp();
-        $(e.target).siblings(".nav_2depth").slideToggle();
-    };
-
-    // URL 열기
-    const openUrl = (url) => {
-        window.open(url, "_blank", "noopener, noreferrer");
-    };
 
     return (
         <>
@@ -35,7 +21,7 @@ const SubHeader = () => {
                         </Link>
                         <Link
                             onClick={() =>
-                                openUrl("https://lincplus.jejunu.ac.kr/")
+                                CommonOpenUrl("https://lincplus.jejunu.ac.kr/")
                             }
                         >
                             <img src="img/web/main/logo_linc.png" alt="" />
@@ -96,7 +82,7 @@ const SubHeader = () => {
                             <li>
                                 <Link
                                     // onClick={() =>
-                                    //     openUrl(
+                                    //     CommonOpenUrl(
                                     //         "https://lincplus.jejunu.ac.kr/programs/notice.htm?act=view&seq=1364"
                                     //     )
                                     // }
@@ -106,7 +92,9 @@ const SubHeader = () => {
                                 </Link>
                             </li>
                             <li>
-                                <Link to={routerPath.web_notice_url}>공지사항</Link>
+                                <Link to={routerPath.web_notice_url}>
+                                    공지사항
+                                </Link>
                             </li>
                         </ul>
                     </div>

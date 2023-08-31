@@ -1,7 +1,7 @@
 // Create By YKSoon_
 
-import { React, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Backdrop, CircularProgress, Modal } from "@mui/material";
+import { React } from "react";
+import { CircularProgress, Modal } from "@mui/material";
 import tokenExpire from "./tokenExpire";
 import RegUserModalMain from "components/admin/user/userList/modal/RegUserModalMain";
 import { RestServer } from "./Rest";
@@ -9,7 +9,6 @@ import RegOneLineBoardModal from "components/admin/board/oneLineBoard/modal/RegO
 import RegNoticeModal from "components/admin/board/notice/modal/RegNoticeModal";
 import { errorCode } from "resultCode";
 import MainContentsNoticeModal from "components/web/main/mainComponents/contents/modal/MainContentsNoticeModal";
-import $ from "jquery";
 import useAlert from "hook/useAlert";
 import { useResetRecoilState, useSetRecoilState } from "recoil";
 import {
@@ -498,7 +497,7 @@ const CommonOpenUrl = (url) => {
 
 const CommonErrModule = () => {
     const { alert } = useAlert();
-    const { confirm } = useConfirm();
+    // const { confirm } = useConfirm();
     const setIsSpinner = useSetRecoilState(isSpinnerAtom);
     const resetUserInfoAdmin = useResetRecoilState(userInfoAdminAtom);
     const resetUserTokenAdmin = useResetRecoilState(userTokenAdminAtom);

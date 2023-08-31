@@ -3,24 +3,18 @@ import { Link } from "react-router-dom";
 import {
     CommonConsole,
     CommonErrModule,
-    CommonErrorCatch,
     CommonModal,
     CommonNotify,
     CommonRest,
 } from "common/js/Common";
-import { RestServer } from "common/js/Rest";
 import { apiPath } from "webPath";
 import { Pagination } from "@mui/material";
 import useConfirm from "hook/useConfirm";
 import useAlert from "hook/useAlert";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import { successCode } from "resultCode";
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
-import {
-    isSpinnerAtom,
-    userInfoAdminAtom,
-    userTokenAdminAtom,
-} from "recoils/atoms";
+import { useSetRecoilState } from "recoil";
+import { isSpinnerAtom } from "recoils/atoms";
 
 const UserList = () => {
     const { alert } = useAlert();

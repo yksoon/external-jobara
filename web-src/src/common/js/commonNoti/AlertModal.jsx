@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import useAlert from "hook/useAlert";
-import $ from "jquery";
 
 const AlertModal = () => {
     const { alertList } = useAlert();

@@ -6,7 +6,7 @@ import {
     CommonSpinner,
 } from "common/js/Common";
 import useAlert from "hook/useAlert";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { successCode } from "resultCode";
 import { apiPath } from "webPath";
@@ -15,7 +15,6 @@ import {
     mobile1Pattern,
     mobile2Pattern,
     oneLinePattern,
-    spacePattern,
 } from "common/js/Pattern";
 import { boardModel } from "models/board/board";
 import { Skeleton } from "@mui/material";

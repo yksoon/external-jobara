@@ -9,7 +9,7 @@ import {
     LinearScale,
     BarElement,
 } from "chart.js";
-import { Bar, Doughnut, Pie } from "react-chartjs-2";
+import { Pie } from "react-chartjs-2";
 
 ChartJS.register(
     ArcElement,

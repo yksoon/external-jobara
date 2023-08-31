@@ -1,7 +1,5 @@
-import { Link } from "react-router-dom";
 import Footer from "../common/Footer";
 import SubHeader from "../common/SubHeader";
-import { CommonOpenUrl } from "common/js/Common";
 
 const Event = () => {
     return (
@@ -15,7 +13,10 @@ const Event = () => {
                     <h2 id="subtitle">이벤트 프로그램</h2>
                     <div className="pro_event">
                         <div className="prepare">
-                            <img src="img/web/main/maintxt.png" alt="잡아라 페스티벌" />
+                            <img
+                                src="img/web/main/maintxt.png"
+                                alt="잡아라 페스티벌"
+                            />
                             <p>준비중입니다.</p>
                         </div>
                     </div>

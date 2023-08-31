@@ -1,10 +1,8 @@
 import useAlert from "hook/useAlert";
-import useConfirm from "hook/useConfirm";
 import {
     CommonConsole,
     CommonErrModule,
     CommonErrorCatch,
-    CommonNotify,
     CommonRest,
 } from "common/js/Common";
 import React, { useEffect, useState } from "react";
@@ -246,7 +244,7 @@ const DashBoardMain = () => {
         <>
             <div className="content">
                 <div className="title">
-                    <h3>통계</h3>
+                    <h3>대시보드</h3>
                 </div>
                 <div className="con_area">
                     <div className="adm_search">

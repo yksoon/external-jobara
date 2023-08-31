@@ -1,4 +1,5 @@
 import { Skeleton } from "@mui/material";
+import { CommonOpenUrl } from "common/js/Common";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
@@ -42,11 +43,6 @@ const MainMainvisual = () => {
     const imgLoded = (e) => {
         // console.log(e);
         setImgChange(true);
-    };
-
-    // URL 열기
-    const openUrl = (url) => {
-        window.open(url, "_blank", "noopener, noreferrer");
     };
 
     return (
@@ -125,7 +121,7 @@ const MainMainvisual = () => {
                         <p className="host">
                             <Link
                                 onClick={() =>
-                                    openUrl("https://www.moe.go.kr/")
+                                    CommonOpenUrl("https://www.moe.go.kr/")
                                 }
                             >
                                 <img
@@ -135,7 +131,7 @@ const MainMainvisual = () => {
                             </Link>
                             <Link
                                 onClick={() =>
-                                    openUrl("https://www.nrf.re.kr/")
+                                    CommonOpenUrl("https://www.nrf.re.kr/")
                                 }
                             >
                                 <img
@@ -145,7 +141,7 @@ const MainMainvisual = () => {
                             </Link>
                             <Link
                                 onClick={() =>
-                                    openUrl("https://www.jeju.go.kr/")
+                                    CommonOpenUrl("https://www.jeju.go.kr/")
                                 }
                             >
                                 <img
@@ -155,7 +151,7 @@ const MainMainvisual = () => {
                             </Link>
                             <Link
                                 onClick={() =>
-                                    openUrl("https://www.jejunu.ac.kr/")
+                                    CommonOpenUrl("https://www.jejunu.ac.kr/")
                                 }
                             >
                                 <img
@@ -165,7 +161,9 @@ const MainMainvisual = () => {
                             </Link>
                             <Link
                                 onClick={() =>
-                                    openUrl("https://lincplus.jejunu.ac.kr/")
+                                    CommonOpenUrl(
+                                        "https://lincplus.jejunu.ac.kr/"
+                                    )
                                 }
                             >
                                 <img
@@ -187,7 +185,7 @@ const MainMainvisual = () => {
                             </Link>
                             <Link
                                 onClick={() =>
-                                    openUrl("http://www.jejuiucc.or.kr/")
+                                    CommonOpenUrl("http://www.jejuiucc.or.kr/")
                                 }
                             >
                                 <img
@@ -197,7 +195,7 @@ const MainMainvisual = () => {
                             </Link>
                             <Link
                                 onClick={() =>
-                                    openUrl("https://www.chu.ac.kr/")
+                                    CommonOpenUrl("https://www.chu.ac.kr/")
                                 }
                             >
                                 <img
@@ -207,7 +205,7 @@ const MainMainvisual = () => {
                             </Link>
                             <Link
                                 onClick={() =>
-                                    openUrl("https://www.jtu.ac.kr/")
+                                    CommonOpenUrl("https://www.jtu.ac.kr/")
                                 }
                             >
                                 <img
@@ -285,7 +283,7 @@ const MainMainvisual = () => {
                             <li>
                                 <Link
                                     // onClick={() =>
-                                    //     openUrl(
+                                    //     CommonOpenUrl(
                                     //         "https://lincplus.jejunu.ac.kr/programs/notice.htm?act=view&seq=1364"
                                     //     )
                                     // }

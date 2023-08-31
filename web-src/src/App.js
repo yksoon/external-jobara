@@ -1,14 +1,10 @@
 import React, { useEffect } from "react";
-import { apiPath, routerPath } from "webPath";
+import { apiPath } from "webPath";
 import { RestServer } from "common/js/Rest";
 import axios from "axios";
 import Router from "Router";
-import { CommonSpinner } from "common/js/Common";
 import { useLocation, useNavigate } from "react-router";
-import {
-    ConfirmContextProvider,
-    SpinnerContextProvider,
-} from "context/ContextProvider";
+import { ConfirmContextProvider } from "context/ContextProvider";
 import { AlertContextProvider } from "context/ContextProvider";
 import ConfirmModal from "common/js/commonNoti/ConfirmModal";
 import AlertModal from "common/js/commonNoti/AlertModal";

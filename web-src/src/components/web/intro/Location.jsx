@@ -3,7 +3,6 @@ import Footer from "../common/Footer";
 import SubHeader from "../common/SubHeader";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import KeyboardDoubleArrowRightOutlinedIcon from "@mui/icons-material/KeyboardDoubleArrowRightOutlined";
-import { routerPath } from "webPath";
 
 const Location = () => {
     const [isNeedUpdate, setIsNeedUpdate] = useState(true);

@@ -1,20 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { CommonErrModule, CommonNotify, CommonRest } from "common/js/Common";
-import Select from "react-select";
-import { pwPattern } from "common/js/Pattern";
-import { apiPath, routerPath } from "webPath";
-import { RestServer } from "common/js/Rest";
+// import Select from "react-select";
+import { apiPath } from "webPath";
 import useAlert from "hook/useAlert";
 import { signupMultiModel } from "models/user/signUp";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { successCode } from "resultCode";
-import { useResetRecoilState, useSetRecoilState } from "recoil";
-import {
-    isSpinnerAtom,
-    userInfoAdminAtom,
-    userTokenAdminAtom,
-} from "recoils/atoms";
+import { useSetRecoilState } from "recoil";
+import { isSpinnerAtom } from "recoils/atoms";
 
 const RegUserModal = (props) => {
     const { alert } = useAlert();

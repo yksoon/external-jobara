@@ -1,27 +1,18 @@
-import {
-    Box,
-    Button,
-    CircularProgress,
-    Modal,
-    Pagination,
-    Skeleton,
-} from "@mui/material";
+import { Pagination, Skeleton } from "@mui/material";
 import {
     CommonConsole,
     CommonErrModule,
     CommonModal,
     CommonNotify,
     CommonRest,
-    CommonTest,
 } from "common/js/Common";
 import useAlert from "hook/useAlert";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { successCode } from "resultCode";
 import { apiPath } from "webPath";
 import Footer from "../common/Footer";
 import SubHeader from "../common/SubHeader";
-import $ from "jquery";
 import { useSetRecoilState } from "recoil";
 import { isSpinnerAtom } from "recoils/atoms";
 

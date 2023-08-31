@@ -2,8 +2,6 @@ import { RestServer } from "./Rest";
 import { apiPath, routerPath } from "webPath";
 import { CommonConsole, CommonNotify } from "./Common";
 import { successCode } from "resultCode";
-import { useResetRecoilState } from "recoil";
-import { userInfoAdminAtom } from "recoils/atoms";
 
 const tokenExpire = (
     // dispatch,
