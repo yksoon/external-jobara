@@ -157,19 +157,4 @@ const setInterceptorsAdmin = (config) => {
     return config;
 };
 
-const getIp = async () => {
-    let ip;
-
-    await axios
-        .get("https://geolocation-db.com/json/")
-        .then((res) => {
-            ip = res.data.IPv4;
-        })
-        .catch((error) => {
-            ip = "";
-        });
-
-    return ip;
-};
-
 export { Instance, Instance_multi, Instance_admin, Instance_admin_multi };

@@ -16,7 +16,7 @@ import { successCode } from "resultCode";
 import { useSetRecoilState } from "recoil";
 import { isSpinnerAtom } from "recoils/atoms";
 
-const UserList = () => {
+const UserList = (props) => {
     const { alert } = useAlert();
     const err = CommonErrModule();
     const setIsSpinner = useSetRecoilState(isSpinnerAtom);
@@ -34,13 +34,15 @@ const UserList = () => {
 
     const searchKeyword = useRef(null);
 
+    const isRefresh = props.isRefresh;
+
     useEffect(() => {
         getAdditional();
     }, []);
 
     useEffect(() => {
         reqUserList(1, 10, "");
-    }, [isNeedUpdate]);
+    }, [isNeedUpdate, isRefresh]);
 
     const handleNeedUpdate = () => {
         setIsNeedUpdate(!isNeedUpdate);

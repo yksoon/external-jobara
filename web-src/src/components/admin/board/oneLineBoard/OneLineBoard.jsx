@@ -22,7 +22,7 @@ import {
 import { successCode } from "resultCode";
 import { apiPath } from "webPath";
 
-const OneLineBoard = () => {
+const OneLineBoard = (props) => {
     // const { alert } = useAlert();
     // const err = { dispatch, alert };
     const resetUserInfoAdmin = useResetRecoilState(userInfoAdminAtom);
@@ -52,9 +52,11 @@ const OneLineBoard = () => {
 
     const searchKeyword = useRef(null);
 
+    const isRefresh = props.isRefresh;
+
     useEffect(() => {
         getBoardList(1, 10, "");
-    }, [isNeedUpdate]);
+    }, [isNeedUpdate, isRefresh]);
 
     // 리스트 가져오기
     const getBoardList = (pageNum, pageSize, searchKeyword) => {

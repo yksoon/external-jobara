@@ -16,7 +16,7 @@ import { isSpinnerAtom } from "recoils/atoms";
 import { successCode } from "resultCode";
 import { apiPath } from "webPath";
 
-const Notice = () => {
+const Notice = (props) => {
     // const dispatch = useDispatch();
     // const { alert } = useAlert();
     // const { confirm } = useConfirm();
@@ -42,9 +42,11 @@ const Notice = () => {
 
     const searchKeyword = useRef(null);
 
+    const isRefresh = props.isRefresh;
+
     useEffect(() => {
         getBoardList(1, 10, "");
-    }, [isNeedUpdate]);
+    }, [isNeedUpdate, isRefresh]);
 
     // 리스트 가져오기
     const getBoardList = (pageNum, pageSize, searchKeyword) => {
@@ -385,10 +387,10 @@ const Notice = () => {
                                                         )
                                                     }
                                                     checked={
-                                                        checkItems &&
-                                                        boardList &&
+                                                        // checkItems &&
+                                                        // boardList &&
                                                         checkItems.length ===
-                                                            boardList.length
+                                                        boardList.length
                                                             ? true
                                                             : false
                                                     }

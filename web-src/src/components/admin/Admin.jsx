@@ -27,10 +27,12 @@ import {
     userInfoAdminAtom,
     userTokenAdminAtom,
 } from "recoils/atoms";
+import { refresh } from "aos";
 
 const Admin = () => {
     const err = CommonErrModule();
     const isSpinner = useRecoilValue(isSpinnerAtom);
+    const [isRefresh, setIsRefresh] = useState(false);
 
     const navigate = useNavigate();
 
@@ -170,6 +172,7 @@ const Admin = () => {
     };
 
     const switchPage = (page) => {
+        setIsRefresh(!isRefresh);
         setPage(page);
     };
 
@@ -178,19 +181,19 @@ const Admin = () => {
         switch (page) {
             // 대시보드
             case "dashboard":
-                return <DashBoardMain />;
+                return <DashBoardMain isRefresh={isRefresh} />;
 
             // 사전등록 관리
             case "userList":
-                return <UserList />;
+                return <UserList isRefresh={isRefresh} />;
 
             // 공지사항
             case "notice":
-                return <Notice />;
+                return <Notice isRefresh={isRefresh} />;
 
             // 한줄게시판
             case "oneLineBoard":
-                return <OneLineBoard />;
+                return <OneLineBoard isRefresh={isRefresh} />;
 
             default:
                 return <DashBoardMain />;

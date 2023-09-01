@@ -143,46 +143,6 @@ const SideNav = (props) => {
                 });
             }
         };
-
-        // RestServer("get", url, data)
-        //     .then((response) => {
-        //         let res = response;
-        //         let result_code = res.headers.result_code;
-        //         let result_info = res.data.result_info;
-
-        //         // 성공
-        //         if (result_code === "0000") {
-        //             dispatch(
-        //                 set_spinner({
-        //                     isLoading: false,
-        //                 })
-        //             );
-
-        //             setModUserData(result_info);
-
-        //             setModalTitle("회원수정");
-        //             setIsOpen(true);
-        //         }
-        //         // 에러
-        //         else {
-        //             CommonConsole("log", response);
-
-        //             dispatch(
-        //                 set_spinner({
-        //                     isLoading: false,
-        //                 })
-        //             );
-
-        //             CommonNotify({
-        //                 type: "alert",
-        //                 hook: alert,
-        //                 message: response.headers.result_message_ko,
-        //             });
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         CommonErrorCatch(error, dispatch, alert);
-        //     });
     };
 
     // 로그아웃

@@ -21,7 +21,7 @@ import {
     userTokenAdminAtom,
 } from "recoils/atoms";
 
-const DashBoardMain = () => {
+const DashBoardMain = (props) => {
     // const { alert } = useAlert();
     const resetUserInfoAdmin = useResetRecoilState(userInfoAdminAtom);
     const resetUserTokenAdmin = useResetRecoilState(userTokenAdminAtom);
@@ -47,12 +47,14 @@ const DashBoardMain = () => {
     const [additionalList, setAdditionalList] = useState([]);
     // const [excelPath, setExcelPath] = useState("");
 
+    const isRefresh = props.isRefresh;
+
     useEffect(() => {
         if (userTokenAdmin) {
             getAdditional();
             getDashboard();
         }
-    }, []);
+    }, [isRefresh]);
 
     // 참여프로그램 리스트 받아오기
     const getAdditional = () => {
