@@ -58,7 +58,7 @@ const MainContentsTalk = () => {
             imageHash: Date.now(),
         });
 
-        // getOneLineList(1, 8);
+        getOneLineList(1, 8);
     }, [isNeedUpdate]);
 
     useEffect(() => {
@@ -73,6 +73,7 @@ const MainContentsTalk = () => {
         //     })
         // );
         // setSpinnerAtom(true);
+        setIsLoading(true);
 
         // /v1/boards
         // POST
@@ -224,6 +225,14 @@ const MainContentsTalk = () => {
     const requestBoards = () => {
         // 리스트 새로고침
         setIsNeedUpdate(!isNeedUpdate);
+
+        oneLineRefs.inputUserFirstName.current.value = "";
+        oneLineRefs.inputUserLastName.current.value = "";
+        oneLineRefs.inputMobile1.current.value = "";
+        oneLineRefs.inputMobile2.current.value = "";
+        oneLineRefs.inputMobile3.current.value = "";
+        oneLineRefs.inputContent.current.value = "";
+        oneLineRefs.inputCaptcha.current.value = "";
     };
 
     // 검증

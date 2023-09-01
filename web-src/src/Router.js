@@ -17,7 +17,6 @@ import Detail from "components/web/program/Detail";
 import Event from "components/web/program/Event";
 import Notice from "components/web/notice/Notice";
 import Company from "components/web/company/Company";
-import Blank from "components/admin/Blank";
 
 // Router
 const Router = () => {
@@ -153,8 +152,6 @@ const Router = () => {
                         path={routerPath.admin_signin_url}
                         element={<SignIn />}
                     />
-
-                    <Route path={"/blank"} element={<Blank />} />
 
                     {/* 404 */}
                     <Route path="*" element={<NotFoundPage />} />
