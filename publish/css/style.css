@@ -578,6 +578,8 @@ a.table_btn span {font-size: 20px;color: #fff;line-height: 28px;    vertical-ali
 	.pro_detail > div ul li h5 {font-size: 18px;}
 	.pro_detail > div ul li p {font-size: 14px;line-height: 24px;}
 
+	.pro_event .pro_table {width:800px;}
+
 }
 
 @media screen and (max-width:360px) { 
