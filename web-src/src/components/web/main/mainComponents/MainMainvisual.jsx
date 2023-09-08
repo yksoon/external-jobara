@@ -213,6 +213,16 @@ const MainMainvisual = () => {
                                     alt="제주관광대학교"
                                 />
                             </Link>
+                            <Link
+                                onClick={() =>
+                                    CommonOpenUrl("https://www.komipo.co.kr/kor/main/main.do")
+                                }
+                            >
+                                <img
+                                    src="img/web/main/host12.png"
+                                    alt="한국중부발전"
+                                />
+                            </Link>
                         </p>
                     )}
 

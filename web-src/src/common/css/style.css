@@ -70,7 +70,7 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 #mainvisual  .main_txt .menu a.m02{padding-left:30px;}
 #mainvisual  .main_txt .menu a.m04{padding-left:20px;}
 #mainvisual  .main_txt .menu a.m05{padding-left:100px;}
-#mainvisual  .main_txt .host {display: flex;justify-content: space-between;align-items: center;}
+#mainvisual  .main_txt .host {display: flex;justify-content: space-between;align-items: center;width:1600px;margin-left:-100px;}
 
 
 #container {width:100%; }
@@ -517,7 +517,7 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 	#mainvisual  .main_txt .date{line-height:30px;font-size: 18px;padding:15px 0 30px;}
 	#mainvisual  .main_txt .date .pink{font-size:26px;}
 	#mainvisual  .main_txt .menu{display:none;}
-	#mainvisual  .main_txt .host {display: flex;justify-content: center;align-items: center;flex-wrap: wrap;}
+	#mainvisual  .main_txt .host {display: flex;justify-content: center;align-items: center;flex-wrap: wrap;width:100%;margin-left:0;}
 	#mainvisual  .main_txt .host a {margin:5px 3px;width:30%;text-align: center;}
 	#mainvisual  .main_txt .host a img{max-width:95%;}
 
@@ -552,7 +552,7 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 	.section02 .program ul li .icon img{width:60px;}
 	.section02 .program ul li .num {width:70px;}
 	.section02 .program ul li div h5 {font-size: 16px;}
-	.section02 .program ul li div p {font-size: 14px;line-height: 1.2;}
+	.section02 .program ul li div p {font-size: 14px;line-height: 1.6;}
 	.section02 .program ul li div p:last-child {margin:6px 0 0;}
 	.section02 .program ul li.p06 {margin-top: 0;}
 
@@ -572,10 +572,11 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 		-webkit-border-radius:50px;
 		-moz-border-radius:50px;
 	}
+	.section03 .notice ul li a, .section03 .notice ul li .date {font-size: 16px;}
 
 	
 	.section04 {padding:0 0 100px;}
-	.section04 .talk {width: 100%;padding:0 20px;}
+	.section04 .talk {width: 100%;padding:80px 20px 0;}
 	.section04 .title h3 {font-size: 25px;word-break: keep-all;}
 	.section04 .title p{ font-size: 16px;line-height: 24px; word-break: keep-all; padding: 0 0 30px 0;}
 	.section04 div.talkbox ul {height:270px;padding:20px;margin:20px 0;}
@@ -586,6 +587,7 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 	.section04 div.talkbox ul li {width: 100%;line-height: 1;background:none;background-size:100%;height:auto;border: 1px solid #222;border-radius: 50px;margin:0 0 20px;}
 	.section04 div.talkbox ul li p {font-size: 14px;padding:20px 20px 10px;}
 	.section04 div.talkbox ul li span {font-size: 12px;height:24px;line-height: 24px;left:20px;top:-10px;}
+	.section04 div.talkbox ul li span:not(.MuiSkeleton-root)  {font-size: 12px;height:24px;line-height: 24px;left:20px;top:-10px;}
 	.section04 div.talkbox ul li:nth-child(2n) {background:none;}
 	.section04 div.talkbox ul li:nth-child(2n) span {right:20px;}
 	.section04 div.talkinput {padding:20px;}
@@ -599,6 +601,8 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 	.section04 div.talkinput .talk_cap {display:block;}
 	.section04 div.talkinput .cap_wrap > div {display:block;}
 	.section04 div.talkinput .cap_wrap .cap_refresh a {height:28px;font-size: 12px;}
+
+	
 
 
 
@@ -680,7 +684,6 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 	.pro_event .pro_table {width:1000px;}
 	.pro_event h5 {font-size: 16px;}
 	.pro_event p {font-size: 14px;}
-
 
 }
 
