@@ -473,95 +473,97 @@ const MainContentsTalk = () => {
                         </ul>
                     </div>
                     <div className="talkinput">
-                        <div className="input_box">
-                            <div className="talk_name">
-                                <p>이름</p>
-                                <input
-                                    type="text"
-                                    className="input"
-                                    placeholder="성"
-                                    ref={oneLineRefs.inputUserFirstName}
-                                />
-                                <input
-                                    type="text"
-                                    className="input"
-                                    placeholder="이름"
-                                    ref={oneLineRefs.inputUserLastName}
-                                />
-                            </div>
-                            <div className="tel_input">
-                                <p>전화번호</p>
-                                <input
-                                    type="text"
-                                    className="input"
-                                    placeholder="010"
-                                    id="mobile1"
-                                    ref={oneLineRefs.inputMobile1}
-                                    onChange={(e) => mobileHandler(e)}
-                                />{" "}
-                                -{" "}
-                                <input
-                                    type="text"
-                                    className="input"
-                                    placeholder="0000"
-                                    id="mobile2"
-                                    ref={oneLineRefs.inputMobile2}
-                                    onChange={(e) => mobileHandler(e)}
-                                />{" "}
-                                -{" "}
-                                <input
-                                    type="text"
-                                    className="input"
-                                    placeholder="0000"
-                                    id="mobile3"
-                                    ref={oneLineRefs.inputMobile3}
-                                    onChange={(e) => mobileHandler(e)}
-                                />
-                            </div>
-                            <div className="talk_cap">
-                                <p>자동입력방지</p>
-                                <div className="cap_wrap">
-                                    <div>
-                                        <span className="cap">
-                                            <img
-                                                className="imgClass"
-                                                id="captchaImg"
-                                                src={`${img.imageSrc}?${img.imageHash}`}
-                                                alt=""
-                                                decoding="async"
-                                                style={{ background: "white" }}
-                                            />
-                                        </span>
-                                        <span className="cap_refresh">
-                                            <Link
-                                                onClick={(e) => {
-                                                    refreshCaptcha();
-                                                    e.preventDefault();
-                                                }}
-                                            >
-                                                <RefreshIcon />
-                                                새로고침
-                                            </Link>
-                                        </span>
-                                    </div>
+                        <div className="talk_input_wrap">
+                            <div className="input_box">
+                                <div className="talk_name">
+                                    <p>이름</p>
                                     <input
                                         type="text"
-                                        className="input_s"
-                                        ref={oneLineRefs.inputCaptcha}
+                                        className="input"
+                                        placeholder="성"
+                                        ref={oneLineRefs.inputUserFirstName}
+                                    />
+                                    <input
+                                        type="text"
+                                        className="input"
+                                        placeholder="이름"
+                                        ref={oneLineRefs.inputUserLastName}
                                     />
                                 </div>
+                                <div className="tel_input">
+                                    <p>전화번호</p>
+                                    <input
+                                        type="text"
+                                        className="input"
+                                        placeholder="010"
+                                        id="mobile1"
+                                        ref={oneLineRefs.inputMobile1}
+                                        onChange={(e) => mobileHandler(e)}
+                                    />{" "}
+                                    -{" "}
+                                    <input
+                                        type="text"
+                                        className="input"
+                                        placeholder="0000"
+                                        id="mobile2"
+                                        ref={oneLineRefs.inputMobile2}
+                                        onChange={(e) => mobileHandler(e)}
+                                    />{" "}
+                                    -{" "}
+                                    <input
+                                        type="text"
+                                        className="input"
+                                        placeholder="0000"
+                                        id="mobile3"
+                                        ref={oneLineRefs.inputMobile3}
+                                        onChange={(e) => mobileHandler(e)}
+                                    />
+                                </div>
+                                <div className="talk_cap">
+                                    <p>자동입력방지</p>
+                                    <div className="cap_wrap">
+                                        <div>
+                                            <span className="cap">
+                                                <img
+                                                    className="imgClass"
+                                                    id="captchaImg"
+                                                    src={`${img.imageSrc}?${img.imageHash}`}
+                                                    alt=""
+                                                    decoding="async"
+                                                    style={{ background: "white" }}
+                                                />
+                                            </span>
+                                            <span className="cap_refresh">
+                                                <Link
+                                                    onClick={(e) => {
+                                                        refreshCaptcha();
+                                                        e.preventDefault();
+                                                    }}
+                                                >
+                                                    <RefreshIcon />
+                                                    새로고침
+                                                </Link>
+                                            </span>
+                                        </div>
+                                        <input
+                                            type="text"
+                                            className="input_s"
+                                            ref={oneLineRefs.inputCaptcha}
+                                        />
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div className="input_btn_box">
-                            <Link
-                                className="input_btn"
-                                onClick={(e) => {
-                                    regOneLineBoard();
-                                    e.preventDefault();
-                                }}
-                            >
-                                응원하기
-                            </Link>
+                            <div className="input_btn_box">
+                                <Link
+                                    className="input_btn"
+                                    onClick={(e) => {
+                                        regOneLineBoard();
+                                        e.preventDefault();
+                                    }}
+                                >
+                                    응원하기
+                                </Link>
+                            </div>
                         </div>
                         <div className="talk_txt_box">
                             <textarea

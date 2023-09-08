@@ -205,11 +205,16 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 .section04 div.talkinput .talk_name input {width: 80px;}
 .section04 div.talkinput .talk_name input:last-child {width: 180px;margin:0 0 0 10px;}
 
+.section04 div.talkinput .talk_input_wrap {display:flex;justify-content: space-between;}
+.section04 div.talkinput .talk_input_wrap .input_box{width: calc(100% - 120px);}
 .section04 div.talkinput .talk_cap {display:flex;align-items: center;}
 .section04 div.talkinput .cap_wrap > div {display:flex;align-items: center;}
 .section04 div.talkinput .cap_wrap .cap {height:40px;width: 120px;}
 .section04 div.talkinput .cap_wrap .cap img {height:40px;}
 .section04 div.talkinput .cap_wrap .cap_refresh a {height:40px;padding:0 5px;}
+
+.section04 div.talkinput .talk_input_wrap {display:block;}
+.section04 div.talkinput .talk_input_wrap .input_box{width: 100%;}
 
 
 
@@ -684,6 +689,10 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 	.pro_event .pro_table {width:1000px;}
 	.pro_event h5 {font-size: 16px;}
 	.pro_event p {font-size: 14px;}
+	
+	.notice ul li {height:42px;line-height: 42px;padding: 0 20px;}
+	.notice ul li a, .notice ul li .date {font-size: 14px;}
+	.notice ul li .date {right:20px;}
 
 }
 
