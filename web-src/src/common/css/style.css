@@ -693,8 +693,6 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 	.notice ul li {height:42px;line-height: 42px;padding: 0 20px;}
 	.notice ul li a, .notice ul li .date {font-size: 14px;}
 	.notice ul li .date {right:20px;}
-	nav.MuiPagination-root {position:static;}
-
 }
 
 @media screen and (max-width:360px) { 
