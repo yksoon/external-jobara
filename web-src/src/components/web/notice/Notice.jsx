@@ -46,8 +46,7 @@ const Notice = () => {
         const data = {
             page_num: pageNum,
             page_size: pageSize,
-            board_type: "000",
-            admin_type: "N",
+            board_type: "000"
         };
 
         // 파라미터
