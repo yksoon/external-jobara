@@ -22,6 +22,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { ipInfoAtom, isSpinnerAtom } from "recoils/atoms";
 // import { useSetRecoilState } from "recoil";
 // import { isSpinnerAtom } from "recoils/atoms";
+import $ from "jquery";
 
 const MainContentsTalk = () => {
     // const dispatch = useDispatch();
@@ -65,6 +66,16 @@ const MainContentsTalk = () => {
         getOneLineList(1, 8);
     }, [ipInfo]);
 
+    useEffect(() => {
+        $(() => {
+            let winW = $(window).width();
+
+            if (winW < 640) {
+                $(".input_btn_box").insertAfter(".talk_txt_box");
+            }
+        });
+    }, []);
+
     // 댓글 리스트
     const getOneLineList = (pageNum, pageSize) => {
         // dispatch(
@@ -82,6 +93,7 @@ const MainContentsTalk = () => {
             page_num: pageNum,
             page_size: pageSize,
             board_type: "400",
+            admin_type: "N",
         };
 
         // 파라미터
@@ -539,6 +551,8 @@ const MainContentsTalk = () => {
                                     />
                                 </div>
                             </div>
+                        </div>
+                        <div className="input_btn_box">
                             <Link
                                 className="input_btn"
                                 onClick={(e) => {
@@ -549,7 +563,7 @@ const MainContentsTalk = () => {
                                 응원하기
                             </Link>
                         </div>
-                        <div>
+                        <div className="talk_txt_box">
                             <textarea
                                 name=""
                                 id=""
