@@ -1,34 +1,36 @@
-import { Box, Button, CircularProgress, Modal, Skeleton } from "@mui/material";
+import { Pagination, Skeleton } from "@mui/material";
 import {
     CommonConsole,
+    CommonErrModule,
     CommonModal,
     CommonNotify,
     CommonRest,
-    CommonTest,
 } from "common/js/Common";
 import useAlert from "hook/useAlert";
-import { useEffect, useLayoutEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { set_spinner } from "redux/actions/commonAction";
 import { successCode } from "resultCode";
 import { apiPath } from "webPath";
 import Footer from "../common/Footer";
 import SubHeader from "../common/SubHeader";
-import $ from "jquery";
+import { useSetRecoilState } from "recoil";
+import { isSpinnerAtom } from "recoils/atoms";
 
 const Notice = () => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
+    // const { alert } = useAlert();
+    // const err = { dispatch, alert };
     const { alert } = useAlert();
-    const err = { dispatch, alert };
+    const err = CommonErrModule();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
 
     const [boardList, setBoardList] = useState([]);
+    const [pageInfo, setPageInfo] = useState({});
     const [isOpen, setIsOpen] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
     const [isNeedUpdate, setIsNeedUpdate] = useState(false);
     const [modNotice, setModNotice] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [isSpinning, setIsSpinning] = useState(false);
 
     useLayoutEffect(() => {
         getBoardList(1, 10);
@@ -36,13 +38,15 @@ const Notice = () => {
 
     // 리스트 가져오기
     const getBoardList = (pageNum, pageSize) => {
+        setIsSpinner(true);
+
         // /v1/boards
         // POST
         const url = apiPath.api_admin_boards;
         const data = {
             page_num: pageNum,
             page_size: pageSize,
-            board_type: "000",
+            board_type: "000"
         };
 
         // 파라미터
@@ -64,14 +68,18 @@ const Notice = () => {
                 result_code === successCode.success ||
                 result_code === successCode.noData
             ) {
-                let result_info = res.data.result_info;
+                const result_info = res.data.result_info;
+                const page_info = res.data.page_info;
 
                 setBoardList(result_info);
+                setPageInfo(page_info);
 
+                setIsSpinner(false);
                 setIsLoading(false);
             } else {
                 // 에러
                 CommonConsole("log", res);
+                setIsSpinner(false);
             }
         };
     };
@@ -93,7 +101,7 @@ const Notice = () => {
         //         isLoading: true,
         //     })
         // );
-        setIsSpinning(true);
+        setIsSpinner(true);
 
         //console.log(e);
         //let offset = $(`#${e.target.id}`).offset(); //선택한 태그의 위치를 반환
@@ -129,7 +137,7 @@ const Notice = () => {
                 //     })
                 // );
 
-                setIsSpinning(false);
+                setIsSpinner(false);
 
                 setModNotice(result_info);
 
@@ -140,11 +148,12 @@ const Notice = () => {
             else {
                 CommonConsole("log", res);
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+                setIsSpinner(false);
 
                 CommonNotify({
                     type: "alert",
@@ -153,6 +162,15 @@ const Notice = () => {
                 });
             }
         };
+    };
+
+    // 페이지네이션 이동
+    const handleChange = (e, value) => {
+        // const keyword = searchKeyword.current.value;
+
+        // getBoardList(value, 10, keyword);
+
+        getBoardList(value, 10, "");
     };
 
     return (
@@ -203,6 +221,20 @@ const Notice = () => {
                             )}
                         </ul>
                     </div>
+                    {boardList.length !== 0 ? (
+                        pageInfo && (
+                            <div className="pagenation">
+                                <Pagination
+                                    count={pageInfo.pages}
+                                    onChange={handleChange}
+                                    shape="rounded"
+                                    color="primary"
+                                />
+                            </div>
+                        )
+                    ) : (
+                        <></>
+                    )}
                 </div>
             </div>
             <CommonModal
@@ -214,11 +246,9 @@ const Notice = () => {
                 handleNeedUpdate={handleNeedUpdate}
                 modNotice={modNotice}
             />
-            {isSpinning && (
-                <div className="spinner">
-                    <CircularProgress />
-                </div>
-            )}
+
+            {/* 푸터 */}
+            <Footer />
         </>
     );
 };

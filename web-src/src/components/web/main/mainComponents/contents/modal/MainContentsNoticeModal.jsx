@@ -1,14 +1,19 @@
+import { CommonErrModule } from "common/js/Common";
 import useAlert from "hook/useAlert";
-import { useEffect, useLayoutEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { isSpinnerAtom } from "recoils/atoms";
 import { apiPath } from "webPath";
 const fileBaseUrl = apiPath.api_file;
 
 const MainContentsNoticeModal = (props) => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
+    // const { alert } = useAlert();
+    // const err = { dispatch, alert };
     const { alert } = useAlert();
-    const err = { dispatch, alert };
+    const err = CommonErrModule();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
 
     const [fileList, setFileList] = useState([]);
     const [noticeContent, setNoticeContent] = useState(null);

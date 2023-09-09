@@ -1,98 +1,127 @@
 import React, { useEffect } from "react";
-import { apiPath, routerPath } from "webPath";
+import { apiPath } from "webPath";
 import { RestServer } from "common/js/Rest";
 import axios from "axios";
 import Router from "Router";
-import { useDispatch, useSelector } from "react-redux";
-import { CommonSpinner } from "common/js/Common";
-import {
-    set_codes,
-    set_result_code,
-    set_country_bank,
-} from "redux/actions/codesAction";
-import { set_ip_info } from "redux/actions/ipInfoAction";
 import { useLocation, useNavigate } from "react-router";
 import { ConfirmContextProvider } from "context/ContextProvider";
 import { AlertContextProvider } from "context/ContextProvider";
 import ConfirmModal from "common/js/commonNoti/ConfirmModal";
 import AlertModal from "common/js/commonNoti/AlertModal";
 import {
-    set_check_schedule,
-    set_schedule,
-    set_view_schedule,
-} from "redux/actions/scheduleAction";
-import { init_user_info } from "redux/actions/userInfoAction";
+    useRecoilState,
+    useRecoilValue,
+    useResetRecoilState,
+    useSetRecoilState,
+} from "recoil";
+import {
+    checkScheduleAtom,
+    codesAtom,
+    countryBankAtom,
+    ipInfoAtom,
+    resultCodeAtom,
+    userInfoAtom,
+    userTokenAtom,
+    viewScheduleAtom,
+} from "recoils/atoms";
 
 function App() {
-    const dispatch = useDispatch();
-    let ipInfo = useSelector((state) => state.ipInfo.ipInfo);
+    // let ipInfo = useSelector((state) => state.ipInfo.ipInfo);
+    const [ipInfo, setIpInfo] = useRecoilState(ipInfoAtom);
+
+    // const ipInfo = useRecoilValue(ipInfoAtom);
+    // const setIpInfo = useSetRecoilState(ipInfoAtom);
+
     const navigate = useNavigate();
     const location = useLocation();
-    const userToken = useSelector((state) => state.userInfo.userToken);
-    const userInfo = useSelector((state) => state.userInfo.userInfo);
+
+    const resetUserInfo = useResetRecoilState(userInfoAtom);
+    const resetUserToken = useResetRecoilState(userTokenAtom);
+
+    const userToken = useRecoilValue(userTokenAtom);
+    // const userToken = useSelector((state) => state.userInfo.userToken);
+    // const userInfo = useSelector((state) => state.userInfo.userInfo);
+
+    const setResultCode = useSetRecoilState(resultCodeAtom);
+    const setCodes = useSetRecoilState(codesAtom);
+    const setCountryBank = useSetRecoilState(countryBankAtom);
+    const setViewSchedule = useSetRecoilState(viewScheduleAtom);
+    const setCheckSchedule = useSetRecoilState(checkScheduleAtom);
 
     useEffect(() => {
-        // localStorage.clear();
-
-        const ipCallback = (ip) => {
-            if (ip) {
-                dispatch(set_ip_info(ip));
-            }
-        };
-        if (!ipInfo) {
-            getIpInfo(ipCallback);
+        if (ipInfo === "") {
+            getIpInfo();
+        } else {
+            getResultCode();
+            getCodes();
+            getCountryBank();
+            getSchedule();
+            setInterval(getResultCode, 3600000);
+            setInterval(getCodes, 3600000);
         }
-
-        getResultCode();
-        getCodes();
-        getCountryBank();
-        getSchedule();
-        setInterval(getResultCode, 3600000);
-        setInterval(getCodes, 3600000);
-
-        // localStorage.clear();
     }, []);
 
     // 사전등록 페이지 벗어날 시 로그아웃처리
     useEffect(() => {
         const pathname = location.pathname;
 
-        if (pathname !== "/signup_mod" && userToken !== null) {
+        if (pathname !== "/signup_mod" && userToken === " ") {
             RestServer("post", apiPath.api_auth_signout, {})
                 .then((response) => {
                     if (response.data.result_info === true) {
-                        dispatch(init_user_info(null));
+                        // dispatch(init_user_info(null));
+                        resetUserInfo();
+                        resetUserToken();
                     } else {
-                        dispatch(init_user_info(null));
+                        // dispatch(init_user_info(null));
+                        resetUserInfo();
+                        resetUserToken();
                     }
                 })
                 .catch((error) => {
                     // 오류발생시 실행
-                    console.log(decodeURI(error));
-                    dispatch(init_user_info(null));
+                    // console.log(decodeURI(error));
+                    // dispatch(init_user_info(null));
+                    resetUserInfo();
+                    resetUserToken();
                 });
         }
     }, [location]);
 
     // Spinner
-    const spinnerOption = useSelector((state) => state.common.spinner);
+    // const spinnerOption = useSelector((state) => state.common.spinner);
 
     // IP
-    const getIpInfo = async (callback) => {
+    const getIpInfo = async () => {
         let ip;
 
         await axios
             .get("https://geolocation-db.com/json/")
             .then((res) => {
                 ip = res.data.IPv4;
-                callback(ip);
+                setIpInfo(ip);
+                sessionStorage.setItem("ipInfo", ip);
+
+                // console.log("@@@@@@@@@@@", ip);
+                getResultCode();
+                getCodes();
+                getCountryBank();
+                getSchedule();
+                setInterval(getResultCode, 3600000);
+                setInterval(getCodes, 3600000);
+
+                // callback(ip);
                 // dispatch(set_ip_info(ip));
             })
             .catch((error) => {
                 ip = "";
-                callback(ip);
+                setIpInfo(ip);
+                sessionStorage.setItem("ipInfo", ip);
+                // callback(ip);
                 // dispatch(set_ip_info(ip));
             });
+
+        return ip;
     };
 
     // result code
@@ -101,9 +130,10 @@ function App() {
             .then((response) => {
                 // console.log("result_code", response);
 
-                dispatch(
-                    set_result_code(JSON.stringify(response.data.result_info))
-                );
+                setResultCode(response.data.result_info);
+                // dispatch(
+                //     set_result_code(JSON.stringify(response.data.result_info))
+                // );
             })
             .catch((error) => {
                 // 오류발생시 실행
@@ -124,7 +154,8 @@ function App() {
             .then((response) => {
                 // console.log("codes", response);
 
-                dispatch(set_codes(JSON.stringify(response.data.result_info)));
+                // dispatch(set_codes(JSON.stringify(response.data.result_info)));
+                setCodes(response.data.result_info);
             })
             .catch((error) => {
                 // 오류발생시 실행
@@ -141,9 +172,11 @@ function App() {
             .then((response) => {
                 // console.log("codesCountryBank", response);
 
-                dispatch(
-                    set_country_bank(JSON.stringify(response.data.result_info))
-                );
+                // dispatch(
+                //     set_country_bank(JSON.stringify(response.data.result_info))
+                // );
+
+                setCountryBank(response.data.result_info);
             })
             .catch((error) => {
                 // 오류발생시 실행
@@ -169,9 +202,11 @@ function App() {
                     (e) => e.schedule_type_cd === "000"
                 )[0];
 
-                dispatch(set_view_schedule(JSON.stringify(viewSchedule)));
+                // dispatch(set_view_schedule(JSON.stringify(viewSchedule)));
+                // dispatch(set_check_schedule(JSON.stringify(checkSchedule)));
 
-                dispatch(set_check_schedule(JSON.stringify(checkSchedule)));
+                setViewSchedule(viewSchedule);
+                setCheckSchedule(checkSchedule);
             })
             .catch((error) => {
                 // 오류발생시 실행
@@ -189,9 +224,9 @@ function App() {
                         <ConfirmModal />
                     </AlertContextProvider>
                 </ConfirmContextProvider>
+                {/* {isSpinner && <CommonSpinner />} */}
             </div>
-
-            <CommonSpinner option={spinnerOption} />
+            {/* <div>{spinnerOption.isLoading && <CommonSpinner />}</div> */}
         </>
     );
 }

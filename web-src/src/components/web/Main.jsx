@@ -5,12 +5,12 @@ import Footer from "components/web/common/Footer";
 import MainMainvisual from "./main/mainComponents/MainMainvisual";
 import MainContents from "./main/mainComponents/MainContents";
 import Aos from "aos";
-import $ from "jquery";
 
 function Main() {
     useEffect(() => {
         Aos.init();
     });
+
     return (
         <>
             {/* 헤더 */}

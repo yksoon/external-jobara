@@ -1,24 +1,28 @@
-import { Box, Button, CircularProgress, Modal, Skeleton } from "@mui/material";
+import { CircularProgress, Skeleton } from "@mui/material";
 import {
     CommonConsole,
+    CommonErrModule,
     CommonModal,
     CommonNotify,
     CommonRest,
-    CommonTest,
 } from "common/js/Common";
 import useAlert from "hook/useAlert";
-import { useEffect, useLayoutEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { set_spinner } from "redux/actions/commonAction";
 import { successCode } from "resultCode";
 import { apiPath } from "webPath";
-import $ from "jquery";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { ipInfoAtom, isSpinnerAtom } from "recoils/atoms";
 
 const MainContentsNoti = () => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
+    // const { alert } = useAlert();
+    // const err = { dispatch, alert };
     const { alert } = useAlert();
-    const err = { dispatch, alert };
+    const err = CommonErrModule();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
+
+    const ipInfo = useRecoilValue(ipInfoAtom);
 
     const [boardList, setBoardList] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
@@ -30,7 +34,7 @@ const MainContentsNoti = () => {
 
     useLayoutEffect(() => {
         getBoardList(1, 5);
-    }, []);
+    }, [ipInfo]);
 
     // 리스트 가져오기
     const getBoardList = (pageNum, pageSize) => {
@@ -41,6 +45,7 @@ const MainContentsNoti = () => {
             page_num: pageNum,
             page_size: pageSize,
             board_type: "000",
+            admin_type: "N",
         };
 
         // 파라미터
@@ -138,11 +143,12 @@ const MainContentsNoti = () => {
             else {
                 CommonConsole("log", res);
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+                setIsSpinner(false);
 
                 CommonNotify({
                     type: "alert",

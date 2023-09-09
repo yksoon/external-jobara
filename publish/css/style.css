@@ -305,6 +305,46 @@ a.table_btn span {font-size: 20px;color: #fff;line-height: 28px;    vertical-ali
 .prepare p {font-family: 'Gmarket Sans';font-size: 32px;color: #111;font-weight: 900;color: #E8368B;}
 
 
+/* 참여기업 */
+.company ul {display:flex;}
+.company ul li {position:relative; width:calc( (100% - 30px) /4 );border: 1px solid #ddd;border-radius: 20px;padding:30px;margin:0 10px 0 0;}
+.company ul li:nth-child(4n) {margin:0;}
+.company ul li span.boothnum {position: absolute;top:-20px;left:20px;width: 40px;height: 40px;line-height: 40px;font-size: 16px;color: #fff;background: #E8368B;text-align: center;border-radius: 10px;font-weight: 900;font-family: 'GMarketSans';}
+.company ul li a {display: block;width: 100%;height: 100%;}
+.company ul li h3 {font-size: 21px;color: #111;font-size: 800;font-family: "GMarketSans";margin:20px 0 15px;}
+.company ul li div {display:flex;gap:5px;}
+.company ul li div.company_logo {justify-content: center;}
+.company ul li div p {padding:5px 10px;border-radius: 5px;color: #fff;font-weight: 600;}
+.company ul li div p.company_booth {background:#65c4f2;}
+.company ul li div p.company_recruit {background:#99b720;}
+.company ul li div p.company_indirect {background:#ffa700;}
+
+/* 이벤트프로그램 */
+.pro_event h5{font-size: 18px;color: #111;font-weight: 800;word-break: keep-all;margin:0 0 6px;}
+.pro_event p{font-size: 16px;color: #616161;font-weight: 400;word-break: keep-all;}
+.pro_event .bdr {border-right: 1px solid #ddd !important;}
+.pro_event .long {padding:10px;}
+.pro_event .pro_table tr td {height:80px;}
+.pro_event .linebox {padding:10px;}
+.pro_event span.event_num {font-family: 'GMarketSans';margin:0 0 10px;font-size: 21px;font-weight: 900;}
+.pro_event .orange span.event_num {color:#f3830a;}
+.pro_event .orange {background:#fff7ef}
+.pro_event .green span.event_num {color:#99b720;}
+.pro_event .green {background:#fbffed}
+.pro_event .sky span.event_num {color:#65c4f2;}
+.pro_event .sky {background:#f0faff;}
+.pro_event .pink span.event_num {color:#E8368B;}
+.pro_event .pink {background:#fff6fb;}
+.pro_event .blue span.event_num {color:#004e94;}
+.pro_event .blue {background:#eef6fd;}
+.pro_event .red span.event_num {color:#d42119;}
+.pro_event .red {background:#fff3f3;}
+.pro_event .mint span.event_num {color:#10c5c7;}
+.pro_event .mint {background:#f2ffff;}
+.pro_event .yellow span.event_num {color:#ffe81d;}
+.pro_event .yellow {background:#fffef3;}
+
+
 
 
 
@@ -537,6 +577,8 @@ a.table_btn span {font-size: 20px;color: #fff;line-height: 28px;    vertical-ali
 	.pro_detail > div ul li img {width: 24px;}
 	.pro_detail > div ul li h5 {font-size: 18px;}
 	.pro_detail > div ul li p {font-size: 14px;line-height: 24px;}
+
+	.pro_event .pro_table {width:800px;}
 
 }
 

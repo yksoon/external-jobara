@@ -3,22 +3,30 @@ import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { apiPath } from "webPath";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import { CommonNotify, CommonRest } from "common/js/Common";
-import { useDispatch } from "react-redux";
+import { CommonErrModule, CommonNotify, CommonRest } from "common/js/Common";
 import useAlert from "hook/useAlert";
-import { set_spinner } from "redux/actions/commonAction";
 import { boardModel } from "models/board/board";
 import { successCode } from "resultCode";
+import useConfirm from "hook/useConfirm";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { isSpinnerAtom, userInfoAdminAtom } from "recoils/atoms";
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const RegOneLineBoardModal = (props) => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
+    const { confirm } = useConfirm();
     const { alert } = useAlert();
-    const err = { dispatch, alert };
+    const err = CommonErrModule();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
 
     const [img, setImg] = useState({});
     const imgUrl = apiPath.api_captcha_img;
     // const [boardData, setBoardData] = useState("");
+
+    // const userInfoAdmin = useSelector(
+    //     (state) => state.userInfoAdmin.userInfoAdmin
+    // );
+    const userInfoAdmin = useRecoilValue(userInfoAdminAtom);
 
     const inputTitle = useRef(null);
     const inputCaptcha = useRef(null);
@@ -82,11 +90,13 @@ const RegOneLineBoardModal = (props) => {
         // console.log(boardData);
 
         if (validation()) {
-            dispatch(
-                set_spinner({
-                    isLoading: true,
-                })
-            );
+            // dispatch(
+            //     set_spinner({
+            //         isLoading: true,
+            //     })
+            // );
+
+            setIsSpinner(true);
 
             const formData = new FormData();
             const model = boardModel;
@@ -135,11 +145,13 @@ const RegOneLineBoardModal = (props) => {
             const responsLogic = (res) => {
                 let result_code = res.headers.result_code;
                 if (result_code === successCode.success) {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+
+                    setIsSpinner(false);
 
                     CommonNotify({
                         type: "alert",
@@ -148,11 +160,13 @@ const RegOneLineBoardModal = (props) => {
                         callback: () => requestBoardList(),
                     });
                 } else {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+
+                    setIsSpinner(false);
 
                     CommonNotify({
                         type: "alert",
@@ -219,11 +233,13 @@ const RegOneLineBoardModal = (props) => {
     // 수정
     const modBoard = () => {
         if (validation()) {
-            dispatch(
-                set_spinner({
-                    isLoading: true,
-                })
-            );
+            // dispatch(
+            //     set_spinner({
+            //         isLoading: true,
+            //     })
+            // );
+
+            setIsSpinner(true);
 
             const formData = new FormData();
             const model = boardModel;
@@ -251,11 +267,13 @@ const RegOneLineBoardModal = (props) => {
             const responsLogic = (res) => {
                 let result_code = res.headers.result_code;
                 if (result_code === successCode.success) {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+
+                    setIsSpinner(false);
 
                     CommonNotify({
                         type: "alert",
@@ -264,11 +282,13 @@ const RegOneLineBoardModal = (props) => {
                         callback: () => requestBoardList(),
                     });
                 } else {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+
+                    setIsSpinner(false);
 
                     CommonNotify({
                         type: "alert",
@@ -293,6 +313,61 @@ const RegOneLineBoardModal = (props) => {
             CommonRest(restParams);
         }
     };
+
+    // 삭제
+    const removeBoard = (board_idx) => {
+        CommonNotify({
+            type: "confirm",
+            hook: confirm,
+            message: "게시글을 삭제하시겠습니까?",
+            callback: () => removeLogic(),
+        });
+
+        const removeLogic = () => {
+            // dispatch(
+            //     set_spinner({
+            //         isLoading: true,
+            //     })
+            // );
+
+            setIsSpinner(true);
+
+            const data = {};
+            const url = apiPath.api_admin_remove_board + `/${board_idx}`;
+
+            // console.log(url);
+            // 파라미터
+            const restParams = {
+                method: "delete",
+                url: url,
+                data: data,
+                err: err,
+                callback: (res) => responsLogic(res),
+                admin: "Y",
+            };
+            CommonRest(restParams);
+
+            const responsLogic = (res) => {
+                if (res.headers.result_code === successCode.success) {
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+
+                    setIsSpinner(false);
+
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: `게시글이 삭제 되었습니다.`,
+                        callback: () => requestBoardList(),
+                    });
+                }
+            };
+        };
+    };
+
     return (
         <>
             <div className="admin">
@@ -446,9 +521,21 @@ const RegOneLineBoardModal = (props) => {
                 </table>
                 <div className="btn_box">
                     {modOneLine ? (
-                        <Link className="btn btn01" onClick={modBoard}>
-                            수정
-                        </Link>
+                        <>
+                            <Link className="btn btn01" onClick={modBoard}>
+                                수정
+                            </Link>
+                            {userInfoAdmin.user_role_cd === "000" && (
+                                <Link
+                                    className="btn btn02"
+                                    onClick={() =>
+                                        removeBoard(modOneLine.board_idx)
+                                    }
+                                >
+                                    삭제
+                                </Link>
+                            )}
+                        </>
                     ) : (
                         <Link className="btn btn01" onClick={regBoard}>
                             등록

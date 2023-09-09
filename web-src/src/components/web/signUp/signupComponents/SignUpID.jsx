@@ -1,14 +1,19 @@
-import { CommonRest } from "common/js/Common";
+import { CommonErrModule, CommonRest } from "common/js/Common";
 import { idPattern } from "common/js/Pattern";
 import useAlert from "hook/useAlert";
 import { forwardRef } from "react";
-import { useDispatch } from "react-redux";
+import { useSetRecoilState } from "recoil";
+import { isSpinnerAtom } from "recoils/atoms";
 import { apiPath } from "webPath";
 
 const SignUpID = forwardRef((props, ref) => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
+    // const { alert } = useAlert();
+    // const err = { dispatch, alert };
     const { alert } = useAlert();
-    const err = { dispatch, alert };
+    const err = CommonErrModule();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
+
     const { inputID } = ref;
 
     // 아이디 중복 체크
@@ -51,6 +56,10 @@ const SignUpID = forwardRef((props, ref) => {
                             idCheck(e);
                         }}
                     />
+                    <p className="pointtxt">
+                        ※ 아이디는 신청확인 및 수정시 사용되며, 희망하는
+                        아이디로 기입해주세요.
+                    </p>
                 </td>
             </tr>
         </>

@@ -1,20 +1,38 @@
-import { CommonConsole, CommonNotify, CommonRest } from "common/js/Common";
+import {
+    CommonConsole,
+    CommonErrModule,
+    CommonNotify,
+    CommonRest,
+    CommonSpinner,
+} from "common/js/Common";
 import useAlert from "hook/useAlert";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { set_spinner } from "redux/actions/commonAction";
 import { successCode } from "resultCode";
 import { apiPath } from "webPath";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import { oneLinePattern } from "common/js/Pattern";
+import {
+    mobile1Pattern,
+    mobile2Pattern,
+    oneLinePattern,
+} from "common/js/Pattern";
 import { boardModel } from "models/board/board";
 import { Skeleton } from "@mui/material";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { ipInfoAtom, isSpinnerAtom } from "recoils/atoms";
+// import { useSetRecoilState } from "recoil";
+// import { isSpinnerAtom } from "recoils/atoms";
+import $ from "jquery";
 
 const MainContentsTalk = () => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
+    // const { alert } = useAlert();
+    // const err = { dispatch, alert };
     const { alert } = useAlert();
-    const err = { dispatch, alert };
+    const err = CommonErrModule();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
+
+    const ipInfo = useRecoilValue(ipInfoAtom);
 
     const [boardList, setBoardList] = useState([]);
     const [img, setImg] = useState({});
@@ -32,6 +50,9 @@ const MainContentsTalk = () => {
         inputCaptcha: useRef(null),
     };
 
+    // const spinnerOption = useSelector((state) => state.common.spinner);
+    // const setSpinnerAtom = useSetRecoilState(isSpinnerAtom);
+
     useEffect(() => {
         setImg({
             imageSrc: imgUrl,
@@ -41,8 +62,30 @@ const MainContentsTalk = () => {
         getOneLineList(1, 8);
     }, [isNeedUpdate]);
 
+    useEffect(() => {
+        getOneLineList(1, 8);
+    }, [ipInfo]);
+
+    useEffect(() => {
+        $(() => {
+            let winW = $(window).width();
+
+            if (winW < 640) {
+                $(".input_btn_box").insertAfter(".talk_txt_box");
+            }
+        });
+    }, []);
+
     // 댓글 리스트
     const getOneLineList = (pageNum, pageSize) => {
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+        // setSpinnerAtom(true);
+        setIsLoading(true);
+
         // /v1/boards
         // POST
         const url = apiPath.api_admin_boards;
@@ -50,6 +93,7 @@ const MainContentsTalk = () => {
             page_num: pageNum,
             page_size: pageSize,
             board_type: "400",
+            admin_type: "N",
         };
 
         // 파라미터
@@ -60,6 +104,7 @@ const MainContentsTalk = () => {
             err: err,
             callback: (res) => responsLogic(res),
         };
+
         CommonRest(restParams);
 
         // 완료 로직
@@ -77,6 +122,8 @@ const MainContentsTalk = () => {
 
                 setIsLoading(false);
 
+                // setSpinnerAtom(false);
+
                 // dispatch(
                 //     set_spinner({
                 //         isLoading: false,
@@ -86,11 +133,13 @@ const MainContentsTalk = () => {
                 // 에러
                 CommonConsole("log", res);
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
             }
         };
     };
@@ -106,11 +155,13 @@ const MainContentsTalk = () => {
     // 응원하기
     const regOneLineBoard = () => {
         if (validation()) {
-            dispatch(
-                set_spinner({
-                    isLoading: true,
-                })
-            );
+            // dispatch(
+            //     set_spinner({
+            //         isLoading: true,
+            //     })
+            // );
+
+            setIsLoading(true);
 
             const formData = new FormData();
             const model = boardModel;
@@ -151,11 +202,13 @@ const MainContentsTalk = () => {
             const responsLogic = (res) => {
                 let result_code = res.headers.result_code;
                 if (result_code === successCode.success) {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+
+                    setIsLoading(false);
 
                     CommonNotify({
                         type: "alert",
@@ -164,11 +217,11 @@ const MainContentsTalk = () => {
                         callback: () => requestBoards(),
                     });
                 } else {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
 
                     CommonNotify({
                         type: "alert",
@@ -184,10 +237,28 @@ const MainContentsTalk = () => {
     const requestBoards = () => {
         // 리스트 새로고침
         setIsNeedUpdate(!isNeedUpdate);
+
+        oneLineRefs.inputUserFirstName.current.value = "";
+        oneLineRefs.inputUserLastName.current.value = "";
+        oneLineRefs.inputMobile1.current.value = "";
+        oneLineRefs.inputMobile2.current.value = "";
+        oneLineRefs.inputMobile3.current.value = "";
+        oneLineRefs.inputContent.current.value = "";
+        oneLineRefs.inputCaptcha.current.value = "";
     };
 
     // 검증
     const validation = () => {
+        // --------------------내용----------------------
+        if (!oneLineRefs.inputContent.current.value) {
+            oneLineRefs.inputContent.current.blur();
+            regBoardAlert({
+                msg: "내용을을 입력해주세요",
+                ref: oneLineRefs.inputContent,
+            });
+            return false;
+        }
+
         // --------------------이름----------------------
         if (
             !oneLineRefs.inputUserFirstName.current.value ||
@@ -250,9 +321,53 @@ const MainContentsTalk = () => {
     const contentFix = (e) => {
         let val = e.target.value;
 
+        if (val.charAt(0) === " " || val.charAt(0) === "　") {
+            oneLineRefs.inputContent.current.value = val.slice(0, -1);
+        }
+
         let test = oneLinePattern.test(val);
         if (!test) {
             oneLineRefs.inputContent.current.value = val.slice(0, -1);
+        }
+    };
+
+    // 모바일 패턴 체크 및 다음칸으로 이동
+    const mobileHandler = (e) => {
+        let id = e.target.id;
+        let val = e.target.value;
+
+        switch (id) {
+            case "mobile1":
+                let test1 = mobile1Pattern.test(val);
+                if (!test1) {
+                    oneLineRefs.inputMobile1.current.value = val.slice(0, -1);
+                }
+                // 다음칸으로 이동
+                if (val.length >= 3) {
+                    oneLineRefs.inputMobile2.current.focus();
+                }
+                break;
+
+            case "mobile2":
+                let test2 = mobile2Pattern.test(val);
+                if (!test2) {
+                    oneLineRefs.inputMobile2.current.value = val.slice(0, -1);
+                }
+                // 다음칸으로 이동
+                if (val.length >= 4) {
+                    oneLineRefs.inputMobile3.current.focus();
+                }
+                break;
+
+            case "mobile3":
+                let test3 = mobile2Pattern.test(val);
+                if (!test3) {
+                    oneLineRefs.inputMobile3.current.value = val.slice(0, -1);
+                }
+                break;
+
+            default:
+                break;
         }
     };
 
@@ -358,89 +473,99 @@ const MainContentsTalk = () => {
                         </ul>
                     </div>
                     <div className="talkinput">
-                        <div className="input_box">
-                            <div className="talk_name">
-                                <p>이름</p>
-                                <input
-                                    type="text"
-                                    className="input"
-                                    placeholder="성"
-                                    ref={oneLineRefs.inputUserFirstName}
-                                />
-                                <input
-                                    type="text"
-                                    className="input"
-                                    placeholder="이름"
-                                    ref={oneLineRefs.inputUserLastName}
-                                />
-                            </div>
-                            <div className="tel_input">
-                                <p>전화번호</p>
-                                <input
-                                    type="text"
-                                    className="input"
-                                    placeholder="010"
-                                    ref={oneLineRefs.inputMobile1}
-                                />{" "}
-                                -{" "}
-                                <input
-                                    type="text"
-                                    className="input"
-                                    placeholder="0000"
-                                    ref={oneLineRefs.inputMobile2}
-                                />{" "}
-                                -{" "}
-                                <input
-                                    type="text"
-                                    className="input"
-                                    placeholder="0000"
-                                    ref={oneLineRefs.inputMobile3}
-                                />
-                            </div>
-                            <div className="talk_cap">
-                                <p>자동입력방지</p>
-                                <div className="cap_wrap">
-                                    <div>
-                                        <span className="cap">
-                                            <img
-                                                className="imgClass"
-                                                id="captchaImg"
-                                                src={`${img.imageSrc}?${img.imageHash}`}
-                                                alt=""
-                                                decoding="async"
-                                                style={{ background: "white" }}
-                                            />
-                                        </span>
-                                        <span className="cap_refresh">
-                                            <Link
-                                                onClick={(e) => {
-                                                    refreshCaptcha();
-                                                    e.preventDefault();
-                                                }}
-                                            >
-                                                <RefreshIcon />
-                                                새로고침
-                                            </Link>
-                                        </span>
-                                    </div>
+                        <div className="talk_input_wrap">
+                            <div className="input_box">
+                                <div className="talk_name">
+                                    <p>이름</p>
                                     <input
                                         type="text"
-                                        className="input_s"
-                                        ref={oneLineRefs.inputCaptcha}
+                                        className="input"
+                                        placeholder="성"
+                                        ref={oneLineRefs.inputUserFirstName}
+                                    />
+                                    <input
+                                        type="text"
+                                        className="input"
+                                        placeholder="이름"
+                                        ref={oneLineRefs.inputUserLastName}
                                     />
                                 </div>
+                                <div className="tel_input">
+                                    <p>전화번호</p>
+                                    <input
+                                        type="text"
+                                        className="input"
+                                        placeholder="010"
+                                        id="mobile1"
+                                        ref={oneLineRefs.inputMobile1}
+                                        onChange={(e) => mobileHandler(e)}
+                                    />{" "}
+                                    -{" "}
+                                    <input
+                                        type="text"
+                                        className="input"
+                                        placeholder="0000"
+                                        id="mobile2"
+                                        ref={oneLineRefs.inputMobile2}
+                                        onChange={(e) => mobileHandler(e)}
+                                    />{" "}
+                                    -{" "}
+                                    <input
+                                        type="text"
+                                        className="input"
+                                        placeholder="0000"
+                                        id="mobile3"
+                                        ref={oneLineRefs.inputMobile3}
+                                        onChange={(e) => mobileHandler(e)}
+                                    />
+                                </div>
+                                <div className="talk_cap">
+                                    <p>자동입력방지</p>
+                                    <div className="cap_wrap">
+                                        <div>
+                                            <span className="cap">
+                                                <img
+                                                    className="imgClass"
+                                                    id="captchaImg"
+                                                    src={`${img.imageSrc}?${img.imageHash}`}
+                                                    alt=""
+                                                    decoding="async"
+                                                    style={{ background: "white" }}
+                                                />
+                                            </span>
+                                            <span className="cap_refresh">
+                                                <Link
+                                                    onClick={(e) => {
+                                                        refreshCaptcha();
+                                                        e.preventDefault();
+                                                    }}
+                                                >
+                                                    <RefreshIcon />
+                                                    새로고침
+                                                </Link>
+                                            </span>
+                                        </div>
+                                        <input
+                                            type="text"
+                                            className="input_s"
+                                            ref={oneLineRefs.inputCaptcha}
+                                        />
+                                    </div>
+                                </div>
                             </div>
-                            <Link
-                                className="input_btn"
-                                onClick={(e) => {
-                                    regOneLineBoard();
-                                    e.preventDefault();
-                                }}
-                            >
-                                응원하기
-                            </Link>
+                            <div className="input_btn_box">
+                                <Link
+                                    className="input_btn"
+                                    onClick={(e) => {
+                                        regOneLineBoard();
+                                        e.preventDefault();
+                                    }}
+                                >
+                                    응원하기
+                                </Link>
+                            </div>
                         </div>
-                        <div>
+                        <div className="talk_txt_box">
                             <textarea
                                 name=""
                                 id=""
@@ -460,6 +585,8 @@ const MainContentsTalk = () => {
                     </div>
                 </div>
             </div>
+            {/* {spinnerOption.isLoading && <CommonSpinner />} */}
+            {/* {isLoading && <CommonSpinner />} */}
         </>
     );
 };

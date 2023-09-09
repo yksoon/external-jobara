@@ -1,31 +1,52 @@
 import useAlert from "hook/useAlert";
 import {
-    CommonConsole,
-    CommonErrorCatch,
+    CommonErrModule,
     CommonNotify,
     CommonRest,
+    CommonSpinner,
 } from "common/js/Common";
 import React, { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { set_spinner } from "redux/actions/commonAction";
-import { set_page } from "redux/actions/pageActios";
 import { apiPath, routerPath } from "webPath";
-import {
-    init_user_info_admin,
-    set_user_info_admin,
-    set_user_token_admin,
-} from "redux/actions/userInfoAdminAction";
 import { successCode } from "resultCode";
+import {
+    useRecoilState,
+    useRecoilValue,
+    useResetRecoilState,
+    useSetRecoilState,
+} from "recoil";
+import {
+    isSpinnerAtom,
+    pageAtom,
+    userInfoAdminAtom,
+    userTokenAdminAtom,
+} from "recoils/atoms";
 
 const SignIn = () => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
+    // const { alert } = useAlert();
+    // const resetUserInfoAdmin = useResetRecoilState(userInfoAdminAtom);
+    // const resetUserTokenAdmin = useResetRecoilState(userTokenAdminAtom);
+    // const err = { dispatch, alert, resetUserInfoAdmin, resetUserTokenAdmin };
+
     const { alert } = useAlert();
-    const err = { dispatch, alert };
-    const userTokenAdmin = useSelector(
-        (state) => state.userInfoAdmin.userTokenAdmin
-    );
+    const err = CommonErrModule();
+    const [isSpinner, setIsSpinner] = useRecoilState(isSpinnerAtom);
+
+    const resetUserInfoAdmin = useResetRecoilState(userInfoAdminAtom);
+    const resetUserTokenAdmin = useResetRecoilState(userTokenAdminAtom);
+
+    const userTokenAdmin = useRecoilValue(userTokenAdminAtom);
+    // const userTokenAdmin = useSelector(
+    //     (state) => state.userInfoAdmin.userTokenAdmin
+    // );
     const navigate = useNavigate();
+
+    const setPage = useSetRecoilState(pageAtom);
+    const setUserInfoAdmin = useSetRecoilState(userInfoAdminAtom);
+    const setUserTokenAdmin = useSetRecoilState(userTokenAdminAtom);
+
+    // const setPage = useSetRecoilState("page");
 
     const inputID = useRef(null);
     const inputPW = useRef(null);
@@ -34,8 +55,12 @@ const SignIn = () => {
         if (userTokenAdmin) {
             navigate(routerPath.admin_main_url);
         } else {
-            dispatch(set_page("dashboard"));
-            dispatch(init_user_info_admin(null));
+            setPage("dashboard");
+
+            resetUserInfoAdmin();
+            resetUserTokenAdmin();
+
+            // dispatch(init_user_info_admin(null));
             inputID.current.focus();
         }
     }, []);
@@ -66,11 +91,13 @@ const SignIn = () => {
     };
 
     const login = () => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+
+        setIsSpinner(true);
 
         // /v1/signin
         // POST
@@ -103,29 +130,38 @@ const SignIn = () => {
                     delete user_info[deleteKey[i]];
                 }
 
-                dispatch(init_user_info_admin(null));
+                // resetUserInfoAdmin();
+                // resetUserTokenAdmin();
 
-                sessionStorage.setItem(
-                    "userInfoAdmin",
-                    JSON.stringify(user_info)
-                );
-                dispatch(set_user_info_admin(JSON.stringify(user_info)));
+                // dispatch(init_user_info_admin(null));
 
-                dispatch(set_user_token_admin(JSON.stringify(user_info)));
+                // sessionStorage.setItem(
+                //     "userInfoAdmin",
+                //     JSON.stringify(user_info)
+                // );
+                // dispatch(set_user_info_admin(JSON.stringify(user_info)));
+                // dispatch(set_user_token_admin(JSON.stringify(user_info)));
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                setUserInfoAdmin(user_info);
+                setUserTokenAdmin(user_info.token);
+
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
 
                 navigate(routerPath.admin_main_url);
             } else {
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
 
                 CommonNotify({
                     type: "alert",
@@ -206,6 +242,7 @@ const SignIn = () => {
                     </div>
                 </div>
             </div>
+            {isSpinner && <CommonSpinner />}
         </>
     );
 };

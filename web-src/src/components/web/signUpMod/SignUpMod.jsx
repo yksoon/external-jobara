@@ -11,30 +11,49 @@ import SignUpModBirthday from "./signUpModComponents/SignUpModBirthday";
 import SignUpModSpecialized from "./signUpModComponents/SignUpModSpecialized";
 import SignUpModSpecialCheck from "./signUpModComponents/SignUpModSpecialCheck";
 import SignUpModFile from "./signUpModComponents/SignUpModFile";
-import { useDispatch, useSelector } from "react-redux";
 import { apiPath, routerPath } from "webPath";
 import useAlert from "hook/useAlert";
-import { set_spinner } from "redux/actions/commonAction";
-import { CommonCheckDate, CommonNotify, CommonRest } from "common/js/Common";
-import { idPattern } from "common/js/Pattern";
+import {
+    CommonCheckDate,
+    CommonErrModule,
+    CommonNotify,
+    CommonRest,
+} from "common/js/Common";
 import { signupMultiModel } from "models/user/signUp";
-import { set_user_info } from "redux/actions/userInfoAction";
 import SignUpModMemo from "./signUpModComponents/SignUpModMemo";
 import { successCode } from "resultCode";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import {
+    checkScheduleAtom,
+    ipInfoAtom,
+    isSpinnerAtom,
+    userInfoAtom,
+    userTokenAtom,
+} from "recoils/atoms";
 
 const SignUpMod = () => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
+    // const { alert } = useAlert();
+    // const err = { dispatch, alert };
     const { alert } = useAlert();
-    const err = { dispatch, alert };
-    const checkSchedule = useSelector((state) => state.schedule.checkSchedule);
-    const ip = useSelector((state) => state.ipInfo.ipInfo);
+    const err = CommonErrModule();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
+
+    const setUserInfo = useSetRecoilState(userInfoAtom);
+
+    // const checkSchedule = useSelector((state) => state.schedule.checkSchedule);
+    const checkSchedule = useRecoilValue(checkScheduleAtom);
+    // const ip = useSelector((state) => state.ipInfo.ipInfo);
+    const ip = useRecoilValue(ipInfoAtom);
     const navigate = useNavigate();
 
     // 참여프로그램 체크박스
     const [checkItems, setCheckItems] = useState([]);
 
-    const userToken = useSelector((state) => state.userInfo.userToken);
-    const userInfo = useSelector((state) => state.userInfo.userInfo);
+    // const userToken = useSelector((state) => state.userInfo.userToken);
+    // const userInfo = useSelector((state) => state.userInfo.userInfo);
+    const userToken = useRecoilValue(userTokenAtom);
+    const userInfo = useRecoilValue(userInfoAtom);
 
     useEffect(() => {
         startLoding();
@@ -44,7 +63,8 @@ const SignUpMod = () => {
             ip,
             alert,
             checkDatecallback,
-            dispatch
+            // dispatch
+            setIsSpinner
         ).then((res) => {
             if (!res) {
                 navigate(routerPath.web_main_url);
@@ -60,21 +80,23 @@ const SignUpMod = () => {
 
     // 사전등록 기간 체크 콜백
     const checkDatecallback = () => {
-        dispatch(
-            set_spinner({
-                isLoading: false,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: false,
+        //     })
+        // );
+        setIsSpinner(false);
 
         navigate(routerPath.web_main_url);
     };
 
     const startLoding = () => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+        setIsSpinner(true);
     };
 
     const signUpRefs = {
@@ -96,11 +118,12 @@ const SignUpMod = () => {
     };
 
     const getDefaultValue = () => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+        setIsSpinner(true);
 
         // console.log("userInfouserInfouserInfo", userInfo);
 
@@ -154,11 +177,12 @@ const SignUpMod = () => {
     // 제출
     const clickForm = () => {
         if (validation()) {
-            dispatch(
-                set_spinner({
-                    isLoading: true,
-                })
-            );
+            // dispatch(
+            //     set_spinner({
+            //         isLoading: true,
+            //     })
+            // );
+            setIsSpinner(true);
 
             const formData = new FormData();
             const model = signupMultiModel;
@@ -190,10 +214,10 @@ const SignUpMod = () => {
                 birthDd: birthArr[2],
                 specializedNameKo: signUpRefs.inputSpecialized.current.value,
                 additionalIdxs: checkItems.join(),
-                organizationIdx: signUpRefs.organization_idx,
-                specializedIdx: signUpRefs.specialized_idx,
-                departmentIdx: signUpRefs.department_idx,
-                userInfo: signUpRefs.inputMemo.current.value,
+                organizationIdx: userInfo.organization_idx,
+                specializedIdx: userInfo.specialized_idx,
+                departmentIdx: userInfo.department_idx,
+                userMemo: signUpRefs.inputMemo.current.value,
             };
 
             // 기본 formData append
@@ -211,11 +235,12 @@ const SignUpMod = () => {
             const responsLogic = (res) => {
                 let result_code = res.headers.result_code;
                 if (result_code === successCode.success) {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+                    setIsSpinner(false);
 
                     CommonNotify({
                         type: "alert",
@@ -224,11 +249,12 @@ const SignUpMod = () => {
                         callback: () => requestUserInfo(),
                     });
                 } else {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+                    setIsSpinner(false);
 
                     CommonNotify({
                         type: "alert",
@@ -244,7 +270,8 @@ const SignUpMod = () => {
                 ip,
                 alert,
                 checkDatecallback,
-                dispatch
+                // dispatch
+                setIsSpinner
             ).then((res) => {
                 if (!res) {
                     navigate(routerPath.web_main_url);
@@ -264,11 +291,12 @@ const SignUpMod = () => {
     };
 
     const requestUserInfo = () => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+        setIsSpinner(true);
 
         const userIdx = userInfo.user_idx;
 
@@ -283,15 +311,17 @@ const SignUpMod = () => {
         CommonRest(restParams);
 
         const responsLogicUserInfo = (res) => {
-            dispatch(
-                set_spinner({
-                    isLoading: false,
-                })
-            );
+            // dispatch(
+            //     set_spinner({
+            //         isLoading: false,
+            //     })
+            // );
+            setIsSpinner(false);
 
             const resultInfo = res.data.result_info;
 
-            dispatch(set_user_info(JSON.stringify(resultInfo)));
+            // dispatch(set_user_info(JSON.stringify(resultInfo)));
+            setUserInfo(resultInfo);
 
             window.location.reload();
         };

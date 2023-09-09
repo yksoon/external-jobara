@@ -1,11 +1,18 @@
 import { routerPath } from "webPath";
 import { RestServer } from "./Rest";
-import { set_user_info, set_user_token } from "redux/actions/userInfoAction";
 import { CommonConsole, CommonNotify } from "./Common";
-import { set_alert, set_spinner } from "redux/actions/commonAction";
 import { successCode } from "resultCode";
 
-export default function Login(url, data, resultCode, dispatch, alert) {
+export default function Login(
+    url,
+    data,
+    resultCode,
+    // dispatch,
+    setIsSpinner,
+    alert,
+    setUserInfo,
+    setUserToken
+) {
     RestServer("post", url, data)
         .then(function (response) {
             // response
@@ -33,16 +40,19 @@ export default function Login(url, data, resultCode, dispatch, alert) {
                 }
 
                 // user_info
-                dispatch(set_user_info(JSON.stringify(user_info)));
+                // dispatch(set_user_info(JSON.stringify(user_info)));
+                setUserInfo(user_info);
 
                 // user_token
-                dispatch(set_user_token(JSON.stringify(user_info)));
+                // dispatch(set_user_token(JSON.stringify(user_info)));
+                setUserToken(user_info.token);
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+                setIsSpinner(false);
 
                 window.location.replace(routerPath.web_main_url);
             } else if (result_code === "1003") {
@@ -57,11 +67,12 @@ export default function Login(url, data, resultCode, dispatch, alert) {
                     message: response.headers.result_message_ko,
                 });
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+                setIsSpinner(false);
             }
         })
         .catch(function (error) {
@@ -77,10 +88,11 @@ export default function Login(url, data, resultCode, dispatch, alert) {
                     : "잠시 후 다시 시도해주세요.",
             });
 
-            dispatch(
-                set_spinner({
-                    isLoading: false,
-                })
-            );
+            // dispatch(
+            //     set_spinner({
+            //         isLoading: false,
+            //     })
+            // );
+            setIsSpinner(false);
         });
 }

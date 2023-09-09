@@ -2,25 +2,24 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
     CommonConsole,
-    CommonErrorCatch,
+    CommonErrModule,
     CommonModal,
     CommonNotify,
     CommonRest,
 } from "common/js/Common";
-import { RestServer } from "common/js/Rest";
 import { apiPath } from "webPath";
-import { useDispatch } from "react-redux";
-import { set_spinner } from "redux/actions/commonAction";
 import { Pagination } from "@mui/material";
 import useConfirm from "hook/useConfirm";
 import useAlert from "hook/useAlert";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import { successCode } from "resultCode";
+import { useSetRecoilState } from "recoil";
+import { isSpinnerAtom } from "recoils/atoms";
 
-const UserList = () => {
-    const dispatch = useDispatch();
+const UserList = (props) => {
     const { alert } = useAlert();
-    const err = { dispatch, alert };
+    const err = CommonErrModule();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
 
     const [isOpen, setIsOpen] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
@@ -31,12 +30,19 @@ const UserList = () => {
     const [pageInfo, setPageInfo] = useState({});
     const { confirm } = useConfirm();
     const fileBaseUrl = apiPath.api_file;
+    const [additionalList, setAdditionalList] = useState([]);
 
     const searchKeyword = useRef(null);
 
+    const isRefresh = props.isRefresh;
+
+    useEffect(() => {
+        getAdditional();
+    }, []);
+
     useEffect(() => {
         reqUserList(1, 10, "");
-    }, [isNeedUpdate]);
+    }, [isNeedUpdate, isRefresh]);
 
     const handleNeedUpdate = () => {
         setIsNeedUpdate(!isNeedUpdate);
@@ -52,13 +58,51 @@ const UserList = () => {
         setIsOpen(true);
     };
 
+    // 참여프로그램 리스트 받아오기
+    const getAdditional = () => {
+        // /v1/meta/_additionals
+        // GET
+        const restParams = {
+            method: "get",
+            url: apiPath.api_get_additional,
+            data: {},
+            err: err,
+            callback: (res) => responsLogic(res),
+        };
+
+        CommonRest(restParams);
+
+        const responsLogic = (res) => {
+            console.log(res);
+
+            const result_code = res.headers.result_code;
+            // 성공
+            if (result_code === successCode.success) {
+                let result_info = res.data.result_info;
+
+                setAdditionalList(result_info);
+            } else {
+                // 에러
+                CommonConsole("log", res);
+
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+                setIsSpinner(false);
+            }
+        };
+    };
+
     // 유저 리스트
     const reqUserList = (pageNum, pageSize, searchKeyword) => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+        setIsSpinner(true);
 
         // /v1/user/infos
         // POST
@@ -94,31 +138,35 @@ const UserList = () => {
                 setUserList(result_info);
                 setPageInfo(page_info);
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                setIsSpinner(false);
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
             } else {
                 // 에러
                 CommonConsole("log", res);
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                setIsSpinner(false);
+
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
             }
         };
     };
 
     // 회원 정보 수정
     const modUser = (user_idx) => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+        setIsSpinner(true);
 
         let userIdx = String(user_idx);
 
@@ -144,11 +192,13 @@ const UserList = () => {
 
             // 성공
             if (result_code === successCode.success) {
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
 
                 setModUserData(result_info);
 
@@ -159,11 +209,13 @@ const UserList = () => {
             else {
                 CommonConsole("log", res);
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
 
                 CommonNotify({
                     type: "alert",
@@ -333,7 +385,7 @@ const UserList = () => {
                             marginBottom: "10px",
                         }}
                     >
-                        총 : <b>{pageInfo && pageInfo.total}</b> 명
+                        총 : <b>&nbsp;{pageInfo && pageInfo.total}&nbsp;</b> 명
                     </div>
                     <div className="adm_table">
                         <table className="table_a">
@@ -384,34 +436,24 @@ const UserList = () => {
                                     <th rowSpan="2">학교</th>
                                     <th rowSpan="2">학과</th>
                                     <th rowSpan="2">희망직종</th>
-                                    <th colSpan="4">참여프로그램</th>
+                                    <th colSpan={`${additionalList.length}`}>
+                                        참여프로그램
+                                    </th>
                                     <th rowSpan="2">등록일</th>
                                     <th rowSpan="2">이력서 보기</th>
                                     <th rowSpan="2">정보수정</th>
                                 </tr>
                                 <tr>
-                                    <th>NCS 모의고사</th>
-                                    <th
-                                        style={{
-                                            borderRight: "1px solid #ddd",
-                                        }}
-                                    >
-                                        현직자 토크콘서트
-                                    </th>
-                                    <th
-                                        style={{
-                                            borderRight: "1px solid #ddd",
-                                        }}
-                                    >
-                                        버크만진단
-                                    </th>
-                                    <th
-                                        style={{
-                                            borderRight: "1px solid #ddd",
-                                        }}
-                                    >
-                                        바로채용면접
-                                    </th>
+                                    {additionalList.map((item, idx) => (
+                                        <th
+                                            key={`admin_additional_${idx}`}
+                                            style={{
+                                                borderRight: "1px solid #ddd",
+                                            }}
+                                        >
+                                            {item.additional_name_ko}
+                                        </th>
+                                    ))}
                                 </tr>
                             </thead>
                             <tbody>
@@ -464,46 +506,24 @@ const UserList = () => {
                                                     ? item.specialized_name_ko
                                                     : "-"}
                                             </td>
-                                            <td className="checkicon">
-                                                {item.additional_info.filter(
-                                                    (e) =>
-                                                        e.additional_idx === 1
-                                                ).length !== 0 ? (
-                                                    <CheckCircleOutlineOutlinedIcon />
-                                                ) : (
-                                                    ""
-                                                )}
-                                            </td>
-                                            <td className="checkicon">
-                                                {item.additional_info.filter(
-                                                    (e) =>
-                                                        e.additional_idx === 2
-                                                ).length !== 0 ? (
-                                                    <CheckCircleOutlineOutlinedIcon />
-                                                ) : (
-                                                    ""
-                                                )}
-                                            </td>
-                                            <td className="checkicon">
-                                                {item.additional_info.filter(
-                                                    (e) =>
-                                                        e.additional_idx === 3
-                                                ).length !== 0 ? (
-                                                    <CheckCircleOutlineOutlinedIcon />
-                                                ) : (
-                                                    ""
-                                                )}
-                                            </td>
-                                            <td className="checkicon">
-                                                {item.additional_info.filter(
-                                                    (e) =>
-                                                        e.additional_idx === 4
-                                                ).length !== 0 ? (
-                                                    <CheckCircleOutlineOutlinedIcon />
-                                                ) : (
-                                                    ""
-                                                )}
-                                            </td>
+                                            {additionalList.map(
+                                                (item2, idx2) => (
+                                                    <td
+                                                        className="checkicon"
+                                                        key={`add_chk_${idx2}`}
+                                                    >
+                                                        {item.additional_info.filter(
+                                                            (e) =>
+                                                                e.additional_idx ===
+                                                                item2.additional_idx
+                                                        ).length !== 0 ? (
+                                                            <CheckCircleOutlineOutlinedIcon />
+                                                        ) : (
+                                                            ""
+                                                        )}
+                                                    </td>
+                                                )
+                                            )}
                                             <td>
                                                 {item.reg_dttm
                                                     ? item.reg_dttm.split(
@@ -552,7 +572,7 @@ const UserList = () => {
                                     <>
                                         <tr>
                                             <td
-                                                colSpan="14"
+                                                colSpan="16"
                                                 style={{ height: "55px" }}
                                             >
                                                 <b>데이터가 없습니다.</b>

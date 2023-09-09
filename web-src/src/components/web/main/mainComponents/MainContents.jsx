@@ -1,4 +1,4 @@
-import MainContentsInfo from "./contents/MainContentsInfo";
+// import MainContentsInfo from "./contents/MainContentsInfo";
 import MainContentsNoti from "./contents/MainContentsNoti";
 import MainContentsProgram from "./contents/MainContentsProgram";
 import MainContentsTalk from "./contents/MainContentsTalk";

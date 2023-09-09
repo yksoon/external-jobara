@@ -60,6 +60,18 @@ const routerPath = {
     // /notice/notice
     web_notice_url: `${base_url}notice/notice`,
 
+    // 참여기업
+    // /company/companydetail
+    web_company_url: `${base_url}company/company`,
+
+    // 참여기업 리스트
+    // /company/companylist
+    // web_company_list_url: `${base_url}company/companylist`,
+
+    // 참여기업 상세
+    // /company/companydetail
+    // web_company_detail_url: `${base_url}company/detail`,
+
     // 회원가입
     // /signup
     web_signup_url: `${base_url}signup`,

@@ -57,8 +57,8 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 #mainvisual  .main_txt .date .blue{ color:#0092E5;font-weight: 900;}
 #mainvisual  .main_txt .menu{position:absolute; top:300px; left:140px;display:flex;flex-direction: column;}
 #mainvisual  .main_txt .menu > ul > li {position: relative;transition:all 0.5s;}
-#mainvisual  .main_txt .menu a.m00 {display:block;font-family: 'LOTTERIACHAB';font-size: 32px; color:#222;line-height:50px;}
-#mainvisual  .main_txt .menu > ul > li > a{display:block;font-family: 'LOTTERIACHAB';font-size: 32px; color:#222;line-height:50px;}
+#mainvisual  .main_txt .menu a.m00 {display:block;font-family: 'GMarketSans';font-size: 32px; color:#222;line-height:50px;}
+#mainvisual  .main_txt .menu > ul > li > a{display:block;font-family: 'GMarketSans';font-size: 32px; color:#222;line-height:50px;font-weight: 900;}
 #mainvisual  .main_txt .menu > ul > li > a.active, #mainvisual  .main_txt .menu > ul > li > a:hover, #mainvisual  .main_txt .menu > ul > li > a:focus{color:#E72295;}
 #mainvisual  .main_txt .menu > ul > li > div.submenu {display:none;width:200px;border-radius: 20px;background: #E72295;padding:14px 20px;right:0;top:0;transition:all 0.5s;}
 #mainvisual  .main_txt .menu > ul > li > div.submenu > a {display: block;color:#fff;font-size: 18px;font-family: "GMarketSans";text-align: center;line-height: 32px;}
@@ -70,7 +70,7 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 #mainvisual  .main_txt .menu a.m02{padding-left:30px;}
 #mainvisual  .main_txt .menu a.m04{padding-left:20px;}
 #mainvisual  .main_txt .menu a.m05{padding-left:100px;}
-#mainvisual  .main_txt .host {display: flex;justify-content: space-between;align-items: center;}
+#mainvisual  .main_txt .host {display: flex;justify-content: space-between;align-items: center;width:1600px;margin-left:-100px;}
 
 
 #container {width:100%; }
@@ -141,9 +141,9 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 .section02 .company{width:1400px; margin:0 auto;}
 .section02 .company h3{font-family:'GmarketSans';font-weight:900;color:#000;text-align: center;font-size:38px;letter-spacing: -0.04em;margin:0 0 25px 0;}
 .section02 .company p{font-family:'GmarketSans';font-size: 21px; color:#111111;letter-spacing: -0.04em;text-align: center;padding:0 0 50px 0;}
-.section02 .company .logobox{display: flex;flex-wrap: wrap;}
-.section02 .company .logobox a{display:flex;width:164px; height:70px;align-items: center;margin:18px;}
-.section02 .company .logobox a img{filter: grayscale(100%);opacity:0.4;}
+.section02 .company .logobox{display: flex;flex-wrap: wrap;justify-content: center;}
+.section02 .company .logobox a{display:flex;width:calc( 100% / 6); height:70px;align-items: center;margin:22px;justify-content: center;}
+.section02 .company .logobox a img{filter: grayscale(100%);opacity:0.4;max-width:90%;max-height:90%;}
 .section02 .company .logobox a:hover img{filter: grayscale(0);opacity:1;}
 
 
@@ -205,11 +205,16 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 .section04 div.talkinput .talk_name input {width: 80px;}
 .section04 div.talkinput .talk_name input:last-child {width: 180px;margin:0 0 0 10px;}
 
+.section04 div.talkinput .talk_input_wrap {display:flex;justify-content: space-between;}
+.section04 div.talkinput .talk_input_wrap .input_box{width: calc(100% - 120px);}
 .section04 div.talkinput .talk_cap {display:flex;align-items: center;}
 .section04 div.talkinput .cap_wrap > div {display:flex;align-items: center;}
 .section04 div.talkinput .cap_wrap .cap {height:40px;width: 120px;}
 .section04 div.talkinput .cap_wrap .cap img {height:40px;}
 .section04 div.talkinput .cap_wrap .cap_refresh a {height:40px;padding:0 5px;}
+
+.section04 div.talkinput .talk_input_wrap {display:block;}
+.section04 div.talkinput .talk_input_wrap .input_box{width: 100%;}
 
 
 
@@ -332,7 +337,7 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 .pro_table tr td.step3 span {background: #ffa700;}
 .pro_table tr td.step1 {box-shadow: 0 0 0 3px #65c4f2 inset; }
 .pro_table tr td.step2 {box-shadow: 0 0 0 3px #bad73c inset; }
-.pro_table tr td.step3 {box-shadow: 0 0 0 3px #ffa700 inset; }
+.pro_table tr td.step3 {box-shadow: 0 0 0 3px #ffa700 inset; letter-spacing: -0.06em;}
 
 /* 세부프로그램 */
 .pro_detail {display:flex;margin:50px 0 0;}
@@ -379,6 +384,54 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 .notice ul li p.notice_no{width:100%;text-align:center;color:#9e9e9e;}
 
 
+/* 참여기업 */
+.company ul {display:flex; flex-wrap: wrap;}
+.company ul li {position:relative; width:calc( (100% - 60px) /4 );border: 1px solid #ddd;border-radius: 20px;padding:30px;margin:0 20px 20px 0;}
+.company ul li img{max-width:90%;max-height:90%;}
+.company ul li:nth-child(4n) {margin:0 0 20px;}
+.company ul li span.boothnum {position: absolute;top:10px;left:20px;width: 40px;height: 40px;line-height: 40px;font-size: 16px;color: #fff;background: #E8368B;text-align: center;border-radius: 10px;font-weight: 900;font-family: 'GMarketSans';}
+.company ul li a {display: block;width: 100%;height: 100%;}
+.company ul li h3 {font-size: 21px;color: #111;font-size: 800;font-family: "GMarketSans";margin:20px 0 15px;height:48px;}
+.company ul li div {display:flex;gap:5px;align-items: center;}
+.company ul li div.company_logo {justify-content: center;height:100px;}
+.company ul li div p {padding:5px 10px;border-radius: 5px;color: #fff;font-weight: 600;}
+.company ul li div p.company_booth {background:#65c4f2;}
+.company ul li div p.company_recruit {background:#99b720;}
+.company ul li div p.company_indirect {background:#ffa700;}
+
+.booth img {max-width:100%;}
+.booth p.mobile_text {display:none;}
+.booth a.booth_home {display:block;width:fit-content;height:38px;line-height:38px;border-radius: 5px;background:#E8368B;margin: 0 0 10px auto;padding:0 30px;font-size: 18px;color:#fff;}
+
+.pointtxt {font-size:16px;color:#ff2929;font-weight:600;margin:6px 0 0;}
+
+
+/* 이벤트프로그램 */
+.pro_event h5{font-size: 18px;color: #111;font-weight: 800;word-break: keep-all;margin:0 0 6px;}
+.pro_event p{font-size: 16px;color: #616161;font-weight: 400;word-break: keep-all;}
+.pro_event .bdr {border-right: 1px solid #ddd !important;}
+.pro_event .long {padding:10px;}
+.pro_event .pro_table tr td {height:80px;}
+.pro_event .pro_table tr th:first-child {position: sticky;left:0;}
+.pro_event .pro_table tr td:first-child {position: sticky;left:0;}
+.pro_event .linebox {padding:10px;}
+.pro_event span.event_num {font-family: 'GMarketSans';margin:0 0 10px;font-size: 21px;font-weight: 900;}
+.pro_event .orange span.event_num {color:#f3830a;}
+.pro_event .orange {background:#fff7ef}
+.pro_event .green span.event_num {color:#99b720;}
+.pro_event .green {background:#fbffed}
+.pro_event .sky span.event_num {color:#65c4f2;}
+.pro_event .sky {background:#f0faff;}
+.pro_event .pink span.event_num {color:#E8368B;}
+.pro_event .pink {background:#fff6fb;}
+.pro_event .blue span.event_num {color:#004e94;}
+.pro_event .blue {background:#eef6fd;}
+.pro_event .red span.event_num {color:#d42119;}
+.pro_event .red {background:#fff3f3;}
+.pro_event .mint span.event_num {color:#10c5c7;}
+.pro_event .mint {background:#f2ffff;}
+.pro_event .yellow span.event_num {color:#ffe81d;}
+.pro_event .yellow {background:#fffef3;}
 
 
 
@@ -469,7 +522,7 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 	#mainvisual  .main_txt .date{line-height:30px;font-size: 18px;padding:15px 0 30px;}
 	#mainvisual  .main_txt .date .pink{font-size:26px;}
 	#mainvisual  .main_txt .menu{display:none;}
-	#mainvisual  .main_txt .host {display: flex;justify-content: center;align-items: center;flex-wrap: wrap;}
+	#mainvisual  .main_txt .host {display: flex;justify-content: center;align-items: center;flex-wrap: wrap;width:100%;margin-left:0;}
 	#mainvisual  .main_txt .host a {margin:5px 3px;width:30%;text-align: center;}
 	#mainvisual  .main_txt .host a img{max-width:95%;}
 
@@ -504,15 +557,15 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 	.section02 .program ul li .icon img{width:60px;}
 	.section02 .program ul li .num {width:70px;}
 	.section02 .program ul li div h5 {font-size: 16px;}
-	.section02 .program ul li div p {font-size: 14px;line-height: 1.2;}
+	.section02 .program ul li div p {font-size: 14px;line-height: 1.6;}
 	.section02 .program ul li div p:last-child {margin:6px 0 0;}
 	.section02 .program ul li.p06 {margin-top: 0;}
 
 	.section02 .company{width:auto; margin:0 auto;padding:0 20px;}
 	.section02 .company h3{font-size:28px;margin:0 0 20px 0;}
 	.section02 .company .logobox{display: flex;flex-wrap: wrap;justify-content: center;}
-	.section02 .company .logobox a{display:flex;width:30%; height:auto;margin:5px 1%; justify-content: center;}
-	.section02 .company .logobox a img{filter: grayscale(100%);opacity:0.4;width:80%;height:auto;}
+	.section02 .company .logobox a{display:flex;width:calc( 100% / 3 ); margin:5px 0; justify-content: center;}
+	.section02 .company .logobox a img{filter: grayscale(100%);opacity:0.4;max-width:80%;}
 	.section02 .company .logobox a:hover img{filter: grayscale(0);opacity:1;}
 
 
@@ -524,10 +577,11 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 		-webkit-border-radius:50px;
 		-moz-border-radius:50px;
 	}
+	.section03 .notice ul li a, .section03 .notice ul li .date {font-size: 16px;}
 
 	
 	.section04 {padding:0 0 100px;}
-	.section04 .talk {width: 100%;padding:0 20px;}
+	.section04 .talk {width: 100%;padding:80px 20px 0;}
 	.section04 .title h3 {font-size: 25px;word-break: keep-all;}
 	.section04 .title p{ font-size: 16px;line-height: 24px; word-break: keep-all; padding: 0 0 30px 0;}
 	.section04 div.talkbox ul {height:270px;padding:20px;margin:20px 0;}
@@ -538,6 +592,7 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 	.section04 div.talkbox ul li {width: 100%;line-height: 1;background:none;background-size:100%;height:auto;border: 1px solid #222;border-radius: 50px;margin:0 0 20px;}
 	.section04 div.talkbox ul li p {font-size: 14px;padding:20px 20px 10px;}
 	.section04 div.talkbox ul li span {font-size: 12px;height:24px;line-height: 24px;left:20px;top:-10px;}
+	.section04 div.talkbox ul li span:not(.MuiSkeleton-root)  {font-size: 12px;height:24px;line-height: 24px;left:20px;top:-10px;}
 	.section04 div.talkbox ul li:nth-child(2n) {background:none;}
 	.section04 div.talkbox ul li:nth-child(2n) span {right:20px;}
 	.section04 div.talkinput {padding:20px;}
@@ -551,6 +606,8 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 	.section04 div.talkinput .talk_cap {display:block;}
 	.section04 div.talkinput .cap_wrap > div {display:block;}
 	.section04 div.talkinput .cap_wrap .cap_refresh a {height:28px;font-size: 12px;}
+
+	
 
 
 
@@ -623,6 +680,20 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 	.pro_detail > div ul li h5 {font-size: 18px;}
 	.pro_detail > div ul li p {font-size: 14px;line-height: 24px;}
 
+
+	.company ul li {display:block;width:100%;margin:0 0 20px}
+	.company ul li:nth-child(4n) {margin:0 0 20px;}
+	.booth p.mobile_text {display:block;} 
+
+	.pro_event .over {overflow-x: scroll;}
+	.pro_event .pro_table {width:1000px;}
+	.pro_event h5 {font-size: 16px;}
+	.pro_event p {font-size: 14px;}
+	
+	.notice ul li {height:42px;line-height: 42px;padding: 0 20px;}
+	.notice ul li a, .notice ul li .date {font-size: 14px;}
+	.notice ul li .date {right:20px;}
+	nav.MuiPagination-root {position:static;}
 
 }
 

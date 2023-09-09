@@ -1,14 +1,11 @@
 import { CommonNotify } from "common/js/Common";
 import useAlert from "hook/useAlert";
 import { forwardRef, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { apiPath } from "webPath";
 
 const SignUpModFile = forwardRef((props, ref) => {
-    const dispatch = useDispatch();
     const { alert } = useAlert();
-    const err = { dispatch, alert };
 
     const { inputAttachmentFile } = ref;
     const [fileList, setFileList] = useState([]);

@@ -1,27 +1,35 @@
 import {
     CommonConsole,
-    CommonErrorCatch,
+    CommonErrModule,
     CommonModal,
     CommonNotify,
     CommonRest,
 } from "common/js/Common";
-import { RestServer } from "common/js/Rest";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { set_spinner } from "redux/actions/commonAction";
-import { init_user_info } from "redux/actions/userInfoAction";
 import { apiPath, routerPath } from "webPath";
 
 import $ from "jquery";
 import useAlert from "hook/useAlert";
-import { init_user_info_admin } from "redux/actions/userInfoAdminAction";
 import { successCode } from "resultCode";
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
+import {
+    isSpinnerAtom,
+    pageAtom,
+    userInfoAdminAtom,
+    userTokenAdminAtom,
+} from "recoils/atoms";
 
 const SideNav = (props) => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
+    // const { alert } = useAlert();
+    const resetUserInfoAdmin = useResetRecoilState(userInfoAdminAtom);
+    const resetUserTokenAdmin = useResetRecoilState(userTokenAdminAtom);
+    // const err = { dispatch, alert, resetUserInfoAdmin, resetUserTokenAdmin };
+
     const { alert } = useAlert();
-    const err = { dispatch, alert };
+    const err = CommonErrModule();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
 
     const [isOpen, setIsOpen] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
@@ -38,7 +46,7 @@ const SideNav = (props) => {
 
     const navList = props.menuList;
 
-    let page = useSelector((state) => state.page.page);
+    const page = useRecoilValue(pageAtom);
 
     // console.log($(`#${page}`).parents());
 
@@ -71,11 +79,13 @@ const SideNav = (props) => {
 
     // 회원 정보 수정
     const modUser = (user_idx) => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+
+        setIsSpinner(true);
 
         let userIdx = String(user_idx);
 
@@ -101,11 +111,13 @@ const SideNav = (props) => {
 
             // 성공
             if (result_code === successCode.success) {
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
 
                 setModUserData(result_info);
 
@@ -116,11 +128,13 @@ const SideNav = (props) => {
             else {
                 CommonConsole("log", res);
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
 
                 CommonNotify({
                     type: "alert",
@@ -129,55 +143,17 @@ const SideNav = (props) => {
                 });
             }
         };
-
-        // RestServer("get", url, data)
-        //     .then((response) => {
-        //         let res = response;
-        //         let result_code = res.headers.result_code;
-        //         let result_info = res.data.result_info;
-
-        //         // 성공
-        //         if (result_code === "0000") {
-        //             dispatch(
-        //                 set_spinner({
-        //                     isLoading: false,
-        //                 })
-        //             );
-
-        //             setModUserData(result_info);
-
-        //             setModalTitle("회원수정");
-        //             setIsOpen(true);
-        //         }
-        //         // 에러
-        //         else {
-        //             CommonConsole("log", response);
-
-        //             dispatch(
-        //                 set_spinner({
-        //                     isLoading: false,
-        //                 })
-        //             );
-
-        //             CommonNotify({
-        //                 type: "alert",
-        //                 hook: alert,
-        //                 message: response.headers.result_message_ko,
-        //             });
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         CommonErrorCatch(error, dispatch, alert);
-        //     });
     };
 
     // 로그아웃
     const signOut = () => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+
+        setIsSpinner(true);
 
         // signout
         // url : /v1/signout
@@ -202,13 +178,18 @@ const SideNav = (props) => {
 
             if (result_code === successCode.success) {
                 // localStorage.removeItem("userInfo");
-                dispatch(init_user_info_admin(null));
+                // dispatch(init_user_info_admin(null));
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                resetUserInfoAdmin();
+                resetUserTokenAdmin();
+
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
 
                 // dispatch(
                 //     set_page({

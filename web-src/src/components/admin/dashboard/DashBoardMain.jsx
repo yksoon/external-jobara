@@ -1,44 +1,108 @@
 import useAlert from "hook/useAlert";
-import useConfirm from "hook/useConfirm";
-import { CommonErrorCatch, CommonNotify, CommonRest } from "common/js/Common";
+import {
+    CommonConsole,
+    CommonErrModule,
+    CommonErrorCatch,
+    CommonRest,
+} from "common/js/Common";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { apiPath } from "webPath";
-import { useDispatch, useSelector } from "react-redux";
-import { set_spinner } from "redux/actions/commonAction";
 import DashBoardChart from "./components/DashBoardChart";
 import axios from "axios";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import { successCode } from "resultCode";
+import { commaOfNumber } from "common/js/Pattern";
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
+import {
+    ipInfoAtom,
+    isSpinnerAtom,
+    userInfoAdminAtom,
+    userTokenAdminAtom,
+} from "recoils/atoms";
 
-const DashBoardMain = () => {
-    const dispatch = useDispatch();
+const DashBoardMain = (props) => {
+    // const { alert } = useAlert();
+    const resetUserInfoAdmin = useResetRecoilState(userInfoAdminAtom);
+    const resetUserTokenAdmin = useResetRecoilState(userTokenAdminAtom);
+    // const err = { dispatch, alert, resetUserInfoAdmin, resetUserTokenAdmin };
+
     const { alert } = useAlert();
-    const err = { dispatch, alert };
+    const err = CommonErrModule();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
+
     const navigate = useNavigate();
     const fileBaseUrl = apiPath.api_file;
 
-    const userTokenAdmin = useSelector(
-        (state) => state.userInfoAdmin.userTokenAdmin
-    );
-    const ip = useSelector((state) => state.ipInfo.ipInfo);
+    // const userTokenAdmin = useSelector(
+    //     (state) => state.userInfoAdmin.userTokenAdmin
+    // );
+    const userTokenAdmin = useRecoilValue(userTokenAdminAtom);
+
+    // const ip = useSelector((state) => state.ipInfo.ipInfo);
+    const ip = useRecoilValue(ipInfoAtom);
 
     const [totalCountInfo, setTotalCountInfo] = useState({});
     const [totalListInfo, setTotalListInfo] = useState([]);
+    const [additionalList, setAdditionalList] = useState([]);
     // const [excelPath, setExcelPath] = useState("");
+
+    const isRefresh = props.isRefresh;
 
     useEffect(() => {
         if (userTokenAdmin) {
+            getAdditional();
             getDashboard();
         }
-    }, []);
+    }, [isRefresh]);
 
+    // 참여프로그램 리스트 받아오기
+    const getAdditional = () => {
+        // /v1/meta/_additionals
+        // GET
+        const restParams = {
+            method: "get",
+            url: apiPath.api_get_additional,
+            data: {},
+            err: err,
+            callback: (res) => responsLogic(res),
+        };
+
+        CommonRest(restParams);
+
+        const responsLogic = (res) => {
+            console.log(res);
+
+            const result_code = res.headers.result_code;
+            // 성공
+            if (result_code === successCode.success) {
+                let result_info = res.data.result_info;
+
+                setAdditionalList(result_info);
+            } else {
+                // 에러
+                CommonConsole("log", res);
+
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
+            }
+        };
+    };
+
+    // 대시보드
     const getDashboard = () => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+
+        setIsSpinner(true);
 
         // 대시보드
         // /v1/dashboard
@@ -72,21 +136,25 @@ const DashBoardMain = () => {
 
                 // downloadExcel();
 
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
             }
         };
     };
 
     const downloadExcel = () => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+
+        setIsSpinner(true);
 
         // 대시보드
         // /v1/dashboard
@@ -106,11 +174,13 @@ const DashBoardMain = () => {
             },
         })
             .then((response) => {
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
+
+                setIsSpinner(false);
 
                 console.log(response);
 
@@ -131,13 +201,22 @@ const DashBoardMain = () => {
                 link.click();
             })
             .catch((error) => {
-                dispatch(
-                    set_spinner({
-                        isLoading: false,
-                    })
-                );
+                // dispatch(
+                //     set_spinner({
+                //         isLoading: false,
+                //     })
+                // );
 
-                CommonErrorCatch(error, dispatch, alert);
+                setIsSpinner(false);
+
+                CommonErrorCatch(
+                    error,
+                    // dispatch,
+                    setIsSpinner,
+                    alert,
+                    resetUserInfoAdmin,
+                    resetUserTokenAdmin
+                );
             });
     };
 
@@ -167,7 +246,7 @@ const DashBoardMain = () => {
         <>
             <div className="content">
                 <div className="title">
-                    <h3>통계</h3>
+                    <h3>대시보드</h3>
                 </div>
                 <div className="con_area">
                     <div className="adm_search">
@@ -189,182 +268,21 @@ const DashBoardMain = () => {
                     <div style={{ marginTop: 20 }}>
                         <table className="table_a">
                             <colgroup>
-                                <col width="33%" />
-                                <col width="33%" />
                                 <col width="*" />
                             </colgroup>
                             <tbody>
                                 <tr>
-                                    <th colSpan="4">총 사전등록 수</th>
+                                    <th>총 사전등록 수</th>
                                 </tr>
                                 <tr>
-                                    <td colSpan="4">
+                                    <td>
                                         {Object.keys(totalCountInfo).length !==
                                             0 &&
-                                            totalCountInfo.total_registration_count}
+                                            String(
+                                                totalCountInfo.total_registration_count
+                                            ).replace(commaOfNumber, ",")}
                                     </td>
                                 </tr>
-
-                                {/* <tr>
-                                    <th>연령별 등록 수</th>
-                                    <th>등록구분</th>
-                                    <th>참여프로그램</th>
-                                </tr>
-                                <tr>
-                                    <td className="inner_table_wrap">
-                                        <table className="inner_table">
-                                            <colgroup>
-                                                <col width="50%" />
-                                                <col width="50%" />
-                                            </colgroup>
-                                            <tbody>
-                                                {Object.keys(totalCountInfo)
-                                                    .length !== 0 &&
-                                                    totalCountInfo.total_age_count.map(
-                                                        (item, idx) => (
-                                                            <tr
-                                                                key={`total_age_${idx}`}
-                                                            >
-                                                                <th>
-                                                                    {item.age}
-                                                                </th>
-                                                                <td>
-                                                                    <Link>
-                                                                        {
-                                                                            item.count
-                                                                        }
-                                                                    </Link>
-                                                                </td>
-                                                            </tr>
-                                                        )
-                                                    )}
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                    <td className="inner_table_wrap">
-                                        <table className="inner_table">
-                                            <colgroup>
-                                                <col width="50%" />
-                                                <col width="50%" />
-                                            </colgroup>
-                                            <tbody>
-                                                <tr>
-                                                    <th colSpan="2">
-                                                        소속기관 수 (학교)
-                                                    </th>
-                                                </tr>
-                                                {Object.keys(totalCountInfo)
-                                                    .length !== 0 &&
-                                                    totalCountInfo.total_organization_count.map(
-                                                        (item, idx) => (
-                                                            <tr
-                                                                key={`total_organization_${idx}`}
-                                                            >
-                                                                <th>
-                                                                    {
-                                                                        item.organization_name
-                                                                    }
-                                                                </th>
-                                                                <td>
-                                                                    <Link>
-                                                                        {
-                                                                            item.count
-                                                                        }
-                                                                    </Link>
-                                                                </td>
-                                                            </tr>
-                                                        )
-                                                    )}
-                                                <tr>
-                                                    <th colSpan="2">
-                                                        전공과 수 (학과)
-                                                    </th>
-                                                </tr>
-                                                {Object.keys(totalCountInfo)
-                                                    .length !== 0 &&
-                                                    totalCountInfo.total_department_count.map(
-                                                        (item, idx) => (
-                                                            <tr
-                                                                key={`total_department_${idx}`}
-                                                            >
-                                                                <th>
-                                                                    {
-                                                                        item.department_name
-                                                                    }
-                                                                </th>
-                                                                <td>
-                                                                    <Link>
-                                                                        {
-                                                                            item.count
-                                                                        }
-                                                                    </Link>
-                                                                </td>
-                                                            </tr>
-                                                        )
-                                                    )}
-                                                <tr>
-                                                    <th colSpan="2">
-                                                        전공분야 수 (희망직종)
-                                                    </th>
-                                                </tr>
-                                                {Object.keys(totalCountInfo)
-                                                    .length !== 0 &&
-                                                    totalCountInfo.total_specialized_count.map(
-                                                        (item, idx) => (
-                                                            <tr
-                                                                key={`total_specialized_${idx}`}
-                                                            >
-                                                                <th>
-                                                                    {
-                                                                        item.specialized_name
-                                                                    }
-                                                                </th>
-                                                                <td>
-                                                                    <Link>
-                                                                        {
-                                                                            item.count
-                                                                        }
-                                                                    </Link>
-                                                                </td>
-                                                            </tr>
-                                                        )
-                                                    )}
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                    <td className="inner_table_wrap">
-                                        <table className="inner_table">
-                                            <colgroup>
-                                                <col width="50%" />
-                                                <col width="50%" />
-                                            </colgroup>
-                                            <tbody>
-                                                {Object.keys(totalCountInfo)
-                                                    .length !== 0 &&
-                                                    totalCountInfo.total_additional_count.map(
-                                                        (item, idx) => (
-                                                            <tr
-                                                                key={`total_additional_${idx}`}
-                                                            >
-                                                                <th>
-                                                                    {
-                                                                        item.additional_name
-                                                                    }
-                                                                </th>
-                                                                <td>
-                                                                    <Link>
-                                                                        {
-                                                                            item.count
-                                                                        }
-                                                                    </Link>
-                                                                </td>
-                                                            </tr>
-                                                        )
-                                                    )}
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr> */}
                             </tbody>
                         </table>
                     </div>
@@ -402,33 +320,26 @@ const DashBoardMain = () => {
                                         <th rowSpan="2">학교</th>
                                         <th rowSpan="2">학과</th>
                                         <th rowSpan="2">희망직종</th>
-                                        <th colSpan="4">참여프로그램</th>
+                                        <th
+                                            colSpan={`${additionalList.length}`}
+                                        >
+                                            참여프로그램
+                                        </th>
                                         <th rowSpan="2">등록일</th>
                                         <th rowSpan="2">이력서 보기</th>
                                     </tr>
                                     <tr>
-                                        <th>NCS 모의고사</th>
-                                        <th
-                                            style={{
-                                                borderRight: "1px solid #ddd",
-                                            }}
-                                        >
-                                            현직자 토크콘서트
-                                        </th>
-                                        <th
-                                            style={{
-                                                borderRight: "1px solid #ddd",
-                                            }}
-                                        >
-                                            버크만진단
-                                        </th>
-                                        <th
-                                            style={{
-                                                borderRight: "1px solid #ddd",
-                                            }}
-                                        >
-                                            바로채용면접
-                                        </th>
+                                        {additionalList.map((item, idx) => (
+                                            <th
+                                                key={`admin_additional_${idx}`}
+                                                style={{
+                                                    borderRight:
+                                                        "1px solid #ddd",
+                                                }}
+                                            >
+                                                {item.additional_name_ko}
+                                            </th>
+                                        ))}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -459,50 +370,24 @@ const DashBoardMain = () => {
                                                         ? item.specialized_name_ko
                                                         : "-"}
                                                 </td>
-                                                <td className="checkicon">
-                                                    {item.additional_info.filter(
-                                                        (e) =>
-                                                            e.additional_idx ===
-                                                            1
-                                                    ).length !== 0 ? (
-                                                        <CheckCircleOutlineOutlinedIcon />
-                                                    ) : (
-                                                        ""
-                                                    )}
-                                                </td>
-                                                <td className="checkicon">
-                                                    {item.additional_info.filter(
-                                                        (e) =>
-                                                            e.additional_idx ===
-                                                            2
-                                                    ).length !== 0 ? (
-                                                        <CheckCircleOutlineOutlinedIcon />
-                                                    ) : (
-                                                        ""
-                                                    )}
-                                                </td>
-                                                <td className="checkicon">
-                                                    {item.additional_info.filter(
-                                                        (e) =>
-                                                            e.additional_idx ===
-                                                            3
-                                                    ).length !== 0 ? (
-                                                        <CheckCircleOutlineOutlinedIcon />
-                                                    ) : (
-                                                        ""
-                                                    )}
-                                                </td>
-                                                <td className="checkicon">
-                                                    {item.additional_info.filter(
-                                                        (e) =>
-                                                            e.additional_idx ===
-                                                            4
-                                                    ).length !== 0 ? (
-                                                        <CheckCircleOutlineOutlinedIcon />
-                                                    ) : (
-                                                        ""
-                                                    )}
-                                                </td>
+                                                {additionalList.map(
+                                                    (item2, idx2) => (
+                                                        <td
+                                                            className="checkicon"
+                                                            key={`add_chk_${idx2}`}
+                                                        >
+                                                            {item.additional_info.filter(
+                                                                (e) =>
+                                                                    e.additional_idx ===
+                                                                    item2.additional_idx
+                                                            ).length !== 0 ? (
+                                                                <CheckCircleOutlineOutlinedIcon />
+                                                            ) : (
+                                                                ""
+                                                            )}
+                                                        </td>
+                                                    )
+                                                )}
                                                 <td>
                                                     {item.reg_dttm
                                                         ? item.reg_dttm.split(
@@ -530,10 +415,6 @@ const DashBoardMain = () => {
                                                                 </Link>
                                                             )
                                                         )}
-                                                    {/* <img
-                                                    src="img/common/file.svg"
-                                                    alt=""
-                                                /> */}
                                                 </td>
                                             </tr>
                                         ))}

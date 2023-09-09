@@ -1,56 +1,32 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
 import $ from "jquery";
-import { apiPath, routerPath } from "webPath";
-import { RestServer } from "common/js/Rest";
-import Login from "common/js/Login";
 import MobileNav from "./MobileNav";
-import { useSelector, useDispatch } from "react-redux";
-import { init_user_info, set_user_info } from "redux/actions/userInfoAction";
-import {
-    CommonConsole,
-    CommonErrorCatch,
-    CommonNotify,
-} from "common/js/Common";
-import { set_spinner } from "redux/actions/commonAction";
-import useAlert from "hook/useAlert";
+import { Link } from "react-router-dom";
+import { routerPath } from "webPath";
+import { CommonOpenUrl } from "common/js/Common";
 
-let resultCode;
-let loginInfo;
-
-function Header({ props }) {
-    useEffect(() => {
-        $("#nav").hide();
-    }, []);
-
-    const menuClick = () => {
-        $("#nav").slideToggle();
-        $("#menu-icon2").toggleClass("open");
-    };
-
-    const menuDepth = (e) => {
-        //$(".nav_2depth").slideToggle();
-        $(".nav_2depth").slideUp();
-        $(e.target).siblings(".nav_2depth").slideToggle();
-    };
-
-
-    // URL 열기
-    const openUrl = (url) => {
-        window.open(url, "_blank", "noopener, noreferrer");
-    };
+function Header() {
+    // useEffect(() => {
+    //     $("#nav").hide();
+    // }, []);
 
     return (
         <>
             <div id="header">
                 <div id="header_content">
                     <h1 className="logo">
-                        <a href="/">
+                        <Link to={routerPath.web_main_url}>
                             <img src="img/web/main/logo_job.png" alt="" />
-                        </a>
-                        <a href="https://lincplus.jejunu.ac.kr/index.htm" target="_blank">
+                        </Link>
+                        <Link
+                            onClick={(e) =>
+                                CommonOpenUrl(
+                                    "https://lincplus.jejunu.ac.kr/index.htm"
+                                )
+                            }
+                        >
                             <img src="img/web/main/logo_linc.png" alt="" />
-                        </a>
+                        </Link>
                     </h1>
                     {/* 모바일 메뉴 // S */}
                     <MobileNav />

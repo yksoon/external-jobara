@@ -1,27 +1,34 @@
 import useAlert from "hook/useAlert";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { apiPath } from "webPath";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import $ from "jquery";
 import "quill-paste-smart";
-import { CommonNotify, CommonRest } from "common/js/Common";
-import { set_spinner } from "redux/actions/commonAction";
+import { CommonErrModule, CommonNotify, CommonRest } from "common/js/Common";
 import { boardModel } from "models/board/board";
 import { successCode } from "resultCode";
+import useConfirm from "hook/useConfirm";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { isSpinnerAtom, userInfoAdminAtom } from "recoils/atoms";
 const fileBaseUrl = apiPath.api_file;
 
 const RegNoticeModal = (props) => {
-    const dispatch = useDispatch();
-    const { alert } = useAlert();
-    const err = { dispatch, alert };
+    // const dispatch = useDispatch();
+    // const { alert } = useAlert();
+    // const { confirm } = useConfirm();
+    // const err = { dispatch, alert };
 
-    const userInfoAdmin = useSelector(
-        (state) => state.userInfoAdmin.userInfoAdmin
-    );
+    const { alert } = useAlert();
+    const { confirm } = useConfirm();
+    const err = CommonErrModule();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
+
+    // const userInfoAdmin = useSelector(
+    //     (state) => state.userInfoAdmin.userInfoAdmin
+    // );
+    const userInfoAdmin = useRecoilValue(userInfoAdminAtom);
 
     const [boardData, setBoardData] = useState("");
     const [fileList, setFileList] = useState([]);
@@ -88,11 +95,12 @@ const RegNoticeModal = (props) => {
     // 등록
     const regBoard = () => {
         if (validation()) {
-            dispatch(
-                set_spinner({
-                    isLoading: true,
-                })
-            );
+            // dispatch(
+            //     set_spinner({
+            //         isLoading: true,
+            //     })
+            // );
+            setIsSpinner(true);
 
             const formData = new FormData();
             const model = boardModel;
@@ -129,11 +137,12 @@ const RegNoticeModal = (props) => {
             const responsLogic = (res) => {
                 let result_code = res.headers.result_code;
                 if (result_code === successCode.success) {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+                    setIsSpinner(false);
 
                     CommonNotify({
                         type: "alert",
@@ -142,11 +151,12 @@ const RegNoticeModal = (props) => {
                         callback: () => requestBoards(),
                     });
                 } else {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+                    setIsSpinner(false);
 
                     CommonNotify({
                         type: "alert",
@@ -172,11 +182,12 @@ const RegNoticeModal = (props) => {
     // 수정
     const modBoard = () => {
         if (validation()) {
-            dispatch(
-                set_spinner({
-                    isLoading: true,
-                })
-            );
+            // dispatch(
+            //     set_spinner({
+            //         isLoading: true,
+            //     })
+            // );
+            setIsSpinner(true);
 
             const formData = new FormData();
             const model = boardModel;
@@ -213,11 +224,12 @@ const RegNoticeModal = (props) => {
             const responsLogic = (res) => {
                 let result_code = res.headers.result_code;
                 if (result_code === successCode.success) {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+                    setIsSpinner(false);
 
                     CommonNotify({
                         type: "alert",
@@ -226,11 +238,12 @@ const RegNoticeModal = (props) => {
                         callback: () => requestBoards(),
                     });
                 } else {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+                    setIsSpinner(false);
 
                     CommonNotify({
                         type: "alert",
@@ -352,6 +365,58 @@ const RegNoticeModal = (props) => {
     // 포커스
     const focusFunc = (ref) => {
         ref.current.focus();
+    };
+
+    // 삭제
+    const removeBoard = (board_idx) => {
+        CommonNotify({
+            type: "confirm",
+            hook: confirm,
+            message: "게시글을 삭제하시겠습니까?",
+            callback: () => removeLogic(),
+        });
+
+        const removeLogic = () => {
+            // dispatch(
+            //     set_spinner({
+            //         isLoading: true,
+            //     })
+            // );
+            setIsSpinner(true);
+
+            const data = {};
+            const url = apiPath.api_admin_remove_board + `/${board_idx}`;
+
+            // console.log(url);
+            // 파라미터
+            const restParams = {
+                method: "delete",
+                url: url,
+                data: data,
+                err: err,
+                callback: (res) => responsLogic(res),
+                admin: "Y",
+            };
+            CommonRest(restParams);
+
+            const responsLogic = (res) => {
+                if (res.headers.result_code === successCode.success) {
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+                    setIsSpinner(false);
+
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: `게시글이 삭제 되었습니다.`,
+                        callback: () => requestBoards(),
+                    });
+                }
+            };
+        };
     };
 
     /*
@@ -667,9 +732,17 @@ const RegNoticeModal = (props) => {
                 </table>
                 <div className="btn_box">
                     {modNotice ? (
-                        <Link className="btn btn01" onClick={modBoard}>
-                            수정
-                        </Link>
+                        <>
+                            <Link className="btn btn01" onClick={modBoard}>
+                                수정
+                            </Link>
+                            <Link
+                                className="btn btn02"
+                                onClick={() => removeBoard(modNotice.board_idx)}
+                            >
+                                삭제
+                            </Link>
+                        </>
                     ) : (
                         <Link className="btn btn01" onClick={regBoard}>
                             등록

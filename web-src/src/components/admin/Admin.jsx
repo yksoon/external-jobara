@@ -1,32 +1,51 @@
-import useAlert from "hook/useAlert";
-import { CommonConsole, CommonErrorCatch, CommonRest } from "common/js/Common";
+import {
+    CommonConsole,
+    CommonErrorCatch,
+    CommonErrModule,
+    CommonRest,
+    CommonSpinner,
+} from "common/js/Common";
 import { RestServer } from "common/js/Rest";
 import DashBoardMain from "components/admin/dashboard/DashBoardMain";
 import SideNav from "components/admin/nav/SideNav";
 import UserList from "components/admin/user/userList/UserList";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { set_spinner } from "redux/actions/commonAction";
-import { set_page } from "redux/actions/pageActios";
 import { apiPath, routerPath } from "webPath";
 import Notice from "./board/notice/Notice";
 import OneLineBoard from "./board/oneLineBoard/OneLineBoard";
 import { successCode } from "resultCode";
+import {
+    useRecoilState,
+    useRecoilValue,
+    useResetRecoilState,
+    useSetRecoilState,
+} from "recoil";
+import {
+    isSpinnerAtom,
+    pageAtom,
+    userInfoAdminAtom,
+    userTokenAdminAtom,
+} from "recoils/atoms";
+import { refresh } from "aos";
 
 const Admin = () => {
-    const dispatch = useDispatch();
-    const { alert } = useAlert();
-    const err = { dispatch, alert };
+    const err = CommonErrModule();
+    const isSpinner = useRecoilValue(isSpinnerAtom);
+    const [isRefresh, setIsRefresh] = useState(false);
 
     const navigate = useNavigate();
-    const userInfoAdmin = useSelector(
-        (state) => state.userInfoAdmin.userInfoAdmin
-    );
-    const userTokenAdmin = useSelector(
-        (state) => state.userInfoAdmin.userTokenAdmin
-    );
-    const page = useSelector((state) => state.page.page);
+
+    const userTokenAdmin = useRecoilValue(userTokenAdminAtom);
+    const userInfoAdmin = useRecoilValue(userInfoAdminAtom);
+    // const userInfoAdmin = useSelector(
+    //     (state) => state.userInfoAdmin.userInfoAdmin
+    // );
+    // const userTokenAdmin = useSelector(
+    //     (state) => state.userInfoAdmin.userTokenAdmin
+    // );
+    // recoil
+    const [page, setPage] = useRecoilState(pageAtom);
 
     const [menuList, setMenuList] = useState([]);
 
@@ -153,7 +172,8 @@ const Admin = () => {
     };
 
     const switchPage = (page) => {
-        dispatch(set_page(page));
+        setIsRefresh(!isRefresh);
+        setPage(page);
     };
 
     // 렌더링 페이지
@@ -161,19 +181,19 @@ const Admin = () => {
         switch (page) {
             // 대시보드
             case "dashboard":
-                return <DashBoardMain />;
+                return <DashBoardMain isRefresh={isRefresh} />;
 
             // 사전등록 관리
             case "userList":
-                return <UserList />;
+                return <UserList isRefresh={isRefresh} />;
 
             // 공지사항
             case "notice":
-                return <Notice />;
+                return <Notice isRefresh={isRefresh} />;
 
             // 한줄게시판
             case "oneLineBoard":
-                return <OneLineBoard />;
+                return <OneLineBoard isRefresh={isRefresh} />;
 
             default:
                 return <DashBoardMain />;
@@ -190,10 +210,10 @@ const Admin = () => {
                             menuList={menuList}
                         />
                     )}
-
                     {renderPage(page)}
                 </div>
             </div>
+            {isSpinner && <CommonSpinner />}
         </>
     );
 };

@@ -1,5 +1,4 @@
 import axios from "axios";
-import store from "redux/store/store";
 
 let ip;
 let token;
@@ -114,8 +113,20 @@ Instance_admin_multi.interceptors.request.use(
 );
 
 const setInterceptors = (config) => {
-    ip = store.getState().ipInfo.ipInfo;
-    token = store.getState().userInfo.userToken;
+    // ip = store.getState().ipInfo.ipInfo;
+    // token = store.getState().userInfo.userToken;
+
+    // ip =
+    //     JSON.parse(sessionStorage.getItem("recoilSession")).ipInfo !== null
+    //         ? JSON.parse(sessionStorage.getItem("recoilSession")).ipInfo
+    //         : sessionStorage.getItem("ipInfo");
+    const recoilSession = JSON.parse(sessionStorage.getItem("recoilSession"));
+
+    ip =
+        recoilSession === null
+            ? sessionStorage.getItem("ipInfo")
+            : recoilSession.ipInfo;
+    token = recoilSession === null ? "" : recoilSession.userToken;
 
     config.headers["Jobara-Src"] = ip ? ip : "";
     config.headers["Jobara-Token"] = token ? token : "";
@@ -124,8 +135,21 @@ const setInterceptors = (config) => {
 };
 
 const setInterceptorsAdmin = (config) => {
-    ip = store.getState().ipInfo.ipInfo;
-    token = store.getState().userInfoAdmin.userTokenAdmin;
+    // ip = store.getState().ipInfo.ipInfo;
+    // token = store.getState().userInfoAdmin.userTokenAdmin;
+    // const userTokenAdmin = useRecoilValue(userTokenAdminAtom);
+
+    // ip =
+    //     JSON.parse(sessionStorage.getItem("recoilSession")).ipInfo !== null
+    //         ? JSON.parse(sessionStorage.getItem("recoilSession")).ipInfo
+    //         : sessionStorage.getItem("ipInfo");
+    const recoilSession = JSON.parse(sessionStorage.getItem("recoilSession"));
+
+    ip =
+        recoilSession === null
+            ? sessionStorage.getItem("ipInfo")
+            : recoilSession.ipInfo;
+    token = recoilSession === null ? "" : recoilSession.userTokenAdmin;
 
     config.headers["Jobara-Src"] = ip ? ip : "";
     config.headers["Jobara-Token"] = token ? token : "";

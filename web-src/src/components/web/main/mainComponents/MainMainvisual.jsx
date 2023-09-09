@@ -1,11 +1,14 @@
 import { Skeleton } from "@mui/material";
+import { CommonOpenUrl } from "common/js/Common";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { ipInfoAtom, viewScheduleAtom } from "recoils/atoms";
 import { routerPath } from "webPath";
 
 const MainMainvisual = () => {
-    const viewSchedule = useSelector((state) => state.schedule.viewSchedule);
+    // const viewSchedule = useSelector((state) => state.schedule.viewSchedule);
+    const viewSchedule = useRecoilValue(viewScheduleAtom);
     const [startYear, setStartYear] = useState("");
     const [startMonth, setStartMonth] = useState("");
     const [startDay, setStartDay] = useState("");
@@ -40,11 +43,6 @@ const MainMainvisual = () => {
     const imgLoded = (e) => {
         // console.log(e);
         setImgChange(true);
-    };
-
-    // URL 열기
-    const openUrl = (url) => {
-        window.open(url, "_blank", "noopener, noreferrer");
     };
 
     return (
@@ -123,7 +121,7 @@ const MainMainvisual = () => {
                         <p className="host">
                             <Link
                                 onClick={() =>
-                                    openUrl("https://www.moe.go.kr/")
+                                    CommonOpenUrl("https://www.moe.go.kr/")
                                 }
                             >
                                 <img
@@ -133,7 +131,7 @@ const MainMainvisual = () => {
                             </Link>
                             <Link
                                 onClick={() =>
-                                    openUrl("https://www.nrf.re.kr/")
+                                    CommonOpenUrl("https://www.nrf.re.kr/")
                                 }
                             >
                                 <img
@@ -143,7 +141,7 @@ const MainMainvisual = () => {
                             </Link>
                             <Link
                                 onClick={() =>
-                                    openUrl("https://www.jeju.go.kr/")
+                                    CommonOpenUrl("https://www.jeju.go.kr/")
                                 }
                             >
                                 <img
@@ -153,7 +151,7 @@ const MainMainvisual = () => {
                             </Link>
                             <Link
                                 onClick={() =>
-                                    openUrl("https://www.jejunu.ac.kr/")
+                                    CommonOpenUrl("https://www.jejunu.ac.kr/")
                                 }
                             >
                                 <img
@@ -163,7 +161,9 @@ const MainMainvisual = () => {
                             </Link>
                             <Link
                                 onClick={() =>
-                                    openUrl("https://lincplus.jejunu.ac.kr/")
+                                    CommonOpenUrl(
+                                        "https://lincplus.jejunu.ac.kr/"
+                                    )
                                 }
                             >
                                 <img
@@ -185,7 +185,7 @@ const MainMainvisual = () => {
                             </Link>
                             <Link
                                 onClick={() =>
-                                    openUrl("http://www.jejuiucc.or.kr/")
+                                    CommonOpenUrl("http://www.jejuiucc.or.kr/")
                                 }
                             >
                                 <img
@@ -195,7 +195,7 @@ const MainMainvisual = () => {
                             </Link>
                             <Link
                                 onClick={() =>
-                                    openUrl("https://www.chu.ac.kr/")
+                                    CommonOpenUrl("https://www.chu.ac.kr/")
                                 }
                             >
                                 <img
@@ -205,12 +205,22 @@ const MainMainvisual = () => {
                             </Link>
                             <Link
                                 onClick={() =>
-                                    openUrl("https://www.jtu.ac.kr/")
+                                    CommonOpenUrl("https://www.jtu.ac.kr/")
                                 }
                             >
                                 <img
                                     src="img/web/main/host11.png"
                                     alt="제주관광대학교"
+                                />
+                            </Link>
+                            <Link
+                                onClick={() =>
+                                    CommonOpenUrl("https://www.komipo.co.kr/kor/main/main.do")
+                                }
+                            >
+                                <img
+                                    src="img/web/main/host12.png"
+                                    alt="한국중부발전"
                                 />
                             </Link>
                         </p>
@@ -222,12 +232,13 @@ const MainMainvisual = () => {
                         data-aos-auration="800"
                         data-aos-delay="500"
                     >
-                        <Link className="m00">
-                            MENU
-                        </Link>
+                        <Link className="m00">MENU</Link>
                         <ul>
                             <li>
-                                <Link to={routerPath.web_intro_url}  className="m01">
+                                <Link
+                                    to={routerPath.web_intro_url}
+                                    className="m01"
+                                >
                                     박람회안내
                                 </Link>
                                 <div className="submenu">
@@ -243,15 +254,33 @@ const MainMainvisual = () => {
                                 </div>
                             </li>
                             <li>
-                                <Link to={routerPath.web_program_url} className="m02">프로그램</Link>
+                                <Link
+                                    to={routerPath.web_program_url}
+                                    className="m02"
+                                >
+                                    프로그램
+                                </Link>
                                 <div className="submenu">
-                                    <Link to={routerPath.web_program_url}>행사일정</Link>
-                                    <Link to={routerPath.web_program_detail_url}>세부프로그램</Link>
-                                    <Link  to={routerPath.web_program_event_url}>이벤트프로그램</Link>
+                                    <Link to={routerPath.web_program_url}>
+                                        행사일정
+                                    </Link>
+                                    <Link
+                                        to={routerPath.web_program_detail_url}
+                                    >
+                                        세부프로그램
+                                    </Link>
+                                    <Link to={routerPath.web_program_event_url}>
+                                        이벤트프로그램
+                                    </Link>
                                 </div>
                             </li>
                             <li>
-                                <Link to={routerPath.web_signup_url} className="m03">사전등록</Link>
+                                <Link
+                                    to={routerPath.web_signup_url}
+                                    className="m03"
+                                >
+                                    사전등록
+                                </Link>
                                 <div className="submenu">
                                     <Link to={routerPath.web_signup_url}>
                                         사전등록
@@ -263,18 +292,21 @@ const MainMainvisual = () => {
                             </li>
                             <li>
                                 <Link
-                                    onClick={() =>
-                                        openUrl(
-                                            "https://lincplus.jejunu.ac.kr/programs/notice.htm?act=view&seq=1364"
-                                        )
-                                    }
+                                    // onClick={() =>
+                                    //     CommonOpenUrl(
+                                    //         "https://lincplus.jejunu.ac.kr/programs/notice.htm?act=view&seq=1364"
+                                    //     )
+                                    // }
+                                    to={`${routerPath.web_company_url}/list`}
                                     className="m04"
                                 >
                                     참여기업
                                 </Link>
                             </li>
                             <li>
-                                <Link  to={routerPath.web_notice_url}>공지</Link>
+                                <Link to={routerPath.web_notice_url}>
+                                    공지사항
+                                </Link>
                             </li>
                         </ul>
                     </div>

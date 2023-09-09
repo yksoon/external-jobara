@@ -81,3 +81,19 @@ div.select input:focus {outline:-webkit-focus-ring-color auto 1px;    border: 1p
 .pagenation ul li {border-radius:5px !important;}
 .pagenation ul li button {background:#f2f2f2;}
 .pagenation ul li:first-child button, .pagenation ul li:last-child button {background:none;}
+
+
+
+
+/**** mobile layout *************************************************************************************************************/
+@media screen and (max-width:640px) {
+	/* 모달 */
+	.modal_wrap .modal {width:95%;max-height:640px;padding:30px;}
+	.modal_wrap .modal img {max-width:100%;}
+    .modal_wrap .modal .modal_close {top:20px;right:20px;}
+	h4.notice_title {font-size: 21px;}
+	h4.notice_title + p.notice_date {font-size: 16px;}
+
+    /* alert */
+    .alert_wrap .alert {width:95%;}
+}

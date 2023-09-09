@@ -1,15 +1,17 @@
-import { CommonRest } from "common/js/Common";
-import useAlert from "hook/useAlert";
+import { CommonErrModule, CommonRest } from "common/js/Common";
 import { forwardRef, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { set_spinner } from "redux/actions/commonAction";
-import { apiPath, routerPath } from "webPath";
+import { useSetRecoilState } from "recoil";
+import { isSpinnerAtom } from "recoils/atoms";
+import { apiPath } from "webPath";
 
 const SignUpModSpecialCheck = forwardRef((props, ref) => {
-    const dispatch = useDispatch();
-    const { alert } = useAlert();
-    const err = { dispatch, alert };
+    // const dispatch = useDispatch();
+    // const { alert } = useAlert();
+    // const err = { dispatch, alert };
+    const err = CommonErrModule();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
+
     const [programInfo, setProgramInfo] = useState([]);
 
     const handleSingleCheck = props.handleSingleCheck;
@@ -27,11 +29,12 @@ const SignUpModSpecialCheck = forwardRef((props, ref) => {
 
         setProgramInfo(resultInfo);
 
-        dispatch(
-            set_spinner({
-                isLoading: false,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: false,
+        //     })
+        // );
+        setIsSpinner(false);
     };
 
     const getInfo = () => {

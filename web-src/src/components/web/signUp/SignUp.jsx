@@ -1,22 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { apiPath, routerPath } from "webPath";
-import { useDispatch, useSelector } from "react-redux";
 
 import SubHeader from "../common/SubHeader";
 import Footer from "components/web/common/Footer";
 
 import {
     CommonCheckDate,
-    CommonConsole,
+    CommonErrModule,
     CommonNotify,
     CommonRest,
 } from "common/js/Common";
-import { set_spinner } from "redux/actions/commonAction";
 import useAlert from "hook/useAlert";
 
 import SignUpID from "./signupComponents/SignUpID";
-import SignUpPW from "./signupComponents/SignUpPW";
 import SignUpCaptcha from "./signupComponents/SignUpCaptcha";
 import SignUpName from "./signupComponents/SignUpName";
 import SignUpMobile from "./signupComponents/SignUpMobile";
@@ -30,15 +27,21 @@ import { signupMultiModel } from "models/user/signUp";
 import { idPattern, pwPattern } from "common/js/Pattern";
 import SignUpMemo from "./signupComponents/SignUpMemo";
 import { successCode } from "resultCode";
-import { set_check_schedule } from "redux/actions/scheduleAction";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { checkScheduleAtom, ipInfoAtom, isSpinnerAtom } from "recoils/atoms";
 
 // 회원가입
 function SignUp() {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
+    // const { alert } = useAlert();
+    // const err = { dispatch, alert };
     const { alert } = useAlert();
-    const err = { dispatch, alert };
-    const checkSchedule = useSelector((state) => state.schedule.checkSchedule);
-    const ip = useSelector((state) => state.ipInfo.ipInfo);
+    const err = CommonErrModule();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
+
+    const checkSchedule = useRecoilValue(checkScheduleAtom);
+    const ip = useRecoilValue(ipInfoAtom);
+
     const navigate = useNavigate();
     const [state, setState] = useState("1");
 
@@ -66,7 +69,8 @@ function SignUp() {
             ip,
             alert,
             () => checkDatecallback(),
-            dispatch
+            // dispatch
+            setIsSpinner
         ).then((res) => {
             if (!res) {
                 navigate(routerPath.web_main_url);
@@ -76,21 +80,23 @@ function SignUp() {
 
     // 사전등록 기간 체크 콜백
     const checkDatecallback = () => {
-        dispatch(
-            set_spinner({
-                isLoading: false,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: false,
+        //     })
+        // );
+        setIsSpinner(false);
 
         navigate(routerPath.web_main_url);
     };
 
     const startLoding = () => {
-        dispatch(
-            set_spinner({
-                isLoading: true,
-            })
-        );
+        // dispatch(
+        //     set_spinner({
+        //         isLoading: true,
+        //     })
+        // );
+        setIsSpinner(true);
     };
 
     const signUpRefs = {
@@ -114,11 +120,12 @@ function SignUp() {
     // 제출
     const clickForm = () => {
         if (validation()) {
-            dispatch(
-                set_spinner({
-                    isLoading: true,
-                })
-            );
+            // dispatch(
+            //     set_spinner({
+            //         isLoading: true,
+            //     })
+            // );
+            setIsSpinner(true);
 
             const formData = new FormData();
             const model = signupMultiModel;
@@ -175,11 +182,13 @@ function SignUp() {
                         navigate(routerPath.web_signupchk_url);
                     };
 
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+
+                    setIsSpinner(false);
 
                     CommonNotify({
                         type: "alert",
@@ -188,11 +197,13 @@ function SignUp() {
                         callback: goToChk(),
                     });
                 } else {
-                    dispatch(
-                        set_spinner({
-                            isLoading: false,
-                        })
-                    );
+                    // dispatch(
+                    //     set_spinner({
+                    //         isLoading: false,
+                    //     })
+                    // );
+
+                    setIsSpinner(false);
 
                     CommonNotify({
                         type: "alert",
@@ -208,7 +219,8 @@ function SignUp() {
                 ip,
                 alert,
                 checkDatecallback,
-                dispatch
+                // dispatch
+                setIsSpinner
             ).then((res) => {
                 if (!res) {
                     navigate(routerPath.web_main_url);
