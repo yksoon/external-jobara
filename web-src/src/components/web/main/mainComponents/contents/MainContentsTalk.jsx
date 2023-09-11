@@ -530,7 +530,9 @@ const MainContentsTalk = () => {
                                                     src={`${img.imageSrc}?${img.imageHash}`}
                                                     alt=""
                                                     decoding="async"
-                                                    style={{ background: "white" }}
+                                                    style={{
+                                                        background: "white",
+                                                    }}
                                                 />
                                             </span>
                                             <span className="cap_refresh">
