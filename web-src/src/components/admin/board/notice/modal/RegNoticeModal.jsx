@@ -12,6 +12,7 @@ import { successCode } from "resultCode";
 import useConfirm from "hook/useConfirm";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { isSpinnerAtom, userInfoAdminAtom } from "recoils/atoms";
+import { commaOfNumber } from "common/js/Pattern";
 const fileBaseUrl = apiPath.api_file;
 
 const RegNoticeModal = (props) => {
@@ -671,6 +672,15 @@ const RegNoticeModal = (props) => {
                                             </div>
                                         ))}
                                 </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>조회 수</th>
+                            <td>
+                                {String(modNotice.view_count).replace(
+                                    commaOfNumber,
+                                    ","
+                                )}
                             </td>
                         </tr>
                         <tr>

@@ -1,4 +1,5 @@
 import { CommonErrModule } from "common/js/Common";
+import { commaOfNumber } from "common/js/Pattern";
 import useAlert from "hook/useAlert";
 import { useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -75,6 +76,15 @@ const MainContentsNoticeModal = (props) => {
                                 <col width="*" />
                             </colgroup>
                             <tbody>
+                                <tr>
+                                    <th>조회 수</th>
+                                    <td>
+                                        {String(modNotice.view_count).replace(
+                                            commaOfNumber,
+                                            ","
+                                        )}
+                                    </td>
+                                </tr>
                                 <tr>
                                     <th>첨부파일</th>
                                     <td className="fileicon">

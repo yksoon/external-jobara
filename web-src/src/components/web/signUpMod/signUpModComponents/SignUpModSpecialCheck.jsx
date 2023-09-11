@@ -74,6 +74,9 @@ const SignUpModSpecialCheck = forwardRef((props, ref) => {
                                                 ? true
                                                 : false
                                         }
+                                        disabled={
+                                            item.additional_idx === 1 && true
+                                        }
                                     />{" "}
                                     <b>{item.additional_name_ko}</b> (
                                     {item.additional_memo})
