@@ -209,7 +209,7 @@ const MainMainvisual = () => {
                                 }
                             >
                                 <img
-                                    src="img/web/main/host11.png"
+                                    src="img/web/main/host14.png"
                                     alt="제주관광대학교"
                                 />
                             </Link>
@@ -221,6 +221,16 @@ const MainMainvisual = () => {
                                 <img
                                     src="img/web/main/host12.png"
                                     alt="한국중부발전"
+                                />
+                            </Link>
+                            <Link
+                                onClick={() =>
+                                    CommonOpenUrl("https://www.komipo.co.kr/kor/main/main.do")
+                                }
+                            >
+                                <img
+                                    src="img/web/main/host13.png"
+                                    alt="제주관광대학교"
                                 />
                             </Link>
                         </p>

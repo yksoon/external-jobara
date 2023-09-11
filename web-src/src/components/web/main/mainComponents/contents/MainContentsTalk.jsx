@@ -59,11 +59,11 @@ const MainContentsTalk = () => {
             imageHash: Date.now(),
         });
 
-        getOneLineList(1, 8);
+        getOneLineList(1, 40);
     }, [isNeedUpdate]);
 
     useEffect(() => {
-        getOneLineList(1, 8);
+        getOneLineList(1, 40);
     }, [ipInfo]);
 
     useEffect(() => {

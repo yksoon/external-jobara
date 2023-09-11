@@ -70,7 +70,7 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 #mainvisual  .main_txt .menu a.m02{padding-left:30px;}
 #mainvisual  .main_txt .menu a.m04{padding-left:20px;}
 #mainvisual  .main_txt .menu a.m05{padding-left:100px;}
-#mainvisual  .main_txt .host {display: flex;justify-content: space-between;align-items: center;width:1600px;margin-left:-100px;}
+#mainvisual  .main_txt .host {display: flex;justify-content: space-between;align-items: center;width:1200px;margin:0 auto;flex-wrap:wrap;gap:16px;justify-content: center;}
 
 
 #container {width:100%; }
@@ -147,7 +147,7 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 .section02 .company .logobox a:hover img{filter: grayscale(0);opacity:1;}
 
 
-.section03 {width:100%; padding:200px 0;background:url('/public/img/web/main/sec03_bg.png') center 100% no-repeat; background-size:100%;}
+.section03 {width:100%; padding:200px 0 400px;background:url('/public/img/web/main/sec03_bg.png') center 100% no-repeat; background-size:100%;}
 .section03 .notice{width:1400px; margin:0 auto;}
 .section03 .notice h3{font-family:'GmarketSans';font-weight:900;color:#000;text-align: center;font-size:38px;letter-spacing: -0.04em;margin:0 0 30px 0;}
 .section03 .notice ul li{width:100%; height:62px;line-height:62px;border:1px solid #ccc;  box-sizing:border-box;position:relative;margin:0 0 20px 0;padding:0 40px;
@@ -213,8 +213,6 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 .section04 div.talkinput .cap_wrap .cap img {height:40px;}
 .section04 div.talkinput .cap_wrap .cap_refresh a {height:40px;padding:0 5px;}
 
-.section04 div.talkinput .talk_input_wrap {display:block;}
-.section04 div.talkinput .talk_input_wrap .input_box{width: 100%;}
 
 
 
@@ -606,6 +604,9 @@ a.table_btn span {font-size: 24px;color: #fff;line-height: 28px;    vertical-ali
 	.section04 div.talkinput .talk_cap {display:block;}
 	.section04 div.talkinput .cap_wrap > div {display:block;}
 	.section04 div.talkinput .cap_wrap .cap_refresh a {height:28px;font-size: 12px;}
+	
+	.section04 div.talkinput .talk_input_wrap {display:block;}
+	.section04 div.talkinput .talk_input_wrap .input_box{width: 100%;}
 
 	
 
