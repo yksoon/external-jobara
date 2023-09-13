@@ -62,9 +62,7 @@ const SignUpSpecialCheck = forwardRef((props, ref) => {
                                                 item.additional_idx
                                             )
                                         }
-                                        disabled={
-                                            item.additional_idx === 1 && true
-                                        }
+                                        disabled={true}
                                     />{" "}
                                     <b>{item.additional_name_ko}</b> (
                                     {item.additional_memo})
