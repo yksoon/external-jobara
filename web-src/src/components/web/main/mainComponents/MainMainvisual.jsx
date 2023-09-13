@@ -233,6 +233,16 @@ const MainMainvisual = () => {
                                     alt="제주관광대학교"
                                 />
                             </Link>
+                            <Link
+                                onClick={() =>
+                                    CommonOpenUrl("https://www.hrdkorea.or.kr/")
+                                }
+                            >
+                                <img
+                                    src="img/web/main/host15.png"
+                                    alt="한국산업인력공단"
+                                />
+                            </Link>
                         </p>
                     )}
 
