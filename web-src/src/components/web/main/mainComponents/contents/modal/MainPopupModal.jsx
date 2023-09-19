@@ -11,39 +11,33 @@ const MainPopupModal = (props) => {
 
     return (
         <>
-            <Modal
-                open={modalOption.isOpen}
-                onClose={modalOption.handleModalClose}
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-            >
-                <div className="modal_wrap" id="modal_wrap">
-                    <div className={`modal w${modalOption.width}`}>
-                        <div
-                            className="modal_close"
-                            onClick={modalOption.handleModalClose}
-                        >
-                            <img src="img/common/modal_close.png" alt="" />
-                        </div>
-                        <div className="form">
-                            <h4
-                                className="mo_title"
-                                id="transition-modal-title"
-                            >
-                                {modalOption.title}
-                            </h4>
-                            {/* 모달 컨텐츠 드가자 */}
-                            <div id="transition-modal-description">
-                                <img
-                                    src="img/web/main/main_popup_event.jpg"
-                                    alt=""
-                                />
-                            </div>
-                            {/* 모달 컨텐츠 드가자 END */}
-                        </div>
+        {modalOption.isOpen && (
+            <div className="popup_wrap" id="modal_wrap">
+            <div className={`popup w600`}>
+                <div className="form">
+                    {/* 모달 컨텐츠 드가자 */}
+                    <div id="transition-modal-description">
+                        <img
+                            src="img/web/main/main_popup_event.jpg"
+                            alt=""
+                        />
+                    </div>
+                    {/* 모달 컨텐츠 드가자 END */}
+                </div>
+                <div
+                    className="popup_btm"
+                >
+                    <div>
+                        <input type="checkbox" id="popup_24" />
+                        <label for="popup_24">24시간동안 보지 않기</label>
+                    </div>
+                    <div onClick={modalOption.handleModalClose}>
+                        <img src="img/common/modal_close.png" alt="" />
                     </div>
                 </div>
-            </Modal>
+            </div>
+        </div>
+        )}
         </>
     );
 };

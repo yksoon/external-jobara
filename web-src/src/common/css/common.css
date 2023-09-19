@@ -83,6 +83,15 @@ div.select input:focus {outline:-webkit-focus-ring-color auto 1px;    border: 1p
 .pagenation ul li:first-child button, .pagenation ul li:last-child button {background:none;}
 
 
+/* 팝업 */
+.popup_wrap {position: fixed;top:10px;left:20px;z-index: 999;box-shadow: 3px 3px 10px rgba(0,0,0,0.2);}
+.popup_wrap .popup {background: #fff;}
+.popup_wrap .popup .popup_btm{background: #efefef;padding:10px;text-align: right;display: flex; justify-content: space-between;}
+.popup_wrap .popup .popup_btm img {width:14px;cursor: pointer;}
+.popup_wrap img {max-width: 100%;}
+.popup_wrap input[type="checkbox"] {vertical-align: middle;margin:0 5px 0 0;}
+
+
 
 
 /**** mobile layout *************************************************************************************************************/
