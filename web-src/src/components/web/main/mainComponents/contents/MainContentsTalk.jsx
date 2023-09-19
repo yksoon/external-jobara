@@ -557,9 +557,9 @@ const MainContentsTalk = () => {
                             </div>
                             <div className="input_btn_box">
                                 <Link
-                                    className="input_btn"
+                                    className="input_btn hold"
                                     onClick={(e) => {
-                                        regOneLineBoard();
+                                        // regOneLineBoard();
                                         e.preventDefault();
                                     }}
                                 >

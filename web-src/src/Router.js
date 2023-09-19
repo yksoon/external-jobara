@@ -166,6 +166,21 @@ const Router = () => {
                     </Routes>
                 ) : (
                     <Routes>
+                        {/* -------------------------------admin------------------------------- */}
+                        {/* 메인 */}
+                        {/* URL : /admin */}
+                        <Route
+                            path={routerPath.admin_main_url}
+                            element={<Admin />}
+                        />
+
+                        {/* 로그인 */}
+                        {/* URL : /admin/signin */}
+                        <Route
+                            path={routerPath.admin_signin_url}
+                            element={<SignIn />}
+                        />
+
                         <Route path="*" element={<Forbidden />} />
                     </Routes>
                 )}

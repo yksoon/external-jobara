@@ -218,6 +218,8 @@ const SideNav = (props) => {
 
     const depth2click = (e) => {
         if (e.target.nextElementSibling.style.display === "none") {
+            $(".sub_3depth").slideUp();
+
             $(e.target).siblings(".sub_3depth").slideToggle();
         } else {
             $(e.target).siblings(".sub_3depth").slideUp();

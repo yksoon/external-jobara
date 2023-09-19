@@ -199,6 +199,7 @@ body {min-width:1400px;max-width: 1920px;margin:0 auto;}
 .section04 div.talkinput .input_box {display:flex;justify-content: space-between;margin:0 0 20px;align-items: center;}
 .section04 div.talkinput input {border:1px solid #ccc; height:40px; line-height:40px;text-indent: 10px; font-family:'GmarketSans';vertical-align: middle;border-radius: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px; }
 .section04 div.talkinput .input_btn {height:40px; line-height:40px;padding:0 20px; font-family:'GmarketSans';vertical-align: middle;border-radius: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px;background:#E72295;color: #fff;display: block;text-align: center;}
+.section04 div.talkinput .input_btn.hold {height:40px; line-height:40px;padding:0 20px; font-family:'GmarketSans';vertical-align: middle;border-radius: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px;background:#efefef;color:#9e9e9e;display: block;text-align: center;}
 .section04 div.talkinput div p {font-family:'GmarketSans';vertical-align: middle;color: #111;font-weight: 500;display: inline-block;margin:0 10px 0 0;}
 .section04 div.talkinput textarea {border:1px solid #ccc; height:60px; line-height:60px;font-family:'GmarketSans';vertical-align: middle;border-radius: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px; width:100%;resize:none;padding: 0 20px;font-size: 16px;}
 .section04 div.talkinput .tel_input input {width:80px;}

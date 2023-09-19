@@ -363,6 +363,18 @@ const Notice = (props) => {
                                 </Link>
                             </div>
                         </div>
+
+                        <div
+                            style={{
+                                display: "flex",
+                                justifyContent: "flex-end",
+                                marginBottom: "10px",
+                            }}
+                        >
+                            총 :{" "}
+                            <b>&nbsp; {pageInfo && pageInfo.total} &nbsp;</b> 건
+                        </div>
+
                         <div className="adm_notice">
                             <div className="adm_table">
                                 <table className="table_a">
